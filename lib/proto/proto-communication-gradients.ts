@@ -1,13 +1,14 @@
 /** Reception reference palette — reused across section 2 slide shapes. */
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
 
+/** Vibrant reception hues — light blue through gold/copper (same gradient flows). */
 export const PROTO_RECEPTION_PALETTE = {
-  lightYellow: "#F7E8A8",
-  wheat: "#F2CF7A",
-  gold: "#E7A944",
-  copper: "#C46848",
-  blue: "#5A7888",
-  deep: "#2A4558",
+  lightYellow: "#FFF0B0",
+  wheat: "#F8D66A",
+  gold: "#F2B838",
+  copper: "#DD6F42",
+  blue: "#6FA8D4",
+  deep: "#1E3D52",
 } as const;
 
 /** Reception hex grid — same line overlay as the front-desk (The phone won't stop) slide. */
@@ -16,17 +17,17 @@ export const PROTO_LINE_GRID = "hex" as const;
 /** Humira / TELUS — exact shared colour stops (solid hex). */
 export const PROTO_HUMIRA_COLORS = {
   deep: PROTO_RECEPTION_PALETTE.deep,
-  bridgeDeep: "#3D6270",
+  bridgeDeep: "#356B85",
   blue: PROTO_RECEPTION_PALETTE.blue,
-  bridgeBlue: "#6A9098",
+  bridgeBlue: "#9FD4F0",
   copper: PROTO_RECEPTION_PALETTE.copper,
-  amber: "#D4893F",
+  amber: "#E89238",
   gold: PROTO_RECEPTION_PALETTE.gold,
   wheat: PROTO_RECEPTION_PALETTE.wheat,
 } as const;
 
 /** Agents roster — exact legacy colours; linear 225° (not center radial). */
-const PROTO_AGENTS_MID_BLUE = "#4A6878";
+const PROTO_AGENTS_MID_BLUE = "#4D85A8";
 
 /** Every colour in the phone won't stop (front-desk) gradient — shared across billing + integrate. */
 const PROTO_RECEPTION_FULL_STOPS = [
@@ -47,11 +48,8 @@ const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%,
 /** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
 const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
-/** Home hero — integrate band with a subtle cool cap to tame top-edge gold. */
-export const PROTO_HOME_HERO_GRADIENT = [
-  `linear-gradient(180deg, ${PROTO_AGENTS_MID_BLUE} 0%, transparent 14%)`,
-  PROTO_INTEGRATE_GRADIENT,
-].join(", ");
+/** Home hero — integrate band (full warm top edge). */
+export const PROTO_HOME_HERO_GRADIENT = PROTO_INTEGRATE_GRADIENT;
 
 /** Prototype validation — cool upper arc into warm copper/gold. */
 const PROTO_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_RECEPTION_PALETTE.blue} 26%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;

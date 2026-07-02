@@ -8,10 +8,10 @@ import zlib
 from pathlib import Path
 
 GRAIN_SEED = 0x50726F746F
-GRAIN_DISPLAY_PX = 256
-# 2× displays (MacBook, etc.) — 512px tile @ 256px = 1:1 device pixels.
+GRAIN_DISPLAY_PX = 208
+# 2× displays (MacBook, etc.) — 512px tile @ 208px = 1:1 device pixels.
 GRAIN_2X_PX = 512
-# 3× displays (iPhone) — 768px tile @ 256px = 1:1 device pixels.
+# 3× displays (iPhone) — 768px tile @ 208px = 1:1 device pixels.
 GRAIN_3X_PX = 768
 
 
@@ -25,9 +25,9 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 
 
 def film_grain_value(rng: random.Random) -> int:
-    fine = rng.gauss(0, 22)
-    coarse = rng.gauss(0, 38)
-    return int(max(0, min(255, 128 + fine + coarse * 0.62)))
+    v = 128.0 + rng.gauss(0, 26.0) + rng.gauss(0, 32.0) * 0.68
+    v = 128.0 + (v - 128.0) * 1.24
+    return int(max(0, min(255, v)))
 
 
 def write_grain_png(path: Path, size: int, seed: int = GRAIN_SEED) -> None:

@@ -40,6 +40,8 @@ import {
 import {
   PROTO_ABOUT_HERO_BACKDROP,
   PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
+  PROTO_PHONE_BACKDROP_GRAIN_SIZE,
+  PROTO_PHONE_GRAIN_BG,
 } from "@/lib/proto/proto-hero-backdrop";
 
 /** /proto-invest — Proto hiring platform investor article in proto dark styling. */
@@ -75,7 +77,8 @@ export function ProtoInvestMobileContent() {
           boxClassName={PROTO_INVEST_HERO_BOX_TW}
           gapClassName=""
           gradientScale={PROTO_PHONE_BACKDROP_GRADIENT_SCALE}
-          hideGrainOverlay
+          grainBackgroundSize={PROTO_PHONE_BACKDROP_GRAIN_SIZE}
+          grainBackgroundImage={PROTO_PHONE_GRAIN_BG}
           hideGridOverlay
         />
       </div>

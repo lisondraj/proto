@@ -224,8 +224,8 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
 
 html[data-proto-page] {
   --proto-grain-image: url("/proto-grain-tile.png");
-  --proto-grain-opacity: 0.32;
-  --proto-grain-tile-size: 256px;
+  --proto-grain-opacity: 0.46;
+  --proto-grain-tile-size: 208px;
 }
 
 @media (-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 2.5dppx) {
@@ -247,11 +247,18 @@ html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
   image-rendering: auto !important;
 }
 
-/* Home hero only — lighter, finer grain than feature cards. */
+/* Home hero — match feature grain density (SS-like film texture). */
 html[data-proto-page] .doephone-hero-backdrop .proto-grain-layer,
 html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\] {
-  --proto-grain-opacity: 0.26;
-  --proto-grain-tile-size: 224px;
+  --proto-grain-opacity: 0.4;
+  --proto-grain-tile-size: 208px;
+}
+
+/* /about hero gradient box — same grain treatment as main feature cards. */
+html[data-proto-page] .proto-invest-hero-backdrop .proto-grain-layer,
+html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
+  --proto-grain-opacity: 0.46;
+  --proto-grain-tile-size: 208px;
 }
 
 /* Feature box UI mocks — display-only (no selection or control clicks). */

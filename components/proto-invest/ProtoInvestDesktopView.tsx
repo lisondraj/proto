@@ -47,6 +47,8 @@ import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 import {
   PROTO_ABOUT_HERO_BACKDROP,
   PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE,
+  PROTO_DESKTOP_BACKDROP_GRAIN_SIZE,
+  PROTO_GRAIN_BG,
 } from "@/lib/proto/proto-hero-backdrop";
 
 /** Desktop /about — hero plus four alternating graphic-panel bands, then footer. */
@@ -78,7 +80,8 @@ export function ProtoInvestDesktopView() {
               boxClassName={PROTO_INVEST_DESKTOP_HERO_BOX_TW}
               gapClassName=""
               gradientScale={PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE}
-              hideGrainOverlay
+              grainBackgroundSize={PROTO_DESKTOP_BACKDROP_GRAIN_SIZE}
+              grainBackgroundImage={PROTO_GRAIN_BG}
               hideGridOverlay
             >
               <div className={ABOUT_DESKTOP_HERO_BYLINE_WRAP_TW}>

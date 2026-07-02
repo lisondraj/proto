@@ -93,7 +93,7 @@ export function DoePhoneHeroSection({
   return (
     <section
       className={`doephone-hero-section relative w-full overflow-hidden ${
-        isProto ? "bg-[#2A4558]" : "bg-[#D2774C]"
+        isProto ? "bg-[#1E3D52]" : "bg-[#D2774C]"
       }`}
       style={
         {
