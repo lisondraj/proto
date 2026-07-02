@@ -103,6 +103,22 @@ html[data-proto-page] .proto-feature-section__card > * {
   height: 100% !important;
 }
 
+/* iPhone — full-panel bands: gradient card fills the section (no copy stack). */
+html[data-proto-page] .proto-feature-section--full-panel .proto-feature-section__inner--full-panel {
+  justify-content: stretch !important;
+}
+
+html[data-proto-page] .proto-feature-section--full-panel .proto-feature-section__card--full-panel {
+  flex: 1 1 auto !important;
+  min-height: clamp(
+    34rem,
+    calc(var(--app-vh, 100lvh) * 0.82),
+    52rem
+  ) !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
 html[data-proto-page] .proto-feature-section__copy {
   flex: 0 0 auto !important;
   width: 100% !important;

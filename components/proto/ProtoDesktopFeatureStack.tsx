@@ -4,14 +4,14 @@ import { ProtoDesktopFeatureSection } from "@/components/proto/ProtoDesktopFeatu
 import { ProtoDesktopFullPanelFeatureSection } from "@/components/proto/ProtoDesktopFullPanelFeatureSection";
 import { PROTO_COMMUNICATION_SLIDES } from "@/lib/proto/proto-communication-slides";
 import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
-import { PROTO_FEATURE_SECTION_LAYOUTS } from "@/lib/proto/proto-feature-section-layout";
+import { protoFeatureSectionLayout } from "@/lib/proto/proto-feature-section-layout";
 
 /** Desktop /proto — stacked feature sections matching the iPhone slide order and copy. */
 export function ProtoDesktopFeatureStack() {
   return (
     <>
       {PROTO_COMMUNICATION_SLIDES.map((slide, index) => {
-        const layout = PROTO_FEATURE_SECTION_LAYOUTS[index];
+        const layout = protoFeatureSectionLayout(index);
         if (!layout) return null;
 
         if (layout.kind === "full-panel") {

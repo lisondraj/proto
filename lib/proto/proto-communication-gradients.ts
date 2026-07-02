@@ -61,10 +61,20 @@ export const PROTO_PROTOTYPE_BACKDROP = {
 const PROTO_SHORTLIST_GRADIENT = `linear-gradient(205deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_AGENTS_MID_BLUE} 34%, ${PROTO_RECEPTION_PALETTE.blue} 58%, ${PROTO_RECEPTION_PALETTE.copper} 82%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
 export const PROTO_SHORTLIST_BACKDROP = {
-  slideIndex: 7,
+  slideIndex: 8,
   label: "Shortlist",
   gradient: PROTO_SHORTLIST_GRADIENT,
   grid: "dot" as const,
+};
+
+/** Validate — warm documents sweep for the pre-shortlist full band. */
+const PROTO_VALIDATE_GRADIENT = `linear-gradient(145deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 30%, ${PROTO_RECEPTION_PALETTE.copper} 62%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
+
+export const PROTO_VALIDATE_BACKDROP = {
+  slideIndex: 7,
+  label: "Validate",
+  gradient: PROTO_VALIDATE_GRADIENT,
+  grid: "crosshatch" as const,
 };
 
 /** Patient chart — Documents palette flipped; warm upper-left → cool edge. */
@@ -91,6 +101,7 @@ export const PROTO_COMMUNICATION_GRADIENTS = {
   billing: PROTO_PRIOR_AUTH_GRADIENT,
   prototype: PROTO_PROTOTYPE_GRADIENT,
   integrate: PROTO_INTEGRATE_GRADIENT,
+  validate: PROTO_VALIDATE_GRADIENT,
   shortlist: PROTO_SHORTLIST_GRADIENT,
 } as const satisfies Record<string, string>;
 
@@ -102,6 +113,7 @@ export const PROTO_COMMUNICATION_GRIDS: Partial<
 > = {
   prototype: "diagonal",
   integrate: "hex",
+  validate: "crosshatch",
   shortlist: "dot",
 };
 

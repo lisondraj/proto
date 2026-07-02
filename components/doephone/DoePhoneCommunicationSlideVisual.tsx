@@ -31,6 +31,8 @@ export function DoePhoneCommunicationSlideVisual({
       return <DoePhoneBillingVisual />;
     case "prototype":
       return <DoePhoneProtoValidateVisual layout={layout} />;
+    case "validate":
+      return <DoePhoneIntegrateVisual />;
     case "shortlist":
       return <DoePhoneWorkflowVisual layout={layout} />;
     default:

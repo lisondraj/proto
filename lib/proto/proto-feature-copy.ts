@@ -51,6 +51,12 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
     description:
       "EMRs, billing platforms, and clinical tools you already rely on, connected without ripping out what is in place. Proto meets your team where they work instead of forcing a rip-and-replace.",
   },
+  validate: {
+    titleLine1: "Validate every",
+    titleLine2: "submission.",
+    description:
+      "Proto stress-tests each candidate's work against your rubric, replays how they executed, and flags what clears the bar before anyone lands on the shortlist.",
+  },
   shortlist: {
     titleLine1: "Your shortlist,",
     titleLine2: "always current.",

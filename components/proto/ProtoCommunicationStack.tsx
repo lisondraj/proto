@@ -2,16 +2,24 @@
 
 import { DoePhoneCommunicationCarouselCard } from "@/components/doephone/DoePhoneCommunicationCarouselCard";
 import { ProtoFeatureSectionCopy } from "@/components/proto/ProtoFeatureSectionCopy";
+import { ProtoPhoneFullPanelFeatureSection } from "@/components/proto/ProtoPhoneFullPanelFeatureSection";
 import { PROTO_COMMUNICATION_SLIDES } from "@/lib/proto/proto-communication-slides";
 import { DOEPHONE_SECTION_CAROUSEL_INSET_X } from "@/lib/doephone/section-styles";
 import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
+import { protoFeatureSectionLayout } from "@/lib/proto/proto-feature-section-layout";
 import { protoCommunicationGradient, protoCommunicationGrid } from "@/lib/proto/proto-communication-gradients";
 
 /** /proto — feature slides stacked vertically, one section each (no carousel or menu). */
 export function ProtoCommunicationStack() {
   return (
     <>
-      {PROTO_COMMUNICATION_SLIDES.map((slide) => {
+      {PROTO_COMMUNICATION_SLIDES.map((slide, index) => {
+        const layout = protoFeatureSectionLayout(index);
+
+        if (layout?.kind === "full-panel") {
+          return <ProtoPhoneFullPanelFeatureSection key={slide.id} slide={slide} />;
+        }
+
         const copy = protoFeatureCopy(slide.id);
         if (!copy) return null;
 

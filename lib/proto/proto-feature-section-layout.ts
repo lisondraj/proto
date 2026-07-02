@@ -7,10 +7,15 @@ export type ProtoFeatureSectionLayout =
 export const PROTO_FEATURE_SECTION_LAYOUTS: readonly ProtoFeatureSectionLayout[] = [
   { kind: "split", boxOnLeft: true },
   { kind: "full-panel" },
-  { kind: "split", boxOnLeft: true },
+  { kind: "split", boxOnLeft: false },
   { kind: "full-panel" },
   { kind: "split", boxOnLeft: true },
   { kind: "full-panel" },
-  { kind: "split", boxOnLeft: true },
+  { kind: "split", boxOnLeft: false },
+  { kind: "full-panel" },
   { kind: "split", boxOnLeft: false },
 ];
+
+export function protoFeatureSectionLayout(index: number): ProtoFeatureSectionLayout | undefined {
+  return PROTO_FEATURE_SECTION_LAYOUTS[index];
+}
