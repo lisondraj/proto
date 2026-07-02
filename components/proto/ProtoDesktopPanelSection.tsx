@@ -8,6 +8,10 @@ import {
   DOEPHONE_SECTION_CAROUSEL_RADIUS,
 } from "@/lib/doephone/section-styles";
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
+import {
+  PROTO_DESKTOP_BACKDROP_GRAIN_SIZE,
+  PROTO_GRAIN_BG,
+} from "@/lib/proto/proto-hero-backdrop";
 
 /** Desktop /proto — square gradient panel with centered slide UI. */
 export function ProtoDesktopPanelSection({
@@ -44,9 +48,11 @@ export function ProtoDesktopPanelSection({
       <WorkflowCarouselDesignBackdrop
         backdrop={slide.backdrop}
         embedded
-        className={radiusClass}
+        className={`proto-desktop-carousel-backdrop ${radiusClass}`.trim()}
         gradientOverride={gradientOverride}
         gridOverride={gridOverride}
+        grainBackgroundSize={PROTO_DESKTOP_BACKDROP_GRAIN_SIZE}
+        grainBackgroundImage={PROTO_GRAIN_BG}
       />
 
       <div className="proto-feature-box-ui absolute inset-0 z-[15] flex items-center justify-center px-[clamp(1.25rem,2.5vw,2.5rem)]">

@@ -339,6 +339,10 @@ export function WorkflowCarouselDesignBackdrop({
             ...WORKFLOW_CAROUSEL_GRAIN_STYLE,
             backgroundImage: grainBackgroundImage ?? WORKFLOW_CAROUSEL_GRAIN_STYLE.backgroundImage,
             backgroundSize: grainBackgroundSize,
+            backgroundRepeat: "repeat",
+            ...(grainBackgroundImage
+              ? { mixBlendMode: "soft-light" as const, opacity: 0.44 }
+              : null),
           }}
           aria-hidden
         />

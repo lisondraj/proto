@@ -48,6 +48,7 @@ import {
   PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE,
   PROTO_DESKTOP_BACKDROP_GRAIN_SIZE,
   PROTO_DESKTOP_BACKDROP_PATTERN_SCALE,
+  PROTO_GRAIN_BG,
 } from "@/lib/proto/proto-hero-backdrop";
 
 /** Desktop /about — hero plus four alternating graphic-panel bands, then footer. */
@@ -81,6 +82,7 @@ export function ProtoInvestDesktopView() {
               patternScale={PROTO_DESKTOP_BACKDROP_PATTERN_SCALE}
               gradientScale={PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE}
               grainBackgroundSize={PROTO_DESKTOP_BACKDROP_GRAIN_SIZE}
+              grainBackgroundImage={PROTO_GRAIN_BG}
             >
               <div className={ABOUT_DESKTOP_HERO_BYLINE_WRAP_TW}>
                 <p className={PROTO_INVEST_DESKTOP_HERO_BYLINE_TW}>{ABOUT_PAGE_MOBILE_BYLINE}</p>
