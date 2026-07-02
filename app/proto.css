@@ -212,11 +212,18 @@ html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephon
   font-size: clamp(2.45rem, 1.32rem + 7.35vmin, 4.05rem) !important;
 }
 
-/* Hero + feature cards — pull gradient / line grids back (less zoomed). */
-html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephone-hero-backdrop [aria-hidden]:first-child,
-html[data-proto-page]:has(.doephone-mobile-root) .proto-carousel-card .doephone-carousel-backdrop [aria-hidden]:first-child {
-  background-size: 86% 86% !important;
+/* Hero + feature cards — full-bleed gradients; soften grain so backdrops stay sharp. */
+html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-backdrop [aria-hidden]:first-child,
+html[data-proto-page]:has(.doephone-mobile-root) .doephone-carousel-backdrop [aria-hidden]:first-child,
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [aria-hidden]:first-child {
+  background-size: 100% 100% !important;
   background-position: center center !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-backdrop > div.z-\[1\],
+html[data-proto-page]:has(.doephone-mobile-root) .doephone-carousel-backdrop > div.z-\[1\],
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop > div.z-\[1\] {
+  opacity: 0.38 !important;
 }
 
 /* Scale down mock UI inside feature boxes. */
@@ -268,10 +275,14 @@ html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section > .absol
   padding-right: var(--proto-phone-gutter-right) !important;
 }
 
-html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-main,
-html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-wrap {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-main {
   padding-left: var(--proto-phone-gutter-left) !important;
   padding-right: var(--proto-phone-gutter-right) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-wrap {
+  padding-left: env(safe-area-inset-left, 0px) !important;
+  padding-right: env(safe-area-inset-right, 0px) !important;
 }
 
 /* Footer — page background, top rule. */
@@ -357,7 +368,6 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark {
   display: block !important;
   width: 100% !important;
   max-width: none !important;
-  font-size: inherit !important;
 }
 
 html[data-proto-page] .proto-footer-wordmark-fit {

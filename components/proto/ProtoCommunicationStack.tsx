@@ -5,6 +5,12 @@ import { ProtoFeatureSectionCopy } from "@/components/proto/ProtoFeatureSectionC
 import { PROTO_COMMUNICATION_SLIDES } from "@/lib/proto/proto-communication-slides";
 import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
 import { protoCommunicationGradient, protoCommunicationGrid } from "@/lib/proto/proto-communication-gradients";
+import {
+  PROTO_HERO_BACKDROP,
+  PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
+  PROTO_PHONE_BACKDROP_GRAIN_SIZE,
+  PROTO_PHONE_BACKDROP_PATTERN_SCALE,
+} from "@/lib/proto/proto-hero-backdrop";
 
 /** /proto iPhone — feature slides stacked vertically: box, title, description per section. */
 export function ProtoCommunicationStack() {
@@ -31,8 +37,9 @@ export function ProtoCommunicationStack() {
                     showExpandControls={false}
                     gradientOverride={protoCommunicationGradient(slide.id)}
                     gridOverride={protoCommunicationGrid(slide.id)}
-                    backdropPatternScale={0.74}
-                    backdropGradientScale={0.86}
+                    backdropPatternScale={PROTO_PHONE_BACKDROP_PATTERN_SCALE}
+                    backdropGradientScale={PROTO_PHONE_BACKDROP_GRADIENT_SCALE}
+                    backdropGrainSize={PROTO_PHONE_BACKDROP_GRAIN_SIZE}
                     uiScaleClass="proto-carousel-ui-scale"
                   />
                 </div>

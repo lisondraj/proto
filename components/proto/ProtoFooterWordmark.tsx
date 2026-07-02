@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 
-import { PROTO_PHONE_PAGE_INSET_X } from "@/lib/proto/proto-phone-layout-styles";
 import { PROTO_DESKTOP_FOOTER_WORDMARK_TW } from "@/lib/proto/proto-desktop-layout-styles";
 import { PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-font";
 
@@ -76,7 +75,7 @@ function ProtoFooterWordmarkPhone() {
   }, []);
 
   return (
-    <div className={`proto-footer-wordmark-wrap relative z-[11] w-full pb-0 ${PROTO_PHONE_PAGE_INSET_X}`}>
+    <div className="proto-footer-wordmark-wrap relative z-[11] w-full pb-0">
       <div ref={fitRef} className="proto-footer-wordmark-fit relative w-full">
         <Link
           href="/"

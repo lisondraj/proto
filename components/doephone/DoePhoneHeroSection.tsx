@@ -15,7 +15,12 @@ import {
 import { CARE_COORDINATION_BACKDROP } from "@/lib/workflow-carousel-design-backdrops";
 import { PROTO_HERO_HEIGHT } from "@/lib/proto/proto-hero-layout";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
-import { PROTO_HERO_BACKDROP } from "@/lib/proto/proto-hero-backdrop";
+import {
+  PROTO_HERO_BACKDROP,
+  PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
+  PROTO_PHONE_BACKDROP_GRAIN_SIZE,
+  PROTO_PHONE_BACKDROP_PATTERN_SCALE,
+} from "@/lib/proto/proto-hero-backdrop";
 import { useEffect, useState, type CSSProperties } from "react";
 
 /** Hero — slightly below full viewport so Safari bottom bar does not clip; section 2 stays full height. */
@@ -103,8 +108,9 @@ export function DoePhoneHeroSection({
         embedded
         className={isProto ? "doephone-hero-backdrop" : ""}
         introOnLoad={!isProto}
-        gradientScale={isProto ? 0.86 : gradientZoom}
-        patternScale={isProto ? 0.74 : 1}
+        gradientScale={isProto ? PROTO_PHONE_BACKDROP_GRADIENT_SCALE : gradientZoom}
+        patternScale={isProto ? PROTO_PHONE_BACKDROP_PATTERN_SCALE : 1}
+        grainBackgroundSize={isProto ? PROTO_PHONE_BACKDROP_GRAIN_SIZE : undefined}
       />
 
       <div
