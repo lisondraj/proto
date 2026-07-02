@@ -311,7 +311,7 @@ export function DoePhoneCommunicationCarouselCard({
       {protoShaderVariant ? (
         <ProtoGrainGradient
           variant={protoShaderVariant}
-          className={`doephone-carousel-backdrop ${DOEPHONE_SECTION_CAROUSEL_RADIUS} ${backdropClassName}`.trim()}
+          className={`${DOEPHONE_SECTION_CAROUSEL_RADIUS} ${backdropClassName}`.trim()}
         />
       ) : (
         <WorkflowCarouselDesignBackdrop

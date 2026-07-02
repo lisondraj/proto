@@ -214,78 +214,14 @@ html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephon
   font-size: clamp(2.15rem, 1.15rem + 6.45vmin, 3.58rem) !important;
 }
 
-/* Hero + feature cards — DPR-matched grain PNG at 208px (sharp 1:1 device pixels). */
-html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-backdrop [aria-hidden]:first-child,
-html[data-proto-page]:has(.doephone-mobile-root) .doephone-carousel-backdrop [aria-hidden]:first-child,
-html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [aria-hidden]:first-child {
-  background-size: 100% 100% !important;
-  background-position: center center !important;
-}
-
-/* iPhone home hero — center integrate radial so yellow reads over the copper arch. */
-html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephone-hero-backdrop [aria-hidden]:first-child {
-  background-position: center center !important;
-}
-
-/* iPhone /about hero — documents flow with top-left bloom. */
-html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [aria-hidden]:first-child {
-  background-position: center center !important;
-}
-
-html[data-proto-page] {
-  --proto-grain-image: url("/proto-grain-tile.png");
-  --proto-grain-opacity: 0.46;
-  --proto-grain-tile-size: 208px;
-}
-
-@media (-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 2.5dppx) {
-  html[data-proto-page] {
-    --proto-grain-image: url("/proto-grain-tile-3x.png");
-  }
-}
-
-html[data-proto-page] .proto-grain-layer,
-html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\],
-html[data-proto-page] .doephone-carousel-backdrop > div.z-\[1\],
-html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\],
-html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
-  background-image: var(--proto-grain-image) !important;
-  opacity: var(--proto-grain-opacity) !important;
-  mix-blend-mode: hard-light !important;
-  background-size: var(--proto-grain-tile-size) var(--proto-grain-tile-size) !important;
-  background-repeat: repeat !important;
-  image-rendering: auto !important;
-  pointer-events: none !important;
-}
-
-/* Home hero — match feature grain density (SS-like film texture). */
-html[data-proto-page] .doephone-hero-backdrop .proto-grain-layer,
-html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\] {
-  --proto-grain-opacity: 0.4;
-  --proto-grain-tile-size: 208px;
-}
-
-/* /about hero gradient box — same grain treatment as main feature cards. */
-html[data-proto-page] .proto-invest-hero-backdrop .proto-grain-layer,
-html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
-  --proto-grain-opacity: 0.46;
-  --proto-grain-tile-size: 208px;
-}
-
-/* Feature box line grids — matched density and centering on iPhone + desktop. */
-html[data-proto-page] .doephone-carousel-backdrop > .pointer-events-none.z-\[2\],
-html[data-proto-page] .proto-desktop-carousel-backdrop > .pointer-events-none.z-\[2\] {
-  inset: 0 !important;
-}
-
-html[data-proto-page] .doephone-carousel-backdrop > .pointer-events-none.z-\[2\] svg,
-html[data-proto-page] .proto-desktop-carousel-backdrop > .pointer-events-none.z-\[2\] svg {
-  transform-origin: center center !important;
-}
-
-html[data-proto-page] .doephone-carousel-backdrop > .pointer-events-none.z-\[2\][style*="background"],
-html[data-proto-page] .proto-desktop-carousel-backdrop > .pointer-events-none.z-\[2\][style*="background"] {
-  background-position: center center !important;
+/* Paper shader surfaces — no legacy PNG grain or line-grid overlays. */
+html[data-proto-page] .proto-shader-surface .proto-grain-layer,
+html[data-proto-page] .proto-shader-surface > div.z-\[1\],
+html[data-proto-page] .proto-shader-surface > .pointer-events-none.z-\[2\] {
+  display: none !important;
+  background-image: none !important;
+  opacity: 0 !important;
+  mix-blend-mode: normal !important;
 }
 
 /* Feature box UI mocks — display-only (no selection or control clicks). */
@@ -659,16 +595,6 @@ html[data-proto-page] .proto-footer-wordmark {
   white-space: nowrap !important;
   width: 100% !important;
   text-align: left !important;
-}
-
-/* Hero — Documents gradient; proto mobile uses component scale (see .doephone-hero-backdrop). */
-html[data-proto-page] .doephone-hero-section > div > div[aria-hidden]:first-of-type {
-  background-position: center center !important;
-}
-
-html[data-proto-page]:not(:has(.doephone-mobile-root)) .doephone-hero-section > div > div[aria-hidden]:first-of-type {
-  background-size: 100% 118% !important;
-  background-position: center top !important;
 }
 
 /* Hero — title stays white, always visible (no load-in blur/rise). */

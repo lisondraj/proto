@@ -64,12 +64,6 @@ html[data-proto-page] .proto-invest-tam-highlight {
   background: #151c1f;
 }
 
-/* /about hero — full-bleed gradients (grain tuned in proto.css on phone). */
-html[data-proto-page] .proto-invest-hero-backdrop [aria-hidden]:first-child {
-  background-size: 100% 100% !important;
-  background-position: center center !important;
-}
-
 /* iPhone /about — clear fixed nav + breathing room above mission headline. */
 html[data-proto-page]:has(.doephone-mobile-root) {
   --proto-about-nav-clearance: calc(

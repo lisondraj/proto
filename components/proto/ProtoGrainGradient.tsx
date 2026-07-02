@@ -24,7 +24,7 @@ export function ProtoGrainGradient({
 
   return (
     <div
-      className={`proto-grain-gradient pointer-events-none absolute inset-0 overflow-hidden ${className}`.trim()}
+      className={`proto-shader-surface pointer-events-none absolute inset-0 overflow-hidden ${className}`.trim()}
       aria-hidden
     >
       <GrainGradient

@@ -24,10 +24,7 @@ export function BlogHeroVisual({
       aria-hidden={children ? undefined : true}
     >
       {protoShaderVariant ? (
-        <ProtoGrainGradient
-          variant={protoShaderVariant}
-          className="proto-invest-hero-backdrop absolute inset-0 h-full w-full"
-        />
+        <ProtoGrainGradient variant={protoShaderVariant} />
       ) : null}
       {children}
     </div>
