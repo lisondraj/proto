@@ -1,0 +1,52 @@
+/** Hero load sequence — gradient zoom in → three rings → headline. */
+
+/**
+ * Gradient starts fully covering the viewport at the scroll-max zoom (1.72×),
+ * showing warm copper across the entire screen. It then "zooms out" to 1.0×
+ * over DOEPHONE_HERO_INTRO_GRADIENT_MS ms, revealing the dark-teal outer edge
+ * of the gradient. Because scale stays ≥ 1.0 throughout, the screen is never
+ * covered by a plain background-color (no visible box artifact).
+ */
+export const DOEPHONE_HERO_INTRO_GRADIENT_START = 1.72;
+export const DOEPHONE_HERO_INTRO_GRADIENT_MS = 1200;
+
+/** Three rings begin once the gradient zoom is fully settled. */
+export const DOEPHONE_HERO_INTRO_POLAR_START_MS = 1180;
+export const DOEPHONE_HERO_INTRO_RING_MS = 820;
+export const DOEPHONE_HERO_INTRO_RING_STAGGER_MS = 180;
+export const DOEPHONE_HERO_INTRO_RING_COUNT = 3;
+
+const HEADLINE_PAD_MS = 90;
+const HEADLINE_LINE_GAP_MS = 480;
+const HEADLINE_TO_CTA_MS = 1100;
+
+export function doephoneHeroIntroRingDelayMs(ringIndex: number): number {
+  return (
+    DOEPHONE_HERO_INTRO_POLAR_START_MS +
+    ringIndex * DOEPHONE_HERO_INTRO_RING_STAGGER_MS
+  );
+}
+
+function polarOverlayEndMs(): number {
+  return (
+    doephoneHeroIntroRingDelayMs(DOEPHONE_HERO_INTRO_RING_COUNT - 1) + DOEPHONE_HERO_INTRO_RING_MS
+  );
+}
+
+export function doephoneHeroIntroHeadlineDelayMs(line: 1 | 2 | "cta"): number {
+  const base = polarOverlayEndMs() + HEADLINE_PAD_MS;
+  if (line === 1) return base;
+  if (line === 2) return base + HEADLINE_LINE_GAP_MS;
+  return base + HEADLINE_LINE_GAP_MS + HEADLINE_TO_CTA_MS;
+}
+
+/** CSS custom properties for hero intro timing (set on the hero section). */
+export function doephoneHeroIntroStyleVars(): Record<string, string> {
+  return {
+    "--doephone-hero-polar-start": `${DOEPHONE_HERO_INTRO_POLAR_START_MS}ms`,
+    "--doephone-hero-polar-ring-duration": `${DOEPHONE_HERO_INTRO_RING_MS}ms`,
+    "--doephone-hero-headline-1": `${doephoneHeroIntroHeadlineDelayMs(1)}ms`,
+    "--doephone-hero-headline-2": `${doephoneHeroIntroHeadlineDelayMs(2)}ms`,
+    "--doephone-hero-headline-cta": `${doephoneHeroIntroHeadlineDelayMs("cta")}ms`,
+  };
+}

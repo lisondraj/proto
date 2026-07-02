@@ -1,0 +1,254 @@
+"use client";
+
+import { BLOG_LANDING_HERO } from "@/lib/blog/blog-landing-hero-colors";
+
+const B = BLOG_LANDING_HERO;
+
+/* Cell dimensions — uniform height for clean 3×2 grid */
+const CELL_H      = "clamp(8.5rem,38vmin,14rem)";
+const CELL_RADIUS = "0.38rem";
+/* Gap between tiles — must match the CSS variable used for container math */
+const GAP         = "clamp(0.45rem,1.2vmin,0.75rem)";
+
+/* ─── Gradient cell definitions ─── */
+const GRADIENT_DESIGNS = [
+  {
+    gradient: "radial-gradient(circle at 45% 42%, #D4893F 0%, #D2774C 38%, #BF593D 62%, #1E343A 100%)",
+    overlay: "dot" as const,
+  },
+  {
+    gradient: "linear-gradient(135deg, #D49D4F 0%, #D2774C 44%, #C47A5A 72%, #1E343A 100%)",
+    overlay: "crosshatch" as const,
+  },
+  {
+    gradient: "radial-gradient(ellipse 110% 95% at 50% 58%, #D49D4F 0%, #D2774C 46%, #8B4F38 80%, #1E343A 100%)",
+    overlay: "rings" as const,
+  },
+  {
+    gradient: "linear-gradient(152deg, #C47A5A 0%, #D2774C 36%, #D49D4F 72%, #1E343A 100%)",
+    overlay: "diagonal" as const,
+  },
+  {
+    gradient: "linear-gradient(200deg, #D49D4F 0%, #BF593D 48%, #1E343A 100%)",
+    overlay: "wave" as const,
+  },
+] as const;
+
+/* ─── Column tile sequences — 6 tiles each, all same height ─── */
+type TileSpec = { kind: "gradient" | "beige"; design: number };
+
+const COL_TILES: TileSpec[][] = [
+  /* Left — recedes (scrolls up) */
+  [
+    { kind: "gradient", design: 0 },
+    { kind: "beige",    design: 0 },
+    { kind: "gradient", design: 2 },
+    { kind: "beige",    design: 2 },
+    { kind: "gradient", design: 4 },
+    { kind: "beige",    design: 3 },
+  ],
+  /* Center — advances (scrolls down, opposite) */
+  [
+    { kind: "beige",    design: 1 },
+    { kind: "gradient", design: 1 },
+    { kind: "beige",    design: 3 },
+    { kind: "gradient", design: 3 },
+    { kind: "beige",    design: 2 },
+    { kind: "gradient", design: 0 },
+  ],
+  /* Right — recedes (scrolls up, same phase as left) */
+  [
+    { kind: "gradient", design: 3 },
+    { kind: "beige",    design: 2 },
+    { kind: "gradient", design: 1 },
+    { kind: "beige",    design: 0 },
+    { kind: "gradient", design: 2 },
+    { kind: "beige",    design: 1 },
+  ],
+];
+
+/* Animation config per column — left and right in sync (same delay) */
+const COL_ANIM = [
+  { animClass: "intel-col-up",   delay: "0s"    }, // left — recede
+  { animClass: "intel-col-down", delay: "0s"    }, // center — advance
+  { animClass: "intel-col-up",   delay: "0s"    }, // right — recede, same phase as left
+];
+
+/* ─── SVG overlays ─── */
+function GradientOverlay({ kind }: { kind: typeof GRADIENT_DESIGNS[number]["overlay"] }) {
+  const stroke = "rgba(255,255,255,0.16)";
+  const sw = "0.9";
+  if (kind === "dot") {
+    const pts: [number, number][] = [];
+    for (let r = 0; r <= 7; r++) for (let c = 0; c <= 5; c++) pts.push([c * 20, r * 16]);
+    return (
+      <svg viewBox="0 0 100 112" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+        {pts.map(([x, y], i) => <circle key={i} cx={x} cy={y} r={1.3} fill={stroke} />)}
+      </svg>
+    );
+  }
+  if (kind === "crosshatch") {
+    const lines = [-20, 0, 20, 40, 60, 80, 100, 120];
+    return (
+      <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+        {lines.map((d, i) => <line key={`a${i}`} x1={d} y1={-10} x2={d + 170} y2={170} stroke={stroke} strokeWidth={sw} />)}
+        {lines.map((d, i) => <line key={`b${i}`} x1={110 - d} y1={-10} x2={-60 - d} y2={170} stroke={stroke} strokeWidth={sw} />)}
+      </svg>
+    );
+  }
+  if (kind === "rings") {
+    return (
+      <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+        {[20, 38, 58, 78, 100, 124].map((r) => (
+          <ellipse key={r} cx={50} cy={80} rx={r} ry={r * 1.2} stroke={stroke} strokeWidth={sw} />
+        ))}
+      </svg>
+    );
+  }
+  if (kind === "diagonal") {
+    const xs = [-20, 0, 16, 32, 48, 64, 80, 96, 112];
+    return (
+      <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+        {xs.map((x, i) => <line key={i} x1={x} y1={-5} x2={x + 130} y2={165} stroke={stroke} strokeWidth={sw} />)}
+      </svg>
+    );
+  }
+  const waveYs = [20, 44, 68, 92, 116, 140];
+  return (
+    <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+      {waveYs.map((y, i) => (
+        <path key={i} d={`M -5,${y} C 15,${y - 7} 25,${y + 7} 50,${y} C 75,${y - 7} 85,${y + 7} 105,${y}`} stroke={stroke} strokeWidth={sw} />
+      ))}
+    </svg>
+  );
+}
+
+function BeigeLineArt({ design }: { design: number }) {
+  const main = B.line;
+  const soft = B.lineSoft;
+  const sw = "0.85";
+  const swSoft = "0.7";
+  if (design === 0) {
+    const offsets = [-90, -72, -54, -36, -18, 0, 18, 36, 54, 72, 90, 108, 126, 144, 162];
+    return (
+      <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+        {offsets.map((o, i) => <line key={i} x1={o} y1={0} x2={o + 160} y2={160} stroke={i % 3 === 1 ? main : soft} strokeWidth={i % 3 === 1 ? sw : swSoft} />)}
+      </svg>
+    );
+  }
+  if (design === 1) {
+    const radii = [20, 40, 62, 86, 112, 140, 170];
+    return (
+      <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+        {radii.map((r, i) => <path key={r} d={`M ${100 - r},0 A ${r},${r} 0 0 1 100,${r}`} stroke={i % 2 === 0 ? main : soft} strokeWidth={sw} />)}
+      </svg>
+    );
+  }
+  if (design === 2) {
+    const ys = [14, 26, 38, 50, 62, 74, 86, 98, 110, 122, 134, 146];
+    return (
+      <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+        {ys.map((y, i) => {
+          const amp = i % 2 === 0 ? 4 : 3;
+          return (
+            <path key={y} d={`M -5,${y} C 10,${y - amp} 20,${y + amp} 35,${y} C 50,${y - amp} 65,${y + amp} 80,${y} C 90,${y - amp} 100,${y + amp} 105,${y}`} stroke={i % 3 === 0 ? main : soft} strokeWidth={i % 3 === 0 ? sw : swSoft} />
+          );
+        })}
+      </svg>
+    );
+  }
+  const xs = [10, 20, 30, 40, 50, 60, 70, 80, 90];
+  return (
+    <svg viewBox="0 0 100 160" preserveAspectRatio="none" fill="none" className="absolute inset-0 h-full w-full" aria-hidden>
+      {xs.map((x, i) => <line key={x} x1={x} y1={0} x2={x} y2={160} stroke={i % 2 === 0 ? main : soft} strokeWidth={i % 2 === 0 ? sw : swSoft} />)}
+    </svg>
+  );
+}
+
+function GridCell({ tile }: { tile: TileSpec }) {
+  if (tile.kind === "gradient") {
+    const d = GRADIENT_DESIGNS[tile.design];
+    return (
+      <div
+        className="relative shrink-0 overflow-hidden"
+        style={{ height: CELL_H, minHeight: CELL_H, borderRadius: CELL_RADIUS, background: d.gradient }}
+      >
+        <GradientOverlay kind={d.overlay} />
+      </div>
+    );
+  }
+  return (
+    <div
+      className="relative shrink-0 overflow-hidden"
+      style={{ height: CELL_H, minHeight: CELL_H, borderRadius: CELL_RADIUS, background: B.fill, border: `1px solid ${B.border}` }}
+    >
+      <BeigeLineArt design={tile.design} />
+    </div>
+  );
+}
+
+/* ─── Public grid component ─── */
+export function DoePhoneCommIntelGrid() {
+  /*
+   * Seamless-loop math:
+   *   strip = 3 copies of N tiles (flex-col with gap)
+   *   strip total height = 3N·h + (3N−1)·g  [flex gaps between every pair]
+   *   Adding paddingBottom=g makes total = 3N·h + 3N·g = 3·(N·h + N·g)
+   *   → translateY(33.333%) = exactly 1 copy height = N·(h+g). Loop is perfect.
+   *
+   * Outer columns (up):   0 → −33.333%  (recede into screen, same phase left & right)
+   * Center column (down): −66.666% → −33.333%  (advance toward viewer, no empty gap)
+   */
+  return (
+    <div
+      style={{
+        marginLeft: "-20vw",
+        marginRight: "-20vw",
+        width: "calc(100% + 40vw)",
+        transform: "perspective(540px) rotateX(46deg)",
+        transformOrigin: "50% 50%",
+        transformStyle: "preserve-3d",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.06) 4%, rgba(0,0,0,0.16) 9%, rgba(0,0,0,0.32) 15%, rgba(0,0,0,0.54) 22%, rgba(0,0,0,0.76) 30%, rgba(0,0,0,0.92) 38%, black 46%, black 80%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.06) 4%, rgba(0,0,0,0.16) 9%, rgba(0,0,0,0.32) 15%, rgba(0,0,0,0.54) 22%, rgba(0,0,0,0.76) 30%, rgba(0,0,0,0.92) 38%, black 46%, black 80%, transparent 100%)",
+      }}
+    >
+      {/*
+       * Container height = exactly 2 tiles + 1 gap → 3×2 spotlight.
+       * overflow:hidden clips each strip to this window.
+       */}
+      <div
+        className="grid w-full grid-cols-3"
+        style={{
+          gap: GAP,
+          height: `calc(2.35 * ${CELL_H} + 2 * ${GAP})`,
+          overflow: "hidden",
+        }}
+      >
+        {COL_TILES.map((tiles, colIdx) => {
+          const { animClass, delay } = COL_ANIM[colIdx];
+          /* 3 copies → 33.333% = exactly 1 copy height (seamless loop) */
+          const strip = [...tiles, ...tiles, ...tiles];
+
+          return (
+            <div
+              key={colIdx}
+              className={`flex flex-col will-change-transform ${animClass}`}
+              style={{
+                gap: GAP,
+                /* Extra bottom padding = 1 gap so total height is divisible by 3 */
+                paddingBottom: GAP,
+                animationDelay: delay,
+              }}
+            >
+              {strip.map((tile, i) => (
+                <GridCell key={i} tile={tile} />
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

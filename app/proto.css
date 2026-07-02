@@ -1,0 +1,576 @@
+/*
+ * /proto — dark chrome; hero uses warm radial gradient on /proto only.
+ */
+
+/* Proto typography — Plus Jakarta Sans overrides for shared components with baked-in fonts. */
+html[data-proto-page] nav.doephone-site-nav,
+html[data-proto-page] nav.doephone-site-nav a:not(.proto-nav-logo),
+html[data-proto-page] nav.doephone-site-nav button,
+html[data-proto-page] nav.doephone-site-nav [role="menuitem"],
+html[data-proto-page] nav.doephone-site-nav p,
+html[data-proto-page] .doephone-section-copy,
+html[data-proto-page] .doephone-section-reveal--title {
+  font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif !important;
+}
+
+html[data-proto-page],
+html[data-proto-page]:has(.doephone-mobile-root) {
+  background-color: #121819 !important;
+}
+
+html[data-proto-page] body,
+html[data-proto-page]:has(.doephone-mobile-root) body {
+  background-color: #121819 !important;
+}
+
+html[data-proto-page] .doephone-mobile-root {
+  background-color: #121819;
+}
+
+html[data-proto-page] .proto-section-band {
+  background-color: #151c1f !important;
+}
+
+/* Feature stack — one slide per full-viewport section on iPhone. */
+html[data-proto-page] .proto-feature-section {
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  min-height: var(--app-vh, 100lvh) !important;
+  height: var(--app-vh, 100lvh) !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+html[data-proto-page] .proto-feature-section__inner {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding-top: max(
+    2.35rem,
+    calc(env(safe-area-inset-top, 0px) + calc(var(--app-vh, 100lvh) * 0.0525))
+  ) !important;
+  padding-bottom: max(
+    2.35rem,
+    calc(env(safe-area-inset-bottom, 0px) + calc(var(--app-vh, 100lvh) * 0.0525))
+  ) !important;
+  padding-left: max(
+    2.35rem,
+    calc(env(safe-area-inset-left, 0px) + calc(var(--app-vw, 100vw) * 0.0525))
+  ) !important;
+  padding-right: max(
+    2.35rem,
+    calc(env(safe-area-inset-right, 0px) + calc(var(--app-vw, 100vw) * 0.0525))
+  ) !important;
+}
+
+html[data-proto-page] .proto-feature-section__stack {
+  display: flex !important;
+  flex: 0 1 auto !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  gap: max(
+    1.45rem,
+    calc(var(--app-vh, 100lvh) * 0.038)
+  ) !important;
+}
+
+html[data-proto-page] .proto-feature-section__card,
+html[data-proto-page] .proto-feature-section .doephone-section-carousel {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  min-height: clamp(
+    34rem,
+    calc(var(--app-vh, 100lvh) * 0.68),
+    52rem
+  ) !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+html[data-proto-page] .proto-feature-section__card > * {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+
+html[data-proto-page] .proto-feature-section__copy {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  color: #ffffff !important;
+}
+
+html[data-proto-page] .proto-feature-section__copy .doephone-hero-headline,
+html[data-proto-page] .proto-feature-section__copy .doephone-hero-headline-line {
+  color: #ffffff !important;
+}
+
+html[data-proto-page] .proto-feature-reveal {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(1.75rem);
+  will-change: opacity, filter, transform;
+}
+
+html[data-proto-page] .proto-feature-reveal--in {
+  animation: doephone-hero-headline-in 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+html[data-proto-page] .proto-feature-reveal--description.proto-feature-reveal--in {
+  animation-delay: 0.2s;
+}
+
+html[data-proto-page] .proto-feature-reveal .doephone-hero-headline,
+html[data-proto-page] .proto-feature-reveal .doephone-hero-headline-line {
+  animation: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-proto-page] .proto-feature-reveal,
+  html[data-proto-page] .proto-feature-reveal--in {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+html[data-proto-page] .proto-feature-section__description {
+  margin: 0 !important;
+  margin-top: max(
+    0.85rem,
+    calc(var(--app-vh, 100lvh) * 0.018)
+  ) !important;
+  font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(1.62rem, calc(1.32rem + 1.55vmin), 2.08rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.52 !important;
+  letter-spacing: -0.012em !important;
+  color: #ffffff !important;
+}
+
+/* Nav bar — scaled up with locked viewport tokens. */
+html[data-proto-page] nav.doephone-site-nav {
+  padding-top: env(safe-area-inset-top, 0px) !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav > div > div {
+  padding-top: clamp(
+    1.15rem,
+    calc(0.72rem + calc(var(--app-vw, 100vw) * 0.0215)),
+    2.65rem
+  ) !important;
+  padding-bottom: clamp(
+    1.15rem,
+    calc(0.72rem + calc(var(--app-vw, 100vw) * 0.0215)),
+    2.65rem
+  ) !important;
+  padding-left: max(
+    1.65rem,
+    calc(env(safe-area-inset-left, 0px) + calc(var(--app-vw, 100vw) * 0.038))
+  ) !important;
+  padding-right: max(
+    1.65rem,
+    calc(env(safe-area-inset-right, 0px) + calc(var(--app-vw, 100vw) * 0.038))
+  ) !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav > div > div > .absolute[class*="top-1/2"] {
+  left: max(
+    1.65rem,
+    calc(env(safe-area-inset-left, 0px) + calc(var(--app-vw, 100vw) * 0.038))
+  ) !important;
+  font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+  font-size: clamp(
+    2.45rem,
+    calc(1.35rem + calc(var(--app-vw, 100vw) * 0.048)),
+    4.2rem
+  ) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav > div > div > .flex.shrink-0.items-center {
+  gap: clamp(0.85rem, calc(var(--app-vw, 100vw) * 0.011), 1.25rem) !important;
+}
+
+/* Nav mail button — square, scaled up. */
+html[data-proto-page] nav.doephone-site-nav button.aspect-square.rounded-md {
+  min-height: clamp(
+    5.85rem,
+    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
+    7.1rem
+  ) !important;
+  min-width: clamp(
+    5.85rem,
+    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
+    7.1rem
+  ) !important;
+  width: clamp(
+    5.85rem,
+    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
+    7.1rem
+  ) !important;
+  padding-top: clamp(
+    1.45rem,
+    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.0165)),
+    1.85rem
+  ) !important;
+  padding-bottom: clamp(
+    1.45rem,
+    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.0165)),
+    1.85rem
+  ) !important;
+  border-radius: clamp(0.62rem, calc(var(--app-vw, 100vw) * 0.016), 0.82rem) !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav button.aspect-square.rounded-md svg {
+  width: clamp(
+    1.85rem,
+    calc(1.58rem + calc(var(--app-vw, 100vw) * 0.011)),
+    2.2rem
+  ) !important;
+  height: clamp(
+    1.85rem,
+    calc(1.58rem + calc(var(--app-vw, 100vw) * 0.011)),
+    2.2rem
+  ) !important;
+}
+
+/* Nav For Investors — attached label + chevron in one split control. */
+html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md {
+  display: flex !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+  border-radius: clamp(0.62rem, calc(var(--app-vw, 100vw) * 0.016), 0.82rem) !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > a.inline-flex.rounded-none,
+html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > button.aspect-square.rounded-none {
+  min-height: clamp(
+    5.85rem,
+    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
+    7.1rem
+  ) !important;
+  height: auto !important;
+  align-self: stretch !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-radius: 0 !important;
+  line-height: 1 !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > a.inline-flex.rounded-none {
+  padding-left: clamp(
+    1.55rem,
+    calc(1.2rem + calc(var(--app-vw, 100vw) * 0.016)),
+    2rem
+  ) !important;
+  padding-right: clamp(
+    1.15rem,
+    calc(0.92rem + calc(var(--app-vw, 100vw) * 0.012)),
+    1.45rem
+  ) !important;
+  font-size: clamp(
+    1.48rem,
+    calc(1.28rem + calc(var(--app-vw, 100vw) * 0.0095)),
+    1.78rem
+  ) !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > button.aspect-square.rounded-none {
+  min-width: clamp(
+    5.85rem,
+    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
+    7.1rem
+  ) !important;
+  width: clamp(
+    5.85rem,
+    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
+    7.1rem
+  ) !important;
+  max-width: clamp(
+    5.85rem,
+    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
+    7.1rem
+  ) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.22) !important;
+  flex-shrink: 0 !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > button.aspect-square.rounded-none svg {
+  width: clamp(
+    1.28rem,
+    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.008)),
+    1.55rem
+  ) !important;
+  height: clamp(
+    1.28rem,
+    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.008)),
+    1.55rem
+  ) !important;
+}
+
+/* Nav dropdowns — email copy + investors menu. */
+html[data-proto-page] nav.doephone-site-nav [role="menu"],
+html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] {
+  padding-top: clamp(0.55rem, calc(var(--app-vw, 100vw) * 0.012), 0.85rem) !important;
+  padding-bottom: clamp(0.55rem, calc(var(--app-vw, 100vw) * 0.012), 0.85rem) !important;
+  border-radius: clamp(0.55rem, calc(var(--app-vw, 100vw) * 0.014), 0.72rem) !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav [role="menuitem"],
+html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] p,
+html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] a {
+  font-size: clamp(
+    1.38rem,
+    calc(1.18rem + calc(var(--app-vw, 100vw) * 0.0088)),
+    1.65rem
+  ) !important;
+  padding-left: clamp(
+    1.42rem,
+    calc(1.12rem + calc(var(--app-vw, 100vw) * 0.014)),
+    1.75rem
+  ) !important;
+  padding-right: clamp(
+    1.42rem,
+    calc(1.12rem + calc(var(--app-vw, 100vw) * 0.014)),
+    1.75rem
+  ) !important;
+  padding-top: clamp(
+    1.08rem,
+    calc(0.88rem + calc(var(--app-vw, 100vw) * 0.011)),
+    1.35rem
+  ) !important;
+  padding-bottom: clamp(
+    1.08rem,
+    calc(0.88rem + calc(var(--app-vw, 100vw) * 0.011)),
+    1.35rem
+  ) !important;
+}
+
+html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] svg {
+  width: clamp(1.32rem, calc(var(--app-vw, 100vw) * 0.032), 1.55rem) !important;
+  height: clamp(1.32rem, calc(var(--app-vw, 100vw) * 0.032), 1.55rem) !important;
+}
+
+/* Footer — page background, top rule. */
+html[data-proto-page] .proto-footer {
+  background-color: #121819 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+  overflow: visible !important;
+}
+
+html[data-proto-page] .proto-footer-inner {
+  padding-top: clamp(3.25rem, calc(2.15rem + 5.25vmin), 5.5rem) !important;
+}
+
+html[data-proto-page] .proto-footer-contact__brand {
+  font-size: clamp(1.85rem, calc(1.52rem + 1.15vmin), 2.35rem) !important;
+  letter-spacing: -0.02em !important;
+}
+
+html[data-proto-page] .proto-footer-contact__line {
+  font-size: clamp(1.62rem, calc(1.32rem + 1vmin), 2rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.38 !important;
+  letter-spacing: -0.012em !important;
+}
+
+html[data-proto-page] .proto-footer-contact__email {
+  padding-bottom: clamp(1.85rem, calc(1.2rem + 2.35vmin), 2.85rem) !important;
+}
+
+html[data-proto-page] .proto-footer-columns {
+  margin-top: clamp(0.85rem, calc(0.5rem + 1.1vmin), 1.35rem) !important;
+}
+
+html[data-proto-page] .proto-footer-main {
+  margin-bottom: clamp(1rem, calc(0.65rem + 1.35vmin), 1.65rem) !important;
+}
+
+html[data-proto-page] .proto-footer-column__title {
+  font-size: clamp(1.48rem, calc(1.22rem + 0.95vmin), 1.82rem) !important;
+  letter-spacing: -0.018em !important;
+  line-height: 1.2 !important;
+}
+
+html[data-proto-page] .proto-footer-column__link {
+  font-size: clamp(1.38rem, calc(1.14rem + 0.82vmin), 1.68rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.32 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Footer — Proto wordmark aligned to footer content gutters. */
+html[data-proto-page] .proto-footer-wordmark-wrap {
+  overflow: visible !important;
+  padding-top: clamp(1rem, calc(0.65rem + 1.35vmin), 1.65rem) !important;
+  padding-bottom: clamp(1rem, calc(0.65rem + 1.85vmin), 1.85rem) !important;
+}
+
+html[data-proto-page] .proto-footer-wordmark-fit {
+  overflow: visible !important;
+}
+
+html[data-proto-page] .proto-footer-wordmark {
+  font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.045em !important;
+  line-height: 1 !important;
+  color: #f7f6f3 !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0.05em !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+/* Hero — Documents gradient stretched for full-viewport band. */
+html[data-proto-page] .doephone-hero-section > div > div[aria-hidden]:first-of-type {
+  background-size: 100% 118% !important;
+  background-position: center top !important;
+}
+
+/* Hero — title stays white, always visible (no load-in blur/rise). */
+html[data-proto-page] .doephone-hero-section .doephone-hero-headline,
+html[data-proto-page] .doephone-hero-section .doephone-hero-headline-line {
+  color: #ffffff !important;
+  animation: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+html[data-proto-page] .doephone-hero-headline,
+html[data-proto-page] .doephone-hero-headline-line {
+  color: #ffffff !important;
+}
+
+/* Feature stack — + badge (proto reception palette). */
+html[data-proto-page] .proto-feature-section .absolute.z-30.rounded-full {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  background: rgba(196, 104, 72, 0.52) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+html[data-proto-page] .proto-feature-section .absolute.z-30.rounded-full span {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+  text-shadow: none !important;
+  transform: translateY(-0.05em);
+}
+
+html[data-proto-page] .proto-feature-section .absolute.z-30.rounded-full path {
+  stroke: #ffffff !important;
+  filter: none !important;
+}
+
+html[data-proto-page] .proto-feature-section .doephone-carousel-frost-fill,
+html[data-proto-page] .proto-feature-section .doephone-carousel-frost-out {
+  background: rgba(90, 120, 136, 0.48) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+}
+
+html[data-proto-page] .doephone-section-reveal {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+html[data-proto-page] .doephone-section-reveal--in {
+  animation: none !important;
+}
+
+/* Desktop /proto — Doe home band layout with proto dark styling. */
+html[data-proto-page][data-layout="desktop"],
+html[data-proto-page][data-layout="desktop"] body {
+  background-color: #121819 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-root {
+  background-color: #121819;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature.proto-feature-section {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 112vh !important;
+  height: 112vh !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-feature-section__description {
+  margin-top: 0 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-feature-reveal {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline,
+html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline-line {
+  font-size: clamp(2.85rem, 4.75vw, 4.85rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-main,
+html[data-proto-page][data-layout="desktop"] .proto-footer-wordmark-wrap {
+  padding-left: clamp(2.5rem, 5vw, 9rem) !important;
+  padding-right: clamp(2.5rem, 5vw, 9rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-contact__brand {
+  font-size: clamp(1.35rem, 1.15rem + 0.55vw, 1.75rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-contact__line,
+html[data-proto-page][data-layout="desktop"] .proto-footer-column__link {
+  font-size: clamp(0.98rem, 0.92rem + 0.22vw, 1.12rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-column__title {
+  font-size: clamp(1.02rem, 0.96rem + 0.25vw, 1.18rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner {
+  padding-top: clamp(3.5rem, 3rem + 2vw, 5rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-columns {
+  margin-top: 1.25rem !important;
+  max-width: 28rem;
+}

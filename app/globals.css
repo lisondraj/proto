@@ -1,0 +1,1129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Visible viewport vars — overridden from JS (`vbAppViewportPx`) using `visualViewport`
+ * so hero height + sections align across iPhone Safari toolbar states.
+ */
+:root {
+  --app-vw: 100vw;
+  --app-vh: 100dvh;
+  --app-vv-offset-top: 0px;
+}
+
+/*
+ * /doeforvc — `.doeforvc-iphone-root` wraps the scaled phone-layout canvas (root `zoom`).
+ * Restore full rem scale so typography stays readable after zoom.
+ */
+html:has(.doeforvc-iphone-root) {
+  font-size: 100%;
+  /** Safe-area “ears” beside Dynamic Island / overscroll — match canvas beige */
+  background-color: #f7f6f3;
+}
+
+html:has(.doeforvc-iphone-root) body {
+  background-color: #f7f6f3;
+}
+
+/*
+ * /doephone — native pinch zoom; cap rem base at iPhone reference width so wide
+ * layout viewports (Safari desktop-site mode, minimized desktop windows) do not
+ * inflate typography before the viewport meta correction runs.
+ */
+html:has(.doephone-mobile-root) {
+  font-size: min(14.5px, 3.7209vw);
+  background-color: #f7f6f3;
+  --app-vw: 100vw;
+  --app-vh: 100lvh;
+  overscroll-behavior-y: none;
+}
+
+html:has(.doephone-mobile-root) body {
+  background-color: #f7f6f3;
+  overscroll-behavior-y: none;
+}
+
+html:has(.blog-mobile-root) {
+  font-size: 100%;
+  background-color: #f7f6f3;
+}
+
+html:has(.blog-mobile-root) body {
+  background-color: #f7f6f3;
+}
+
+html[data-doeforvc-always-phone="true"]:has(.blog-mobile-root),
+html[data-doeforvc-always-phone="true"]:has(.blog-mobile-root) body {
+  overscroll-behavior-y: none;
+}
+
+.blog-mobile-root {
+  overflow-x: clip;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+.doephone-mobile-root {
+  overflow-x: clip;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  -webkit-overflow-scrolling: touch;
+}
+
+.doephone-site-nav {
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+html[data-doephone-pinching="true"] .doephone-mobile-root {
+  overscroll-behavior-y: auto;
+}
+
+/** /desktop — full desktop scroll; root layout uses wide-desktop:overflow-hidden on body */
+body.desktop-route,
+body.mainpage-route,
+body.proto-route {
+  overflow: auto;
+}
+
+.doeforvc-iphone-root {
+  /* Prevent horizontal bleed from scaled fixed-width sections */
+  overflow-x: clip;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  /** Bottom safe area is applied inside <footer> so the footer gradient reaches the physical bottom (no cream gap above the home indicator). */
+}
+
+@layer base {
+  /* Match ~80% browser zoom at 100%: scale rem (Tailwind default) so layout
+     reflows proportionally, not a visual zoom/scale that “shrinks a canvas”. */
+  html {
+    font-size: 80%;
+    background-color: #f7f6f3;
+    touch-action: pan-x pan-y;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply text-gray-900 antialiased;
+    /** Default page canvas (iphone layout overrides via html:has above when root present) */
+    background-color: #f7f6f3;
+    touch-action: pan-x pan-y;
+  }
+
+  /** /doephone — allow native pinch zoom (root layout disables it globally). */
+  html[data-doephone-pinching="true"],
+  html[data-doephone-pinching="true"] body {
+    touch-action: auto;
+  }
+
+  /* Standard link reset - only remove underline, let Tailwind handle colors */
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    @apply cursor-pointer bg-transparent border-0 p-0 m-0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-horizontal {
+  animation: scroll-horizontal 30s linear infinite;
+}
+
+@keyframes hero-cta-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-hero-cta-float {
+  animation: hero-cta-float 7s ease-in-out infinite;
+}
+
+@keyframes hero-cta-bounce-once {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-9px);
+  }
+  70% {
+    transform: translateY(2px);
+  }
+}
+
+.animate-hero-cta-bounce-once {
+  animation: hero-cta-bounce-once 1.4s ease-in-out 1 both;
+}
+
+/* Hero square grid — page-load reveal from top-left (/doephone). */
+.hero-carousel-grid-intro {
+  opacity: 0;
+  transform-origin: top left;
+  -webkit-mask-image: radial-gradient(
+    ellipse 130% 130% at 0% 0%,
+    #000 0%,
+    #000 38%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 130% 130% at 0% 0%,
+    #000 0%,
+    #000 38%,
+    transparent 100%
+  );
+  -webkit-mask-size: 10% 10%;
+  mask-size: 10% 10%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+  animation: hero-carousel-grid-intro 3.4s cubic-bezier(0.19, 1, 0.22, 1) 0.45s forwards;
+}
+
+@keyframes hero-carousel-grid-intro {
+  0% {
+    opacity: 0;
+    -webkit-mask-size: 10% 10%;
+    mask-size: 10% 10%;
+  }
+
+  28% {
+    opacity: 0.28;
+    -webkit-mask-size: 95% 95%;
+    mask-size: 95% 95%;
+  }
+
+  62% {
+    opacity: 0.68;
+    -webkit-mask-size: 210% 210%;
+    mask-size: 210% 210%;
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-mask-size: 360% 360%;
+    mask-size: 360% 360%;
+  }
+}
+
+/* /doephone hero polar overlay — rings only on load; one-time build animation. */
+.doephone-hero-polar-overlay--intro .doephone-hero-polar-ring--intro {
+  opacity: 0;
+}
+
+.doephone-hero-polar-segment {
+  stroke: rgba(255, 255, 255, 0.24);
+  stroke-width: 0.8;
+  opacity: 1;
+}
+
+.doephone-hero-polar-overlay--intro .doephone-hero-polar-ring {
+  stroke: rgba(255, 255, 255, 0.17);
+}
+
+/* Three rings pulse out from polar center after gradient settles (inner → outer).
+   transform-origin is set inline per-ring with exact SVG coordinates for Safari. */
+.doephone-hero-polar-ring--intro {
+  opacity: 0;
+  transform: scale(0.001);
+  animation: doephone-hero-polar-ring-in var(--doephone-hero-polar-ring-duration, 0.82s)
+    cubic-bezier(0.33, 1, 0.36, 1) both;
+}
+
+@keyframes doephone-hero-polar-ring-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.001);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  70% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* /doephone hero headline — deblur + rise after polar overlay build completes. */
+.doephone-hero-headline-line {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(1.75rem);
+  animation: doephone-hero-headline-in 1.45s cubic-bezier(0.22, 1, 0.36, 1)
+    var(--doephone-hero-headline-1, 3.05s) both;
+  will-change: opacity, filter, transform;
+  text-shadow: none;
+}
+
+.doephone-hero-headline-line--second {
+  animation-delay: var(--doephone-hero-headline-2, 3.53s);
+}
+
+.doephone-hero-waitlist-cta {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(1.75rem);
+  animation: doephone-hero-headline-in 1.45s cubic-bezier(0.22, 1, 0.36, 1)
+    var(--doephone-hero-headline-cta, 4.98s) both;
+  will-change: opacity, filter, transform;
+}
+
+.doephone-hero-second-line {
+  gap: 0.3em;
+}
+
+/** Hero copy band — container for width-aware headline sizing. */
+.doephone-hero-copy {
+  container-type: inline-size;
+  container-name: hero-copy;
+}
+
+/* /doephone mobile — symmetric safe-area gutters (not gated on iphone-page variant). */
+.doephone-mobile-root .doephone-hero-copy-inset {
+  padding-left: max(2.35rem, calc(env(safe-area-inset-left, 0px) + 5.25vmin));
+  padding-right: max(2.35rem, calc(env(safe-area-inset-right, 0px) + 5.25vmin));
+}
+
+@keyframes doephone-carousel-frost-fill {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.doephone-carousel-frost-fill {
+  animation: doephone-carousel-frost-fill 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes doephone-carousel-frost-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.doephone-carousel-frost-out {
+  opacity: 1;
+  animation: doephone-carousel-frost-out 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes doephone-carousel-content-lift {
+  from {
+    transform: translateY(clamp(1.45rem, 4.45vmin, 1.95rem));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.doephone-carousel-content--expanded {
+  animation: doephone-carousel-content-lift 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.doephone-hero-headline {
+  font-size: clamp(2rem, 10.75cqi, 5.85rem);
+}
+
+.doephone-hero-triage-preview {
+  opacity: 0;
+  filter: blur(18px);
+  transform: translate3d(0, 2.25rem, 0);
+  animation: doephone-hero-triage-in 1.35s cubic-bezier(0.22, 1, 0.36, 1) 4.1s forwards;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes doephone-hero-triage-in {
+  from {
+    opacity: 0;
+    filter: blur(18px);
+    transform: translate3d(0, 2.25rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+html[data-doeforvc-always-phone="true"] .doephone-hero-headline {
+  font-size: clamp(1.85rem, 10.25cqi, 5.45rem);
+}
+
+.doephone-hero-career-slot {
+  min-width: 0;
+  line-height: 1.1;
+}
+
+.doephone-hero-career-clip {
+  height: 1lh;
+  overflow: hidden;
+  isolation: isolate;
+  position: relative;
+}
+
+.doephone-hero-career-word {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-style: normal;
+}
+
+.doephone-hero-career-word--enter {
+  animation: career-enter 740ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.doephone-hero-career-word--exit {
+  animation: career-exit 290ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes career-enter {
+  0% {
+    opacity: 0;
+    transform: perspective(480px) rotateX(58deg) scaleX(0.86) translateY(38%);
+    filter: blur(8px);
+  }
+  28% {
+    opacity: 1;
+    filter: blur(1px);
+  }
+  52% {
+    filter: blur(0);
+  }
+  74% {
+    transform: perspective(480px) rotateX(-3deg) scaleX(1.014) translateY(-1.5%);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(480px) rotateX(0deg) scaleX(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes career-exit {
+  0% {
+    opacity: 1;
+    transform: perspective(480px) rotateX(0deg) scaleX(1) translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(480px) rotateX(-54deg) scaleX(0.88) translateY(-36%);
+    filter: blur(6px);
+  }
+}
+
+/* ─── Communication + Intelligence grid — infinite column scrolls ─── */
+@keyframes intel-col-scroll-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-33.333%); }
+}
+
+/*
+ * Center column scrolls DOWN (opposite of outer).
+ * Stays negative so the strip always fills the container — no empty-space gap.
+ * from -66.666% → -33.333%: strip drifts downward, then snaps back seamlessly
+ * (copy 3 at -66.666% is identical to copy 2 at -33.333%).
+ */
+@keyframes intel-col-scroll-down {
+  from { transform: translateY(-66.666%); }
+  to   { transform: translateY(-33.333%); }
+}
+
+.intel-col-up {
+  animation: intel-col-scroll-up 36s linear infinite;
+}
+
+.intel-col-down {
+  animation: intel-col-scroll-down 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intel-col-up,
+  .intel-col-down {
+    animation: none;
+  }
+}
+
+@keyframes doephone-hero-headline-in {
+  0% {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translateY(1.75rem);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+/* /doephone section titles — scroll-triggered unblur + rise (matches hero). */
+.doephone-section-copy {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(1.75rem);
+  will-change: opacity, filter, transform;
+  text-shadow: none;
+}
+
+.doephone-section-copy-visible {
+  animation: doephone-hero-headline-in 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Join hero bands — same scroll reveal as intern track cards, with hover lift after in. */
+.join-hero-band-reveal.doephone-section-copy-visible {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.join-hero-band-reveal.doephone-section-copy-visible:hover {
+  transform: translateY(-7px);
+}
+
+/* Join hero decorative boxes — scroll-triggered rise + hover lift. */
+@keyframes join-hero-box-rise-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.join-hero-box-reveal {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(10px);
+  transform-box: fill-box;
+  transform-origin: center;
+  pointer-events: auto;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), filter 0.28s ease;
+}
+
+.join-hero-box-reveal--in {
+  animation: join-hero-box-rise-in 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.join-hero-box-reveal--in:hover {
+  filter: blur(0);
+  transform: translateY(-7px);
+}
+
+/* /join apply card — individual answered field animates in from the right. */
+@keyframes join-card-field-in {
+  from {
+    opacity: 0;
+    transform: translateX(0.5rem);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes join-card-idle-hint-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.join-card-idle-scrim {
+  background-color: rgba(239, 236, 231, 0.52);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  animation: join-card-idle-hint-fade-in 0.65s ease-out forwards;
+}
+
+.join-card-modal-scrim {
+  background-color: rgba(239, 236, 231, 0.58);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform: translateZ(0);
+}
+
+.join-card-idle-hint-copy {
+  opacity: 0;
+  animation: join-card-idle-hint-fade-in 0.65s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .join-card-idle-scrim,
+  .join-card-idle-hint-copy {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* /join apply form — step content enters from below (forward) or above (back). */
+@keyframes join-step-enter-down {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(0.65rem);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes join-step-enter-up {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(-0.65rem);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes join-step-exit-down {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(-0.5rem);
+  }
+}
+
+@keyframes join-step-exit-up {
+  from {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(0.5rem);
+  }
+}
+
+/* /doephone section 2 — segmented scroll reveal: title → carousel → menu. */
+@keyframes doephone-section-reveal-in {
+  0% {
+    opacity: 0;
+    filter: blur(24px);
+    transform: translateY(2.75rem);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.doephone-section-reveal {
+  opacity: 0;
+  filter: blur(24px);
+  transform: translateY(2.75rem);
+  will-change: opacity, filter, transform;
+}
+
+.doephone-section-reveal--in.doephone-section-reveal--title {
+  animation: doephone-section-reveal-in var(--doephone-section-reveal-duration, 1.75s)
+    cubic-bezier(0.22, 1, 0.36, 1) var(--doephone-section-reveal-title-delay, 0ms) both;
+}
+
+.doephone-section-reveal--in.doephone-section-reveal--carousel {
+  animation: doephone-section-reveal-in var(--doephone-section-reveal-duration, 1.75s)
+    cubic-bezier(0.22, 1, 0.36, 1) var(--doephone-section-reveal-carousel-delay, 700ms) both;
+}
+
+.doephone-section-reveal--in.doephone-section-reveal--menu {
+  animation: doephone-section-reveal-in var(--doephone-section-reveal-duration, 1.75s)
+    cubic-bezier(0.22, 1, 0.36, 1) var(--doephone-section-reveal-menu-delay, 2.85s) both;
+}
+
+.doephone-section-reveal--in.doephone-section-reveal--badge {
+  animation: doephone-section-reveal-in var(--doephone-section-reveal-duration, 1.75s)
+    cubic-bezier(0.22, 1, 0.36, 1) var(--doephone-section-reveal-badge-delay, 700ms) both;
+}
+
+.doephone-section-reveal--in.doephone-section-reveal--input {
+  animation: doephone-section-reveal-in var(--doephone-section-reveal-duration, 1.75s)
+    cubic-bezier(0.22, 1, 0.36, 1) var(--doephone-section-reveal-input-delay, 2.85s) both;
+}
+
+.doephone-section-plus {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 0.22em;
+  color: currentColor;
+  line-height: 1;
+}
+
+.doephone-section-plus-icon {
+  display: inline-block;
+  width: 0.56em;
+  height: 0.56em;
+  vertical-align: -0.05em;
+}
+
+.doephone-section-apostrophe {
+  display: inline-block;
+  vertical-align: 0.52em;
+  margin-inline: -0.01em 0.01em;
+  color: currentColor;
+  line-height: 1;
+}
+
+.doephone-section-apostrophe-icon {
+  display: inline-block;
+  width: 0.21em;
+  height: 0.34em;
+  vertical-align: 0;
+}
+
+/* Wheel-driven mission caret — uses transform so inline opacity stays 1∶1 with scroll deltas */
+.hero-mission-scroll-caret-blink {
+  transform-origin: bottom;
+  animation: hero-mission-scroll-caret-blink-transform 1s ease-in-out infinite;
+}
+
+@keyframes hero-mission-scroll-caret-blink-transform {
+  0%,
+  45% {
+    transform: scaleY(1);
+  }
+
+  50%,
+  95% {
+    transform: scaleY(0.16);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* Desktop home — typed caret after left mission line (blink + ease-in appearance) — legacy fallback */
+.hero-mission-caret-wrap {
+  display: inline-block;
+  vertical-align: -0.12em;
+  height: 0.82em;
+  width: 2px;
+  margin-left: 0.09em;
+  transform-origin: bottom;
+  opacity: 0;
+  animation: hero-mission-caret-wrap-in 0.45s ease-out 0.35s forwards;
+}
+
+.hero-mission-caret-bar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 1px;
+  background: rgb(255 255 255 / 0.92);
+  animation: hero-mission-caret-blink 1.05s ease-in-out infinite 0.75s;
+}
+
+@keyframes hero-mission-caret-wrap-in {
+  from {
+    opacity: 0;
+    transform: scaleY(0.25);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes hero-mission-caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  50%,
+  95% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-cta-float,
+  .animate-hero-cta-bounce-once {
+    animation: none;
+  }
+
+  .hero-carousel-grid-intro {
+    animation: none !important;
+    opacity: 1;
+    -webkit-mask-image: none;
+    mask-image: none;
+    -webkit-mask-size: auto;
+    mask-size: auto;
+  }
+
+  .doephone-hero-polar-ring--intro {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .doephone-hero-polar-segment {
+    stroke: rgba(255, 255, 255, 0.24);
+    opacity: 1;
+  }
+
+  .doephone-hero-headline-line {
+    animation: none !important;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .doephone-hero-triage-preview {
+    animation: none !important;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .doephone-hero-waitlist-cta {
+    animation: none !important;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .doephone-section-copy,
+  .doephone-section-copy-visible {
+    animation: none !important;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .doephone-section-reveal,
+  .doephone-section-reveal--in {
+    animation: none !important;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .doephone-hero-career-word--enter,
+  .doephone-hero-career-word--exit {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .doephone-hero-career-word--exit {
+    display: none;
+  }
+
+  .hero-mission-scroll-caret-blink {
+    animation: none !important;
+    transform: scaleY(1);
+  }
+
+  .hero-mission-caret-wrap,
+  .hero-mission-caret-bar {
+    animation: none !important;
+  }
+
+  .hero-mission-caret-wrap {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  .hero-mission-caret-bar {
+    opacity: 1;
+  }
+
+  .join-hero-box-reveal {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .join-hero-box-reveal--in {
+    animation: none;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes expand-sidebar {
+  from {
+    width: 4rem;
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    width: 16rem;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes collapse-sidebar {
+  from {
+    width: 16rem;
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    width: 4rem;
+    opacity: 0;
+    transform: translateX(-12px) scale(0.95);
+  }
+}
+
+@keyframes fade-in-backdrop {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes fade-out-backdrop {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(2px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+.animate-expand-sidebar {
+  animation: expand-sidebar 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-collapse-sidebar {
+  animation: collapse-sidebar 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-backdrop {
+  animation: fade-in-backdrop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-out-backdrop {
+  animation: fade-out-backdrop 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes bento-bridge-caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.bento-bridge-caret {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 3px;
+  border-radius: 2px;
+  background-color: #b08f68;
+  animation: bento-bridge-caret-blink 1.05s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-bridge-caret {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@keyframes bento-bridge-disk-idle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -22px, 0) scale(1.06);
+  }
+}
+
+.bento-bridge-disk {
+  animation: bento-bridge-disk-idle 10s ease-in-out infinite;
+}
+
+.bento-bridge-disk:hover {
+  animation-duration: 18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-bridge-disk {
+    animation: none;
+  }
+}
+
+@keyframes cds-medallion-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+.cds-medallion-float {
+  animation: cds-medallion-float 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-medallion-float {
+    animation: none;
+  }
+}
+
+@font-face {
+  font-family: 'Copernicus New Cond';
+  src: url('/fonts/CopernicusNewCond-070.otf') format('opentype'),
+       url('/fonts/CopernicusNewCond-070.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canela Deck';
+  src: url('/fonts/CanelaDeck-Light-Trial.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/** Workflow carousel UI mocks — inherit Suisse Intl Trial from panel root (next/font/local). */
+.workflow-carousel-ui {
+  font-weight: 300;
+  font-synthesis: none;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.workflow-carousel-ui * {
+  font-family: inherit !important;
+}
+
+.workflow-carousel-ui :where(.font-bold, .font-semibold) {
+  font-weight: 500 !important;
+}
+
+/* ── Blog filter dropdown entrance ──────────────────────────── */
+@keyframes blog-dropdown-in {
+  0%   { opacity: 0; transform: translateY(-5px) scale(0.975); }
+  100% { opacity: 1; transform: translateY(0)    scale(1);     }
+}
+.blog-dropdown-menu {
+  animation: blog-dropdown-in 150ms cubic-bezier(0.33, 1, 0.36, 1) both;
+  transform-origin: top center;
+}
