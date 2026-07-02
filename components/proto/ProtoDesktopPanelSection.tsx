@@ -36,7 +36,7 @@ export function ProtoDesktopPanelSection({
 
   return (
     <div
-      className={`relative isolate h-full w-full overflow-hidden shadow-[0_10px_32px_rgba(0,0,0,0.28)] ${radiusClass} ${borderClass}`}
+      className={`relative isolate min-h-0 w-full flex-1 overflow-hidden shadow-[0_10px_32px_rgba(0,0,0,0.28)] ${radiusClass} ${borderClass}`}
       style={DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE}
     >
       {shaderVariant ? (

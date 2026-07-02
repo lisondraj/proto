@@ -28,7 +28,7 @@ export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT = `${PROTO_DESKTOP_SPLIT_BOX_C
 export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
   "aspect-square h-auto w-full max-h-full max-w-full";
 
-/** Full-width gradient band — vertical inset + page gutters on the shell. */
+/** Full-width gradient band — gutters on the section; shell fills the inset. */
 export const PROTO_DESKTOP_FULL_PANEL_SHELL_TW =
   "proto-desktop-feature__full-panel-shell box-border flex min-h-0 w-full flex-1 flex-col";
 
