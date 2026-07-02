@@ -72,18 +72,6 @@ export const PROTO_PHONE_HERO_VOID = PROTO_PHONE_PRISM_PALETTE.void;
 
 const P = PROTO_PHONE_PRISM_PALETTE;
 
-/** Evenly spaced sweep — all eight prism stops visible in circular / band flows. */
-const PROTO_PHONE_FULL_STOPS = [
-  `${P.void} 0%`,
-  `${P.plum} 14%`,
-  `${P.violet} 28%`,
-  `${P.orchid} 42%`,
-  `${P.lilac} 56%`,
-  `${P.periwinkle} 68%`,
-  `${P.bronze} 82%`,
-  `${P.glow} 100%`,
-].join(", ");
-
 /** iPhone home hero — twilight prism: void base, violet surge, champagne crest (portrait flow). */
 export const PROTO_HOME_HERO_PHONE_GRADIENT = [
   `linear-gradient(0deg, ${P.void} 0%, ${P.plum} 16%, ${P.violet} 36%, ${P.orchid} 52%, ${P.lilac} 64%, ${P.periwinkle} 76%, ${P.bronze} 88%, ${P.glow} 100%)`,
@@ -98,29 +86,29 @@ export const PROTO_ABOUT_HERO_PHONE_GRADIENT = [
   `linear-gradient(135deg, ${P.void} 0%, ${P.orchid} 22%, ${P.orchid} 48%, ${P.lilac} 78%, ${P.bronze} 100%)`,
 ].join(", ");
 
-/** Feature boxes — unique prism flows; all eight stops in every band. */
-const PROTO_FEATURE_AGENTS_GRADIENT = `radial-gradient(circle at 50% 44%, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 24%, ${P.lilac} 36%, ${P.orchid} 48%, ${P.violet} 62%, ${P.plum} 78%, ${P.void} 100%)`;
+/** Feature boxes — cinematic prism flows; palette unchanged. */
+const PROTO_FEATURE_AGENTS_GRADIENT = `radial-gradient(ellipse 96% 90% at 40% 36%, ${P.glow} 0%, ${P.bronze} 11%, ${P.periwinkle} 24%, ${P.lilac} 38%, ${P.orchid} 52%, ${P.violet} 66%, ${P.plum} 80%, ${P.void} 100%)`;
 
-const PROTO_FEATURE_FRONT_DESK_GRADIENT = `linear-gradient(90deg, ${PROTO_PHONE_FULL_STOPS})`;
+const PROTO_FEATURE_FRONT_DESK_GRADIENT = `linear-gradient(96deg, ${P.void} 0%, ${P.plum} 9%, ${P.violet} 24%, ${P.orchid} 40%, ${P.lilac} 54%, ${P.periwinkle} 66%, ${P.bronze} 80%, ${P.glow} 96%)`;
 
-const PROTO_FEATURE_INBOX_GRADIENT = `linear-gradient(180deg, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+const PROTO_FEATURE_INBOX_GRADIENT = `linear-gradient(168deg, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 26%, ${P.lilac} 42%, ${P.orchid} 58%, ${P.violet} 74%, ${P.plum} 88%, ${P.void} 100%)`;
 
-const PROTO_FEATURE_AMBIENT_GRADIENT = `radial-gradient(ellipse 108% 96% at 84% 16%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+const PROTO_FEATURE_AMBIENT_GRADIENT = `radial-gradient(ellipse 92% 84% at 90% 10%, ${P.glow} 0%, ${P.bronze} 14%, ${P.lilac} 32%, ${P.orchid} 52%, ${P.violet} 72%, ${P.plum} 88%, ${P.void} 100%)`;
 
-const PROTO_FEATURE_BILLING_GRADIENT = `radial-gradient(ellipse 112% 102% at 16% 90%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+const PROTO_FEATURE_BILLING_GRADIENT = `radial-gradient(ellipse 104% 96% at 10% 90%, ${P.glow} 0%, ${P.bronze} 13%, ${P.orchid} 34%, ${P.violet} 54%, ${P.plum} 74%, ${P.void} 100%)`;
 
 const PROTO_FEATURE_PROTOTYPE_GRADIENT = [
-  `radial-gradient(circle at 68% 32%, ${P.periwinkle} 0%, ${P.lilac} 24%, transparent 58%)`,
-  `linear-gradient(152deg, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`,
+  `radial-gradient(ellipse 58% 52% at 76% 24%, ${P.periwinkle} 0%, ${P.lilac} 26%, transparent 62%)`,
+  `linear-gradient(138deg, ${P.void} 0%, ${P.plum} 16%, ${P.violet} 34%, ${P.orchid} 52%, ${P.lilac} 68%, ${P.bronze} 84%, ${P.glow} 100%)`,
 ].join(", ");
 
-const PROTO_FEATURE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 122% 108% at 50% 112%, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`;
+const PROTO_FEATURE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 88% 124% at 50% 102%, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 30%, ${P.orchid} 48%, ${P.lilac} 64%, ${P.periwinkle} 78%, ${P.bronze} 90%, ${P.glow} 100%)`;
 
-const PROTO_FEATURE_VALIDATE_GRADIENT = `linear-gradient(270deg, ${PROTO_PHONE_FULL_STOPS})`;
+const PROTO_FEATURE_VALIDATE_GRADIENT = `linear-gradient(258deg, ${P.glow} 0%, ${P.bronze} 10%, ${P.periwinkle} 26%, ${P.lilac} 42%, ${P.orchid} 58%, ${P.violet} 74%, ${P.plum} 88%, ${P.void} 100%)`;
 
 const PROTO_FEATURE_SHORTLIST_GRADIENT = [
-  `linear-gradient(205deg, ${P.void} 0%, ${P.plum} 12%, ${P.violet} 26%, ${P.orchid} 40%, ${P.lilac} 54%, ${P.periwinkle} 66%, ${P.bronze} 80%, ${P.glow} 100%)`,
-  `radial-gradient(ellipse 72% 64% at 22% 78%, ${P.lilac} 0%, ${P.orchid} 32%, transparent 68%)`,
+  `radial-gradient(ellipse 68% 60% at 26% 76%, ${P.lilac} 0%, ${P.orchid} 28%, transparent 66%)`,
+  `linear-gradient(198deg, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 30%, ${P.orchid} 48%, ${P.lilac} 64%, ${P.bronze} 82%, ${P.glow} 100%)`,
 ].join(", ");
 
 export const PROTO_COMMUNICATION_PHONE_GRADIENTS = {

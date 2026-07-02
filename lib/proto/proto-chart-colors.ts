@@ -28,9 +28,9 @@ export const PROTO_CHART_SLICE_COLORS = [
 
 /** Proto gradient fills for statistics in /proto-invest. */
 export const PROTO_CHART_GRADIENTS = {
-  bar: `linear-gradient(90deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 42%, ${PROTO_RECEPTION_PALETTE.copper} 74%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`,
-  track: `linear-gradient(90deg, rgba(22, 42, 72, 0.38) 0%, rgba(58, 159, 212, 0.3) 55%, rgba(92, 184, 232, 0.26) 100%)`,
-  tamBar: `linear-gradient(180deg, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.blue} 100%)`,
+  bar: `linear-gradient(88deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 12%, ${PROTO_RECEPTION_PALETTE.blue} 30%, ${PROTO_RECEPTION_PALETTE.copper} 54%, ${PROTO_HUMIRA_COLORS.amber} 74%, ${PROTO_RECEPTION_PALETTE.gold} 90%, ${PROTO_RECEPTION_PALETTE.lightYellow} 100%)`,
+  track: `linear-gradient(88deg, rgba(22, 42, 72, 0.34) 0%, rgba(58, 159, 212, 0.26) 48%, rgba(240, 120, 64, 0.18) 100%)`,
+  tamBar: `radial-gradient(ellipse 78% 138% at 50% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 34%, ${PROTO_RECEPTION_PALETTE.copper} 66%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`,
 } as const;
 
 /** iPhone /about charts — twilight prism palette. */
@@ -56,7 +56,7 @@ export const PROTO_PHONE_CHART_SLICE_COLORS = [
 ] as const;
 
 export const PROTO_PHONE_CHART_GRADIENTS = {
-  bar: `linear-gradient(90deg, ${P.void} 0%, ${P.violet} 20%, ${P.orchid} 40%, ${P.lilac} 58%, ${P.periwinkle} 72%, ${P.bronze} 86%, ${P.glow} 100%)`,
-  track: `linear-gradient(90deg, rgba(24, 16, 46, 0.42) 0%, rgba(110, 72, 200, 0.28) 55%, rgba(164, 132, 220, 0.22) 100%)`,
-  tamBar: `linear-gradient(180deg, ${P.glow} 0%, ${P.bronze} 18%, ${P.lilac} 40%, ${P.orchid} 62%, ${P.violet} 82%, ${P.void} 100%)`,
+  bar: `linear-gradient(92deg, ${P.void} 0%, ${P.plum} 10%, ${P.violet} 26%, ${P.orchid} 44%, ${P.lilac} 58%, ${P.periwinkle} 70%, ${P.bronze} 84%, ${P.glow} 100%)`,
+  track: `linear-gradient(92deg, rgba(24, 16, 46, 0.38) 0%, rgba(110, 72, 200, 0.26) 52%, rgba(184, 144, 104, 0.18) 100%)`,
+  tamBar: `radial-gradient(ellipse 76% 132% at 50% 110%, ${P.void} 0%, ${P.violet} 26%, ${P.orchid} 48%, ${P.lilac} 66%, ${P.bronze} 84%, ${P.glow} 100%)`,
 } as const;
