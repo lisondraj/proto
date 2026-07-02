@@ -6,6 +6,7 @@ import { DoePhoneMobileView } from "@/components/doephone/DoePhoneMobileView";
 import { ProtoDesktopHome } from "@/components/proto/ProtoDesktopHome";
 import {
   applyPhoneLayoutViewportMeta,
+  PHONE_DEVICE_VIEWPORT,
   phoneLayoutViewportContent,
 } from "@/lib/doephone/phone-layout-viewport";
 import {
@@ -26,9 +27,13 @@ function applyPhoneDocumentAttrs() {
 function applyDesktopDocumentAttrs() {
   const html = document.documentElement;
   const body = document.body;
+  const meta = document.querySelector('meta[name="viewport"]');
   html.removeAttribute("data-doeforvc-always-phone");
+  html.removeAttribute("data-doephone-pinching");
   html.setAttribute("data-layout", "desktop");
   body.classList.add("desktop-route");
+  body.classList.remove("doephone-route");
+  meta?.setAttribute("content", PHONE_DEVICE_VIEWPORT);
 }
 
 function applyPhonePinchViewport() {
@@ -40,21 +45,9 @@ function applyPhonePinchViewport() {
   meta?.setAttribute("content", phoneLayoutViewportContent());
 }
 
-function clearPhonePinchViewport(prevViewport: string) {
-  const html = document.documentElement;
-  const body = document.body;
-  const meta = document.querySelector('meta[name="viewport"]');
-  html.removeAttribute("data-doephone-pinching");
-  body.classList.remove("doephone-route");
-  if (meta) {
-    if (prevViewport) meta.setAttribute("content", prevViewport);
-    else meta.removeAttribute("content");
-  }
-}
-
 /** /proto — phone or desktop layout based on viewport, matching Doe home routing. */
 export function ProtoRouter() {
-  const [variant, setVariant] = useState<DoePhoneVariant>("phone");
+  const [variant, setVariant] = useState<DoePhoneVariant | null>(null);
 
   useLayoutEffect(() => {
     setVariant(resolveDoePhoneVariant());
@@ -62,9 +55,9 @@ export function ProtoRouter() {
 
   useEffect(() => {
     const sync = () => setVariant(resolveDoePhoneVariant());
-    sync();
 
     if (shouldLockDesignersTouchPhoneLayout()) {
+      sync();
       return;
     }
 
@@ -74,6 +67,8 @@ export function ProtoRouter() {
   }, []);
 
   useLayoutEffect(() => {
+    if (variant === null) return;
+
     const html = document.documentElement;
     const body = document.body;
     html.setAttribute("data-proto-page", "true");
@@ -89,17 +84,7 @@ export function ProtoRouter() {
     applyDesktopDocumentAttrs();
   }, [variant]);
 
-  useEffect(() => {
-    if (variant !== "phone") return;
-
-    const meta = document.querySelector('meta[name="viewport"]');
-    const prevViewport = meta?.getAttribute("content") ?? "";
-
-    return () => {
-      clearPhonePinchViewport(prevViewport);
-      applyPhoneDocumentAttrs();
-    };
-  }, [variant]);
+  if (variant === null) return null;
 
   return variant === "desktop" ? <ProtoDesktopHome /> : <DoePhoneMobileView />;
 }
