@@ -64,14 +64,17 @@ html[data-proto-page] .proto-invest-tam-highlight {
   background: #151c1f;
 }
 
-/* iPhone /about — full-bleed hero gradients + softer grain (all layouts). */
+/* /about hero — full-bleed gradients (grain tuned in proto.css on phone). */
 html[data-proto-page] .proto-invest-hero-backdrop [aria-hidden]:first-child {
   background-size: 100% 100% !important;
   background-position: center center !important;
 }
 
-html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
-  opacity: 0.38 !important;
+/* iPhone /about — clear fixed nav so mission headline is fully visible. */
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main.proto-invest-content-pt {
+  padding-top: calc(
+    env(safe-area-inset-top, 0px) + clamp(5.35rem, 4.55rem + 3.65vmin, 6.35rem)
+  ) !important;
 }
 
 /* iPhone /about — line graphics in solid panels. */

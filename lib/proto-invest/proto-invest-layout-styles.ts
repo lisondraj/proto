@@ -12,8 +12,8 @@ import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 /** Horizontal gutters — aligned with /proto feature sections. */
 export const PROTO_INVEST_PAGE_INSET_X = PROTO_PHONE_PAGE_INSET_X;
 
-/** Clears scaled proto nav — extra breathing room above mission headline. */
-export const PROTO_INVEST_CONTENT_PT = PROTO_PHONE_CONTENT_PT;
+/** Clears fixed proto nav — pairs with .proto-invest-content-pt in about.css. */
+export const PROTO_INVEST_CONTENT_PT = `${PROTO_PHONE_CONTENT_PT} proto-invest-content-pt`;
 
 export const PROTO_INVEST_SECTION_GAP = "space-y-8 iphone-page:space-y-9";
 
@@ -21,15 +21,15 @@ export const PROTO_INVEST_CONTENT_GAP = "space-y-5 iphone-page:space-y-6";
 
 export const PROTO_INVEST_LIST_GAP = "space-y-3.5 iphone-page:space-y-4";
 
-export const PROTO_INVEST_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(2.28rem,1.22rem+6.15vmin,3.72rem)] ${PROTO_FONT_CLASS}`;
+export const PROTO_INVEST_TITLE_TW = `text-left font-light leading-[1.0] tracking-[-0.03em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(1.82rem,0.98rem+4.45vmin,2.55rem)] ${PROTO_FONT_CLASS}`;
 
-export const PROTO_INVEST_SUBHEADING_TW = `mt-[clamp(0.85rem,0.65rem+0.85vmin,1.25rem)] text-[clamp(1.42rem,1.22rem+0.95vmin,1.78rem)] iphone-page:text-[clamp(1.22rem,1.02rem+0.88vmin,1.52rem)] font-normal leading-[1.44] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
+export const PROTO_INVEST_SUBHEADING_TW = `mt-[clamp(0.85rem,0.65rem+0.85vmin,1.25rem)] text-[clamp(1.42rem,1.22rem+0.95vmin,1.78rem)] iphone-page:mt-[clamp(0.55rem,0.45rem+0.45vmin,0.82rem)] iphone-page:text-[clamp(0.98rem,0.86rem+0.58vmin,1.14rem)] font-normal leading-[1.36] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_BYLINE_TW = `text-[clamp(1.28rem,1.08rem+0.75vmin,1.48rem)] iphone-page:text-[clamp(1.08rem,0.9rem+0.65vmin,1.28rem)] font-medium text-white/55 ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_BODY_TW = `text-[clamp(1.42rem,1.18rem+1.2vmin,1.82rem)] iphone-page:text-[clamp(1.12rem,0.92rem+0.95vmin,1.42rem)] font-normal leading-[1.48] tracking-[-0.012em] text-white ${PROTO_FONT_CLASS}`;
 
-export const PROTO_INVEST_SECTION_HEADLINE_TW = PROTO_INVEST_TITLE_TW;
+export const PROTO_INVEST_SECTION_HEADLINE_TW = `text-left font-light leading-[1.02] tracking-[-0.028em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(1.68rem,0.9rem+4.05vmin,2.32rem)] ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_PANEL_BORDER_TW = "border border-[#2A3538]";
 
