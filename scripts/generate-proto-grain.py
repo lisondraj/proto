@@ -8,11 +8,11 @@ import zlib
 from pathlib import Path
 
 GRAIN_SEED = 0x50726F746F
-GRAIN_DISPLAY_PX = 208
-# 2× displays (MacBook, etc.) — 512px tile @ 208px = 1:1 device pixels.
-GRAIN_2X_PX = 512
-# 3× displays (iPhone) — 768px tile @ 208px = 1:1 device pixels.
-GRAIN_3X_PX = 768
+GRAIN_DISPLAY_PX = 180
+# 2× displays — 1:1 device pixels at GRAIN_DISPLAY_PX.
+GRAIN_2X_PX = 360
+# 3× displays (iPhone) — 1:1 device pixels at GRAIN_DISPLAY_PX.
+GRAIN_3X_PX = 540
 
 
 def png_chunk(tag: bytes, data: bytes) -> bytes:
@@ -24,22 +24,78 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
     )
 
 
-def film_grain_value(rng: random.Random) -> int:
-    v = 128.0 + rng.gauss(0, 26.0) + rng.gauss(0, 32.0) * 0.68
-    v = 128.0 + (v - 128.0) * 1.24
-    # Compress the dark tail so hard-light specks stay subtler on gradients.
-    if v < 128.0:
-        v = 128.0 - (128.0 - v) * 0.45
-    return int(max(114, min(255, v)))
+def box_blur_2d(grid: list[list[float]], radius: int) -> list[list[float]]:
+    size = len(grid)
+    temp = [[0.0] * size for _ in range(size)]
+    out = [[0.0] * size for _ in range(size)]
+    diam = radius * 2 + 1
+
+    for y in range(size):
+        for x in range(size):
+            total = 0.0
+            for k in range(-radius, radius + 1):
+                total += grid[y][max(0, min(size - 1, x + k))]
+            temp[y][x] = total / diam
+
+    for x in range(size):
+        for y in range(size):
+            total = 0.0
+            for k in range(-radius, radius + 1):
+                total += temp[max(0, min(size - 1, y + k))][x]
+            out[y][x] = total / diam
+
+    return out
+
+
+def downsample_2x(grid: list[list[float]]) -> list[list[float]]:
+    size = len(grid) // 2
+    out = [[0.0] * size for _ in range(size)]
+    for y in range(size):
+        for x in range(size):
+            acc = 0.0
+            for dy in range(2):
+                for dx in range(2):
+                    acc += grid[y * 2 + dy][x * 2 + dx]
+            out[y][x] = acc / 4.0
+    return out
+
+
+def film_grain_tile(size: int, seed: int) -> list[list[int]]:
+    """Supersampled, multi-scale noise — fine film grain without blocky specks."""
+    rng = random.Random(seed)
+    ss = size * 2
+
+    fine = [[rng.gauss(0.0, 1.0) for _ in range(ss)] for _ in range(ss)]
+    fine = box_blur_2d(fine, 1)
+    coarse = box_blur_2d(fine, 5)
+
+    merged = [[0.0] * ss for _ in range(ss)]
+    for y in range(ss):
+        for x in range(ss):
+            merged[y][x] = fine[y][x] * 0.72 + coarse[y][x] * 0.28
+
+    merged = box_blur_2d(merged, 1)
+    merged = downsample_2x(merged)
+
+    out = [[0] * size for _ in range(size)]
+    for y in range(size):
+        for x in range(size):
+            v = 128.0 + merged[y][x] * 11.5
+            if v < 128.0:
+                v = 128.0 - (128.0 - v) * 0.62
+            else:
+                v = 128.0 + (v - 128.0) * 0.72
+            out[y][x] = int(max(122, min(234, v)))
+    return out
 
 
 def write_grain_png(path: Path, size: int, seed: int = GRAIN_SEED) -> None:
-    rng = random.Random(seed)
+    tile = film_grain_tile(size, seed)
     rows: list[bytes] = []
-    for _ in range(size):
+    for y in range(size):
         row = b"\x00"
-        for _ in range(size):
-            v = film_grain_value(rng)
+        for x in range(size):
+            v = tile[y][x]
             row += bytes((v, v, v, 255))
         rows.append(row)
 
