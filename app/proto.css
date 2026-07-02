@@ -269,6 +269,8 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav:not(.prot
 
 /* Proto iPhone — frosted pill nav between page gutters on scroll. */
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav-scroll-frost {
+  --proto-nav-motion-duration: 620ms;
+  --proto-nav-motion-ease: cubic-bezier(0.28, 0.84, 0.24, 1);
   --proto-nav-frost-pad-x-min: clamp(0.8rem, 0.55rem + 1.1vmin, 1.05rem);
   --proto-nav-frost-pad-x-max: clamp(1.12rem, 0.82rem + 1.45vmin, 1.45rem);
   --proto-nav-frost-pad-y: clamp(0.3rem, 0.18rem + 0.5vmin, 0.5rem);
@@ -276,7 +278,7 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
     (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-frost-pad-x-min) +
     var(--proto-nav-frost-progress, 0) * var(--proto-nav-frost-pad-x-max)
   );
-  --proto-nav-frost-compact-scale: calc(1 - var(--proto-nav-frost-progress, 0) * 0.1);
+  --proto-nav-frost-compact-scale: calc(1 - var(--proto-nav-frost-progress, 0) * 0.06);
   --proto-nav-frost-nav-pad-top: clamp(0.35rem, 0.2rem + 0.85vmin, 0.65rem);
   --proto-nav-frost-nav-pad-bottom: clamp(0.25rem, 0.1rem + 0.55vmin, 0.45rem);
   padding-top: calc(
@@ -301,10 +303,11 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
   box-shadow: 0 calc(-120px * (1 - var(--proto-nav-frost-progress, 0))) 0
     calc(120px * (1 - var(--proto-nav-frost-progress, 0))) var(--proto-page-bg) !important;
   transition:
-    padding 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    background 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    --proto-nav-frost-progress var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
+    padding var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
+    background var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
+    border-color var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
+    box-shadow var(--proto-nav-motion-duration) var(--proto-nav-motion-ease);
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready),
@@ -320,12 +323,12 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-frost-shell {
   transition:
-    background-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-radius 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    backdrop-filter 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    -webkit-backdrop-filter 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    background-color var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    border-color var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    box-shadow var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    backdrop-filter var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    -webkit-backdrop-filter var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
   border: 1px solid transparent;
   border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px);
   border-color: rgba(255, 255, 255, calc(var(--proto-nav-frost-progress, 0) * 0.1));
@@ -341,7 +344,7 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-frost-shell > div {
-  transition: padding 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: padding var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
   padding-left: calc(var(--proto-phone-gutter-left) * (1 - var(--proto-nav-frost-progress, 0))) !important;
   padding-right: calc(
     var(--proto-phone-gutter-right) * (1 - var(--proto-nav-frost-progress, 0)) +
@@ -361,8 +364,8 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-chrome-logo {
   transition:
-    transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    left 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    left var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
   transform: translateY(-50%) scale(var(--proto-nav-frost-compact-scale, 1));
   transform-origin: left center;
   left: calc(
@@ -372,15 +375,15 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-chrome-actions {
-  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
   transform: scale(var(--proto-nav-frost-compact-scale, 1));
   transform-origin: right center;
   overflow: visible !important;
-  margin-right: calc(var(--proto-nav-frost-progress, 0) * 0px) !important;
 }
 
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-chrome-actions {
-  margin-right: 0 !important;
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-chrome-actions[class*="top-1/2"] {
+  transform: translateY(-50%) scale(var(--proto-nav-frost-compact-scale, 1)) !important;
+  transform-origin: right center;
 }
 
 /* Nav CTAs — black buttons + white text (mail, investors, dropdowns). */
@@ -393,22 +396,25 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
   box-shadow: none !important;
   border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px) !important;
   overflow: visible !important;
-  transition: border-radius 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
 }
 
-/* Split trigger — one pill clip on the inner row only (not the dropdown menu). */
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell > div:not([role="menu"]) {
-  border-radius: 9999px !important;
+/* Split trigger — pill clip follows scroll progress (not a binary snap). */
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell > div:not([role="menu"]) {
+  border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px) !important;
   overflow: hidden !important;
+  transition: border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
 }
 
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell > div:not([role="menu"]) > a,
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell > div:not([role="menu"]) > button {
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell > div:not([role="menu"]) > a,
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell > div:not([role="menu"]) > button {
   border-radius: 0 !important;
+  transition: none !important;
 }
 
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell > button {
-  border-radius: 9999px !important;
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell > button {
+  border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px) !important;
+  transition: border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell a,
@@ -416,7 +422,6 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
   background-color: #000000 !important;
   color: #ffffff !important;
   box-shadow: none !important;
-  transition: border-radius 480ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-dropdown,
@@ -425,12 +430,12 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
   overflow: hidden !important;
   border-radius: clamp(0.85rem, 0.68rem + 0.75vmin, 1.05rem) !important;
   transition:
-    border-radius 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    backdrop-filter 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    -webkit-backdrop-filter 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    background-color var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    border-color var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    box-shadow var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    backdrop-filter var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
+    -webkit-backdrop-filter var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell [role="menu"],
