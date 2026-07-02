@@ -62,12 +62,6 @@ export function ProtoRouteShell({
         navChromeTheme="dark"
         logoLink
         navActionLinksEnabled
-        mobileNavChrome={{
-          bg: "#151c1f",
-          fg: "#E8EDEF",
-          divider: "#2A3538",
-          shadow: "none",
-        }}
       />
       {children}
     </div>

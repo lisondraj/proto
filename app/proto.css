@@ -265,20 +265,26 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .absolute
   font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
 }
 
-/* Nav CTAs — proto dark chrome borders on investors + email controls. */
+/* Nav CTAs — black buttons + white text (mail, investors, dropdowns). */
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell {
-  border: 1px solid #2a3538 !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell a,
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell button {
+  background-color: #000000 !important;
+  color: #ffffff !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell [role="menu"],
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-email-dropdown {
-  border: 1px solid #2a3538 !important;
-  background-color: #151c1f !important;
-  color: #e8edef !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell button[class*="border-l"] {
-  border-left-color: #2a3538 !important;
+  border-left-color: rgba(255, 255, 255, 0.22) !important;
 }
 
 /* Hero copy — same horizontal gutters as sections. */
