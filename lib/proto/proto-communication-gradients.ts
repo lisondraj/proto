@@ -54,7 +54,7 @@ export const PROTO_PROTOTYPE_BACKDROP = {
   slideIndex: 6,
   label: "Prototype",
   gradient: PROTO_PROTOTYPE_GRADIENT,
-  grid: "diagonal" as const,
+  grid: "dot" as const,
 };
 
 /** Shortlist — cool base into warm highlight. */
@@ -111,7 +111,7 @@ export type ProtoCommunicationSlideId = keyof typeof PROTO_COMMUNICATION_GRADIEN
 export const PROTO_COMMUNICATION_GRIDS: Partial<
   Record<ProtoCommunicationSlideId, WorkflowCarouselGridKind>
 > = {
-  prototype: "diagonal",
+  prototype: "dot",
   integrate: "hex",
   validate: "crosshatch",
   shortlist: "wave",
