@@ -33,6 +33,9 @@ function applyDesktopDocumentAttrs() {
   html.setAttribute("data-layout", "desktop");
   body.classList.add("desktop-route");
   body.classList.remove("doephone-route");
+  html.style.removeProperty("--app-vw");
+  html.style.removeProperty("--app-vh");
+  html.style.removeProperty("--app-vv-offset-top");
   meta?.setAttribute("content", PHONE_DEVICE_VIEWPORT);
 }
 

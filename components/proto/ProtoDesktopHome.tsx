@@ -18,22 +18,28 @@ export function ProtoDesktopHome() {
   const [navSolid, setNavSolid] = useState(false);
 
   useEffect(() => {
+    let raf = 0;
+
     const onScroll = () => {
-      setNavSolid(window.scrollY > window.innerHeight * 0.72);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setNavSolid(window.scrollY > window.innerHeight * 0.72);
+      });
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
+      cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
   }, []);
 
   return (
-    <div className={`proto-desktop-root relative overflow-x-hidden bg-[#121819] ${PROTO_FONT_CLASS}`}>
-      <div className="relative z-[40] overflow-x-clip overflow-y-visible">
+    <div className={`proto-desktop-root relative bg-[#121819] ${PROTO_FONT_CLASS}`}>
+      <div className="relative z-[40]">
         <DoePhoneHeroSection variant="desktop" proto />
 
         <nav

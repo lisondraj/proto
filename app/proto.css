@@ -516,10 +516,24 @@ html[data-proto-page] .doephone-section-reveal--in {
 html[data-proto-page][data-layout="desktop"],
 html[data-proto-page][data-layout="desktop"] body {
   background-color: #121819 !important;
+  touch-action: auto !important;
+  overscroll-behavior-y: auto !important;
+}
+
+html[data-proto-page][data-layout="desktop"] {
+  overflow-x: clip !important;
+}
+
+html[data-proto-page][data-layout="desktop"] body {
+  overflow-x: clip !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100% !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-root {
   background-color: #121819;
+  overflow: visible !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature.proto-feature-section {

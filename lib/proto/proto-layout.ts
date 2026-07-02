@@ -6,5 +6,5 @@ export function protoPageBootstrapScript(): string {
   const viewportBootstrap = phoneLayoutViewportBootstrapScript();
   const storagePrefix = "doephone-app-viewport-lock:";
 
-  return `(function(){try{var html=document.documentElement;html.setAttribute("data-proto-page","true");try{sessionStorage.removeItem(${JSON.stringify(storagePrefix)}+location.hostname);}catch(e){}var desktop=window.matchMedia(${JSON.stringify(DOEPHONE_DESKTOP_MEDIA_QUERY)}).matches;if(desktop){html.removeAttribute("data-doeforvc-always-phone");html.removeAttribute("data-doephone-pinching");html.setAttribute("data-layout","desktop");return;}${viewportBootstrap}}catch(e){}})();`;
+  return `(function(){try{var html=document.documentElement;html.setAttribute("data-proto-page","true");try{sessionStorage.removeItem(${JSON.stringify(storagePrefix)}+location.hostname);}catch(e){}var desktop=window.matchMedia(${JSON.stringify(DOEPHONE_DESKTOP_MEDIA_QUERY)}).matches;if(desktop){html.removeAttribute("data-doeforvc-always-phone");html.removeAttribute("data-doephone-pinching");html.setAttribute("data-layout","desktop");html.style.removeProperty("--app-vw");html.style.removeProperty("--app-vh");html.style.removeProperty("--app-vv-offset-top");return;}${viewportBootstrap}}catch(e){}})();`;
 }
