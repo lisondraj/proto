@@ -19,9 +19,9 @@ export const PROTO_INVEST_CONTENT_GAP = "space-y-5 iphone-page:space-y-6";
 
 export const PROTO_INVEST_LIST_GAP = "space-y-3.5 iphone-page:space-y-4";
 
-export const PROTO_INVEST_TITLE_TW = `text-left font-light leading-[1.0] tracking-[-0.03em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(1.82rem,0.98rem+4.45vmin,2.55rem)] ${PROTO_FONT_CLASS}`;
+export const PROTO_INVEST_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(2.08rem,1.12rem+5.15vmin,2.92rem)] ${PROTO_FONT_CLASS}`;
 
-export const PROTO_INVEST_SUBHEADING_TW = `mt-[clamp(0.85rem,0.65rem+0.85vmin,1.25rem)] text-[clamp(1.42rem,1.22rem+0.95vmin,1.78rem)] iphone-page:mt-[clamp(0.55rem,0.45rem+0.45vmin,0.82rem)] iphone-page:text-[clamp(0.98rem,0.86rem+0.58vmin,1.14rem)] font-normal leading-[1.36] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
+export const PROTO_INVEST_SUBHEADING_TW = `mt-[clamp(0.85rem,0.65rem+0.85vmin,1.25rem)] text-[clamp(1.42rem,1.22rem+0.95vmin,1.78rem)] iphone-page:mt-[clamp(0.6rem,0.48rem+0.48vmin,0.88rem)] iphone-page:text-[clamp(1.08rem,0.94rem+0.75vmin,1.32rem)] font-normal leading-[1.34] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_BYLINE_TW = `text-[clamp(1.28rem,1.08rem+0.75vmin,1.48rem)] iphone-page:text-[clamp(1.08rem,0.9rem+0.65vmin,1.28rem)] font-medium text-white/55 ${PROTO_FONT_CLASS}`;
 
