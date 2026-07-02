@@ -7,8 +7,10 @@ import struct
 import zlib
 from pathlib import Path
 
-GRAIN_ASSET_PX = 768
+GRAIN_ASSET_PX = 1024
+GRAIN_DISPLAY_PX = 288
 GRAIN_SEED = 0x50726F746F
+GRAIN_BLUR_RADIUS = 0.85
 
 
 def png_chunk(tag: bytes, data: bytes) -> bytes:
@@ -22,18 +24,38 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 
 def film_grain_value(rng: random.Random) -> int:
     """Two-octave monochrome noise — visible contrast, smooth when downscaled."""
-    fine = rng.gauss(0, 19)
-    coarse = rng.gauss(0, 38)
-    return int(max(0, min(255, 128 + fine + coarse * 0.58)))
+    fine = rng.gauss(0, 17)
+    coarse = rng.gauss(0, 40)
+    return int(max(0, min(255, 128 + fine + coarse * 0.55)))
+
+
+def build_noise_grid(size: int, rng: random.Random) -> list[int]:
+    return [film_grain_value(rng) for _ in range(size * size)]
+
+
+def soften_grid(grid: list[int], size: int) -> list[int]:
+    """Light gaussian blur removes pixel speckle while keeping film grain."""
+    try:
+        from PIL import Image, ImageFilter
+    except ImportError:
+        return grid
+
+    image = Image.new("L", (size, size))
+    image.putdata(grid)
+    softened = image.filter(ImageFilter.GaussianBlur(radius=GRAIN_BLUR_RADIUS))
+    return list(softened.getdata())
 
 
 def write_grain_png(path: Path, size: int = GRAIN_ASSET_PX) -> None:
     rng = random.Random(GRAIN_SEED)
+    grid = soften_grid(build_noise_grid(size, rng), size)
+
     rows: list[bytes] = []
-    for _ in range(size):
+    for y in range(size):
         row = b"\x00"
-        for _ in range(size):
-            v = film_grain_value(rng)
+        offset = y * size
+        for x in range(size):
+            v = grid[offset + x]
             row += bytes((v, v, v, 255))
         rows.append(row)
 
@@ -46,7 +68,7 @@ def write_grain_png(path: Path, size: int = GRAIN_ASSET_PX) -> None:
     png += png_chunk(b"IEND", b"")
 
     path.write_bytes(png)
-    print(f"wrote {path} ({size}x{size}, {len(png)} bytes)")
+    print(f"wrote {path} ({size}x{size} -> {GRAIN_DISPLAY_PX}px, {len(png)} bytes)")
 
 
 if __name__ == "__main__":

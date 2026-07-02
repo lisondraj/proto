@@ -1,8 +1,8 @@
-/** Proto grain — 768px PNG displayed at 256px (3× on phone, smooth downscale). */
-export const PROTO_GRAIN_ASSET_PX = 768;
+/** Proto grain — 1024px PNG displayed at 288px (downscaled, anti-pixelate). */
+export const PROTO_GRAIN_ASSET_PX = 1024;
 
 /** CSS background-size — one tile in layout pixels. */
-export const PROTO_GRAIN_TILE_PX = 256;
+export const PROTO_GRAIN_TILE_PX = 288;
 
 export const PROTO_GRAIN_BG = 'url("/proto-grain-tile.png")';
 
