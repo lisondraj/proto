@@ -33,16 +33,16 @@ export const PROTO_CHART_GRADIENTS = {
   tamBar: `linear-gradient(180deg, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.blue} 100%)`,
 } as const;
 
-/** iPhone /about charts — sage bloom palette. */
+/** iPhone /about charts — lavender steel palette. */
 export const PROTO_PHONE_CHART_COLORS = {
   accent: R.gold,
   accentWarm: R.copper,
-  cool: "#A8C8B0",
+  cool: "#B0B0D0",
   coolDeep: R.blue,
-  track: "rgba(88, 144, 122, 0.22)",
-  gridLine: "rgba(88, 144, 122, 0.14)",
-  axis: "rgba(168, 200, 176, 0.42)",
-  sliceMuted: "#A8C8B0",
+  track: "rgba(106, 106, 144, 0.22)",
+  gridLine: "rgba(106, 106, 144, 0.14)",
+  axis: "rgba(176, 176, 208, 0.42)",
+  sliceMuted: "#B0B0D0",
   sliceMid: R.blue,
   donutCenter: R.deep,
   label: "rgba(255, 255, 255, 0.72)",
@@ -57,6 +57,6 @@ export const PROTO_PHONE_CHART_SLICE_COLORS = [
 
 export const PROTO_PHONE_CHART_GRADIENTS = {
   bar: `linear-gradient(90deg, ${R.deep} 0%, ${R.blue} 42%, ${R.copper} 74%, ${R.gold} 100%)`,
-  track: `linear-gradient(90deg, rgba(24, 40, 32, 0.42) 0%, rgba(88, 144, 122, 0.28) 55%, rgba(168, 200, 176, 0.22) 100%)`,
+  track: `linear-gradient(90deg, rgba(28, 28, 44, 0.42) 0%, rgba(106, 106, 144, 0.28) 55%, rgba(176, 176, 208, 0.22) 100%)`,
   tamBar: `linear-gradient(180deg, ${R.gold} 0%, ${R.copper} 58%, ${R.blue} 100%)`,
 } as const;
