@@ -16,11 +16,9 @@ export const PROTO_DESKTOP_FULL_PANEL_NAV_CLEARANCE = DESKTOP_HOME_FIXED_NAV_HEI
 /** Split bands — page gutters on the grid; column gap separates copy and panel. */
 export const PROTO_DESKTOP_SPLIT_SECTION_GRID = `proto-desktop-split-section-grid grid h-full min-h-0 w-full grid-cols-2 items-center gap-8 md:gap-10 lg:gap-12 xl:gap-14 ${DOEPHONE_DESKTOP_PAGE_INSET_X} py-8 md:py-10 lg:py-12`;
 
-export const PROTO_DESKTOP_SPLIT_COLUMN_PAD = "p-6 md:p-8 lg:p-10 xl:p-12";
+export const PROTO_DESKTOP_SPLIT_TEXT_COLUMN = "flex min-h-0 min-w-0 flex-col justify-center";
 
-export const PROTO_DESKTOP_SPLIT_TEXT_COLUMN = `flex min-h-0 min-w-0 flex-col justify-center ${PROTO_DESKTOP_SPLIT_COLUMN_PAD}`;
-
-export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_BASE = `grid min-h-0 min-w-0 h-full items-center ${PROTO_DESKTOP_SPLIT_COLUMN_PAD}`;
+export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_BASE = "grid min-h-0 min-w-0 h-full items-center";
 
 export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_LEFT = `${PROTO_DESKTOP_SPLIT_BOX_COLUMN_BASE} justify-items-start`;
 
