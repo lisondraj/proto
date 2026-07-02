@@ -234,8 +234,8 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
 
 html[data-proto-page] {
   --proto-grain-image: url("/proto-grain-tile.png");
-  --proto-grain-opacity: 0.4;
-  --proto-grain-tile-size: 180px;
+  --proto-grain-opacity: 0.52;
+  --proto-grain-tile-size: 192px;
 }
 
 @media (-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 2.5dppx) {
@@ -251,26 +251,24 @@ html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\],
 html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
   background-image: var(--proto-grain-image) !important;
   opacity: var(--proto-grain-opacity) !important;
-  mix-blend-mode: soft-light !important;
+  mix-blend-mode: overlay !important;
   background-size: var(--proto-grain-tile-size) var(--proto-grain-tile-size) !important;
   background-repeat: repeat !important;
   image-rendering: auto !important;
-  filter: blur(0.35px);
-  -webkit-filter: blur(0.35px);
 }
 
 /* Home hero — lighter film grain. */
 html[data-proto-page] .doephone-hero-backdrop .proto-grain-layer,
 html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\] {
-  --proto-grain-opacity: 0.34;
-  --proto-grain-tile-size: 180px;
+  --proto-grain-opacity: 0.46;
+  --proto-grain-tile-size: 192px;
 }
 
 /* /about hero gradient box — same grain treatment as main feature cards. */
 html[data-proto-page] .proto-invest-hero-backdrop .proto-grain-layer,
 html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
-  --proto-grain-opacity: 0.4;
-  --proto-grain-tile-size: 180px;
+  --proto-grain-opacity: 0.52;
+  --proto-grain-tile-size: 192px;
 }
 
 /* Feature box line grids — matched density and centering on iPhone + desktop. */
@@ -415,13 +413,11 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-chrome-actions {
-  margin-right: var(--proto-nav-frost-pad-y) !important;
+  margin-right: 0 !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-chrome-actions {
-  transition:
-    transform 360ms cubic-bezier(0.32, 0.72, 0, 1),
-    margin-right 360ms cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 360ms cubic-bezier(0.32, 0.72, 0, 1);
   transform: scale(var(--proto-nav-frost-compact-scale, 1));
   transform-origin: right center;
   overflow: visible !important;

@@ -8,11 +8,11 @@ import zlib
 from pathlib import Path
 
 GRAIN_SEED = 0x50726F746F
-GRAIN_DISPLAY_PX = 180
+GRAIN_DISPLAY_PX = 192
 # 2× displays — 1:1 device pixels at GRAIN_DISPLAY_PX.
-GRAIN_2X_PX = 360
+GRAIN_2X_PX = 384
 # 3× displays (iPhone) — 1:1 device pixels at GRAIN_DISPLAY_PX.
-GRAIN_3X_PX = 540
+GRAIN_3X_PX = 576
 
 
 def png_chunk(tag: bytes, data: bytes) -> bytes:
@@ -61,18 +61,18 @@ def downsample_2x(grid: list[list[float]]) -> list[list[float]]:
 
 
 def film_grain_tile(size: int, seed: int) -> list[list[int]]:
-    """Supersampled, multi-scale noise — fine film grain without blocky specks."""
+    """Supersampled film grain — smooth specks with enough contrast for overlay blend."""
     rng = random.Random(seed)
     ss = size * 2
 
     fine = [[rng.gauss(0.0, 1.0) for _ in range(ss)] for _ in range(ss)]
     fine = box_blur_2d(fine, 1)
-    coarse = box_blur_2d(fine, 5)
+    coarse = box_blur_2d(fine, 4)
 
     merged = [[0.0] * ss for _ in range(ss)]
     for y in range(ss):
         for x in range(ss):
-            merged[y][x] = fine[y][x] * 0.72 + coarse[y][x] * 0.28
+            merged[y][x] = fine[y][x] * 0.68 + coarse[y][x] * 0.32
 
     merged = box_blur_2d(merged, 1)
     merged = downsample_2x(merged)
@@ -80,12 +80,12 @@ def film_grain_tile(size: int, seed: int) -> list[list[int]]:
     out = [[0] * size for _ in range(size)]
     for y in range(size):
         for x in range(size):
-            v = 128.0 + merged[y][x] * 11.5
+            v = 128.0 + merged[y][x] * 17.5
             if v < 128.0:
-                v = 128.0 - (128.0 - v) * 0.62
+                v = 128.0 - (128.0 - v) * 0.72
             else:
-                v = 128.0 + (v - 128.0) * 0.72
-            out[y][x] = int(max(122, min(234, v)))
+                v = 128.0 + (v - 128.0) * 0.9
+            out[y][x] = int(max(110, min(246, v)))
     return out
 
 
