@@ -267,8 +267,12 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .absolute
 }
 
 /* Nav CTAs — black buttons + white text (mail, investors, dropdowns). */
+html[data-proto-page]:has(.doephone-mobile-root) {
+  --proto-nav-cta-border: #151c1f;
+}
+
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell {
-  border: 1px solid #2a3538 !important;
+  border: 1px solid var(--proto-nav-cta-border) !important;
   box-shadow: none !important;
 }
 
@@ -281,14 +285,14 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell [role="menu"],
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-email-dropdown {
-  border: 1px solid #2a3538 !important;
+  border: 1px solid var(--proto-nav-cta-border) !important;
   background-color: #000000 !important;
   color: #ffffff !important;
   box-shadow: none !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell button[class*="border-l"] {
-  border-left-color: #2a3538 !important;
+  border-left-color: var(--proto-nav-cta-border) !important;
 }
 
 /* Hero copy — same horizontal gutters as sections. */
