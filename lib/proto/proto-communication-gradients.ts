@@ -48,10 +48,10 @@ const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%,
 /** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
 const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
-/** Home hero — integrate flow; light blue top cap, warm yellow band lower in frame. */
+/** Home hero — integrate flow; subdued top blue cap, warm hues sweep with copper. */
 export const PROTO_HOME_HERO_GRADIENT = [
-  `linear-gradient(180deg, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_RECEPTION_PALETTE.blue} 16%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 28%, transparent 38%)`,
-  `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 62%, ${PROTO_RECEPTION_PALETTE.copper} 68%, ${PROTO_RECEPTION_PALETTE.gold} 74%, ${PROTO_RECEPTION_PALETTE.wheat} 79%, ${PROTO_RECEPTION_PALETTE.lightYellow} 84%)`,
+  `linear-gradient(180deg, ${PROTO_HUMIRA_COLORS.bridgeDeep} 0%, ${PROTO_AGENTS_MID_BLUE} 16%, ${PROTO_RECEPTION_PALETTE.blue} 28%, transparent 38%)`,
+  `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 62%, ${PROTO_RECEPTION_PALETTE.copper} 70%, ${PROTO_HUMIRA_COLORS.amber} 74%, ${PROTO_RECEPTION_PALETTE.gold} 78%, ${PROTO_RECEPTION_PALETTE.wheat} 82%, ${PROTO_RECEPTION_PALETTE.lightYellow} 86%)`,
 ].join(", ");
 
 /** Prototype validation — cool upper arc into warm copper/gold. */
