@@ -3,6 +3,7 @@ import type { WorkflowCarouselDesignBackdrop } from "@/lib/workflow-carousel-des
 import {
   PROTO_ABOUT_HERO_PHONE_GRADIENT,
   PROTO_COMMUNICATION_GRIDS,
+  PROTO_COMMUNICATION_LINE_OPACITY,
   PROTO_HOME_HERO_GRADIENT,
   PROTO_HOME_HERO_PHONE_GRADIENT,
   PROTO_HERO_GRADIENT,
@@ -11,20 +12,22 @@ import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/pro
 
 export { PROTO_HERO_GRADIENT };
 
-/** Home hero — integrate flow with yellow arch above copper. */
+/** Home hero — prior-auth sweep from the billing (Analyzes in seconds) band. */
 export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
   gradient: PROTO_HOME_HERO_GRADIENT,
-  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
+  grid: PROTO_COMMUNICATION_GRIDS.billing ?? "hex",
+  lineOverlayOpacity: PROTO_COMMUNICATION_LINE_OPACITY.billing,
 };
 
-/** iPhone home hero — same reception colouring as desktop. */
+/** iPhone home hero — same prior-auth colouring with a taller radial fit. */
 export const PROTO_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero phone",
   gradient: PROTO_HOME_HERO_PHONE_GRADIENT,
-  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
+  grid: PROTO_COMMUNICATION_GRIDS.billing ?? "hex",
+  lineOverlayOpacity: PROTO_COMMUNICATION_LINE_OPACITY.billing,
 };
 
 /** /about hero visual — documents reception palette. */

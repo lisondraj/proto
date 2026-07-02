@@ -42,20 +42,28 @@ const PROTO_RECEPTION_FULL_STOPS = [
 
 const PROTO_AGENTS_GRADIENT = `linear-gradient(225deg, ${PROTO_RECEPTION_FULL_STOPS})`;
 
+/** Prior auth colour stops — shared by billing band and home hero. */
+const PROTO_PRIOR_AUTH_STOPS = [
+  `${PROTO_RECEPTION_PALETTE.lightYellow} 0%`,
+  `${PROTO_RECEPTION_PALETTE.wheat} 12%`,
+  `${PROTO_RECEPTION_PALETTE.gold} 26%`,
+  `${PROTO_RECEPTION_PALETTE.copper} 40%`,
+  `${PROTO_RECEPTION_PALETTE.blue} 56%`,
+  `${PROTO_AGENTS_MID_BLUE} 72%`,
+  `${PROTO_RECEPTION_PALETTE.deep} 100%`,
+].join(", ");
+
 /** Prior auth — warm lower-right bloom; full reception sweep (all phone won't stop colours). */
-const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%, ${PROTO_RECEPTION_PALETTE.lightYellow} 0%, ${PROTO_RECEPTION_PALETTE.wheat} 12%, ${PROTO_RECEPTION_PALETTE.gold} 26%, ${PROTO_RECEPTION_PALETTE.copper} 40%, ${PROTO_RECEPTION_PALETTE.blue} 56%, ${PROTO_AGENTS_MID_BLUE} 72%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
+const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%, ${PROTO_PRIOR_AUTH_STOPS})`;
 
 /** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
 const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
-/** Home hero — integrate flow; subdued top blue cap, wide yellow arch over a thin copper stop. */
-export const PROTO_HOME_HERO_GRADIENT = [
-  `linear-gradient(180deg, ${PROTO_HUMIRA_COLORS.bridgeDeep} 0%, ${PROTO_AGENTS_MID_BLUE} 16%, ${PROTO_RECEPTION_PALETTE.blue} 28%, transparent 38%)`,
-  `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 62%, ${PROTO_RECEPTION_PALETTE.copper} 64%, ${PROTO_HUMIRA_COLORS.amber} 65.5%, ${PROTO_RECEPTION_PALETTE.gold} 69%, ${PROTO_RECEPTION_PALETTE.wheat} 75%, ${PROTO_RECEPTION_PALETTE.lightYellow} 82%, ${PROTO_RECEPTION_PALETTE.lightYellow} 100%)`,
-].join(", ");
+/** Home hero desktop — same prior-auth sweep as billing, expanded for full viewport. */
+export const PROTO_HOME_HERO_GRADIENT = `radial-gradient(ellipse 136% 132% at 66% 92%, ${PROTO_PRIOR_AUTH_STOPS})`;
 
-/** iPhone home hero — same reception colouring as desktop. */
-export const PROTO_HOME_HERO_PHONE_GRADIENT = PROTO_HOME_HERO_GRADIENT;
+/** iPhone home hero — same prior-auth sweep, taller ellipse for narrow viewport. */
+export const PROTO_HOME_HERO_PHONE_GRADIENT = `radial-gradient(ellipse 128% 142% at 60% 94%, ${PROTO_PRIOR_AUTH_STOPS})`;
 
 export const PROTO_PHONE_HERO_VOID = PROTO_RECEPTION_PALETTE.deep;
 
