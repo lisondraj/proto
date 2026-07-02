@@ -49,7 +49,7 @@ export function ProtoDesktopPanelSection({
         gridOverride={gridOverride}
       />
 
-      <div className="absolute inset-0 z-[15] flex items-center justify-center px-[clamp(1.25rem,2.5vw,2.5rem)]">
+      <div className="proto-feature-box-ui absolute inset-0 z-[15] flex items-center justify-center px-[clamp(1.25rem,2.5vw,2.5rem)]">
         <DoePhoneCommunicationSlideVisual slideId={slide.id} layout="desktop" />
       </div>
     </div>

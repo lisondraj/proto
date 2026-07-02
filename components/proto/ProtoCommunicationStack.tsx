@@ -35,6 +35,7 @@ export function ProtoCommunicationStack() {
                     layout="phone"
                     className="proto-carousel-card"
                     showExpandControls={false}
+                    uiInteractive={false}
                     gradientOverride={protoCommunicationGradient(slide.id)}
                     gridOverride={protoCommunicationGrid(slide.id)}
                     backdropPatternScale={PROTO_PHONE_BACKDROP_PATTERN_SCALE}

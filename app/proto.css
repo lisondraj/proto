@@ -227,6 +227,16 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop > d
   mix-blend-mode: soft-light !important;
 }
 
+/* Feature box UI mocks — display-only (no selection or control clicks). */
+html[data-proto-page] .proto-feature-box-ui,
+html[data-proto-page] .proto-feature-box-ui * {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none;
+  cursor: default !important;
+}
+
 /* Scale down mock UI inside feature boxes. */
 html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card .proto-carousel-ui-scale {
   transform: scale(0.84);

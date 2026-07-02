@@ -158,6 +158,7 @@ function CarouselMenuOverlay({
   description,
   layout,
   uiScaleClass,
+  uiInteractive = true,
 }: {
   children: React.ReactNode;
   expanded: boolean;
@@ -165,12 +166,15 @@ function CarouselMenuOverlay({
   description?: string;
   layout: CarouselCardLayout;
   uiScaleClass?: string;
+  uiInteractive?: boolean;
 }) {
   const tokens = LAYOUT[layout];
 
   return (
     <div
-      className="absolute inset-0 z-[15] flex h-full w-full flex-col overflow-hidden"
+      className={`absolute inset-0 z-[15] flex h-full w-full flex-col overflow-hidden${
+        uiInteractive ? "" : " proto-feature-box-ui"
+      }`}
       style={{
         padding: expanded
           ? `${tokens.overlayExpandedPadTop} ${tokens.overlayPadX} ${tokens.overlayExpandedPadBottom}`
@@ -234,6 +238,7 @@ export function DoePhoneCommunicationCarouselCard({
   backdropGradientScale = 1,
   backdropGrainSize,
   uiScaleClass,
+  uiInteractive = true,
 }: {
   slide: DoePhoneCommunicationSlide;
   isActive?: boolean;
@@ -241,6 +246,8 @@ export function DoePhoneCommunicationCarouselCard({
   className?: string;
   /** When false, hides the + badge and expand panel (e.g. /proto feature stack). */
   showExpandControls?: boolean;
+  /** When false, UI mocks are display-only (no text selection or control clicks). */
+  uiInteractive?: boolean;
   /** Extra inset when the slide canvas is cover-cropped (desktop sliding boxes). */
   badgeCrop700?: { x: number; y: number };
   /** Replaces only the backdrop gradient layer. */
@@ -309,6 +316,7 @@ export function DoePhoneCommunicationCarouselCard({
         description={expandable ? slide.description : undefined}
         layout={layout}
         uiScaleClass={uiScaleClass}
+        uiInteractive={uiInteractive}
       >
         <DoePhoneCommunicationSlideVisual slideId={slide.id} layout={layout} />
       </CarouselMenuOverlay>
