@@ -15,7 +15,9 @@ html[data-proto-page] .doephone-section-reveal--title {
 
 html[data-proto-page],
 html[data-proto-page]:has(.doephone-mobile-root) {
-  background-color: #121819 !important;
+  --proto-page-bg: #121819;
+  --proto-page-bg-light: #151c1f;
+  background-color: var(--proto-page-bg) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) {
@@ -48,15 +50,15 @@ html[data-proto-page] .proto-more-about__track-spacer--end {
 
 html[data-proto-page] body,
 html[data-proto-page]:has(.doephone-mobile-root) body {
-  background-color: #121819 !important;
+  background-color: var(--proto-page-bg) !important;
 }
 
 html[data-proto-page] .doephone-mobile-root {
-  background-color: #121819;
+  background-color: var(--proto-page-bg);
 }
 
 html[data-proto-page] .proto-section-band {
-  background-color: #151c1f !important;
+  background-color: var(--proto-page-bg) !important;
 }
 
 /* Feature stack — one slide per full-viewport section on iPhone. */
@@ -331,7 +333,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-main {
 
 /* Footer — page background, top rule. */
 html[data-proto-page] .proto-footer {
-  background-color: #121819 !important;
+  background-color: var(--proto-page-bg) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
   overflow: visible !important;
 }
@@ -377,30 +379,26 @@ html[data-proto-page] .proto-footer-main {
   margin-bottom: clamp(1rem, calc(0.65rem + 1.35vmin), 1.65rem) !important;
 }
 
-html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-column__title {
-  font-size: clamp(1.22rem, calc(1.02rem + 0.68vmin), 1.48rem) !important;
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-column--nav .proto-footer-column__title {
+  font-size: clamp(1.05rem, calc(0.9rem + 0.55vmin), 1.28rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-column--nav .proto-footer-column__link {
+  font-size: clamp(0.98rem, calc(0.84rem + 0.5vmin), 1.18rem) !important;
+}
+
+html[data-proto-page] .proto-more-about {
+  background-color: var(--proto-page-bg-light) !important;
+}
+
+html[data-proto-page] .proto-footer-column--nav .proto-footer-column__title {
   letter-spacing: -0.018em !important;
   line-height: 1.2 !important;
 }
 
-html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-column__link {
-  font-size: clamp(1.12rem, calc(0.94rem + 0.62vmin), 1.35rem) !important;
-  font-weight: 400 !important;
-  line-height: 1.32 !important;
-  letter-spacing: -0.01em !important;
-}
-
-html[data-proto-page] .proto-footer-column__title {
-  font-size: clamp(1.48rem, calc(1.22rem + 0.95vmin), 1.82rem) !important;
-  letter-spacing: -0.018em !important;
-  line-height: 1.2 !important;
-}
-
-html[data-proto-page] .proto-footer-column__link {
+html[data-proto-page] .proto-footer-column--nav .proto-footer-column__link {
   color: rgba(255, 255, 255, 0.78) !important;
-  font-size: clamp(1.38rem, calc(1.14rem + 0.82vmin), 1.68rem) !important;
   font-weight: 400 !important;
-  line-height: 1.32 !important;
   letter-spacing: -0.01em !important;
 }
 
@@ -520,7 +518,7 @@ html[data-proto-page] .doephone-section-reveal--in {
 /* Desktop /proto — Doe home band layout with proto dark styling. */
 html[data-proto-page][data-layout="desktop"],
 html[data-proto-page][data-layout="desktop"] body {
-  background-color: #121819 !important;
+  background-color: var(--proto-page-bg) !important;
   touch-action: auto !important;
   overscroll-behavior-y: auto !important;
 }
@@ -537,7 +535,7 @@ html[data-proto-page][data-layout="desktop"] body {
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-root {
-  background-color: #121819;
+  background-color: var(--proto-page-bg);
   overflow: visible !important;
 }
 
@@ -675,9 +673,44 @@ html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-he
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop {
-  padding-top: clamp(3.5rem, 2.75rem + 2vw, 5.25rem) !important;
-  padding-bottom: clamp(3rem, 2.25rem + 1.75vw, 4.5rem) !important;
-  min-height: clamp(14rem, 12rem + 8vw, 20rem) !important;
+  align-items: center !important;
+  padding-top: clamp(3rem, 2.5rem + 1.75vw, 4.75rem) !important;
+  padding-bottom: clamp(2.75rem, 2rem + 1.5vw, 4rem) !important;
+  min-height: clamp(12rem, 10rem + 6vw, 17rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-desktop-nav {
+  margin-left: auto !important;
+  align-items: center !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-corp {
+  min-width: 11.5rem !important;
+  align-self: center !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-column--nav {
+  min-width: 7.75rem !important;
+  align-self: center !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-column--nav .proto-footer-column__title {
+  font-size: clamp(0.88rem, 0.8rem + 0.22vw, 0.98rem) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-column--nav .proto-footer-column__link {
+  font-size: clamp(0.82rem, 0.76rem + 0.18vw, 0.92rem) !important;
+  line-height: 1.38 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-column--nav .proto-footer-column__links {
+  margin-top: 0.7rem !important;
+  gap: 0.5rem !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-columns {
+  margin-top: 0 !important;
+  max-width: none !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-wordmark--desktop {
@@ -685,28 +718,11 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-wordmark--desktop {
   width: auto !important;
   font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
   white-space: nowrap !important;
+  align-self: center !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-desktop-nav {
-  margin-left: auto !important;
-}
-
-html[data-proto-page][data-layout="desktop"] .proto-footer-corp {
-  min-width: 12.25rem !important;
-}
-
-html[data-proto-page][data-layout="desktop"] .proto-footer-column {
-  min-width: 9.5rem !important;
-}
-
-html[data-proto-page][data-layout="desktop"] .proto-footer-column__links {
-  margin-top: 0.875rem !important;
-  gap: 0.625rem !important;
-}
-
-html[data-proto-page][data-layout="desktop"] .proto-footer-columns {
-  margin-top: 0 !important;
-  max-width: none !important;
+html[data-proto-page][data-layout="desktop"] .proto-footer-desktop-brand {
+  align-self: center !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-contact__email {
@@ -732,20 +748,17 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto
   line-height: 1.45 !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__title {
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column--nav .proto-footer-column__title {
   color: #ffffff !important;
-  font-size: clamp(0.98rem, 0.88rem + 0.32vw, 1.14rem) !important;
   font-weight: 600 !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link {
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column--nav .proto-footer-column__link {
   color: rgba(255, 255, 255, 0.78) !important;
-  font-size: clamp(0.92rem, 0.85rem + 0.25vw, 1.02rem) !important;
   font-weight: 400 !important;
-  line-height: 1.4 !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link:hover {
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column--nav .proto-footer-column__link:hover {
   color: #ffffff !important;
 }
 

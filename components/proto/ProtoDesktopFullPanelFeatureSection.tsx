@@ -2,6 +2,7 @@
 
 import { ProtoDesktopPanelSection } from "@/components/proto/ProtoDesktopPanelSection";
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
+import { PROTO_PAGE_BG } from "@/lib/proto/proto-chrome-colors";
 import {
   PROTO_DESKTOP_FULL_PANEL_BAND_H,
   PROTO_DESKTOP_FULL_PANEL_SHELL_TW,
@@ -27,7 +28,8 @@ export function ProtoDesktopFullPanelFeatureSection({
   return (
     <section
       ref={ref}
-      className={`proto-desktop-feature proto-desktop-feature--full-panel box-border flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FULL_PANEL_BAND_H}`}
+      className={`proto-desktop-feature proto-desktop-feature--full-panel box-border flex w-full flex-col ${PROTO_DESKTOP_FULL_PANEL_BAND_H}`}
+      style={{ backgroundColor: PROTO_PAGE_BG }}
       aria-label={slide.menuLabel}
     >
       <div className={PROTO_DESKTOP_FULL_PANEL_SHELL_TW}>

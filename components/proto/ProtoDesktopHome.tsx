@@ -8,6 +8,7 @@ import { ProtoDesktopFeatureStack } from "@/components/proto/ProtoDesktopFeature
 import { ProtoDesktopNavActionRow } from "@/components/proto/ProtoDesktopNavActionRow";
 import { ProtoFooter } from "@/components/proto/ProtoFooter";
 import { ProtoMoreAboutSection } from "@/components/proto/ProtoMoreAboutSection";
+import { PROTO_PAGE_BG } from "@/lib/proto/proto-chrome-colors";
 import {
   PROTO_DESKTOP_NAV_LOGO_TW,
   PROTO_DESKTOP_PAGE_INSET_X,
@@ -39,14 +40,14 @@ export function ProtoDesktopHome() {
   }, []);
 
   return (
-    <div className={`proto-desktop-root relative bg-[#121819] ${PROTO_FONT_CLASS}`}>
+    <div className={`proto-desktop-root relative ${PROTO_FONT_CLASS}`} style={{ backgroundColor: PROTO_PAGE_BG }}>
       <div className="relative z-[40]">
         <DoePhoneHeroSection variant="desktop" proto />
 
         <nav
           className="fixed top-0 left-0 right-0 z-[50] transition-[background-color,border-color] duration-300 ease-out"
           style={{
-            backgroundColor: navSolid ? "#121819" : "transparent",
+            backgroundColor: navSolid ? PROTO_PAGE_BG : "transparent",
             borderBottom: navSolid ? "1px solid #2A3538" : "1px solid transparent",
           }}
           aria-label="Primary"

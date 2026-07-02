@@ -6,6 +6,7 @@ import DoeIphoneSiteNav from "@/components/DoeIphoneSiteNav";
 import { useDoePhoneLayoutViewport } from "@/lib/doephone/use-doe-phone-layout-viewport";
 import { useDoePhoneStableViewport } from "@/lib/doephone/use-doe-phone-stable-viewport";
 import { PROTO_INVEST_PATH } from "@/lib/site-domains";
+import { PROTO_PAGE_BG } from "@/lib/proto/proto-chrome-colors";
 import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-font";
 
 /** Shared /proto chrome — dark nav, phone viewport, stable scroll height. */
@@ -46,7 +47,8 @@ export function ProtoRouteShell({
 
   return (
     <div
-      className={`doephone-mobile-root relative z-0 min-h-[var(--app-vh,100lvh)] overflow-x-hidden bg-[#121819] ${PROTO_FONT_CLASS}`}
+      className={`doephone-mobile-root relative z-0 min-h-[var(--app-vh,100lvh)] overflow-x-hidden ${PROTO_FONT_CLASS}`}
+      style={{ backgroundColor: PROTO_PAGE_BG }}
       suppressHydrationWarning
       data-doeforvc-view="iphone"
     >

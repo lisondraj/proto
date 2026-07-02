@@ -100,6 +100,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main h2 {
 
 /* Desktop /about — full-viewport split bands with proto dark chrome. */
 html[data-proto-page][data-layout="desktop"] .proto-invest-desktop {
+  background-color: var(--proto-page-bg) !important;
   overflow: visible !important;
 }
 

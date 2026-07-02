@@ -12,6 +12,7 @@ import {
   PROTO_DESKTOP_SPLIT_SECTION_GRID,
   PROTO_DESKTOP_SPLIT_TEXT_COLUMN,
 } from "@/lib/proto/proto-desktop-layout-styles";
+import { PROTO_PAGE_BG } from "@/lib/proto/proto-chrome-colors";
 import {
   protoCommunicationGradient,
   protoCommunicationGrid,
@@ -80,7 +81,8 @@ export function ProtoDesktopFeatureSection({
   return (
     <section
       ref={ref}
-      className={`proto-desktop-feature proto-desktop-feature--split flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FEATURE_BAND_H}`}
+      className={`proto-desktop-feature proto-desktop-feature--split flex w-full flex-col ${PROTO_DESKTOP_FEATURE_BAND_H}`}
+      style={{ backgroundColor: PROTO_PAGE_BG }}
       aria-label={slide.menuLabel}
     >
       <div className={PROTO_DESKTOP_SPLIT_SECTION_GRID}>

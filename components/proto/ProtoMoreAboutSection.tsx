@@ -1,6 +1,7 @@
 "use client";
 
 import { ProtoMoreAboutCard } from "@/components/proto/ProtoMoreAboutCard";
+import { PROTO_PAGE_BG_LIGHT } from "@/lib/proto/proto-chrome-colors";
 import {
   PROTO_MORE_ABOUT_CARD_DESKTOP_TW,
   PROTO_MORE_ABOUT_CARD_PHONE_TW,
@@ -33,7 +34,11 @@ export function ProtoMoreAboutSection({ layout = "phone" }: { layout?: "phone" |
   const trackClass = isDesktop ? PROTO_MORE_ABOUT_TRACK_DESKTOP_TW : PROTO_MORE_ABOUT_TRACK_PHONE_TW;
 
   return (
-    <section className={`proto-more-about w-full bg-[#121819] ${PROTO_MORE_ABOUT_SECTION_PAD_Y}`} aria-label="More about Proto">
+    <section
+      className={`proto-more-about w-full ${PROTO_MORE_ABOUT_SECTION_PAD_Y}`}
+      style={{ backgroundColor: PROTO_PAGE_BG_LIGHT }}
+      aria-label="More about Proto"
+    >
       <div className={`${insetX} ${PROTO_MORE_ABOUT_TITLE_TO_TRACK_GAP}`}>
         <h2 className={isDesktop ? PROTO_MORE_ABOUT_SECTION_TITLE_DESKTOP_TW : PROTO_MORE_ABOUT_SECTION_TITLE_PHONE_TW}>
           More about Proto

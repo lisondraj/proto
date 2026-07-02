@@ -46,7 +46,7 @@ function FooterColumns({
   return (
     <>
       {FOOTER_COLUMNS.map((column) => (
-        <div key={column.title} className="proto-footer-column min-w-0">
+        <div key={column.title} className="proto-footer-column proto-footer-column--nav min-w-0">
           <p className={`proto-footer-column__title font-semibold ${titleClassName ?? "text-white"}`.trim()}>
             {column.title}
           </p>
@@ -71,13 +71,13 @@ function ProtoFooterDesktop() {
   return (
     <footer className="proto-footer relative z-10 mt-0 w-full overflow-visible pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
       <div
-        className={`proto-footer-inner proto-footer-inner--desktop flex w-full items-end justify-between ${PROTO_DESKTOP_FOOTER_ROW_GAP} ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FOOTER_PAD_Y}`}
+        className={`proto-footer-inner proto-footer-inner--desktop flex w-full items-center justify-between ${PROTO_DESKTOP_FOOTER_ROW_GAP} ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FOOTER_PAD_Y}`}
       >
         <div className="proto-footer-desktop-brand shrink-0">
           <ProtoFooterWordmark layout="desktop" />
         </div>
 
-        <div className={`proto-footer-desktop-nav flex shrink-0 items-start ${PROTO_DESKTOP_FOOTER_NAV_GAP}`}>
+        <div className={`proto-footer-desktop-nav flex shrink-0 items-center ${PROTO_DESKTOP_FOOTER_NAV_GAP}`}>
           <div className={`proto-footer-corp min-w-0 text-left ${PROTO_FONT_CLASS}`}>
             <p className={`proto-footer-contact__brand ${PROTO_DESKTOP_FOOTER_CORP_BRAND_TW}`}>Proto</p>
             <p className={`proto-footer-contact__line mt-2.5 ${PROTO_DESKTOP_FOOTER_CORP_LINE_TW}`}>
@@ -116,7 +116,7 @@ function ProtoFooterPhone() {
               ask@proto.jobs
             </a>
 
-            <div className="proto-footer-columns grid grid-cols-2 gap-x-10 gap-y-6 iphone-page:gap-x-8">
+            <div className="proto-footer-columns grid grid-cols-2 items-center gap-x-10 gap-y-6 iphone-page:gap-x-8">
               <FooterColumns />
             </div>
           </div>

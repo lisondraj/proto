@@ -42,6 +42,7 @@ import {
   PROTO_INVEST_DESKTOP_SUBHEADING_TW,
   PROTO_INVEST_DESKTOP_TITLE_TW,
 } from "@/lib/proto-invest/proto-invest-layout-styles";
+import { PROTO_INVEST_PAGE_BG } from "@/lib/proto-invest/proto-invest-theme";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 import {
   PROTO_ABOUT_HERO_BACKDROP,
@@ -53,7 +54,7 @@ export function ProtoInvestDesktopView() {
   const [foundersOne, foundersTwo] = PROTO_INVEST_FOUNDERS_PARAGRAPHS;
 
   return (
-    <div className="proto-invest-desktop relative min-h-[100dvh] bg-[#121819]" data-doeforvc-view="desktop">
+    <div className="proto-invest-desktop relative min-h-[100dvh]" style={{ backgroundColor: PROTO_INVEST_PAGE_BG }} data-doeforvc-view="desktop">
       <ProtoInvestDesktopNav />
 
       <main className={`proto-invest-main w-full ${PROTO_FONT_CLASS}`}>
