@@ -1,33 +1,33 @@
 /** Reception reference palette — reused across section 2 slide shapes. */
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
 
-/** Vibrant reception hues — light blue through gold/copper (same gradient flows). */
+/** Aurora palette — ink through electric sky into coral-gold (shared across hero + feature boxes). */
 export const PROTO_RECEPTION_PALETTE = {
-  lightYellow: "#FFF0B0",
-  wheat: "#F8D66A",
-  gold: "#F2B838",
-  copper: "#DD6F42",
-  blue: "#6FA8D4",
-  deep: "#1E3D52",
+  lightYellow: "#FFE08A",
+  wheat: "#FFC960",
+  gold: "#FFAA35",
+  copper: "#E45B52",
+  blue: "#3A9FD4",
+  deep: "#0B1528",
 } as const;
 
 /** Reception hex grid — same line overlay as the front-desk (The phone won't stop) slide. */
 export const PROTO_LINE_GRID = "hex" as const;
 
-/** Humira / TELUS — exact shared colour stops (solid hex). */
+/** Humira / TELUS — aurora bridge tones between ink and sky. */
 export const PROTO_HUMIRA_COLORS = {
   deep: PROTO_RECEPTION_PALETTE.deep,
-  bridgeDeep: "#356B85",
+  bridgeDeep: "#162A48",
   blue: PROTO_RECEPTION_PALETTE.blue,
-  bridgeBlue: "#9FD4F0",
+  bridgeBlue: "#5CB8E8",
   copper: PROTO_RECEPTION_PALETTE.copper,
-  amber: "#E89238",
+  amber: "#F07840",
   gold: PROTO_RECEPTION_PALETTE.gold,
   wheat: PROTO_RECEPTION_PALETTE.wheat,
 } as const;
 
-/** Agents roster — exact legacy colours; linear 225° (not center radial). */
-const PROTO_AGENTS_MID_BLUE = "#4D85A8";
+/** Agents roster — teal mid-tone; linear 225° (not center radial). */
+const PROTO_AGENTS_MID_BLUE = "#1F5A7A";
 
 /** Every colour in the phone won't stop (front-desk) gradient — shared across billing + integrate. */
 const PROTO_RECEPTION_FULL_STOPS = [
@@ -49,18 +49,8 @@ const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%,
 const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
 /** Home hero — diagonal aurora: ink base, electric sky crest, coral-gold surge. */
-const PROTO_HERO_INK = "#0B1528";
-const PROTO_HERO_NAVY = "#162A48";
-const PROTO_HERO_TEAL = "#1F5A7A";
-const PROTO_HERO_SKY = "#3A9FD4";
-const PROTO_HERO_CYAN = "#5CB8E8";
-const PROTO_HERO_CORAL = "#E45B52";
-const PROTO_HERO_FLAME = "#F07840";
-const PROTO_HERO_SUN = "#FFAA35";
-const PROTO_HERO_CREAM = "#FFE08A";
-
 export const PROTO_HOME_HERO_GRADIENT = [
-  `linear-gradient(118deg, ${PROTO_HERO_INK} 0%, ${PROTO_HERO_NAVY} 12%, ${PROTO_HERO_TEAL} 26%, ${PROTO_HERO_SKY} 40%, ${PROTO_HERO_CYAN} 48%, ${PROTO_HERO_CORAL} 62%, ${PROTO_HERO_FLAME} 74%, ${PROTO_HERO_SUN} 88%, ${PROTO_HERO_CREAM} 100%)`,
+  `linear-gradient(118deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 12%, ${PROTO_AGENTS_MID_BLUE} 26%, ${PROTO_RECEPTION_PALETTE.blue} 40%, ${PROTO_HUMIRA_COLORS.bridgeBlue} 48%, ${PROTO_RECEPTION_PALETTE.copper} 62%, ${PROTO_HUMIRA_COLORS.amber} 74%, ${PROTO_RECEPTION_PALETTE.gold} 88%, ${PROTO_RECEPTION_PALETTE.lightYellow} 100%)`,
   `radial-gradient(ellipse 88% 72% at 82% 96%, rgba(255, 200, 75, 0.72) 0%, rgba(240, 105, 60, 0.38) 32%, transparent 64%)`,
   `radial-gradient(ellipse 62% 54% at 6% 8%, rgba(92, 184, 232, 0.55) 0%, rgba(31, 90, 122, 0.22) 42%, transparent 70%)`,
   `radial-gradient(ellipse 40% 35% at 92% 42%, rgba(228, 91, 82, 0.28) 0%, transparent 68%)`,
