@@ -124,6 +124,11 @@ html[data-proto-page] .proto-feature-reveal {
 
 html[data-proto-page] .proto-feature-reveal--in {
   animation: doephone-hero-headline-in 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-proto-page] .proto-feature-reveal--in:hover {
+  transform: translateY(-7px);
 }
 
 html[data-proto-page] .proto-feature-reveal--description.proto-feature-reveal--in {
@@ -145,6 +150,11 @@ html[data-proto-page] .proto-feature-reveal .doephone-hero-headline-line {
     filter: none !important;
     transform: none !important;
     animation: none !important;
+    transition: none !important;
+  }
+
+  html[data-proto-page] .proto-feature-reveal--in:hover {
+    transform: none !important;
   }
 }
 
@@ -557,11 +567,8 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-featu
   margin-top: 0 !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-feature-reveal {
-  opacity: 1 !important;
-  filter: none !important;
-  transform: none !important;
-  animation: none !important;
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel.proto-feature-reveal--in:hover {
+  transform: translateY(-7px);
 }
 
 html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline,

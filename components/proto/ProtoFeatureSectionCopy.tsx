@@ -16,15 +16,19 @@ import {
 export function ProtoFeatureSectionCopy({
   copy,
   layout = "phone",
+  revealed: revealedOverride,
 }: {
   copy: ProtoFeatureCopy;
   layout?: "phone" | "desktop";
+  /** When set, scroll reveal is driven by a parent section observer (desktop bands). */
+  revealed?: boolean;
 }) {
-  const { ref, revealed } = useProtoFeatureScrollReveal();
+  const { ref, revealed: observedRevealed } = useProtoFeatureScrollReveal();
+  const revealed = revealedOverride ?? observedRevealed;
   const isDesktop = layout === "desktop";
 
   return (
-    <div ref={ref} className="proto-feature-section__copy w-full min-w-0">
+    <div ref={revealedOverride === undefined ? ref : undefined} className="proto-feature-section__copy w-full min-w-0">
       <div className={protoFeatureRevealClass(revealed, "title")}>
         <div className="doephone-hero-copy w-full min-w-0">
           {isDesktop ? (

@@ -15,14 +15,22 @@ import {
   protoCommunicationGradient,
   protoCommunicationGrid,
 } from "@/lib/proto/proto-communication-gradients";
+import {
+  protoFeatureRevealClass,
+  useProtoFeatureScrollReveal,
+} from "@/lib/proto/use-proto-feature-scroll-reveal";
 
 function FeaturePanel({
   slide,
+  revealed,
 }: {
   slide: DoePhoneCommunicationSlide;
+  revealed: boolean;
 }) {
   return (
-    <div className={`proto-desktop-feature__panel aspect-square ${PROTO_DESKTOP_FEATURE_PANEL_SIZE}`}>
+    <div
+      className={`proto-desktop-feature__panel aspect-square ${PROTO_DESKTOP_FEATURE_PANEL_SIZE} ${protoFeatureRevealClass(revealed, "title")}`}
+    >
       <ProtoDesktopPanelSection
         slide={slide}
         gradientOverride={protoCommunicationGradient(slide.id)}
@@ -32,10 +40,10 @@ function FeaturePanel({
   );
 }
 
-function FeatureCopy({ copy }: { copy: ProtoFeatureCopy }) {
+function FeatureCopy({ copy, revealed }: { copy: ProtoFeatureCopy; revealed: boolean }) {
   return (
     <div className="proto-desktop-feature__copy flex min-w-0 flex-1 flex-col justify-center">
-      <ProtoFeatureSectionCopy copy={copy} layout="desktop" />
+      <ProtoFeatureSectionCopy copy={copy} layout="desktop" revealed={revealed} />
     </div>
   );
 }
@@ -52,9 +60,11 @@ export function ProtoDesktopFeatureSection({
   index: number;
 }) {
   const boxOnLeft = index % 2 === 0;
+  const { ref, revealed } = useProtoFeatureScrollReveal(0.18);
 
   return (
     <section
+      ref={ref}
       className={`proto-desktop-feature proto-section-band flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FEATURE_BAND_H}`}
       aria-label={slide.menuLabel}
     >
@@ -63,13 +73,13 @@ export function ProtoDesktopFeatureSection({
       >
         {boxOnLeft ? (
           <>
-            <FeaturePanel slide={slide} />
-            <FeatureCopy copy={copy} />
+            <FeaturePanel slide={slide} revealed={revealed} />
+            <FeatureCopy copy={copy} revealed={revealed} />
           </>
         ) : (
           <>
-            <FeatureCopy copy={copy} />
-            <FeaturePanel slide={slide} />
+            <FeatureCopy copy={copy} revealed={revealed} />
+            <FeaturePanel slide={slide} revealed={revealed} />
           </>
         )}
       </div>
