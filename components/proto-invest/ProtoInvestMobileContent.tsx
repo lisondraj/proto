@@ -37,13 +37,6 @@ import {
   PROTO_INVEST_PRODUCT_HEADLINE_LINES,
   PROTO_INVEST_STAT_BULLETS,
 } from "@/lib/proto-invest/proto-invest-content";
-import {
-  PROTO_ABOUT_HERO_PHONE_BACKDROP,
-  PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
-  PROTO_PHONE_BACKDROP_GRAIN_SIZE,
-  PROTO_PHONE_GRAIN_BG,
-} from "@/lib/proto/proto-hero-backdrop";
-
 /** /proto-invest — Proto hiring platform investor article in proto dark styling. */
 export function ProtoInvestMobileContent() {
   const [foundersOne, foundersTwo] = PROTO_INVEST_FOUNDERS_PARAGRAPHS;
@@ -72,14 +65,10 @@ export function ProtoInvestMobileContent() {
 
       <div className={`${PROTO_INVEST_HERO_AFTER_BYLINE} ${PROTO_INVEST_HERO_BEFORE_ARTICLE}`}>
         <BlogHeroVisual
-          backdrop={PROTO_ABOUT_HERO_PHONE_BACKDROP}
           variant="hero"
           boxClassName={PROTO_INVEST_HERO_BOX_TW}
           gapClassName=""
-          gradientScale={PROTO_PHONE_BACKDROP_GRADIENT_SCALE}
-          grainBackgroundSize={PROTO_PHONE_BACKDROP_GRAIN_SIZE}
-          grainBackgroundImage={PROTO_PHONE_GRAIN_BG}
-          hideGridOverlay
+          protoShaderVariant="about-hero"
         />
       </div>
 

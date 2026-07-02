@@ -1,30 +1,19 @@
-import { WorkflowCarouselDesignBackdrop } from "@/components/workflow-carousel-design-backdrop";
-import type { WorkflowCarouselDesignBackdrop as WorkflowCarouselDesignBackdropType } from "@/lib/workflow-carousel-design-backdrops";
+import { ProtoGrainGradient } from "@/components/proto/ProtoGrainGradient";
+import type { ProtoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
 import { BLOG_FEATURE_BOX_TW, BLOG_TITLE_VISUAL_GAP } from "@/lib/blog/blog-layout-styles";
 
 export function BlogHeroVisual({
-  backdrop,
   variant = "hero",
   boxClassName,
   gapClassName,
-  patternScale,
-  gradientScale,
-  grainBackgroundSize,
-  grainBackgroundImage,
-  hideGrainOverlay,
-  hideGridOverlay,
+  protoShaderVariant,
   children,
 }: {
-  backdrop: WorkflowCarouselDesignBackdropType;
   variant?: "hero" | "list";
   boxClassName?: string;
   gapClassName?: string;
-  patternScale?: number;
-  gradientScale?: number;
-  grainBackgroundSize?: string;
-  grainBackgroundImage?: string;
-  hideGrainOverlay?: boolean;
-  hideGridOverlay?: boolean;
+  /** /proto — Paper GrainGradient variant instead of CSS gradient + line grid. */
+  protoShaderVariant?: ProtoGrainGradientVariant;
   children?: React.ReactNode;
 }) {
   const gap = gapClassName ?? (variant === "hero" ? BLOG_TITLE_VISUAL_GAP : "");
@@ -34,17 +23,12 @@ export function BlogHeroVisual({
       className={`relative w-full overflow-hidden ${boxClassName ?? BLOG_FEATURE_BOX_TW} ${gap}`.trim()}
       aria-hidden={children ? undefined : true}
     >
-      <WorkflowCarouselDesignBackdrop
-        backdrop={backdrop}
-        embedded
-        className="proto-invest-hero-backdrop absolute inset-0 h-full w-full"
-        patternScale={patternScale}
-        gradientScale={gradientScale}
-        grainBackgroundSize={grainBackgroundSize}
-        grainBackgroundImage={grainBackgroundImage}
-        hideGrainOverlay={hideGrainOverlay}
-        hideGridOverlay={hideGridOverlay}
-      />
+      {protoShaderVariant ? (
+        <ProtoGrainGradient
+          variant={protoShaderVariant}
+          className="proto-invest-hero-backdrop absolute inset-0 h-full w-full"
+        />
+      ) : null}
       {children}
     </div>
   );

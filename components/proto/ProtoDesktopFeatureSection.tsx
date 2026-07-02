@@ -14,11 +14,6 @@ import {
 } from "@/lib/proto/proto-desktop-layout-styles";
 import { PROTO_PAGE_BG } from "@/lib/proto/proto-chrome-colors";
 import {
-  protoCommunicationGradient,
-  protoCommunicationGrid,
-  protoCommunicationLineOpacity,
-} from "@/lib/proto/proto-communication-gradients";
-import {
   protoFeatureRevealClass,
   useProtoFeatureScrollReveal,
 } from "@/lib/proto/use-proto-feature-scroll-reveal";
@@ -34,12 +29,7 @@ function FeaturePanel({
     <div
       className={`proto-desktop-feature__panel ${PROTO_DESKTOP_FEATURE_PANEL_SIZE} ${protoFeatureRevealClass(revealed, "title")}`}
     >
-      <ProtoDesktopPanelSection
-        slide={slide}
-        gradientOverride={protoCommunicationGradient(slide.id)}
-        gridOverride={protoCommunicationGrid(slide.id)}
-        lineOverlayOpacity={protoCommunicationLineOpacity(slide.id)}
-      />
+      <ProtoDesktopPanelSection slide={slide} />
     </div>
   );
 }

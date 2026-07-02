@@ -1,10 +1,12 @@
 "use client";
 
 import { DoePhoneCommunicationSlideVisual } from "@/components/doephone/DoePhoneCommunicationSlideVisual";
+import { ProtoGrainGradient } from "@/components/proto/ProtoGrainGradient";
 import { WorkflowCarouselDesignBackdrop } from "@/components/workflow-carousel-design-backdrop";
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
 import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
+import type { ProtoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
 import {
   DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE,
   DOEPHONE_SECTION_CAROUSEL_RADIUS,
@@ -239,6 +241,7 @@ export function DoePhoneCommunicationCarouselCard({
   backdropGrainSize,
   backdropGrainImage,
   backdropLineOverlayOpacity,
+  protoShaderVariant,
   uiScaleClass,
   uiInteractive = true,
 }: {
@@ -262,6 +265,8 @@ export function DoePhoneCommunicationCarouselCard({
   backdropGrainSize?: string;
   backdropGrainImage?: string;
   backdropLineOverlayOpacity?: number;
+  /** /proto — Paper GrainGradient variant instead of CSS gradient + line grid. */
+  protoShaderVariant?: ProtoGrainGradientVariant;
   uiScaleClass?: string;
 }) {
   const [panelPhase, setPanelPhase] = useState<PanelPhase>("idle");
@@ -303,18 +308,25 @@ export function DoePhoneCommunicationCarouselCard({
       style={DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE}
       aria-hidden={!isActive}
     >
-      <WorkflowCarouselDesignBackdrop
-        backdrop={slide.backdrop}
-        embedded
-        className={`doephone-carousel-backdrop ${DOEPHONE_SECTION_CAROUSEL_RADIUS} ${backdropClassName}`.trim()}
-        gradientOverride={gradientOverride}
-        gridOverride={gridOverride}
-        patternScale={backdropPatternScale}
-        gradientScale={backdropGradientScale}
-        grainBackgroundSize={backdropGrainSize}
-        grainBackgroundImage={backdropGrainImage}
-        lineOverlayOpacity={backdropLineOverlayOpacity}
-      />
+      {protoShaderVariant ? (
+        <ProtoGrainGradient
+          variant={protoShaderVariant}
+          className={`doephone-carousel-backdrop ${DOEPHONE_SECTION_CAROUSEL_RADIUS} ${backdropClassName}`.trim()}
+        />
+      ) : (
+        <WorkflowCarouselDesignBackdrop
+          backdrop={slide.backdrop}
+          embedded
+          className={`doephone-carousel-backdrop ${DOEPHONE_SECTION_CAROUSEL_RADIUS} ${backdropClassName}`.trim()}
+          gradientOverride={gradientOverride}
+          gridOverride={gridOverride}
+          patternScale={backdropPatternScale}
+          gradientScale={backdropGradientScale}
+          grainBackgroundSize={backdropGrainSize}
+          grainBackgroundImage={backdropGrainImage}
+          lineOverlayOpacity={backdropLineOverlayOpacity}
+        />
+      )}
       {expandable && panelOpen ? <CarouselSlideFrostOverlay closing={isClosing} /> : null}
       <CarouselMenuOverlay
         expanded={panelPhase === "open"}

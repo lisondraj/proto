@@ -9,11 +9,6 @@ import {
   PROTO_DESKTOP_FEATURE_PANEL_FULL_TW,
 } from "@/lib/proto/proto-desktop-layout-styles";
 import {
-  protoCommunicationGradient,
-  protoCommunicationGrid,
-  protoCommunicationLineOpacity,
-} from "@/lib/proto/proto-communication-gradients";
-import {
   protoFeatureRevealClass,
   useProtoFeatureScrollReveal,
 } from "@/lib/proto/use-proto-feature-scroll-reveal";
@@ -37,12 +32,7 @@ export function ProtoDesktopFullPanelFeatureSection({
         <div
           className={`proto-desktop-feature__panel proto-desktop-feature__panel--full ${PROTO_DESKTOP_FEATURE_PANEL_FULL_TW} ${protoFeatureRevealClass(revealed, "title")}`}
         >
-          <ProtoDesktopPanelSection
-            slide={slide}
-            gradientOverride={protoCommunicationGradient(slide.id)}
-            gridOverride={protoCommunicationGrid(slide.id)}
-            lineOverlayOpacity={protoCommunicationLineOpacity(slide.id)}
-          />
+          <ProtoDesktopPanelSection slide={slide} />
         </div>
       </div>
     </section>

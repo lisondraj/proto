@@ -4,14 +4,7 @@ import { DoePhoneCommunicationCarouselCard } from "@/components/doephone/DoePhon
 import { ProtoFeatureSectionCopy } from "@/components/proto/ProtoFeatureSectionCopy";
 import { PROTO_COMMUNICATION_SLIDES } from "@/lib/proto/proto-communication-slides";
 import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
-import { protoCommunicationGradient, protoCommunicationGrid, protoCommunicationLineOpacity } from "@/lib/proto/proto-communication-gradients";
-import {
-  PROTO_HERO_BACKDROP,
-  PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
-  PROTO_PHONE_BACKDROP_GRAIN_SIZE,
-  PROTO_PHONE_BACKDROP_PATTERN_SCALE,
-  PROTO_PHONE_GRAIN_BG,
-} from "@/lib/proto/proto-hero-backdrop";
+import { protoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
 
 /** /proto iPhone — feature slides stacked vertically: box, title, description per section. */
 export function ProtoCommunicationStack() {
@@ -37,13 +30,7 @@ export function ProtoCommunicationStack() {
                     className="proto-carousel-card"
                     showExpandControls={false}
                     uiInteractive={false}
-                    gradientOverride={protoCommunicationGradient(slide.id)}
-                    gridOverride={protoCommunicationGrid(slide.id)}
-                    backdropLineOverlayOpacity={protoCommunicationLineOpacity(slide.id)}
-                    backdropPatternScale={PROTO_PHONE_BACKDROP_PATTERN_SCALE}
-                    backdropGradientScale={PROTO_PHONE_BACKDROP_GRADIENT_SCALE}
-                    backdropGrainSize={PROTO_PHONE_BACKDROP_GRAIN_SIZE}
-                    backdropGrainImage={PROTO_PHONE_GRAIN_BG}
+                    protoShaderVariant={protoGrainGradientVariant(slide.id)}
                     uiScaleClass="proto-carousel-ui-scale"
                   />
                 </div>
