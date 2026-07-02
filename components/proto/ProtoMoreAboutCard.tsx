@@ -31,7 +31,7 @@ export function ProtoMoreAboutCard({
         {post.title}
       </h3>
       <p className={isDesktop ? PROTO_MORE_ABOUT_CARD_META_DESKTOP_TW : PROTO_MORE_ABOUT_CARD_META_PHONE_TW}>
-        {post.author} · {post.date}
+        {post.credit} · {post.date}
       </p>
     </article>
   );

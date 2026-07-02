@@ -31,7 +31,7 @@ export function ProtoMoreAboutSection({ layout = "phone" }: { layout?: "phone" |
       </div>
 
       <div className={trackClass}>
-        <div className={`flex w-max min-w-full flex-row gap-4 iphone-page:gap-5 lg:gap-6 ${insetX}`}>
+        <div className={`flex w-max min-w-full flex-row gap-5 iphone-page:gap-6 lg:gap-7 ${insetX}`}>
           {PROTO_MORE_ABOUT_POSTS.map((post) => (
             <div key={post.id} className={cardClass}>
               <ProtoMoreAboutCard post={post} layout={layout} />
