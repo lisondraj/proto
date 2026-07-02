@@ -4,7 +4,6 @@ import {
 } from "@/lib/about/about-layout-styles";
 import { DOEPHONE_SECTION_CAROUSEL_RADIUS } from "@/lib/doephone/section-styles";
 import {
-  PROTO_PHONE_CONTENT_PT,
   PROTO_PHONE_PAGE_INSET_X,
 } from "@/lib/proto/proto-phone-layout-styles";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
@@ -12,8 +11,7 @@ import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 /** Horizontal gutters — aligned with /proto feature sections. */
 export const PROTO_INVEST_PAGE_INSET_X = PROTO_PHONE_PAGE_INSET_X;
 
-/** Clears fixed proto nav — pairs with .proto-invest-content-pt in about.css. */
-export const PROTO_INVEST_CONTENT_PT = `${PROTO_PHONE_CONTENT_PT} proto-invest-content-pt`;
+export const PROTO_INVEST_ARTICLE_TOP_PT = "proto-invest-article-top";
 
 export const PROTO_INVEST_SECTION_GAP = "space-y-8 iphone-page:space-y-9";
 
@@ -61,7 +59,7 @@ export const PROTO_INVEST_FAQ_ANSWER_BODY_TW = PROTO_INVEST_BODY_TW.replace("tex
 
 export const PROTO_INVEST_HERO_HEADLINE_WRAP = "w-fit max-w-full";
 
-export const PROTO_INVEST_HERO_HEADLINE_PT = "mt-3 iphone-page:mt-4";
+export const PROTO_INVEST_HERO_HEADLINE_PT = "mt-0";
 
 export const PROTO_INVEST_HERO_AFTER_BYLINE = "mt-6 iphone-page:mt-7";
 

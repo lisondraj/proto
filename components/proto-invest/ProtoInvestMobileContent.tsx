@@ -15,7 +15,7 @@ import {
   PROTO_INVEST_BYLINE_TW,
   PROTO_INVEST_BULLET_TW,
   PROTO_INVEST_CONTENT_GAP,
-  PROTO_INVEST_CONTENT_PT,
+  PROTO_INVEST_ARTICLE_TOP_PT,
   PROTO_INVEST_HERO_AFTER_BYLINE,
   PROTO_INVEST_HERO_BEFORE_ARTICLE,
   PROTO_INVEST_HERO_BOX_TW,
@@ -49,8 +49,8 @@ export function ProtoInvestMobileContent() {
   const [foundersOne, foundersTwo] = PROTO_INVEST_FOUNDERS_PARAGRAPHS;
 
   return (
-    <main className={`proto-invest-main w-full ${PROTO_INVEST_CONTENT_PT} ${PROTO_INVEST_MAIN_PB} ${PROTO_INVEST_PAGE_INSET_X}`}>
-      <div className={`${PROTO_INVEST_HERO_HEADLINE_WRAP} ${PROTO_INVEST_HERO_HEADLINE_PT}`}>
+    <main className={`proto-invest-main w-full ${PROTO_INVEST_MAIN_PB} ${PROTO_INVEST_PAGE_INSET_X}`}>
+      <div className={`${PROTO_INVEST_HERO_HEADLINE_WRAP} ${PROTO_INVEST_ARTICLE_TOP_PT} ${PROTO_INVEST_HERO_HEADLINE_PT}`}>
         <h1 className={PROTO_INVEST_TITLE_TW}>
           <span className="block">Proto is changing the</span>
           <span className="block">way we hire talent.</span>
