@@ -226,8 +226,8 @@ html[data-proto-page] {
     url("/proto-grain-tile.png") 2x,
     url("/proto-grain-tile-3x.png") 3x
   );
-  --proto-grain-opacity: 0.28;
-  --proto-grain-tile-size: 192px;
+  --proto-grain-opacity: 0.34;
+  --proto-grain-tile-size: 256px;
 }
 
 @media (-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 2.5dppx) {
@@ -251,7 +251,7 @@ html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
 }
 
 html[data-proto-page][data-layout="desktop"] {
-  --proto-grain-opacity: 0.25;
+  --proto-grain-opacity: 0.32;
 }
 
 /* Feature box UI mocks — display-only (no selection or control clicks). */
