@@ -39,7 +39,7 @@ export function NavEmailCopyDropdown({
 }) {
   return (
     <div
-      className={`proto-nav-email-dropdown ${attachClassName} ${NAV_EMAIL_DROPDOWN_PANEL_TW}`}
+      className={`proto-nav-email-dropdown proto-nav-cta-dropdown ${attachClassName} ${NAV_EMAIL_DROPDOWN_PANEL_TW}`}
       style={{
         backgroundColor: bg,
         color: fg,

@@ -120,7 +120,7 @@ export function MobileMainNavCta({
         {open ? (
           <div
             role="menu"
-            className={MOBILE_NAV_CTA_DROPDOWN_ATTACH_TW}
+            className={`${MOBILE_NAV_CTA_DROPDOWN_ATTACH_TW} proto-nav-cta-dropdown`}
             style={{
               backgroundColor: bg,
               color: fg,
