@@ -1,6 +1,7 @@
 import type { WorkflowCarouselDesignBackdrop } from "@/lib/workflow-carousel-design-backdrops";
 
 import {
+  PROTO_ABOUT_HERO_PHONE_GRADIENT,
   PROTO_COMMUNICATION_GRIDS,
   PROTO_HOME_HERO_GRADIENT,
   PROTO_HOME_HERO_PHONE_GRADIENT,
@@ -31,6 +32,14 @@ export const PROTO_ABOUT_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto about hero",
   gradient: PROTO_HERO_GRADIENT,
+  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
+};
+
+/** iPhone /about hero — horizontal prism sweep with overhead bloom. */
+export const PROTO_ABOUT_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
+  slideIndex: 4,
+  label: "Proto about hero phone",
+  gradient: PROTO_ABOUT_HERO_PHONE_GRADIENT,
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 

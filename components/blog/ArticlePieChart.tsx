@@ -6,12 +6,13 @@ import {
   ABOUT_DESKTOP_CHART_CITATION_TW,
 } from "@/lib/about/about-layout-styles";
 import { dmSans, inter } from "@/lib/home/fonts";
-import { PROTO_CHART_SLICE_COLORS } from "@/lib/proto/proto-chart-colors";
+import { PROTO_CHART_SLICE_COLORS, PROTO_PHONE_CHART_SLICE_COLORS } from "@/lib/proto/proto-chart-colors";
 import type { ArticleBodyLayout } from "@/components/blog/ArticleBodyBlocks";
 
 const SLICE_COLORS_LIGHT = ["#D2774C", "rgba(30, 52, 58, 0.22)", "rgba(30, 52, 58, 0.38)"] as const;
 const SLICE_COLORS_DARK = PROTO_CHART_SLICE_COLORS;
 const SLICE_COLORS_PROTO = PROTO_CHART_SLICE_COLORS;
+const SLICE_COLORS_PROTO_PHONE = PROTO_PHONE_CHART_SLICE_COLORS;
 
 function pieGradient(slices: readonly { value: number }[], sliceColors: readonly string[]) {
   const total = slices.reduce((sum, slice) => sum + slice.value, 0) || 1;
@@ -50,17 +51,28 @@ export function ArticlePieChart({
   showCaption?: boolean;
   showCitation?: boolean;
   titleClassName?: string;
-  theme?: "light" | "dark" | "proto";
+  theme?: "light" | "dark" | "proto" | "proto-phone";
 }) {
   const isDesktop = layout === "desktop";
-  const isDark = theme === "dark" || theme === "proto";
+  const isDark = theme === "dark" || theme === "proto" || theme === "proto-phone";
   const sliceColors =
-    theme === "proto" ? SLICE_COLORS_PROTO : isDark ? SLICE_COLORS_DARK : SLICE_COLORS_LIGHT;
+    theme === "proto-phone"
+      ? SLICE_COLORS_PROTO_PHONE
+      : theme === "proto"
+        ? SLICE_COLORS_PROTO
+        : isDark
+          ? SLICE_COLORS_DARK
+          : SLICE_COLORS_LIGHT;
   const titleColor = isDark ? "text-white" : "text-[#1E343A]";
   const labelColor = isDark ? "text-white/72" : "text-[#1E343A]/72";
   const valueColor = isDark ? "text-white" : "text-[#1E343A]";
   const metaColor = isDark ? "text-white/55" : "text-[#9A8F82]";
-  const donutCenter = isDark ? "bg-[#121819]" : "bg-[#F7F6F3]";
+  const donutCenter =
+    theme === "proto-phone"
+      ? "bg-[#080612]"
+      : isDark
+        ? "bg-[#121819]"
+        : "bg-[#F7F6F3]";
 
   return (
     <figure className={embedded ? "" : isDesktop ? ABOUT_DESKTOP_ARTICLE_SECTION_GAP : "mt-10 iphone-page:mt-12"}>

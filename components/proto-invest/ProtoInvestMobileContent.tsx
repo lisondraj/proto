@@ -38,7 +38,7 @@ import {
   PROTO_INVEST_STAT_BULLETS,
 } from "@/lib/proto-invest/proto-invest-content";
 import {
-  PROTO_ABOUT_HERO_BACKDROP,
+  PROTO_ABOUT_HERO_PHONE_BACKDROP,
   PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
   PROTO_PHONE_BACKDROP_GRAIN_SIZE,
   PROTO_PHONE_GRAIN_BG,
@@ -72,7 +72,7 @@ export function ProtoInvestMobileContent() {
 
       <div className={`${PROTO_INVEST_HERO_AFTER_BYLINE} ${PROTO_INVEST_HERO_BEFORE_ARTICLE}`}>
         <BlogHeroVisual
-          backdrop={PROTO_ABOUT_HERO_BACKDROP}
+          backdrop={PROTO_ABOUT_HERO_PHONE_BACKDROP}
           variant="hero"
           boxClassName={PROTO_INVEST_HERO_BOX_TW}
           gapClassName=""

@@ -56,23 +56,85 @@ export const PROTO_HOME_HERO_GRADIENT = [
   `radial-gradient(ellipse 40% 35% at 92% 42%, rgba(228, 91, 82, 0.28) 0%, transparent 68%)`,
 ].join(", ");
 
-/** iPhone home hero — twilight prism: void base, violet surge, rose-gold crest (portrait flow). */
-export const PROTO_PHONE_HERO_VOID = "#080612";
+/** iPhone twilight prism — shared palette (home hero + feature boxes + /about). */
+export const PROTO_PHONE_PRISM_PALETTE = {
+  void: "#080612",
+  plum: "#18102E",
+  violet: "#3A2868",
+  orchid: "#6E48C8",
+  lilac: "#8E62D8",
+  periwinkle: "#A484DC",
+  bronze: "#B89068",
+  glow: "#E8DCC8",
+} as const;
 
-const PROTO_PHONE_HERO_PLUM = "#18102E";
-const PROTO_PHONE_HERO_VIOLET = "#3A2868";
-const PROTO_PHONE_HERO_ORCHID = "#6E48C8";
-const PROTO_PHONE_HERO_LILAC = "#8E62D8";
-const PROTO_PHONE_HERO_PERIWINKLE = "#A484DC";
-const PROTO_PHONE_HERO_BRONZE = "#B89068";
-const PROTO_PHONE_HERO_GLOW = "#E8DCC8";
+export const PROTO_PHONE_HERO_VOID = PROTO_PHONE_PRISM_PALETTE.void;
 
+const P = PROTO_PHONE_PRISM_PALETTE;
+
+/** Evenly spaced sweep so every prism stop is visible. */
+const PROTO_PHONE_FULL_STOPS = [
+  `${P.void} 0%`,
+  `${P.plum} 14%`,
+  `${P.violet} 28%`,
+  `${P.orchid} 42%`,
+  `${P.lilac} 56%`,
+  `${P.periwinkle} 68%`,
+  `${P.bronze} 82%`,
+  `${P.glow} 100%`,
+].join(", ");
+
+/** iPhone home hero — twilight prism: void base, violet surge, champagne crest (portrait flow). */
 export const PROTO_HOME_HERO_PHONE_GRADIENT = [
-  `linear-gradient(0deg, ${PROTO_PHONE_HERO_VOID} 0%, ${PROTO_PHONE_HERO_PLUM} 16%, ${PROTO_PHONE_HERO_VIOLET} 36%, ${PROTO_PHONE_HERO_ORCHID} 52%, ${PROTO_PHONE_HERO_LILAC} 64%, ${PROTO_PHONE_HERO_PERIWINKLE} 76%, ${PROTO_PHONE_HERO_BRONZE} 88%, ${PROTO_PHONE_HERO_GLOW} 100%)`,
+  `linear-gradient(0deg, ${P.void} 0%, ${P.plum} 16%, ${P.violet} 36%, ${P.orchid} 52%, ${P.lilac} 64%, ${P.periwinkle} 76%, ${P.bronze} 88%, ${P.glow} 100%)`,
   `radial-gradient(ellipse 118% 92% at 16% 94%, rgba(122, 82, 208, 0.5) 0%, rgba(110, 72, 200, 0.26) 38%, transparent 66%)`,
   `radial-gradient(ellipse 68% 52% at 90% 10%, rgba(110, 72, 200, 0.44) 0%, rgba(58, 40, 104, 0.2) 42%, transparent 70%)`,
   `radial-gradient(ellipse 130% 96% at 50% 50%, transparent 40%, rgba(8, 6, 18, 0.42) 100%)`,
 ].join(", ");
+
+/** iPhone /about hero — horizontal prism sweep with soft overhead bloom. */
+export const PROTO_ABOUT_HERO_PHONE_GRADIENT = [
+  `linear-gradient(90deg, ${PROTO_PHONE_FULL_STOPS})`,
+  `radial-gradient(ellipse 92% 78% at 50% -8%, ${P.glow} 0%, ${P.periwinkle} 22%, ${P.orchid} 42%, transparent 72%)`,
+  `radial-gradient(ellipse 55% 48% at 8% 92%, ${P.lilac} 0%, ${P.violet} 38%, ${P.void} 100%)`,
+].join(", ");
+
+/** iPhone feature boxes — unique flows; all eight prism stops in every band. */
+const PROTO_PHONE_AGENTS_GRADIENT = `radial-gradient(circle at 50% 44%, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 24%, ${P.lilac} 36%, ${P.orchid} 48%, ${P.violet} 62%, ${P.plum} 78%, ${P.void} 100%)`;
+
+const PROTO_PHONE_FRONT_DESK_GRADIENT = `linear-gradient(90deg, ${PROTO_PHONE_FULL_STOPS})`;
+
+const PROTO_PHONE_INBOX_GRADIENT = `linear-gradient(180deg, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+
+const PROTO_PHONE_AMBIENT_GRADIENT = `radial-gradient(ellipse 108% 96% at 84% 16%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+
+const PROTO_PHONE_BILLING_GRADIENT = `radial-gradient(ellipse 112% 102% at 16% 90%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+
+const PROTO_PHONE_PROTOTYPE_GRADIENT = [
+  `radial-gradient(circle at 68% 32%, ${P.periwinkle} 0%, ${P.lilac} 24%, transparent 58%)`,
+  `linear-gradient(152deg, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`,
+].join(", ");
+
+const PROTO_PHONE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 122% 108% at 50% 112%, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`;
+
+const PROTO_PHONE_VALIDATE_GRADIENT = `linear-gradient(270deg, ${PROTO_PHONE_FULL_STOPS})`;
+
+const PROTO_PHONE_SHORTLIST_GRADIENT = [
+  `linear-gradient(205deg, ${P.void} 0%, ${P.plum} 12%, ${P.violet} 26%, ${P.orchid} 40%, ${P.lilac} 54%, ${P.periwinkle} 66%, ${P.bronze} 80%, ${P.glow} 100%)`,
+  `radial-gradient(ellipse 72% 64% at 22% 78%, ${P.lilac} 0%, ${P.orchid} 32%, transparent 68%)`,
+].join(", ");
+
+export const PROTO_COMMUNICATION_PHONE_GRADIENTS = {
+  agents: PROTO_PHONE_AGENTS_GRADIENT,
+  "front-desk": PROTO_PHONE_FRONT_DESK_GRADIENT,
+  inbox: PROTO_PHONE_INBOX_GRADIENT,
+  ambient: PROTO_PHONE_AMBIENT_GRADIENT,
+  billing: PROTO_PHONE_BILLING_GRADIENT,
+  prototype: PROTO_PHONE_PROTOTYPE_GRADIENT,
+  integrate: PROTO_PHONE_INTEGRATE_GRADIENT,
+  validate: PROTO_PHONE_VALIDATE_GRADIENT,
+  shortlist: PROTO_PHONE_SHORTLIST_GRADIENT,
+} as const satisfies Record<string, string>;
 
 /** Prototype validation — cool upper arc into warm copper/gold. */
 const PROTO_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_RECEPTION_PALETTE.blue} 26%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
@@ -144,9 +206,14 @@ export const PROTO_COMMUNICATION_GRIDS: Partial<
   shortlist: "wave",
 };
 
-export function protoCommunicationGradient(slideId: string): string | undefined {
-  if (slideId in PROTO_COMMUNICATION_GRADIENTS) {
-    return PROTO_COMMUNICATION_GRADIENTS[slideId as ProtoCommunicationSlideId];
+export function protoCommunicationGradient(
+  slideId: string,
+  platform: "desktop" | "phone" = "desktop",
+): string | undefined {
+  const gradients =
+    platform === "phone" ? PROTO_COMMUNICATION_PHONE_GRADIENTS : PROTO_COMMUNICATION_GRADIENTS;
+  if (slideId in gradients) {
+    return gradients[slideId as ProtoCommunicationSlideId];
   }
   return undefined;
 }

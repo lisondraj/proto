@@ -227,6 +227,11 @@ html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephon
   background-position: center bottom !important;
 }
 
+/* iPhone /about hero — center horizontal prism sweep. */
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [aria-hidden]:first-child {
+  background-position: center center !important;
+}
+
 html[data-proto-page] {
   --proto-grain-image: url("/proto-grain-tile.png");
   --proto-grain-opacity: 0.46;

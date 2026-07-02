@@ -6,15 +6,17 @@ import {
   ABOUT_DESKTOP_CHART_CITATION_TW,
 } from "@/lib/about/about-layout-styles";
 import { dmSans, inter } from "@/lib/home/fonts";
-import { PROTO_CHART_GRADIENTS } from "@/lib/proto/proto-chart-colors";
+import { PROTO_CHART_GRADIENTS, PROTO_PHONE_CHART_GRADIENTS } from "@/lib/proto/proto-chart-colors";
 import type { ArticleBodyLayout } from "@/components/blog/ArticleBodyBlocks";
 
 const TRACK_LIGHT = "rgba(30, 52, 58, 0.08)";
 const TRACK_DARK = "rgba(255, 255, 255, 0.12)";
 const TRACK_PROTO = PROTO_CHART_GRADIENTS.track;
+const TRACK_PROTO_PHONE = PROTO_PHONE_CHART_GRADIENTS.track;
 const BAR = "#D2774C";
 const BAR_DARK = "#C46848";
 const BAR_PROTO = PROTO_CHART_GRADIENTS.bar;
+const BAR_PROTO_PHONE = PROTO_PHONE_CHART_GRADIENTS.bar;
 const GRID_LINE = "rgba(30, 52, 58, 0.07)";
 const BAR_CHART_GRID_LINES = 5;
 
@@ -39,12 +41,26 @@ export function ArticleBarChart({
   showCaption?: boolean;
   showCitation?: boolean;
   titleClassName?: string;
-  theme?: "light" | "dark" | "proto";
+  theme?: "light" | "dark" | "proto" | "proto-phone";
 }) {
   const isDesktop = layout === "desktop";
-  const isDark = theme === "dark" || theme === "proto";
-  const track = theme === "proto" ? TRACK_PROTO : isDark ? TRACK_DARK : TRACK_LIGHT;
-  const barColor = theme === "proto" ? BAR_PROTO : isDark ? BAR_DARK : BAR;
+  const isDark = theme === "dark" || theme === "proto" || theme === "proto-phone";
+  const track =
+    theme === "proto-phone"
+      ? TRACK_PROTO_PHONE
+      : theme === "proto"
+        ? TRACK_PROTO
+        : isDark
+          ? TRACK_DARK
+          : TRACK_LIGHT;
+  const barColor =
+    theme === "proto-phone"
+      ? BAR_PROTO_PHONE
+      : theme === "proto"
+        ? BAR_PROTO
+        : isDark
+          ? BAR_DARK
+          : BAR;
   const titleColor = isDark ? "text-white" : "text-[#1E343A]";
   const labelColor = isDark ? "text-white/72" : "text-[#1E343A]/72";
   const valueColor = isDark ? "text-white" : "text-[#1E343A]";

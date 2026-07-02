@@ -9,9 +9,7 @@ import {
   PROTO_INVEST_TAM_CHART,
   PROTO_INVEST_TAM_CITATION,
 } from "@/lib/proto-invest/proto-invest-content";
-import { PROTO_CHART_GRADIENTS } from "@/lib/proto/proto-chart-colors";
-
-import { PROTO_INVEST_CHART_COLORS } from "@/lib/proto-invest/proto-invest-theme";
+import { PROTO_PHONE_CHART_COLORS, PROTO_PHONE_CHART_GRADIENTS } from "@/lib/proto/proto-chart-colors";
 
 const TAM_Y_MAX = 28;
 const TAM_Y_TICKS = [0, 7, 14, 21, 28] as const;
@@ -41,7 +39,7 @@ export function ProtoInvestMobileTamChart() {
                 <span
                   key={tick}
                   className={`absolute right-0 -translate-y-1/2 text-right tabular-nums font-normal leading-none text-[clamp(0.72rem,0.62rem+0.45vmin,0.88rem)] iphone-page:text-[clamp(0.82rem,0.7rem+0.52vmin,0.98rem)] ${PROTO_FONT_CLASS}`}
-                  style={{ bottom: `${(tick / TAM_Y_MAX) * 100}%`, color: PROTO_INVEST_CHART_COLORS.labelMuted }}
+                  style={{ bottom: `${(tick / TAM_Y_MAX) * 100}%`, color: PROTO_PHONE_CHART_COLORS.labelMuted }}
                 >
                   {formatTamAxis(tick)}
                 </span>
@@ -50,7 +48,7 @@ export function ProtoInvestMobileTamChart() {
 
           <div
             className="relative col-start-2 row-start-1 min-h-0 border-b border-l"
-            style={{ borderColor: PROTO_INVEST_CHART_COLORS.axis }}
+            style={{ borderColor: PROTO_PHONE_CHART_COLORS.axis }}
           >
             {TAM_Y_TICKS.map((tick) => (
               <div
@@ -58,7 +56,7 @@ export function ProtoInvestMobileTamChart() {
                 className="pointer-events-none absolute left-0 right-0 border-t"
                 style={{
                   bottom: `${(tick / TAM_Y_MAX) * 100}%`,
-                  borderColor: tick === 0 ? PROTO_INVEST_CHART_COLORS.axis : PROTO_INVEST_CHART_COLORS.gridLine,
+                  borderColor: tick === 0 ? PROTO_PHONE_CHART_COLORS.axis : PROTO_PHONE_CHART_COLORS.gridLine,
                 }}
                 aria-hidden
               />
@@ -77,7 +75,7 @@ export function ProtoInvestMobileTamChart() {
                     <div className="flex h-full flex-col justify-end">
                       <div
                         className="w-full rounded-t-[0.35rem] transition-[height] duration-500 ease-out iphone-page:rounded-t-[0.42rem]"
-                        style={{ height: heightPct, background: PROTO_CHART_GRADIENTS.tamBar }}
+                        style={{ height: heightPct, background: PROTO_PHONE_CHART_GRADIENTS.tamBar }}
                       />
                     </div>
                   </div>
@@ -91,7 +89,7 @@ export function ProtoInvestMobileTamChart() {
               <span
                 key={`${bar.label}-label`}
                 className={`min-w-0 flex-1 text-center font-normal leading-[1.15] tracking-[-0.01em] text-[clamp(0.72rem,0.62rem+0.45vmin,0.88rem)] iphone-page:text-[clamp(0.82rem,0.7rem+0.52vmin,0.98rem)] ${PROTO_FONT_CLASS}`}
-                style={{ color: PROTO_INVEST_CHART_COLORS.label }}
+                style={{ color: PROTO_PHONE_CHART_COLORS.label }}
               >
                 {bar.label}
               </span>
@@ -113,7 +111,7 @@ export function ProtoInvestMobileTamChart() {
         </p>
         <p
           className={`mt-1 font-normal leading-snug text-[clamp(1rem,0.88rem+0.58vmin,1.18rem)] iphone-page:mt-1.5 iphone-page:text-[clamp(1.02rem,0.88rem+0.62vmin,1.18rem)] ${PROTO_FONT_CLASS}`}
-          style={{ color: PROTO_INVEST_CHART_COLORS.labelMuted }}
+          style={{ color: PROTO_PHONE_CHART_COLORS.labelMuted }}
         >
           {PROTO_INVEST_TAM_CHART.highlight.headline}
         </p>
