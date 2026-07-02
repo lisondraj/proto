@@ -650,9 +650,11 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel 
   overflow: hidden !important;
   min-height: 100dvh !important;
   height: 100dvh !important;
+  padding-top: 5.5rem !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
+  --proto-full-panel-gutter-x: 2.5rem;
   box-sizing: border-box !important;
   display: flex !important;
   flex: 1 1 auto !important;
@@ -661,30 +663,27 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel 
   min-height: 0 !important;
   max-height: 100% !important;
   width: 100% !important;
-  padding-top: clamp(2.5rem, 4vh, 4rem) !important;
-  padding-bottom: clamp(2.5rem, 4vh, 4rem) !important;
-  padding-left: 2.5rem !important;
-  padding-right: 2.5rem !important;
+  padding-top: calc(var(--proto-full-panel-gutter-x) * 0.5) !important;
+  padding-bottom: calc(var(--proto-full-panel-gutter-x) * 0.5) !important;
+  padding-left: var(--proto-full-panel-gutter-x) !important;
+  padding-right: var(--proto-full-panel-gutter-x) !important;
 }
 
 @media (min-width: 768px) {
   html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
-    padding-left: 5rem !important;
-    padding-right: 5rem !important;
+    --proto-full-panel-gutter-x: 5rem;
   }
 }
 
 @media (min-width: 1024px) {
   html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
-    padding-left: 7rem !important;
-    padding-right: 7rem !important;
+    --proto-full-panel-gutter-x: 7rem;
   }
 }
 
 @media (min-width: 1280px) {
   html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
-    padding-left: 9rem !important;
-    padding-right: 9rem !important;
+    --proto-full-panel-gutter-x: 9rem;
   }
 }
 
