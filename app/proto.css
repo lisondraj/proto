@@ -559,7 +559,12 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel {
   aspect-ratio: 1 / 1 !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__copy {
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--split .proto-desktop-feature__panel {
+  max-height: min(72vh, 100%) !important;
+  height: auto !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--split .proto-desktop-feature__copy {
   max-width: none !important;
 }
 

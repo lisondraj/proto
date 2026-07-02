@@ -7,10 +7,10 @@ import type { ProtoFeatureCopy } from "@/lib/proto/proto-feature-copy";
 import {
   PROTO_DESKTOP_FEATURE_BAND_H,
   PROTO_DESKTOP_FEATURE_PANEL_SIZE,
-  PROTO_DESKTOP_SPLIT_BOX_COLUMN,
+  PROTO_DESKTOP_SPLIT_BOX_COLUMN_LEFT,
+  PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT,
   PROTO_DESKTOP_SPLIT_SECTION_GRID,
-  PROTO_DESKTOP_SPLIT_TEXT_COLUMN_LEFT,
-  PROTO_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT,
+  PROTO_DESKTOP_SPLIT_TEXT_COLUMN,
 } from "@/lib/proto/proto-desktop-layout-styles";
 import {
   protoCommunicationGradient,
@@ -61,18 +61,18 @@ export function ProtoDesktopFeatureSection({
 }) {
   const { ref, revealed } = useProtoFeatureScrollReveal(0.18);
 
-  const textColumnClass = boxOnLeft
-    ? PROTO_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT
-    : PROTO_DESKTOP_SPLIT_TEXT_COLUMN_LEFT;
+  const boxColumnClass = boxOnLeft
+    ? PROTO_DESKTOP_SPLIT_BOX_COLUMN_LEFT
+    : PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT;
 
   const textColumn = (
-    <div className={textColumnClass}>
+    <div className={PROTO_DESKTOP_SPLIT_TEXT_COLUMN}>
       <FeatureCopy copy={copy} revealed={revealed} />
     </div>
   );
 
   const boxColumn = (
-    <div className={PROTO_DESKTOP_SPLIT_BOX_COLUMN}>
+    <div className={boxColumnClass}>
       <FeaturePanel slide={slide} revealed={revealed} />
     </div>
   );

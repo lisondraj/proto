@@ -6,23 +6,24 @@ import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-f
 /** Desktop /proto feature band — split panel + copy within one viewport-tall section. */
 export const PROTO_DESKTOP_FEATURE_BAND_H = "min-h-[112vh] h-[112vh]";
 
-/** Split bands — matches /about desktop horizontal gutters and column gap. */
-export const PROTO_DESKTOP_SPLIT_SECTION_GRID = `grid h-full min-h-0 w-full grid-cols-2 gap-8 md:gap-10 lg:gap-12 xl:gap-14 ${DOEPHONE_DESKTOP_PAGE_INSET_X} py-8 md:py-10 lg:py-12`;
+/** Split bands — page gutters on the grid; column gap separates copy and panel. */
+export const PROTO_DESKTOP_SPLIT_SECTION_GRID = `grid h-full min-h-0 w-full grid-cols-2 items-center gap-8 md:gap-10 lg:gap-12 xl:gap-14 ${DOEPHONE_DESKTOP_PAGE_INSET_X} py-8 md:py-10 lg:py-12`;
 
-/** Column padding within margined split bands — matches /about. */
-export const PROTO_DESKTOP_SPLIT_COLUMN_PAD = "p-6 md:p-8 lg:p-10 xl:p-12";
+export const PROTO_DESKTOP_SPLIT_TEXT_COLUMN = `flex min-h-0 min-w-0 flex-col justify-center`;
 
-export const PROTO_DESKTOP_SPLIT_TEXT_COLUMN_LEFT = `flex min-h-0 min-w-0 flex-col justify-center ${PROTO_DESKTOP_SPLIT_COLUMN_PAD}`;
+export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_BASE = `grid min-h-0 min-w-0 h-full items-center`;
 
-export const PROTO_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT = `flex min-h-0 min-w-0 flex-col justify-center ${PROTO_DESKTOP_SPLIT_COLUMN_PAD}`;
+export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_LEFT = `${PROTO_DESKTOP_SPLIT_BOX_COLUMN_BASE} justify-items-start`;
 
-export const PROTO_DESKTOP_SPLIT_BOX_COLUMN = `grid min-h-0 min-w-0 h-full place-items-center ${PROTO_DESKTOP_SPLIT_COLUMN_PAD}`;
+export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT = `${PROTO_DESKTOP_SPLIT_BOX_COLUMN_BASE} justify-items-end`;
 
-/** Square gradient panel — largest square that fits its column (matches /about beige panel). */
+/** Square gradient panel — largest square that fits its column. */
 export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
-  "aspect-square max-h-full max-w-full w-full";
+  "aspect-square h-auto w-full max-h-full max-w-full";
 
-/** Full-width gradient band between page margins — no copy, not square. */
+/** Full-width gradient band between page margins — vertical inset within the section. */
+export const PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y = "py-8 md:py-10 lg:py-12";
+
 export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW = "h-full w-full min-h-0";
 
 export const PROTO_DESKTOP_FEATURE_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(2.65rem,4.05vw,4.05rem)] md:text-[clamp(2.78rem,3.75vw,4.28rem)] lg:text-[clamp(2.92rem,3.5vw,4.52rem)] ${PROTO_FONT_CLASS}`;
