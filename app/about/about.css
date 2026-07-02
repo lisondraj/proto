@@ -63,3 +63,22 @@ html[data-proto-page] .proto-invest-tam-highlight {
   border-color: #2a3538 !important;
   background: #151c1f;
 }
+
+/* Desktop /about — full-viewport split bands with proto dark chrome. */
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop {
+  overflow: visible !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-main,
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-main p,
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-main li,
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-main h1,
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-main h2,
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-main button {
+  font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-chart-zone figcaption,
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-chart-zone span {
+  font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif !important;
+}

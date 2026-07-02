@@ -1,15 +1,9 @@
 "use client";
 
-import { ProtoRouteShell } from "@/components/proto/ProtoRouteShell";
-import { ProtoFooter } from "@/components/proto/ProtoFooter";
-import { ProtoInvestMobileContent } from "@/components/proto-invest/ProtoInvestMobileContent";
+import { ProtoInvestRouter } from "@/components/proto-invest/ProtoInvestRouter";
+import type { JoinPageVariant } from "@/lib/join/use-join-page-variant";
 
-/** /proto-invest — investor mission page in proto dark chrome. */
-export function ProtoInvestView() {
-  return (
-    <ProtoRouteShell>
-      <ProtoInvestMobileContent />
-      <ProtoFooter />
-    </ProtoRouteShell>
-  );
+/** /about — investor mission page with responsive proto chrome. */
+export function ProtoInvestView({ initialVariant }: { initialVariant: JoinPageVariant }) {
+  return <ProtoInvestRouter initialVariant={initialVariant} />;
 }
