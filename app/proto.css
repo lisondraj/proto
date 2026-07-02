@@ -60,7 +60,7 @@ html[data-proto-page] .proto-section-band {
 }
 
 /* Feature stack — one slide per full-viewport section on iPhone. */
-html[data-proto-page] .proto-feature-section {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section {
   display: flex !important;
   flex-direction: column !important;
   box-sizing: border-box !important;
@@ -70,7 +70,7 @@ html[data-proto-page] .proto-feature-section {
   padding-bottom: 0 !important;
 }
 
-html[data-proto-page] .proto-feature-section__inner {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__inner {
   display: flex !important;
   flex: 1 1 auto !important;
   flex-direction: column !important;
@@ -89,7 +89,7 @@ html[data-proto-page] .proto-feature-section__inner {
   padding-bottom: var(--proto-phone-gutter-y) !important;
 }
 
-html[data-proto-page] .proto-feature-section__stack {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__stack {
   display: flex !important;
   flex: 0 1 auto !important;
   flex-direction: column !important;
@@ -99,8 +99,8 @@ html[data-proto-page] .proto-feature-section__stack {
   gap: max(1.5rem, calc(var(--app-vh, 100lvh) * 0.044)) !important;
 }
 
-html[data-proto-page] .proto-feature-section__card,
-html[data-proto-page] .proto-feature-section .doephone-section-carousel {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card,
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section .doephone-section-carousel {
   display: flex !important;
   flex: 0 1 auto !important;
   flex-direction: column !important;
@@ -113,7 +113,7 @@ html[data-proto-page] .proto-feature-section .doephone-section-carousel {
   height: auto !important;
 }
 
-html[data-proto-page] .proto-feature-section__card > * {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card > * {
   flex: 1 1 auto !important;
   min-height: 0 !important;
   height: 100% !important;
@@ -524,6 +524,33 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel 
   overflow: hidden !important;
   min-height: 100dvh !important;
   height: 100dvh !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
+  box-sizing: border-box !important;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
+}
+
+@media (min-width: 768px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
+    padding-left: 7rem !important;
+    padding-right: 7rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
+    padding-left: 9rem !important;
+    padding-right: 9rem !important;
+  }
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
