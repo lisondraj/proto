@@ -28,9 +28,9 @@ export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT = `${PROTO_DESKTOP_SPLIT_BOX_C
 export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
   "aspect-square h-auto w-full max-h-full max-w-full";
 
-/** Full-width gradient band — grid inset; gutters applied in proto.css. */
+/** Full-width gradient band — flex inset; gutters applied in proto.css. */
 export const PROTO_DESKTOP_FULL_PANEL_SHELL_TW =
-  "proto-desktop-feature__full-panel-shell box-border flex min-h-0 min-w-0 flex-col";
+  "proto-desktop-feature__full-panel-shell box-border flex h-full min-h-0 w-full min-w-0 flex-1 flex-col";
 
 export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW =
   "min-h-0 min-w-0 flex-1 overflow-hidden";
