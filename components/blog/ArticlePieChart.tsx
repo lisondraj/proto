@@ -69,7 +69,7 @@ export function ArticlePieChart({
   const metaColor = isDark ? "text-white/55" : "text-[#9A8F82]";
   const donutCenter =
     theme === "proto-phone"
-      ? "bg-[#061410]"
+      ? "bg-[#100810]"
       : isDark
         ? "bg-[#121819]"
         : "bg-[#F7F6F3]";
