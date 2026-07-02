@@ -64,7 +64,17 @@ html[data-proto-page] .proto-invest-tam-highlight {
   background: #151c1f;
 }
 
-/* iPhone /about — line graphics scaled via layout tokens. */
+/* iPhone /about — full-bleed hero gradients + softer grain (all layouts). */
+html[data-proto-page] .proto-invest-hero-backdrop [aria-hidden]:first-child {
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+}
+
+html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
+  opacity: 0.38 !important;
+}
+
+/* iPhone /about — line graphics in solid panels. */
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main .proto-invest-graphic-panel svg {
   transform: scale(0.84);
   transform-origin: center center;

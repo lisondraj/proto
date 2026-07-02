@@ -15,3 +15,8 @@ export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
 export const PROTO_PHONE_BACKDROP_GRADIENT_SCALE = 1;
 export const PROTO_PHONE_BACKDROP_PATTERN_SCALE = 1.2;
 export const PROTO_PHONE_BACKDROP_GRAIN_SIZE = "280px 280px";
+
+/** Desktop proto backdrops — same full-bleed rule, slightly tighter grain. */
+export const PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE = 1;
+export const PROTO_DESKTOP_BACKDROP_PATTERN_SCALE = 1.15;
+export const PROTO_DESKTOP_BACKDROP_GRAIN_SIZE = "240px 240px";

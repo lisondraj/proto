@@ -4,6 +4,7 @@ import { ArticleBarChart } from "@/components/blog/ArticleBarChart";
 import { ArticlePieChart } from "@/components/blog/ArticlePieChart";
 import { BlogHeroVisual } from "@/components/blog/BlogHeroVisual";
 import { ProtoFooter } from "@/components/proto/ProtoFooter";
+import { ProtoMoreAboutSection } from "@/components/proto/ProtoMoreAboutSection";
 import {
   ProtoInvestDesktopBulletList,
   ProtoInvestDesktopParagraph,
@@ -42,7 +43,12 @@ import {
   PROTO_INVEST_DESKTOP_TITLE_TW,
 } from "@/lib/proto-invest/proto-invest-layout-styles";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
-import { PROTO_HERO_BACKDROP } from "@/lib/proto/proto-hero-backdrop";
+import {
+  PROTO_HERO_BACKDROP,
+  PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE,
+  PROTO_DESKTOP_BACKDROP_GRAIN_SIZE,
+  PROTO_DESKTOP_BACKDROP_PATTERN_SCALE,
+} from "@/lib/proto/proto-hero-backdrop";
 
 /** Desktop /about — hero plus four alternating graphic-panel bands, then footer. */
 export function ProtoInvestDesktopView() {
@@ -72,6 +78,9 @@ export function ProtoInvestDesktopView() {
               variant="hero"
               boxClassName={PROTO_INVEST_DESKTOP_HERO_BOX_TW}
               gapClassName=""
+              patternScale={PROTO_DESKTOP_BACKDROP_PATTERN_SCALE}
+              gradientScale={PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE}
+              grainBackgroundSize={PROTO_DESKTOP_BACKDROP_GRAIN_SIZE}
             >
               <div className={ABOUT_DESKTOP_HERO_BYLINE_WRAP_TW}>
                 <p className={PROTO_INVEST_DESKTOP_HERO_BYLINE_TW}>{ABOUT_PAGE_MOBILE_BYLINE}</p>
@@ -130,6 +139,8 @@ export function ProtoInvestDesktopView() {
           </div>
         </ProtoInvestDesktopSplitSection>
       </main>
+
+      <ProtoMoreAboutSection layout="desktop" />
 
       <ProtoFooter layout="desktop" />
     </div>
