@@ -394,7 +394,10 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-frost-shell > div {
   padding-left: 0 !important;
-  padding-right: 0 !important;
+  padding-right: calc(
+    var(--proto-nav-frost-pad-y) +
+    (1 - var(--proto-nav-frost-compact-scale, 1)) * clamp(3.9rem, 3.15rem + 3.45vmin, 4.75rem) * 0.5
+  ) !important;
   padding-top: var(--proto-nav-frost-pad-y) !important;
   padding-bottom: var(--proto-nav-frost-pad-y) !important;
 }
