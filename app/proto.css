@@ -20,10 +20,10 @@ html[data-proto-page]:has(.doephone-mobile-root) {
 
 html[data-proto-page]:has(.doephone-mobile-root) {
   font-size: 80%;
-  --proto-phone-gutter-left: max(2.35rem, calc(env(safe-area-inset-left, 0px) + 5.25vmin));
-  --proto-phone-gutter-right: max(1.65rem, env(safe-area-inset-right, 0px));
-  --proto-phone-gutter-y: max(2.35rem, calc(env(safe-area-inset-bottom, 0px) + 5.25vmin));
-  --proto-phone-nav-clearance: max(5.35rem, calc(env(safe-area-inset-top, 0px) + 4.35rem));
+  --proto-phone-gutter-left: max(2rem, calc(env(safe-area-inset-left, 0px) + 4.25vmin));
+  --proto-phone-gutter-right: max(2rem, calc(env(safe-area-inset-right, 0px) + 4.25vmin));
+  --proto-phone-gutter-y: max(2rem, calc(env(safe-area-inset-bottom, 0px) + 4.25vmin));
+  --proto-phone-nav-clearance: max(5rem, calc(env(safe-area-inset-top, 0px) + 4.1rem));
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-phone-inset-x {
@@ -57,6 +57,10 @@ html[data-proto-page] .doephone-mobile-root {
 
 html[data-proto-page] .proto-section-band {
   background-color: #151c1f !important;
+}
+
+html[data-proto-page] .proto-feature-section.proto-section-band + .proto-feature-section.proto-section-band {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 /* Feature stack — one slide per full-viewport section on iPhone. */
@@ -94,23 +98,23 @@ html[data-proto-page] .proto-feature-section__stack {
   flex: 0 1 auto !important;
   flex-direction: column !important;
   width: 100% !important;
-  max-height: 100% !important;
+  max-height: calc(var(--app-vh, 100lvh) * 0.78) !important;
   min-height: 0 !important;
-  gap: max(1.25rem, calc(var(--app-vh, 100lvh) * 0.032)) !important;
+  gap: max(1.5rem, calc(var(--app-vh, 100lvh) * 0.044)) !important;
 }
 
 html[data-proto-page] .proto-feature-section__card,
 html[data-proto-page] .proto-feature-section .doephone-section-carousel {
   display: flex !important;
-  flex: 1 1 auto !important;
+  flex: 0 1 auto !important;
   flex-direction: column !important;
   min-height: clamp(
-    30rem,
-    calc(var(--app-vh, 100lvh) * 0.62),
-    46rem
+    22rem,
+    calc(var(--app-vh, 100lvh) * 0.46),
+    36rem
   ) !important;
+  max-height: calc(var(--app-vh, 100lvh) * 0.5) !important;
   height: auto !important;
-  max-height: none !important;
 }
 
 html[data-proto-page] .proto-feature-section__card > * {
@@ -193,19 +197,23 @@ html[data-proto-page] .proto-feature-reveal .doephone-hero-headline-line {
 html[data-proto-page] .proto-feature-section__description {
   margin: 0 !important;
   margin-top: max(
-    1rem,
-    calc(var(--app-vh, 100lvh) * 0.022)
+    0.85rem,
+    calc(var(--app-vh, 100lvh) * 0.018)
   ) !important;
   font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif !important;
-  font-size: clamp(1.32rem, calc(1.08rem + 1.2vmin), 1.68rem) !important;
+  font-size: clamp(1.12rem, calc(0.92rem + 0.95vmin), 1.42rem) !important;
   font-weight: 400 !important;
-  line-height: 1.5 !important;
+  line-height: 1.48 !important;
   letter-spacing: -0.012em !important;
   color: #ffffff !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__copy .doephone-hero-headline {
-  font-size: clamp(2.65rem, 1.42rem + 7.15vmin, 4.35rem) !important;
+  font-size: clamp(2.28rem, 1.22rem + 6.15vmin, 3.72rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephone-hero-headline {
+  font-size: clamp(3.15rem, 1.68rem + 9.25vmin, 5.35rem) !important;
 }
 
 /* Nav — align strip + logo to proto phone gutters. */
@@ -243,7 +251,19 @@ html[data-proto-page] .proto-footer {
 }
 
 html[data-proto-page] .proto-footer-inner {
-  padding-top: clamp(3.25rem, calc(2.15rem + 5.25vmin), 5.5rem) !important;
+  padding-top: clamp(2.5rem, calc(1.75rem + 4.25vmin), 4.25rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-contact__brand {
+  font-size: clamp(1.42rem, calc(1.18rem + 0.75vmin), 1.72rem) !important;
+  letter-spacing: -0.02em !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-contact__line {
+  font-size: clamp(1.22rem, calc(1.02rem + 0.72vmin), 1.48rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.38 !important;
+  letter-spacing: -0.012em !important;
 }
 
 html[data-proto-page] .proto-footer-contact__brand {
@@ -258,8 +278,8 @@ html[data-proto-page] .proto-footer-contact__line {
   letter-spacing: -0.012em !important;
 }
 
-html[data-proto-page] .proto-footer-contact__email {
-  padding-bottom: clamp(1.85rem, calc(1.2rem + 2.35vmin), 2.85rem) !important;
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-contact__email {
+  padding-bottom: clamp(1.25rem, calc(0.85rem + 1.65vmin), 2rem) !important;
 }
 
 html[data-proto-page] .proto-footer-columns {
@@ -268,6 +288,19 @@ html[data-proto-page] .proto-footer-columns {
 
 html[data-proto-page] .proto-footer-main {
   margin-bottom: clamp(1rem, calc(0.65rem + 1.35vmin), 1.65rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-column__title {
+  font-size: clamp(1.22rem, calc(1.02rem + 0.68vmin), 1.48rem) !important;
+  letter-spacing: -0.018em !important;
+  line-height: 1.2 !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-column__link {
+  font-size: clamp(1.12rem, calc(0.94rem + 0.62vmin), 1.35rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.32 !important;
+  letter-spacing: -0.01em !important;
 }
 
 html[data-proto-page] .proto-footer-column__title {
@@ -283,11 +316,16 @@ html[data-proto-page] .proto-footer-column__link {
   letter-spacing: -0.01em !important;
 }
 
-/* Footer — Proto wordmark aligned to footer content gutters. */
-html[data-proto-page] .proto-footer-wordmark-wrap {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-wrap {
   overflow: visible !important;
-  padding-top: clamp(1rem, calc(0.65rem + 1.35vmin), 1.65rem) !important;
-  padding-bottom: clamp(1rem, calc(0.65rem + 1.85vmin), 1.85rem) !important;
+  padding-top: clamp(0.75rem, calc(0.5rem + 1vmin), 1.25rem) !important;
+  padding-bottom: clamp(0.75rem, calc(0.5rem + 1.25vmin), 1.35rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark {
+  width: auto !important;
+  max-width: 100% !important;
+  font-size: clamp(2.85rem, calc(2.35rem + 3.25vmin), 4.15rem) !important;
 }
 
 html[data-proto-page] .proto-footer-wordmark-fit {
