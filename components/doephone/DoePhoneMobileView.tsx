@@ -6,6 +6,7 @@ import DoeIphoneSiteNav from "@/components/DoeIphoneSiteNav";
 import { DoePhoneHeroSection } from "@/components/doephone/DoePhoneHeroSection";
 import { ProtoCommunicationStack } from "@/components/proto/ProtoCommunicationStack";
 import { ProtoFooter } from "@/components/proto/ProtoFooter";
+import { ProtoMoreAboutSection } from "@/components/proto/ProtoMoreAboutSection";
 import { useDoePhoneLayoutViewport } from "@/lib/doephone/use-doe-phone-layout-viewport";
 import { useDoePhoneStableViewport } from "@/lib/doephone/use-doe-phone-stable-viewport";
 import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-font";
@@ -62,6 +63,8 @@ export function DoePhoneMobileView() {
       <DoePhoneHeroSection variant="mobile" proto />
 
       <ProtoCommunicationStack />
+
+      <ProtoMoreAboutSection layout="phone" />
 
       <ProtoFooter />
     </div>

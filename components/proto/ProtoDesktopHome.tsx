@@ -7,6 +7,7 @@ import { DoePhoneHeroSection } from "@/components/doephone/DoePhoneHeroSection";
 import { ProtoDesktopFeatureStack } from "@/components/proto/ProtoDesktopFeatureStack";
 import { ProtoDesktopNavActionRow } from "@/components/proto/ProtoDesktopNavActionRow";
 import { ProtoFooter } from "@/components/proto/ProtoFooter";
+import { ProtoMoreAboutSection } from "@/components/proto/ProtoMoreAboutSection";
 import {
   PROTO_DESKTOP_NAV_LOGO_TW,
   PROTO_DESKTOP_PAGE_INSET_X,
@@ -65,6 +66,8 @@ export function ProtoDesktopHome() {
       <div className="w-full border-t border-[#2A3538]" aria-hidden />
 
       <ProtoDesktopFeatureStack />
+
+      <ProtoMoreAboutSection layout="desktop" />
 
       <ProtoFooter layout="desktop" />
     </div>

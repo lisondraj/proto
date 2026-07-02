@@ -737,3 +737,8 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link:hover {
   color: #ffffff !important;
 }
+
+/* More about Proto — horizontal post row above footer. */
+html[data-proto-page] .proto-more-about__track {
+  -webkit-overflow-scrolling: touch;
+}
