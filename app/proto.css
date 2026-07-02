@@ -209,7 +209,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__copy .d
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephone-hero-headline {
-  font-size: clamp(2.45rem, 1.32rem + 7.35vmin, 4.05rem) !important;
+  font-size: clamp(2.15rem, 1.15rem + 6.45vmin, 3.58rem) !important;
 }
 
 /* Hero + feature cards — full-bleed gradients; soften grain so backdrops stay sharp. */
@@ -223,8 +223,9 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-backdrop > div.z-\[1\],
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-carousel-backdrop > div.z-\[1\],
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop > div.z-\[1\] {
-  opacity: 0.14 !important;
-  mix-blend-mode: soft-light !important;
+  opacity: 0.3 !important;
+  mix-blend-mode: overlay !important;
+  background-size: 520px 520px !important;
 }
 
 /* Feature box UI mocks — display-only (no selection or control clicks). */
