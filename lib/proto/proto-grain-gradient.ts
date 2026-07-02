@@ -8,6 +8,12 @@ export const PROTO_GRAIN_GRADIENT_COLOR_BACK = "#000a0f";
 /** Default animation speed when a preset omits speed. */
 export const PROTO_GRAIN_GRADIENT_SPEED = 1;
 
+/** Match library default — full hero sharpness on large bands. */
+export const PROTO_SHADER_MAX_PIXEL_COUNT_HERO = 1920 * 1080 * 4;
+
+/** Cap feature boxes only; stays above typical panel pixel counts at 2× DPR. */
+export const PROTO_SHADER_MAX_PIXEL_COUNT_FEATURE = 1920 * 1080 * 2;
+
 export const PROTO_GRAIN_GRADIENT_WORLD_WIDTH = 1280;
 
 export const PROTO_GRAIN_GRADIENT_WORLD_HEIGHT = 720;
