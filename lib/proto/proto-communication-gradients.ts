@@ -44,8 +44,8 @@ const PROTO_AGENTS_GRADIENT = `linear-gradient(225deg, ${PROTO_RECEPTION_FULL_ST
 /** Prior auth — warm lower-right bloom; full reception sweep (all phone won't stop colours). */
 const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%, ${PROTO_RECEPTION_PALETTE.lightYellow} 0%, ${PROTO_RECEPTION_PALETTE.wheat} 12%, ${PROTO_RECEPTION_PALETTE.gold} 26%, ${PROTO_RECEPTION_PALETTE.copper} 40%, ${PROTO_RECEPTION_PALETTE.blue} 56%, ${PROTO_AGENTS_MID_BLUE} 72%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
 
-/** Integrate — vertical foundation stack; cool blues rising from a deep base, copper accent at the top. */
-const PROTO_INTEGRATE_GRADIENT = `linear-gradient(0deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 22%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_HUMIRA_COLORS.bridgeBlue} 84%, ${PROTO_RECEPTION_PALETTE.copper} 100%)`;
+/** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
+const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
 /** Prototype validation — cool upper arc into warm copper/gold. */
 const PROTO_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_RECEPTION_PALETTE.blue} 26%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
