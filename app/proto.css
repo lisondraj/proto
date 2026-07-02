@@ -278,9 +278,10 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
     (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-frost-pad-x-min) +
     var(--proto-nav-frost-progress, 0) * var(--proto-nav-frost-pad-x-max)
   );
-  --proto-nav-frost-compact-scale: calc(1 - var(--proto-nav-frost-progress, 0) * 0.06);
+  --proto-nav-frost-compact-scale: calc(1 - var(--proto-nav-frost-progress, 0) * 0.1);
   --proto-nav-frost-nav-pad-top: clamp(0.35rem, 0.2rem + 0.85vmin, 0.65rem);
   --proto-nav-frost-nav-pad-bottom: clamp(0.25rem, 0.1rem + 0.55vmin, 0.45rem);
+  --proto-nav-cta-radius-rest: 0.375rem;
   padding-top: calc(
     env(safe-area-inset-top, 0px) +
     var(--proto-nav-frost-progress, 0) * var(--proto-nav-frost-nav-pad-top)
@@ -366,7 +367,8 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
   transition:
     transform var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)),
     left var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
-  transform: translateY(-50%) scale(var(--proto-nav-frost-compact-scale, 1));
+  transform: translateY(-50%)
+    scale(calc(1 - var(--proto-nav-frost-progress, 0) * (1 - var(--proto-nav-frost-compact-scale, 1))));
   transform-origin: left center;
   left: calc(
     var(--proto-phone-gutter-left) * (1 - var(--proto-nav-frost-progress, 0)) +
@@ -376,13 +378,14 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-chrome-actions {
   transition: transform var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
-  transform: scale(var(--proto-nav-frost-compact-scale, 1));
+  transform: scale(calc(1 - var(--proto-nav-frost-progress, 0) * (1 - var(--proto-nav-frost-compact-scale, 1))));
   transform-origin: right center;
   overflow: visible !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-chrome-actions[class*="top-1/2"] {
-  transform: translateY(-50%) scale(var(--proto-nav-frost-compact-scale, 1)) !important;
+  transform: translateY(-50%)
+    scale(calc(1 - var(--proto-nav-frost-progress, 0) * (1 - var(--proto-nav-frost-compact-scale, 1)))) !important;
   transform-origin: right center;
 }
 
@@ -394,14 +397,20 @@ html[data-proto-page]:has(.doephone-mobile-root) {
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell {
   border: 1px solid var(--proto-nav-cta-border) !important;
   box-shadow: none !important;
-  border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px) !important;
+  border-radius: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-cta-radius-rest, 0.375rem) +
+    var(--proto-nav-frost-progress, 0) * 9999px
+  ) !important;
   overflow: visible !important;
   transition: border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
 }
 
 /* Split trigger — pill clip follows scroll progress (not a binary snap). */
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell > div:not([role="menu"]) {
-  border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px) !important;
+  border-radius: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-cta-radius-rest, 0.375rem) +
+    var(--proto-nav-frost-progress, 0) * 9999px
+  ) !important;
   overflow: hidden !important;
   transition: border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1));
 }
@@ -413,7 +422,10 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell > button {
-  border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px) !important;
+  border-radius: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-cta-radius-rest, 0.375rem) +
+    var(--proto-nav-frost-progress, 0) * 9999px
+  ) !important;
   transition: border-radius var(--proto-nav-motion-duration, 620ms) var(--proto-nav-motion-ease, cubic-bezier(0.28, 0.84, 0.24, 1)) !important;
 }
 
