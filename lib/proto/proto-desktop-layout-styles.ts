@@ -22,9 +22,13 @@ export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
   "aspect-square h-auto w-full max-h-full max-w-full";
 
 /** Full-width gradient band between page margins — vertical inset within the section. */
-export const PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y = "py-8 md:py-10 lg:py-12";
+export const PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y =
+  "py-12 md:py-16 lg:py-20 xl:py-24";
 
-export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW = "h-full w-full min-h-0";
+export const PROTO_DESKTOP_FULL_PANEL_SHELL_TW =
+  "proto-desktop-feature__full-panel-shell box-border flex h-full min-h-0 w-full flex-col";
+
+export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW = "h-full w-full min-h-0 flex-1";
 
 export const PROTO_DESKTOP_FEATURE_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(2.65rem,4.05vw,4.05rem)] md:text-[clamp(2.78rem,3.75vw,4.28rem)] lg:text-[clamp(2.92rem,3.5vw,4.52rem)] ${PROTO_FONT_CLASS}`;
 

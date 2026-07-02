@@ -6,6 +6,7 @@ import {
   PROTO_DESKTOP_FEATURE_BAND_H,
   PROTO_DESKTOP_FEATURE_PANEL_FULL_TW,
   PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y,
+  PROTO_DESKTOP_FULL_PANEL_SHELL_TW,
   PROTO_DESKTOP_PAGE_INSET_X,
 } from "@/lib/proto/proto-desktop-layout-styles";
 import {
@@ -32,7 +33,7 @@ export function ProtoDesktopFullPanelFeatureSection({
       aria-label={slide.menuLabel}
     >
       <div
-        className={`flex h-full min-h-0 w-full flex-1 ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y}`}
+        className={`${PROTO_DESKTOP_FULL_PANEL_SHELL_TW} ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y}`}
       >
         <div
           className={`proto-desktop-feature__panel proto-desktop-feature__panel--full ${PROTO_DESKTOP_FEATURE_PANEL_FULL_TW} ${protoFeatureRevealClass(revealed, "title")}`}

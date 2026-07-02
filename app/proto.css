@@ -604,11 +604,21 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel 
   overflow: hidden !important;
 }
 
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
+  box-sizing: border-box !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding-top: clamp(3rem, 4.5vh, 5.5rem) !important;
+  padding-bottom: clamp(3rem, 4.5vh, 5.5rem) !important;
+}
+
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--full {
   aspect-ratio: auto !important;
-  height: 100% !important;
+  flex: 1 1 auto !important;
+  height: auto !important;
   width: 100% !important;
-  max-height: none !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
   max-width: none !important;
 }
 
