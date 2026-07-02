@@ -7,7 +7,7 @@ import struct
 import zlib
 from pathlib import Path
 
-GRAIN_ASSET_PX = 512
+GRAIN_ASSET_PX = 768
 GRAIN_SEED = 0x50726F746F
 
 
@@ -22,9 +22,9 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 
 def film_grain_value(rng: random.Random) -> int:
     """Two-octave monochrome noise — visible contrast, smooth when downscaled."""
-    fine = rng.gauss(0, 22)
-    coarse = rng.gauss(0, 36)
-    return int(max(0, min(255, 128 + fine + coarse * 0.62)))
+    fine = rng.gauss(0, 19)
+    coarse = rng.gauss(0, 38)
+    return int(max(0, min(255, 128 + fine + coarse * 0.58)))
 
 
 def write_grain_png(path: Path, size: int = GRAIN_ASSET_PX) -> None:

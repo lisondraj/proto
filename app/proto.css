@@ -212,7 +212,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephon
   font-size: clamp(2.15rem, 1.15rem + 6.45vmin, 3.58rem) !important;
 }
 
-/* Hero + feature cards — full-bleed gradients; proto grain PNG at 256px (512px @2x asset). */
+/* Hero + feature cards — full-bleed gradients; proto grain PNG at 256px (768px @3x asset). */
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-backdrop [aria-hidden]:first-child,
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-carousel-backdrop [aria-hidden]:first-child,
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [aria-hidden]:first-child {

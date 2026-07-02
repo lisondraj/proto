@@ -1,5 +1,5 @@
-/** Proto grain — 512px PNG displayed at 256px (2× retina, smooth downscale). */
-export const PROTO_GRAIN_ASSET_PX = 512;
+/** Proto grain — 768px PNG displayed at 256px (3× on phone, smooth downscale). */
+export const PROTO_GRAIN_ASSET_PX = 768;
 
 /** CSS background-size — one tile in layout pixels. */
 export const PROTO_GRAIN_TILE_PX = 256;
