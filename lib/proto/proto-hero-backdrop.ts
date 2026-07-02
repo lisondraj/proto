@@ -16,7 +16,7 @@ export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
 export const PROTO_PHONE_BACKDROP_GRADIENT_SCALE = 1;
 export const PROTO_PHONE_BACKDROP_PATTERN_SCALE = 0.84;
 export const PROTO_PHONE_BACKDROP_GRAIN_SIZE = PROTO_GRAIN_SIZE;
-export { PROTO_GRAIN_BG, PROTO_GRAIN_SIZE, PROTO_GRAIN_BG as PROTO_PHONE_GRAIN_BG };
+export { PROTO_GRAIN_BG, PROTO_GRAIN_SIZE, PROTO_GRAIN_OPACITY, PROTO_GRAIN_BG as PROTO_PHONE_GRAIN_BG };
 
 /** Desktop proto backdrops — same full-bleed rule, native grain tile. */
 export const PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE = 1;

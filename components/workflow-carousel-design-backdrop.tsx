@@ -8,6 +8,7 @@ import {
   type WorkflowCarouselGridKind,
   type WorkflowCarouselSurface,
 } from "@/lib/workflow-carousel-design-backdrops";
+import { PROTO_GRAIN_OPACITY } from "@/lib/proto/proto-phone-grain";
 import {
   doephoneHeroIntroRingDelayMs,
   DOEPHONE_HERO_INTRO_RING_COUNT,
@@ -341,7 +342,7 @@ export function WorkflowCarouselDesignBackdrop({
             backgroundSize: grainBackgroundSize,
             backgroundRepeat: "repeat",
             ...(grainBackgroundImage
-              ? { mixBlendMode: "overlay" as const, opacity: 0.22 }
+              ? { mixBlendMode: "overlay" as const, opacity: PROTO_GRAIN_OPACITY }
               : null),
           }}
           aria-hidden

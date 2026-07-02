@@ -220,11 +220,15 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
   background-position: center center !important;
 }
 
+html[data-proto-page] {
+  --proto-grain-opacity: 0.17;
+}
+
 html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\],
 html[data-proto-page] .doephone-carousel-backdrop > div.z-\[1\],
 html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\],
 html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
-  opacity: 0.22 !important;
+  opacity: var(--proto-grain-opacity) !important;
   mix-blend-mode: overlay !important;
   background-size: 256px 256px !important;
   background-repeat: repeat !important;
