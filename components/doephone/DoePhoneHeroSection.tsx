@@ -126,7 +126,13 @@ export function DoePhoneHeroSection({
         <div className="doephone-hero-copy pointer-events-none w-full min-w-0">
           <DoePhoneHeroHeadline
             line1={isProto ? "Recruiting for the" : undefined}
-            line2={isProto ? "intelligence era." : undefined}
+            line2={
+              isProto
+                ? isDesktop
+                  ? "intelligence era"
+                  : "intelligence era."
+                : undefined
+            }
             fontClass={isProto ? PROTO_FONT_CLASS : undefined}
           />
         </div>

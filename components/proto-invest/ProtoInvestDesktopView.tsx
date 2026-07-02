@@ -64,7 +64,7 @@ export function ProtoInvestDesktopView() {
           <div className={`${ABOUT_HERO_HEADLINE_WRAP} min-w-0 ${ABOUT_DESKTOP_HERO_HEADLINE_TOP}`}>
             <h1 className={PROTO_INVEST_DESKTOP_TITLE_TW}>
               <span className="block">Proto is changing the</span>
-              <span className="block">way we hire talent.</span>
+              <span className="block">way we hire talent</span>
             </h1>
 
             <p className={PROTO_INVEST_DESKTOP_SUBHEADING_TW}>
