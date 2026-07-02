@@ -223,9 +223,9 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-backdrop > div.z-\[1\],
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-carousel-backdrop > div.z-\[1\],
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop > div.z-\[1\] {
-  opacity: 0.3 !important;
-  mix-blend-mode: overlay !important;
-  background-size: 520px 520px !important;
+  opacity: 0.24 !important;
+  mix-blend-mode: soft-light !important;
+  background-size: 380px 380px !important;
 }
 
 /* Feature box UI mocks — display-only (no selection or control clicks). */
@@ -380,6 +380,10 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-wrap {
   padding-bottom: clamp(0.75rem, calc(0.5rem + 1.25vmin), 1.35rem) !important;
 }
 
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-fit > .proto-footer-wordmark {
+  font-size: clamp(3.5rem, 33.5cqw, 11rem) !important;
+}
+
 html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark {
   display: block !important;
   width: 100% !important;
@@ -388,6 +392,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark {
 
 html[data-proto-page] .proto-footer-wordmark-fit {
   overflow: visible !important;
+  container-type: inline-size;
 }
 
 html[data-proto-page] .proto-footer-wordmark {
