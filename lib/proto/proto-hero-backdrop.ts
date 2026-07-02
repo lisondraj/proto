@@ -44,9 +44,9 @@ export const PROTO_ABOUT_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
 };
 
 /** Hero-only grain — slightly lighter than feature cards. */
-export const PROTO_HERO_GRAIN_TILE_PX = 200;
+export const PROTO_HERO_GRAIN_TILE_PX = 208;
 export const PROTO_HERO_GRAIN_SIZE = `${PROTO_HERO_GRAIN_TILE_PX}px ${PROTO_HERO_GRAIN_TILE_PX}px`;
-export const PROTO_HERO_GRAIN_OPACITY = 0.5;
+export const PROTO_HERO_GRAIN_OPACITY = 0.4;
 
 /** Proto feature backdrops — match iPhone density; patternScale > 1 spreads line grids. */
 export const PROTO_FEATURE_BACKDROP_PATTERN_SCALE = 0.84;
