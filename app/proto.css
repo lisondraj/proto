@@ -579,14 +579,14 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel.proto
   transform: translateY(-7px);
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--bleed-only {
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--bleed {
   overflow: hidden !important;
-  padding: 0 !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--bleed {
   height: 100% !important;
-  width: auto !important;
+  width: 100% !important;
+  max-height: 100% !important;
   max-width: 100% !important;
   aspect-ratio: 1 / 1 !important;
 }
