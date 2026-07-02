@@ -6,11 +6,11 @@ export const NAV_EMAIL_DROPDOWN_DIVIDER = "rgba(255, 255, 255, 0.22)";
 
 /** Left-aligned to the mail button (legacy). */
 export const NAV_EMAIL_DROPDOWN_ATTACH_TW =
-  "absolute left-0 top-[calc(100%+0.5rem)] z-[60] min-w-max overflow-hidden rounded-md";
+  "absolute left-0 top-[calc(100%+0.5rem)] z-[60] min-w-max overflow-hidden rounded-none";
 
 /** Right edge flush with the For Investors split button in the nav action row. */
 export const NAV_EMAIL_DROPDOWN_ATTACH_RIGHT_TW =
-  "absolute right-0 top-[calc(100%+0.5rem)] z-[60] min-w-max overflow-hidden rounded-md";
+  "absolute right-0 top-[calc(100%+0.5rem)] z-[60] min-w-max overflow-hidden rounded-none";
 
 export const NAV_EMAIL_DROPDOWN_PANEL_TW = `border px-4 py-3.5 shadow-[0_8px_24px_rgba(0,0,0,0.12)] iphone-page:px-[clamp(1.05rem,0.86rem+0.95vmin,1.28rem)] iphone-page:py-[clamp(0.95rem,0.76rem+0.95vmin,1.15rem)]`;
 

@@ -76,7 +76,10 @@ export function MobileMainNavCta({
 
   return (
     <div ref={rootRef} className="relative flex shrink-0 items-center">
-      <div className={`${MOBILE_NAV_SPLIT_SHELL_TW} proto-nav-cta-shell`} style={{ boxShadow: shadow }}>
+      <div
+        className={`${MOBILE_NAV_SPLIT_SHELL_TW} proto-nav-cta-shell${open ? " proto-nav-cta-shell--open" : ""}`}
+        style={{ boxShadow: shadow }}
+      >
         <div className={MOBILE_NAV_SPLIT_INNER_TW}>
           {linksEnabled ? (
             <Link

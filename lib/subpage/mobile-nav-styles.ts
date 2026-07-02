@@ -25,7 +25,7 @@ export const MOBILE_NAV_SPLIT_SHELL_TW = "relative flex items-stretch overflow-v
 export const MOBILE_NAV_SPLIT_INNER_TW = "flex items-stretch overflow-hidden rounded-md";
 
 export const MOBILE_NAV_DROPDOWN_ATTACH_TW =
-  "absolute left-0 right-0 top-[calc(100%+0.5rem)] z-[60] overflow-hidden rounded-md";
+  "absolute left-0 right-0 top-[calc(100%+0.5rem)] z-[60] overflow-hidden rounded-none";
 
 export const MOBILE_NAV_CTA_DROPDOWN_ATTACH_TW =
-  "absolute left-0 right-0 top-[calc(100%+0.5rem)] z-[60] overflow-hidden rounded-md py-1 iphone-page:py-1.5";
+  "absolute left-0 right-0 top-[calc(100%+0.5rem)] z-[60] overflow-hidden rounded-none py-1 iphone-page:py-1.5";
