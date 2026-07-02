@@ -21,7 +21,24 @@ export function ProtoCommunicationStack() {
         }
 
         const copy = protoFeatureCopy(slide.id);
-        if (!copy) return null;
+        if (!copy || layout?.kind !== "split") return null;
+
+        const boxOnTop = layout.boxOnTop ?? layout.boxOnLeft;
+
+        const card = (
+          <div className="proto-feature-section__card w-full min-h-0">
+            <DoePhoneCommunicationCarouselCard
+              slide={slide}
+              isActive
+              layout="phone"
+              showExpandControls={false}
+              gradientOverride={protoCommunicationGradient(slide.id)}
+              gridOverride={protoCommunicationGrid(slide.id)}
+            />
+          </div>
+        );
+
+        const copyBlock = <ProtoFeatureSectionCopy copy={copy} />;
 
         return (
           <section
@@ -31,17 +48,17 @@ export function ProtoCommunicationStack() {
           >
             <div className={`${DOEPHONE_SECTION_CAROUSEL_INSET_X} proto-feature-section__inner`}>
               <div className="proto-feature-section__stack w-full min-h-0">
-                <div className="proto-feature-section__card w-full min-h-0">
-                  <DoePhoneCommunicationCarouselCard
-                    slide={slide}
-                    isActive
-                    layout="phone"
-                    showExpandControls={false}
-                    gradientOverride={protoCommunicationGradient(slide.id)}
-                    gridOverride={protoCommunicationGrid(slide.id)}
-                  />
-                </div>
-                <ProtoFeatureSectionCopy copy={copy} />
+                {boxOnTop ? (
+                  <>
+                    {card}
+                    {copyBlock}
+                  </>
+                ) : (
+                  <>
+                    {copyBlock}
+                    {card}
+                  </>
+                )}
               </div>
             </div>
           </section>

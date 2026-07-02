@@ -64,7 +64,7 @@ export const PROTO_SHORTLIST_BACKDROP = {
   slideIndex: 8,
   label: "Shortlist",
   gradient: PROTO_SHORTLIST_GRADIENT,
-  grid: "dot" as const,
+  grid: "wave" as const,
 };
 
 /** Validate — warm documents sweep for the pre-shortlist full band. */
@@ -114,7 +114,7 @@ export const PROTO_COMMUNICATION_GRIDS: Partial<
   prototype: "diagonal",
   integrate: "hex",
   validate: "crosshatch",
-  shortlist: "dot",
+  shortlist: "wave",
 };
 
 export function protoCommunicationGradient(slideId: string): string | undefined {

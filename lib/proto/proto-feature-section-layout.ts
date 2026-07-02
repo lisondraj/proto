@@ -1,6 +1,6 @@
 /** Desktop /proto feature band layout — split copy+panel or full-width panel band. */
 export type ProtoFeatureSectionLayout =
-  | { kind: "split"; boxOnLeft: boolean }
+  | { kind: "split"; boxOnLeft: boolean; /** iPhone — card above copy when true (defaults to boxOnLeft). */ boxOnTop?: boolean }
   | { kind: "full-panel" };
 
 /** One entry per slide in PROTO_COMMUNICATION_SLIDES order. */
@@ -13,7 +13,7 @@ export const PROTO_FEATURE_SECTION_LAYOUTS: readonly ProtoFeatureSectionLayout[]
   { kind: "full-panel" },
   { kind: "split", boxOnLeft: false },
   { kind: "full-panel" },
-  { kind: "split", boxOnLeft: false },
+  { kind: "split", boxOnLeft: true, boxOnTop: false },
 ];
 
 export function protoFeatureSectionLayout(index: number): ProtoFeatureSectionLayout | undefined {
