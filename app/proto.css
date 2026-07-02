@@ -509,7 +509,7 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"],
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
   top: calc(100% + 0.22rem) !important;
-  border-radius: clamp(0.24rem, 0.2rem + 0.16vmin, 0.32rem) !important;
+  border-radius: clamp(0.45rem, 0.38rem + 0.32vmin, 0.62rem) !important;
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
