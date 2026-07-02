@@ -32,11 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-doeforvc-always-phone="true">
       <head>
         <script dangerouslySetInnerHTML={{ __html: protoBootstrap }} />
       </head>
-      <body className={`${PROTO_FONT_VARIABLE} ${PROTO_NAV_LOGO_FONT_VARIABLE} ${PROTO_FONT_CLASS} antialiased`}>
+      <body className={`${PROTO_FONT_VARIABLE} ${PROTO_NAV_LOGO_FONT_VARIABLE} ${PROTO_FONT_CLASS} antialiased wide-desktop:overflow-hidden`}>
         {children}
       </body>
     </html>

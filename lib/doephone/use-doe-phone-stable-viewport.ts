@@ -1,6 +1,7 @@
 "use client";
 
 import { shouldLockDesignersTouchPhoneLayout } from "@/lib/designers/designers-page-context";
+import { shouldLockProtoTouchPhoneLayout } from "@/lib/proto/proto-page-context";
 
 import { vbIsVisualViewportPinching } from "@/lib/home/vertical-bento";
 import { useLayoutEffect } from "react";
@@ -150,7 +151,7 @@ export function useDoePhoneStableViewport(enabled = true) {
       if (event.persisted) reapplyStable();
     };
 
-    if (shouldLockDesignersTouchPhoneLayout()) {
+    if (shouldLockDesignersTouchPhoneLayout() || shouldLockProtoTouchPhoneLayout()) {
       clearStoredLock();
       measure(true);
     } else {

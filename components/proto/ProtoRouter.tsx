@@ -6,7 +6,6 @@ import { DoePhoneMobileView } from "@/components/doephone/DoePhoneMobileView";
 import { ProtoDesktopHome } from "@/components/proto/ProtoDesktopHome";
 import {
   applyPhoneLayoutViewportMeta,
-  PHONE_DEVICE_VIEWPORT,
   phoneLayoutViewportContent,
 } from "@/lib/doephone/phone-layout-viewport";
 import {
@@ -15,6 +14,7 @@ import {
   type DoePhoneVariant,
 } from "@/lib/doephone/resolve-doe-phone-variant";
 import { shouldLockDesignersTouchPhoneLayout } from "@/lib/designers/designers-page-context";
+import { shouldLockProtoTouchPhoneLayout } from "@/lib/proto/proto-page-context";
 
 function applyPhoneDocumentAttrs() {
   const html = document.documentElement;
@@ -27,16 +27,9 @@ function applyPhoneDocumentAttrs() {
 function applyDesktopDocumentAttrs() {
   const html = document.documentElement;
   const body = document.body;
-  const meta = document.querySelector('meta[name="viewport"]');
   html.removeAttribute("data-doeforvc-always-phone");
-  html.removeAttribute("data-doephone-pinching");
   html.setAttribute("data-layout", "desktop");
   body.classList.add("desktop-route");
-  body.classList.remove("doephone-route");
-  html.style.removeProperty("--app-vw");
-  html.style.removeProperty("--app-vh");
-  html.style.removeProperty("--app-vv-offset-top");
-  meta?.setAttribute("content", PHONE_DEVICE_VIEWPORT);
 }
 
 function applyPhonePinchViewport() {
@@ -48,9 +41,22 @@ function applyPhonePinchViewport() {
   meta?.setAttribute("content", phoneLayoutViewportContent());
 }
 
+function clearPhonePinchViewport(prevViewport: string) {
+  const html = document.documentElement;
+  const body = document.body;
+  const meta = document.querySelector('meta[name="viewport"]');
+  html.removeAttribute("data-doephone-pinching");
+  body.classList.remove("doephone-route");
+  if (meta) {
+    if (prevViewport) meta.setAttribute("content", prevViewport);
+    else meta.removeAttribute("content");
+  }
+}
+
 /** /proto — phone or desktop layout based on viewport, matching Doe home routing. */
 export function ProtoRouter() {
-  const [variant, setVariant] = useState<DoePhoneVariant | null>(null);
+  /** Boot phone on SSR + first paint to avoid desktop/mobile hydration splits. */
+  const [variant, setVariant] = useState<DoePhoneVariant>("phone");
 
   useLayoutEffect(() => {
     setVariant(resolveDoePhoneVariant());
@@ -58,9 +64,9 @@ export function ProtoRouter() {
 
   useEffect(() => {
     const sync = () => setVariant(resolveDoePhoneVariant());
+    sync();
 
-    if (shouldLockDesignersTouchPhoneLayout()) {
-      sync();
+    if (shouldLockDesignersTouchPhoneLayout() || shouldLockProtoTouchPhoneLayout()) {
       return;
     }
 
@@ -70,8 +76,6 @@ export function ProtoRouter() {
   }, []);
 
   useLayoutEffect(() => {
-    if (variant === null) return;
-
     const html = document.documentElement;
     const body = document.body;
     html.setAttribute("data-proto-page", "true");
@@ -87,7 +91,17 @@ export function ProtoRouter() {
     applyDesktopDocumentAttrs();
   }, [variant]);
 
-  if (variant === null) return null;
+  useEffect(() => {
+    if (variant !== "phone") return;
+
+    const meta = document.querySelector('meta[name="viewport"]');
+    const prevViewport = meta?.getAttribute("content") ?? "";
+
+    return () => {
+      clearPhonePinchViewport(prevViewport);
+      applyPhoneDocumentAttrs();
+    };
+  }, [variant]);
 
   return variant === "desktop" ? <ProtoDesktopHome /> : <DoePhoneMobileView />;
 }

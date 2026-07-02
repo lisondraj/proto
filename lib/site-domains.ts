@@ -2,6 +2,9 @@
 export const PRIMARY_SITE_HOST =
   process.env.PRIMARY_SITE_HOST ?? "doe.care";
 
+/** Proto standalone site — hireproto.com */
+export const PROTO_SITE_HOST = process.env.PROTO_SITE_HOST ?? "hireproto.com";
+
 /** Designers landing domain — serves /designers at the site root. */
 export const DESIGNERS_SITE_HOST =
   process.env.DESIGNERS_SITE_HOST ?? process.env.JOIN_SITE_HOST ?? "doehealth.care";
@@ -62,6 +65,10 @@ export function isJoinHost(host: string | null | undefined): boolean {
 
 export function isPrimaryHost(host: string | null | undefined): boolean {
   return normalizeHost(host) === normalizeHost(PRIMARY_SITE_HOST);
+}
+
+export function isProtoHost(host: string | null | undefined): boolean {
+  return normalizeHost(host) === normalizeHost(PROTO_SITE_HOST);
 }
 
 /** Skip cross-domain redirects on localhost and Vercel preview URLs. */
