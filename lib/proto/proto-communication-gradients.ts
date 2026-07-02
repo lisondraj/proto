@@ -80,23 +80,23 @@ export const PROTO_HOME_HERO_PHONE_GRADIENT = [
   `radial-gradient(ellipse 130% 96% at 50% 50%, transparent 40%, rgba(8, 6, 18, 0.42) 100%)`,
 ].join(", ");
 
-/** iPhone feature + /about boxes — sundown ember palette (heroes keep twilight prism). */
+/** iPhone feature + /about boxes — nordic frost palette (heroes keep twilight prism). */
 export const PROTO_PHONE_REEF_PALETTE = {
-  lightYellow: "#F9EBD4",
-  wheat: "#EFC080",
-  gold: "#E89440",
-  copper: "#D45E48",
-  blue: "#A07090",
-  deep: "#100810",
+  lightYellow: "#F4ECD8",
+  wheat: "#ECD898",
+  gold: "#D8B060",
+  copper: "#B89078",
+  blue: "#6A9CB8",
+  deep: "#0C1018",
 } as const;
 
 const PROTO_PHONE_REEF_BRIDGE = {
-  bridgeDeep: "#281820",
-  bridgeBlue: "#D8B0C8",
-  amber: "#C87868",
+  bridgeDeep: "#1A2438",
+  bridgeBlue: "#B8D8E8",
+  amber: "#88A8C8",
 } as const;
 
-const PROTO_PHONE_REEF_MID = "#583848";
+const PROTO_PHONE_REEF_MID = "#2E4A66";
 
 const R = PROTO_PHONE_REEF_PALETTE;
 const RB = PROTO_PHONE_REEF_BRIDGE;
