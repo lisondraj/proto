@@ -8,11 +8,11 @@ import zlib
 from pathlib import Path
 
 GRAIN_SEED = 0x50726F746F
-GRAIN_DISPLAY_PX = 256
-# 2× displays (MacBook, etc.) — 512px tile @ 256px = 1:1 device pixels.
-GRAIN_2X_PX = 512
-# 3× displays (iPhone) — 768px tile @ 256px = 1:1 device pixels.
-GRAIN_3X_PX = 768
+GRAIN_DISPLAY_PX = 192
+# 2× displays — 384px tile @ 192px = 1:1 device pixels.
+GRAIN_2X_PX = 384
+# 3× displays — 576px tile @ 192px = 1:1 device pixels.
+GRAIN_3X_PX = 576
 
 
 def png_chunk(tag: bytes, data: bytes) -> bytes:
@@ -25,15 +25,11 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 
 
 def film_grain_value(rng: random.Random) -> int:
-    """Per-pixel film grain — high-frequency only; no spatial blur or upsampling."""
-    v = 128.0 + rng.gauss(0, 24.0)
-    roll = rng.random()
-    if roll < 0.055:
-        v += rng.choice([-1.0, 1.0]) * rng.uniform(34.0, 56.0)
-    elif roll < 0.105:
-        v += rng.choice([-1.0, 1.0]) * rng.uniform(14.0, 26.0)
-    v = 128.0 + (v - 128.0) * 1.1
-    return int(max(0, min(255, v)))
+    """Per-pixel grain biased light so soft-light darkens the gradient less."""
+    v = 136.0 + rng.gauss(0, 17.0)
+    if rng.random() < 0.04:
+        v += rng.uniform(10.0, 28.0)
+    return int(max(108, min(255, v)))
 
 
 def write_grain_png(path: Path, size: int, seed: int = GRAIN_SEED) -> None:
