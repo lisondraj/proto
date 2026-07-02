@@ -7,16 +7,26 @@ export const PROTO_DESKTOP_FEATURE_BAND_H = "min-h-[112vh] h-[112vh]";
 export const PROTO_DESKTOP_FEATURE_SECTION_PAD =
   "py-10 md:py-14 lg:py-16 xl:py-20";
 
-export const PROTO_DESKTOP_FEATURE_SPLIT_GAP =
-  "gap-[clamp(2rem,4vw,5rem)] xl:gap-[clamp(2.5rem,5vw,6rem)]";
+/** Centered content shell — aligns nav, feature bands, and footer. */
+export const PROTO_DESKTOP_CONTENT_MAX_W =
+  "mx-auto w-full max-w-[min(100%,90rem)]";
 
-/** Square gradient panel — sized to fit beside copy within the feature band. */
+export const PROTO_DESKTOP_FEATURE_SPLIT_GAP =
+  "gap-x-[clamp(2.5rem,5vw,5.5rem)] gap-y-8";
+
+/** Square gradient panel — fills its grid column without leaving dead space. */
 export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
-  "h-[min(72vh,44vw)] w-[min(72vh,44vw)] shrink-0";
+  "h-[min(72vh,100%)] w-full max-w-[min(72vh,100%)] max-h-[min(72vh,100%)] aspect-square";
 
 export const PROTO_DESKTOP_FEATURE_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(2.65rem,4.05vw,4.05rem)] md:text-[clamp(2.78rem,3.75vw,4.28rem)] lg:text-[clamp(2.92rem,3.5vw,4.52rem)] ${PROTO_FONT_CLASS}`;
 
-export const PROTO_DESKTOP_FEATURE_DESC_TW = `mt-5 max-w-[42rem] text-[clamp(1.05rem,0.95rem+0.35vw,1.28rem)] md:text-[clamp(1.12rem,1rem+0.4vw,1.38rem)] font-normal leading-[1.52] tracking-[-0.012em] text-white ${PROTO_FONT_CLASS}`;
+export const PROTO_DESKTOP_FEATURE_DESC_TW = `mt-5 max-w-[36rem] text-[clamp(1.05rem,0.95rem+0.35vw,1.28rem)] md:text-[clamp(1.12rem,1rem+0.4vw,1.38rem)] font-normal leading-[1.52] tracking-[-0.012em] text-white ${PROTO_FONT_CLASS}`;
+
+export const PROTO_DESKTOP_FEATURE_COPY_COL_TW =
+  "flex min-h-0 min-w-0 flex-col justify-center px-[clamp(0.5rem,1.5vw,1.5rem)]";
+
+export const PROTO_DESKTOP_FEATURE_PANEL_COL_TW =
+  "flex min-h-0 min-w-0 items-center justify-center";
 
 export const PROTO_DESKTOP_PAGE_INSET_X = DOEPHONE_DESKTOP_PAGE_INSET_X;
 

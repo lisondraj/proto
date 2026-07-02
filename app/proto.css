@@ -560,7 +560,7 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel {
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__copy {
-  max-width: min(42rem, 100%) !important;
+  max-width: none !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-feature-section__description {
