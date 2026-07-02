@@ -2,16 +2,19 @@ import {
   ABOUT_DESKTOP_BEIGE_PANEL_TW,
   ABOUT_DESKTOP_PAGE_INSET,
 } from "@/lib/about/about-layout-styles";
-import { DOEPHONE_SECTION_CAROUSEL_INSET_X, DOEPHONE_SECTION_CAROUSEL_RADIUS } from "@/lib/doephone/section-styles";
 import { DOEPHONE_SECTION_CLOSING_FEATURE_HEIGHT } from "@/lib/doephone/closing-section-styles";
+import { DOEPHONE_SECTION_CAROUSEL_RADIUS } from "@/lib/doephone/section-styles";
+import {
+  PROTO_PHONE_CONTENT_PT,
+  PROTO_PHONE_PAGE_INSET_X,
+} from "@/lib/proto/proto-phone-layout-styles";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 
 /** Horizontal gutters — aligned with /proto feature sections. */
-export const PROTO_INVEST_PAGE_INSET_X = DOEPHONE_SECTION_CAROUSEL_INSET_X;
+export const PROTO_INVEST_PAGE_INSET_X = PROTO_PHONE_PAGE_INSET_X;
 
 /** Clears scaled proto nav — extra breathing room above mission headline. */
-export const PROTO_INVEST_CONTENT_PT =
-  "pt-[max(14.25rem,calc(env(safe-area-inset-top,0px)+10.25rem))]";
+export const PROTO_INVEST_CONTENT_PT = PROTO_PHONE_CONTENT_PT;
 
 export const PROTO_INVEST_SECTION_GAP = "space-y-10 iphone-page:space-y-12";
 
@@ -19,7 +22,7 @@ export const PROTO_INVEST_CONTENT_GAP = "space-y-6 iphone-page:space-y-7";
 
 export const PROTO_INVEST_LIST_GAP = "space-y-4 iphone-page:space-y-5";
 
-export const PROTO_INVEST_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(2.85rem,10.75vw,4.85rem)] ${PROTO_FONT_CLASS}`;
+export const PROTO_INVEST_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(2.65rem,1.42rem+7.15vmin,4.35rem)] ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_SUBHEADING_TW = `mt-[clamp(0.85rem,0.65rem+0.85vmin,1.25rem)] text-[clamp(1.42rem,1.22rem+0.95vmin,1.78rem)] iphone-page:text-[clamp(1.68rem,1.38rem+1.35vmin,2.12rem)] font-normal leading-[1.44] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
 

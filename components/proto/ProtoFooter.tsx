@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { DOEPHONE_FOOTER_CONTENT_INSET } from "@/lib/doephone/section-styles";
+import { PROTO_PHONE_PAGE_INSET_X } from "@/lib/proto/proto-phone-layout-styles";
 import {
   PROTO_DESKTOP_FOOTER_COLUMN_LINK_TW,
   PROTO_DESKTOP_FOOTER_COLUMN_TITLE_TW,
@@ -105,7 +105,7 @@ function ProtoFooterPhone() {
   return (
     <footer className="proto-footer relative z-10 mt-0 w-full overflow-visible pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
       <div className="proto-footer-inner relative z-10 flex w-full flex-col">
-        <div className={`proto-footer-main w-full ${DOEPHONE_FOOTER_CONTENT_INSET}`}>
+        <div className={`proto-footer-main w-full ${PROTO_PHONE_PAGE_INSET_X}`}>
           <div className={`proto-footer-contact min-w-0 text-left text-white ${PROTO_FONT_CLASS}`}>
             <p className="proto-footer-contact__brand font-semibold leading-[1.16]">Proto</p>
             <p className="proto-footer-contact__line mt-3 text-white/88">Delaware C-Corporation</p>

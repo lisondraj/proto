@@ -19,8 +19,31 @@ html[data-proto-page]:has(.doephone-mobile-root) {
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) {
-  /* Match global 80% design scale — doephone’s 14.5px root oversizes proto at 100% zoom. */
   font-size: 80%;
+  --proto-phone-gutter-left: max(2.35rem, calc(env(safe-area-inset-left, 0px) + 5.25vmin));
+  --proto-phone-gutter-right: max(1.65rem, env(safe-area-inset-right, 0px));
+  --proto-phone-gutter-y: max(2.35rem, calc(env(safe-area-inset-bottom, 0px) + 5.25vmin));
+  --proto-phone-nav-clearance: max(5.35rem, calc(env(safe-area-inset-top, 0px) + 4.35rem));
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-phone-inset-x {
+  padding-left: var(--proto-phone-gutter-left) !important;
+  padding-right: var(--proto-phone-gutter-right) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-phone-content-pt {
+  padding-top: max(
+    var(--proto-phone-nav-clearance),
+    calc(env(safe-area-inset-top, 0px) + 4.35rem)
+  ) !important;
+}
+
+html[data-proto-page] .proto-more-about__track-spacer--start {
+  width: var(--proto-phone-gutter-left);
+}
+
+html[data-proto-page] .proto-more-about__track-spacer--end {
+  width: var(--proto-phone-gutter-right);
 }
 
 html[data-proto-page] body,
@@ -57,14 +80,13 @@ html[data-proto-page] .proto-feature-section__inner {
   width: 100% !important;
   height: 100% !important;
   min-height: 0 !important;
+  padding-left: var(--proto-phone-gutter-left) !important;
+  padding-right: var(--proto-phone-gutter-right) !important;
   padding-top: max(
-    2.35rem,
-    calc(env(safe-area-inset-top, 0px) + 5.25vmin)
+    var(--proto-phone-nav-clearance),
+    var(--proto-phone-gutter-y)
   ) !important;
-  padding-bottom: max(
-    2.35rem,
-    calc(env(safe-area-inset-bottom, 0px) + 5.25vmin)
-  ) !important;
+  padding-bottom: var(--proto-phone-gutter-y) !important;
 }
 
 html[data-proto-page] .proto-feature-section__stack {
@@ -74,10 +96,7 @@ html[data-proto-page] .proto-feature-section__stack {
   width: 100% !important;
   max-height: 100% !important;
   min-height: 0 !important;
-  gap: max(
-    1.45rem,
-    calc(var(--app-vh, 100lvh) * 0.038)
-  ) !important;
+  gap: max(1.25rem, calc(var(--app-vh, 100lvh) * 0.032)) !important;
 }
 
 html[data-proto-page] .proto-feature-section__card,
@@ -86,9 +105,9 @@ html[data-proto-page] .proto-feature-section .doephone-section-carousel {
   flex: 1 1 auto !important;
   flex-direction: column !important;
   min-height: clamp(
-    34rem,
-    calc(var(--app-vh, 100lvh) * 0.68),
-    52rem
+    30rem,
+    calc(var(--app-vh, 100lvh) * 0.62),
+    46rem
   ) !important;
   height: auto !important;
   max-height: none !important;
@@ -178,20 +197,42 @@ html[data-proto-page] .proto-feature-section__description {
     calc(var(--app-vh, 100lvh) * 0.022)
   ) !important;
   font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif !important;
-  font-size: clamp(1.48rem, calc(1.22rem + 1.35vmin), 1.92rem) !important;
+  font-size: clamp(1.32rem, calc(1.08rem + 1.2vmin), 1.68rem) !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
   letter-spacing: -0.012em !important;
   color: #ffffff !important;
 }
 
-/* Nav — keep proto logo font; gutters come from NavChromeStrip (pinchSafe vmin). */
-html[data-proto-page] nav.doephone-site-nav {
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__copy .doephone-hero-headline {
+  font-size: clamp(2.65rem, 1.42rem + 7.15vmin, 4.35rem) !important;
+}
+
+/* Nav — align strip + logo to proto phone gutters. */
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav {
   padding-top: env(safe-area-inset-top, 0px) !important;
 }
 
-html[data-proto-page] nav.doephone-site-nav .absolute.top-1\/2 {
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav > div > div {
+  padding-left: var(--proto-phone-gutter-left) !important;
+  padding-right: var(--proto-phone-gutter-right) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .absolute.top-1\/2 {
+  left: var(--proto-phone-gutter-left) !important;
   font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+}
+
+/* Hero copy — same horizontal gutters as sections. */
+html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section > .absolute.left-0.right-0 {
+  padding-left: var(--proto-phone-gutter-left) !important;
+  padding-right: var(--proto-phone-gutter-right) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-main,
+html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-wrap {
+  padding-left: var(--proto-phone-gutter-left) !important;
+  padding-right: var(--proto-phone-gutter-right) !important;
 }
 
 /* Footer — page background, top rule. */

@@ -1,18 +1,22 @@
-import { DOEPHONE_SECTION_CAROUSEL_INSET_X, DOEPHONE_SECTION_CAROUSEL_RADIUS } from "@/lib/doephone/section-styles";
+import { DOEPHONE_SECTION_CAROUSEL_RADIUS } from "@/lib/doephone/section-styles";
 import { PROTO_DESKTOP_PAGE_INSET_X } from "@/lib/proto/proto-desktop-layout-styles";
+import {
+  PROTO_MORE_ABOUT_PHONE_TRACK_END_SPACER,
+  PROTO_MORE_ABOUT_PHONE_TRACK_START_SPACER,
+  PROTO_PHONE_PAGE_INSET_X,
+} from "@/lib/proto/proto-phone-layout-styles";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 
-export const PROTO_MORE_ABOUT_PHONE_INSET_X = DOEPHONE_SECTION_CAROUSEL_INSET_X;
+export {
+  PROTO_MORE_ABOUT_PHONE_TRACK_END_SPACER,
+  PROTO_MORE_ABOUT_PHONE_TRACK_START_SPACER,
+};
+
+export const PROTO_MORE_ABOUT_PHONE_INSET_X = PROTO_PHONE_PAGE_INSET_X;
 
 export const PROTO_MORE_ABOUT_DESKTOP_INSET_X = PROTO_DESKTOP_PAGE_INSET_X;
 
 /** Scroll track spacers — match title left/right gutters without nested padding. */
-export const PROTO_MORE_ABOUT_PHONE_TRACK_START_SPACER =
-  "proto-more-about__track-spacer shrink-0 w-14 iphone-page:w-[max(2.35rem,calc(env(safe-area-inset-left,0px)+5.25vmin))]";
-
-export const PROTO_MORE_ABOUT_PHONE_TRACK_END_SPACER =
-  "proto-more-about__track-spacer shrink-0 w-14 iphone-page:w-[max(2.35rem,calc(env(safe-area-inset-left,0px)+5.25vmin))]";
-
 export const PROTO_MORE_ABOUT_DESKTOP_TRACK_START_SPACER =
   "proto-more-about__track-spacer shrink-0 w-10 md:w-20 lg:w-28 xl:w-36";
 
@@ -22,7 +26,7 @@ export const PROTO_MORE_ABOUT_DESKTOP_TRACK_END_SPACER =
 export const PROTO_MORE_ABOUT_SECTION_PAD_Y =
   "py-12 iphone-page:py-14 md:py-16 lg:py-20";
 
-export const PROTO_MORE_ABOUT_SECTION_TITLE_PHONE_TW = `text-left font-light leading-[1.06] tracking-[-0.028em] text-white text-[clamp(2.05rem,7.25vw,3rem)] iphone-page:text-[clamp(1.95rem,6.85vw,2.85rem)] ${PROTO_FONT_CLASS}`;
+export const PROTO_MORE_ABOUT_SECTION_TITLE_PHONE_TW = `text-left font-light leading-[1.06] tracking-[-0.028em] text-white text-[clamp(2.05rem,7.25vw,3rem)] iphone-page:text-[clamp(1.95rem,1.12rem+5.35vmin,2.75rem)] ${PROTO_FONT_CLASS}`;
 
 export const PROTO_MORE_ABOUT_SECTION_TITLE_DESKTOP_TW = `text-left font-light leading-[1.06] tracking-[-0.028em] text-white text-[clamp(1.85rem,2.15vw,2.45rem)] md:text-[clamp(1.95rem,2.25vw,2.55rem)] ${PROTO_FONT_CLASS}`;
 
@@ -41,7 +45,7 @@ export const PROTO_MORE_ABOUT_CARD_META_PHONE_TW = `mt-2 text-left font-medium l
 export const PROTO_MORE_ABOUT_CARD_META_DESKTOP_TW = `mt-2 text-left font-medium leading-[1.35] text-white/55 text-[clamp(1.08rem,0.98vw,1.22rem)] md:text-[clamp(1.14rem,1.02vw,1.28rem)] ${PROTO_FONT_CLASS}`;
 
 export const PROTO_MORE_ABOUT_TRACK_PHONE_TW =
-  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-14 iphone-page:scroll-pl-[max(2.35rem,calc(env(safe-area-inset-left,0px)+5.25vmin))] iphone-page:gap-6 [scrollbar-width:none] [-ms-overflow-style:none] [touch-action:pan-y_pinch-zoom] [&::-webkit-scrollbar]:hidden";
+  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-[var(--proto-phone-gutter-left)] iphone-page:gap-6 [scrollbar-width:none] [-ms-overflow-style:none] [touch-action:pan-y_pinch-zoom] [&::-webkit-scrollbar]:hidden";
 
 export const PROTO_MORE_ABOUT_TRACK_DESKTOP_TW =
   "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-10 md:scroll-pl-20 lg:scroll-pl-28 xl:scroll-pl-36 lg:gap-7 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden";
