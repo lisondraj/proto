@@ -82,6 +82,7 @@ function PolarGridOverlay({
   surface = "orange",
   lineOverlayOpacity,
   clipClassName = "",
+  insetClassName = "absolute inset-0",
 }: {
   patternScale?: number;
   centerY?: string;
@@ -89,6 +90,7 @@ function PolarGridOverlay({
   surface?: WorkflowCarouselSurface;
   lineOverlayOpacity?: number;
   clipClassName?: string;
+  insetClassName?: string;
 }) {
   const polarCy = polarCenterYUnits(centerY);
   const ringCount = introOnLoad ? DOEPHONE_HERO_INTRO_RING_COUNT : 6;
@@ -106,7 +108,7 @@ function PolarGridOverlay({
 
   return (
     <div
-      className={`pointer-events-none absolute inset-0 z-[2] overflow-hidden ${clipClassName}${
+      className={`pointer-events-none ${insetClassName} z-[2] overflow-hidden ${clipClassName}${
         introOnLoad ? " doephone-hero-polar-overlay doephone-hero-polar-overlay--intro" : ""
       }`.trim()}
       aria-hidden
@@ -170,16 +172,18 @@ function WaveGridOverlay({
   surface = "orange",
   lineOverlayOpacity,
   clipClassName = "",
+  insetClassName = "absolute inset-0",
 }: {
   patternScale?: number;
   surface?: WorkflowCarouselSurface;
   lineOverlayOpacity?: number;
   clipClassName?: string;
+  insetClassName?: string;
 }) {
   const stroke = workflowWaveStroke(surface, lineOverlayOpacity);
 
   return (
-    <div className={`pointer-events-none absolute inset-0 z-[2] overflow-hidden ${clipClassName}`.trim()} aria-hidden>
+    <div className={`pointer-events-none ${insetClassName} z-[2] overflow-hidden ${clipClassName}`.trim()} aria-hidden>
       <svg
         className="pointer-events-none absolute left-1/2 top-1/2 max-w-none"
         style={{
@@ -213,6 +217,7 @@ function GridOverlay({
   surface = "orange",
   lineOverlayOpacity,
   clipClassName = "",
+  insetClassName = "absolute inset-0",
 }: {
   kind: WorkflowCarouselGridKind;
   patternScale?: number;
@@ -221,6 +226,7 @@ function GridOverlay({
   surface?: WorkflowCarouselSurface;
   lineOverlayOpacity?: number;
   clipClassName?: string;
+  insetClassName?: string;
 }) {
   if (kind === "polar") {
     return (
@@ -231,6 +237,7 @@ function GridOverlay({
         surface={surface}
         lineOverlayOpacity={lineOverlayOpacity}
         clipClassName={clipClassName}
+        insetClassName={insetClassName}
       />
     );
   }
@@ -241,6 +248,7 @@ function GridOverlay({
         surface={surface}
         lineOverlayOpacity={lineOverlayOpacity}
         clipClassName={clipClassName}
+        insetClassName={insetClassName}
       />
     );
   }
@@ -250,7 +258,7 @@ function GridOverlay({
 
   return (
     <div
-      className={`pointer-events-none absolute inset-0 z-[2] overflow-hidden ${clipClassName}`.trim()}
+      className={`pointer-events-none ${insetClassName} z-[2] overflow-hidden ${clipClassName}`.trim()}
       style={style}
       aria-hidden
     />
@@ -266,6 +274,7 @@ export function WorkflowCarouselDesignBackdrop({
   gradientScale = 1,
   gridOverride,
   grainBackgroundSize = "200px 200px",
+  grainBackgroundImage,
   introOnLoad = false,
   surface = "orange",
 }: {
@@ -283,6 +292,8 @@ export function WorkflowCarouselDesignBackdrop({
   gradientScale?: number;
   /** Grain tile size — smaller values yield finer, sharper noise. */
   grainBackgroundSize?: string;
+  /** Optional grain SVG — proto phone uses a sharper tile at native resolution. */
+  grainBackgroundImage?: string;
   /** Staggered fade-in for polar line overlay on load. */
   introOnLoad?: boolean;
   /** Beige uses solid fill and taupe line overlays instead of orange gradient + white lines. */
@@ -326,6 +337,7 @@ export function WorkflowCarouselDesignBackdrop({
           className={`pointer-events-none ${layerInsetClass} z-[1] ${layerClass}`.trim()}
           style={{
             ...WORKFLOW_CAROUSEL_GRAIN_STYLE,
+            backgroundImage: grainBackgroundImage ?? WORKFLOW_CAROUSEL_GRAIN_STYLE.backgroundImage,
             backgroundSize: grainBackgroundSize,
           }}
           aria-hidden
@@ -339,6 +351,7 @@ export function WorkflowCarouselDesignBackdrop({
         surface={surface}
         lineOverlayOpacity={backdrop.lineOverlayOpacity}
         clipClassName={layerClass}
+        insetClassName={layerInsetClass}
       />
     </Root>
   );

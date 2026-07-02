@@ -10,6 +10,7 @@ import {
   PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
   PROTO_PHONE_BACKDROP_GRAIN_SIZE,
   PROTO_PHONE_BACKDROP_PATTERN_SCALE,
+  PROTO_PHONE_GRAIN_BG,
 } from "@/lib/proto/proto-hero-backdrop";
 
 /** /proto iPhone — feature slides stacked vertically: box, title, description per section. */
@@ -41,6 +42,7 @@ export function ProtoCommunicationStack() {
                     backdropPatternScale={PROTO_PHONE_BACKDROP_PATTERN_SCALE}
                     backdropGradientScale={PROTO_PHONE_BACKDROP_GRADIENT_SCALE}
                     backdropGrainSize={PROTO_PHONE_BACKDROP_GRAIN_SIZE}
+                    backdropGrainImage={PROTO_PHONE_GRAIN_BG}
                     uiScaleClass="proto-carousel-ui-scale"
                   />
                 </div>

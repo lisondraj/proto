@@ -222,6 +222,7 @@ export function getWorkflowGridOverlayStyle(
       return {
         ...dotGridStyle(surface),
         backgroundSize: `${scaleSize(50)} ${scaleSize(50)}`,
+        backgroundPosition: "center center",
       };
     case "crosshatch":
       return {
@@ -233,11 +234,13 @@ export function getWorkflowGridOverlayStyle(
       return {
         ...diagonalGridStyle(surface),
         backgroundSize: `${scaleSize(60)} ${scaleSize(60)}`,
+        backgroundPosition: "center center",
       };
     case "hex":
       return {
         ...hexGridStyle(surface),
         backgroundSize: `${scaleSize(HEX_CELL_W_PX)} ${scaleSize(HEX_CELL_H_PX)}`,
+        backgroundPosition: "center center",
       };
     case "polar":
     case "wave":

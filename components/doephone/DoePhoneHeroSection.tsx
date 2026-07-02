@@ -20,6 +20,7 @@ import {
   PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
   PROTO_PHONE_BACKDROP_GRAIN_SIZE,
   PROTO_PHONE_BACKDROP_PATTERN_SCALE,
+  PROTO_PHONE_GRAIN_BG,
 } from "@/lib/proto/proto-hero-backdrop";
 import { useEffect, useState, type CSSProperties } from "react";
 
@@ -111,6 +112,7 @@ export function DoePhoneHeroSection({
         gradientScale={isProto ? PROTO_PHONE_BACKDROP_GRADIENT_SCALE : gradientZoom}
         patternScale={isProto ? PROTO_PHONE_BACKDROP_PATTERN_SCALE : 1}
         grainBackgroundSize={isProto ? PROTO_PHONE_BACKDROP_GRAIN_SIZE : undefined}
+        grainBackgroundImage={isProto ? PROTO_PHONE_GRAIN_BG : undefined}
       />
 
       <div

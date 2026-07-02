@@ -10,6 +10,7 @@ export function BlogHeroVisual({
   patternScale,
   gradientScale,
   grainBackgroundSize,
+  grainBackgroundImage,
   children,
 }: {
   backdrop: WorkflowCarouselDesignBackdropType;
@@ -19,6 +20,7 @@ export function BlogHeroVisual({
   patternScale?: number;
   gradientScale?: number;
   grainBackgroundSize?: string;
+  grainBackgroundImage?: string;
   children?: React.ReactNode;
 }) {
   const gap = gapClassName ?? (variant === "hero" ? BLOG_TITLE_VISUAL_GAP : "");
@@ -35,6 +37,7 @@ export function BlogHeroVisual({
         patternScale={patternScale}
         gradientScale={gradientScale}
         grainBackgroundSize={grainBackgroundSize}
+        grainBackgroundImage={grainBackgroundImage}
       />
       {children}
     </div>
