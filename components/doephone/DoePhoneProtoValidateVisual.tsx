@@ -2,28 +2,24 @@
 
 import { inter, suisseIntl } from "@/lib/home/fonts";
 import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
-import { WORKFLOW_DOT_GRID_STYLE } from "@/lib/workflow-carousel-design-backdrops";
+
+const { ink: INK, accent: DOE_ORANGE, divider: DIVIDER } = CAROUSEL_MENU_UI;
+
+const BORDER = "#E5E7EB";
+const MUTED_TEXT = "#6B7280";
+const LIVE_BG = "rgba(210, 119, 76, 0.12)";
+const BTN_BG = "#F3F4F6";
 
 const OUTER_RADIUS = "rounded-[clamp(0.8rem,2.4vmin,0.95rem)]";
 const INNER_RADIUS = "rounded-[clamp(0.45rem,1.35vmin,0.55rem)]";
+const PILL_RADIUS = "rounded-[clamp(0.38rem,1.15vmin,0.48rem)]";
 const CARD_PAD = "clamp(1.2rem,3.85vmin,1.45rem) clamp(1.25rem,4vmin,1.55rem)";
-const TITLE_SIZE = "clamp(1.12rem,3.45vmin,1.38rem)";
+const ROW_PAD = "clamp(0.82rem,2.55vmin,1.02rem) clamp(0.88rem,2.75vmin,1.05rem)";
+const TITLE_SIZE = "clamp(1.02rem,3.15vmin,1.22rem)";
 const BODY_SIZE = "clamp(0.88rem,2.65vmin,1.05rem)";
 const CAPTION_SIZE = "clamp(0.72rem,2.15vmin,0.86rem)";
 
-const PROTO_PANEL_BG = "#151c1f";
-const PROTO_PANEL_BORDER = "#2A3538";
-const PROTO_ACCENT = "#E7A944";
-const PROTO_TEXT = "#ffffff";
-const PROTO_TEXT_MUTED = "rgba(255, 255, 255, 0.72)";
-const PROTO_TEXT_SOFT = "rgba(255, 255, 255, 0.55)";
-
-const FEEDBACK = [
-  { name: "User 12", note: "Clear flow, would use weekly" },
-  { name: "User 08", note: "Needs faster onboarding" },
-] as const;
-
-/** Applicant prototype + feedback + in-product simulation — /proto prototype slide. */
+/** Applicant prototype fit check — /proto prototype slide. */
 export function DoePhoneProtoValidateVisual({ layout = "phone" }: { layout?: "phone" | "desktop" }) {
   const isDesktop = layout === "desktop";
 
@@ -34,96 +30,77 @@ export function DoePhoneProtoValidateVisual({ layout = "phone" }: { layout?: "ph
       aria-hidden
     >
       <div
-        className={`w-full overflow-hidden border ${OUTER_RADIUS}`}
-        style={{ borderColor: PROTO_PANEL_BORDER, backgroundColor: PROTO_PANEL_BG, padding: CARD_PAD }}
+        className={`w-full border bg-white ${OUTER_RADIUS}`}
+        style={{ borderColor: BORDER, padding: CARD_PAD }}
       >
-        <div
-          className={`relative overflow-hidden ${INNER_RADIUS}`}
+        <p
+          className="font-semibold leading-none tracking-[-0.015em]"
+          style={{ color: INK, fontSize: TITLE_SIZE }}
+        >
+          Onboarding redesign
+        </p>
+        <p
+          className={`${inter.className} font-normal leading-snug`}
           style={{
-            border: `1px solid ${PROTO_PANEL_BORDER}`,
-            padding: "clamp(0.85rem,2.65vmin,1.05rem) clamp(0.9rem,2.75vmin,1.1rem)",
+            color: MUTED_TEXT,
+            fontSize: CAPTION_SIZE,
+            marginTop: "clamp(0.28rem,0.85vmin,0.36rem)",
           }}
         >
-          <div className="pointer-events-none absolute inset-0 z-0 opacity-90" style={WORKFLOW_DOT_GRID_STYLE} aria-hidden />
-          <div className="relative z-10">
-            <h3 className="font-semibold leading-tight tracking-[-0.02em]" style={{ color: PROTO_TEXT, fontSize: TITLE_SIZE }}>
-              Onboarding redesign
-            </h3>
-            <p
-              className={`${inter.className} font-normal leading-snug`}
-              style={{
-                color: PROTO_TEXT_SOFT,
-                fontSize: CAPTION_SIZE,
-                marginTop: "clamp(0.22rem,0.68vmin,0.3rem)",
-              }}
-            >
-              Applicant prototype · Maya Chen
-            </p>
-          </div>
-        </div>
+          Applicant prototype · Maya Chen
+        </p>
 
         <div
-          className={`${INNER_RADIUS} border`}
+          className={`${INNER_RADIUS} border bg-white`}
           style={{
+            borderColor: BORDER,
             marginTop: "clamp(0.85rem,2.65vmin,1.05rem)",
-            borderColor: PROTO_PANEL_BORDER,
-            padding: "clamp(0.72rem,2.2vmin,0.92rem)",
-            background: "linear-gradient(135deg, rgba(90,120,136,0.28) 0%, rgba(231,169,68,0.16) 100%)",
+            padding: ROW_PAD,
           }}
         >
-          <div
-            className={`${INNER_RADIUS} border`}
-            style={{
-              borderColor: PROTO_PANEL_BORDER,
-              backgroundColor: "rgba(21, 28, 31, 0.88)",
-              padding: "clamp(0.55rem,1.7vmin,0.72rem) clamp(0.62rem,1.9vmin,0.82rem)",
-            }}
-          >
-            <p className={`${inter.className} font-medium`} style={{ color: PROTO_TEXT, fontSize: BODY_SIZE }}>
-              Simulate in product
-            </p>
-            <p
-              className={`${inter.className} font-normal leading-snug`}
+          <div className="flex items-center justify-between" style={{ gap: "clamp(0.55rem,1.65vmin,0.72rem)" }}>
+            <span className={`${inter.className} font-medium`} style={{ color: INK, fontSize: BODY_SIZE }}>
+              Product fit
+            </span>
+            <span
+              className={`inline-flex items-center font-medium leading-none ${PILL_RADIUS} ${inter.className}`}
               style={{
-                color: PROTO_TEXT_MUTED,
+                background: LIVE_BG,
+                color: DOE_ORANGE,
                 fontSize: CAPTION_SIZE,
-                marginTop: "clamp(0.18rem,0.55vmin,0.24rem)",
+                padding: "clamp(0.22rem,0.68vmin,0.28rem) clamp(0.42rem,1.28vmin,0.52rem)",
               }}
             >
-              Fit score 87% · matches checkout flow
-            </p>
+              87% match
+            </span>
           </div>
+          <div className="h-px w-full" style={{ background: DIVIDER, margin: "clamp(0.68rem,2.1vmin,0.82rem) 0" }} />
+          <p className={`${inter.className} font-normal leading-snug`} style={{ color: MUTED_TEXT, fontSize: BODY_SIZE }}>
+            Simulated in checkout flow — users found the path clear
+          </p>
         </div>
 
-        <div style={{ marginTop: "clamp(0.82rem,2.55vmin,1.02rem)", display: "grid", gap: "clamp(0.55rem,1.7vmin,0.72rem)" }}>
-          {FEEDBACK.map((item) => (
-            <div
-              key={item.name}
-              className={`flex items-start gap-3 ${INNER_RADIUS} border`}
-              style={{
-                borderColor: PROTO_PANEL_BORDER,
-                backgroundColor: "rgba(255, 255, 255, 0.03)",
-                padding: "clamp(0.55rem,1.7vmin,0.72rem) clamp(0.62rem,1.9vmin,0.82rem)",
-              }}
-            >
-              <span
-                className="mt-[0.12rem] shrink-0 rounded-full"
-                style={{ width: "0.55rem", height: "0.55rem", background: PROTO_ACCENT }}
-                aria-hidden
-              />
-              <div className="min-w-0">
-                <p className={`${inter.className} font-medium`} style={{ color: PROTO_TEXT, fontSize: CAPTION_SIZE }}>
-                  {item.name}
-                </p>
-                <p
-                  className={`${inter.className} font-normal leading-snug`}
-                  style={{ color: PROTO_TEXT_MUTED, fontSize: CAPTION_SIZE, marginTop: "0.12rem" }}
-                >
-                  {item.note}
-                </p>
-              </div>
-            </div>
-          ))}
+        <div
+          className={`flex items-start gap-3 ${INNER_RADIUS} border`}
+          style={{
+            borderColor: BORDER,
+            backgroundColor: BTN_BG,
+            marginTop: "clamp(0.72rem,2.2vmin,0.92rem)",
+            padding: ROW_PAD,
+          }}
+        >
+          <span
+            className="mt-[0.12rem] shrink-0 rounded-full"
+            style={{ width: "0.5rem", height: "0.5rem", background: DOE_ORANGE }}
+            aria-hidden
+          />
+          <p className={`${inter.className} min-w-0 font-normal leading-snug`} style={{ color: MUTED_TEXT, fontSize: CAPTION_SIZE }}>
+            <span className="font-medium" style={{ color: INK }}>
+              User feedback
+            </span>
+            {" · "}
+            Clear flow, would use weekly
+          </p>
         </div>
       </div>
     </div>

@@ -5,14 +5,8 @@ export const PROTO_GRAIN_GRADIENT_COLORS = ["#c6750c", "#beae60", "#d7cbc6"] as 
 
 export const PROTO_GRAIN_GRADIENT_COLOR_BACK = "#000a0f";
 
-/** Feature boxes stay static; only hero bands animate when visible. */
-export const PROTO_GRAIN_GRADIENT_SPEED = 0;
-
-export const PROTO_SHADER_MIN_PIXEL_RATIO = 1;
-
-export const PROTO_SHADER_MAX_PIXEL_COUNT_HERO = 1280 * 720;
-
-export const PROTO_SHADER_MAX_PIXEL_COUNT_FEATURE = 640 * 400;
+/** Default speed for hero bands; feature presets omit speed so they stay static. */
+export const PROTO_GRAIN_GRADIENT_SPEED = 1;
 
 export const PROTO_GRAIN_GRADIENT_WORLD_WIDTH = 1280;
 
@@ -95,13 +89,14 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     scale: 1.12,
   },
   ambient: {
-    shape: "sphere",
-    softness: 0.68,
-    intensity: 0.16,
+    shape: "ripple",
+    softness: 0.74,
+    intensity: 0.13,
     fit: "cover",
-    rotation: 270,
-    offsetX: 0.2,
-    scale: 1.04,
+    rotation: 48,
+    offsetX: -0.14,
+    offsetY: 0.18,
+    scale: 1.14,
   },
   billing: {
     shape: "wave",
@@ -112,14 +107,14 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     offsetY: 0.14,
   },
   prototype: {
-    shape: "dots",
-    softness: 0.5,
-    intensity: 0.2,
+    shape: "wave",
+    softness: 0.68,
+    intensity: 0.12,
     fit: "cover",
-    rotation: 135,
-    offsetX: -0.16,
-    offsetY: 0.22,
-    scale: 0.88,
+    rotation: 160,
+    offsetX: 0.1,
+    offsetY: -0.12,
+    scale: 1.02,
   },
   integrate: {
     shape: "ripple",
@@ -141,14 +136,14 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     scale: 1.22,
   },
   shortlist: {
-    shape: "corners",
-    softness: 0.58,
-    intensity: 0.19,
+    shape: "blob",
+    softness: 0.7,
+    intensity: 0.14,
     fit: "cover",
-    rotation: 225,
-    offsetX: -0.2,
-    offsetY: -0.14,
-    scale: 0.92,
+    rotation: 120,
+    offsetX: 0.16,
+    offsetY: -0.2,
+    scale: 1.08,
   },
 };
 

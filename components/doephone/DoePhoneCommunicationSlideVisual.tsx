@@ -5,6 +5,7 @@ import { DoePhoneBillingVisual } from "@/components/doephone/DoePhoneBillingVisu
 import { DoePhoneClinicAgentsVisual } from "@/components/doephone/DoePhoneClinicAgentsVisual";
 import { DoePhoneFrontDeskInboxVisual } from "@/components/doephone/DoePhoneFrontDeskInboxVisual";
 import { DoePhoneIntegrateVisual } from "@/components/doephone/DoePhoneIntegrateVisual";
+import { DoePhoneProtoShortlistVisual } from "@/components/doephone/DoePhoneProtoShortlistVisual";
 import { DoePhoneProtoValidateVisual } from "@/components/doephone/DoePhoneProtoValidateVisual";
 import { DoePhoneWorkflowVisual } from "@/components/doephone/DoePhoneWorkflowVisual";
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
@@ -34,7 +35,7 @@ export function DoePhoneCommunicationSlideVisual({
     case "validate":
       return <DoePhoneIntegrateVisual />;
     case "shortlist":
-      return <DoePhoneWorkflowVisual layout={layout} />;
+      return <DoePhoneProtoShortlistVisual layout={layout} />;
     default:
       return null;
   }
