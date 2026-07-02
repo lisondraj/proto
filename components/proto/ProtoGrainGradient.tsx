@@ -1,7 +1,7 @@
 "use client";
 
 import { GrainGradient } from "@paper-design/shaders-react";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import {
   PROTO_GRAIN_GRADIENT_COLOR_BACK,
@@ -19,7 +19,13 @@ function isHeroVariant(variant: ProtoGrainGradientVariant) {
   return variant === "home-hero" || variant === "about-hero";
 }
 
-/** /proto — mounts near viewport, animates when visible, full resolution (default 2× DPR). */
+function isNearViewport(node: HTMLElement, marginRatio = 0.75) {
+  const rect = node.getBoundingClientRect();
+  const vh = window.innerHeight;
+  return rect.bottom > -vh * marginRatio && rect.top < vh * (1 + marginRatio);
+}
+
+/** /proto — sticky mount near viewport; animates when visible, pauses off-screen (no unmount). */
 export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   variant,
   className = "",
@@ -32,11 +38,19 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
 }) {
   const preset = PROTO_GRAIN_GRADIENT_PRESETS[variant];
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const hero = isHeroVariant(variant);
+  const [hasMounted, setHasMounted] = useState(hero);
+  const [isVisible, setIsVisible] = useState(hero);
   const [tabVisible, setTabVisible] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const hero = isHeroVariant(variant);
+
+  useLayoutEffect(() => {
+    const node = containerRef.current;
+    if (!node) return;
+    if (isNearViewport(node, hero ? 0.4 : 0.75)) {
+      setHasMounted(true);
+    }
+  }, [hero]);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -59,37 +73,28 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
 
     const mountObserver = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setIsMounted(true);
+        if (entry.isIntersecting) setHasMounted(true);
       },
-      { rootMargin: hero ? "25% 0px" : "50% 0px", threshold: 0 },
-    );
-
-    const unmountObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) setIsMounted(false);
-      },
-      { rootMargin: "-35% 0px", threshold: 0 },
+      { rootMargin: hero ? "40% 0px" : "80% 0px", threshold: 0 },
     );
 
     const animateObserver = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { rootMargin: "15% 0px", threshold: 0 },
+      { rootMargin: "12% 0px", threshold: 0 },
     );
 
     mountObserver.observe(node);
-    unmountObserver.observe(node);
     animateObserver.observe(node);
 
     return () => {
       mountObserver.disconnect();
-      unmountObserver.disconnect();
       animateObserver.disconnect();
     };
   }, [hero]);
 
   const targetSpeed = preset.speed ?? PROTO_GRAIN_GRADIENT_SPEED;
   const shouldAnimate =
-    !staticShader && !reducedMotion && targetSpeed > 0 && isVisible && tabVisible && isMounted;
+    !staticShader && !reducedMotion && targetSpeed > 0 && isVisible && tabVisible && hasMounted;
 
   return (
     <div
@@ -98,7 +103,7 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
       style={{ backgroundColor: PROTO_GRAIN_GRADIENT_COLOR_BACK }}
       aria-hidden
     >
-      {isMounted ? (
+      {hasMounted ? (
         <GrainGradient
           width="100%"
           height="100%"
