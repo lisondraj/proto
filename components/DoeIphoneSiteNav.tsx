@@ -164,7 +164,7 @@ function NavChromeStrip({
       className={`${navInsetX} ${navStripMinH} py-6 iphone-page:py-[clamp(0.8125rem,0.52rem+1.55vmin,1.9rem)] flex items-center relative z-10 iphone-page:gap-[clamp(0.45rem,0.35rem+0.85vmin,0.75rem)] ${subpageAnchored && subpageWithButton ? "" : "justify-end"}`}
     >
       {logoLink ? (
-        <Link href={homeHref} className={`${doeClassName} transition-opacity duration-500 ease-out opacity-100`} style={{ color: navTextColor }}>
+        <Link href={homeHref} className={`${doeClassName}${frostedScrollChrome ? "" : " transition-opacity duration-500 ease-out"} opacity-100`} style={{ color: navTextColor }}>
           {brandName}
         </Link>
       ) : (
@@ -347,10 +347,28 @@ export default function DoeIphoneSiteNav({
   const [viewportWidth, setViewportWidth] = useState(1200);
   const [appViewport, setAppViewport] = useState({ width: 1200, height: 800 });
   const [mounted, setMounted] = useState(false);
+  const [navMotionReady, setNavMotionReady] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useLayoutEffect(() => {
+    if (!frostedScrollNav) {
+      setNavMotionReady(true);
+      return;
+    }
+
+    setNavMotionReady(false);
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setNavMotionReady(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [frostedScrollNav]);
 
   useEffect(() => {
     if (mobileNavOpen) {
@@ -780,26 +798,39 @@ export default function DoeIphoneSiteNav({
         ref={navBarRowRef}
         className={`${pinchSafe ? "doephone-site-nav " : ""}${
           frostedScrollNav ? "proto-nav-scroll-frost " : ""
-        }${protoNavScrolled ? "proto-nav--scrolled " : ""}fixed top-0 left-0 right-0 iphone-page:pt-[env(safe-area-inset-top,0px)] ${
+        }${frostedScrollNav && navMotionReady ? "proto-nav--motion-ready " : ""}${
+          protoNavScrolled ? "proto-nav--scrolled " : ""
+        }fixed top-0 left-0 right-0 iphone-page:pt-[env(safe-area-inset-top,0px)] ${
           navSheetLive ? "z-[200]" : "z-50"
         } ${pinchSafe ? "translate-z-0" : ""}`}
         style={{
-          backgroundColor: frostedScrollNav ? undefined : protoNavScrolled ? "transparent" : navBackground,
+          backgroundColor: frostedScrollNav
+            ? protoNavScrolled
+              ? undefined
+              : navBackground
+            : protoNavScrolled
+              ? "transparent"
+              : navBackground,
           borderBottom: frostedScrollNav
-            ? undefined
+            ? protoNavScrolled
+              ? undefined
+              : `1px solid ${navBorderColor}`
             : protoNavScrolled
               ? "1px solid transparent"
               : `1px solid ${navBorderColor}`,
           boxShadow:
             frostedScrollNav
-              ? undefined
+              ? protoNavScrolled
+                ? undefined
+                : `0 -120px 0 120px ${navBackground}`
               : protoNavScrolled
                 ? undefined
                 : pinchSafe
                   ? `0 -120px 0 120px ${navBackground}`
                   : undefined,
-          transition:
-            "border-bottom 280ms ease-out, border-color 280ms ease-out, background-color 320ms ease-out, box-shadow 320ms ease-out",
+          transition: frostedScrollNav && !navMotionReady
+            ? "none"
+            : "border-bottom 280ms ease-out, border-color 280ms ease-out, background-color 320ms ease-out, box-shadow 320ms ease-out",
         }}
       >
         {frostedScrollNav ? (
