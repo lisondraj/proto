@@ -62,14 +62,14 @@ export const PROTO_PHONE_HERO_VOID = "#080612";
 const PROTO_PHONE_HERO_PLUM = "#18102E";
 const PROTO_PHONE_HERO_VIOLET = "#3A2868";
 const PROTO_PHONE_HERO_ORCHID = "#6E48C8";
-const PROTO_PHONE_HERO_MAGENTA = "#B84CC8";
-const PROTO_PHONE_HERO_ROSE = "#E06698";
-const PROTO_PHONE_HERO_PEACH = "#F09868";
-const PROTO_PHONE_HERO_GLOW = "#FFD8B8";
+const PROTO_PHONE_HERO_LILAC = "#8E62D8";
+const PROTO_PHONE_HERO_PERIWINKLE = "#A484DC";
+const PROTO_PHONE_HERO_BRONZE = "#B89068";
+const PROTO_PHONE_HERO_GLOW = "#E8DCC8";
 
 export const PROTO_HOME_HERO_PHONE_GRADIENT = [
-  `linear-gradient(0deg, ${PROTO_PHONE_HERO_VOID} 0%, ${PROTO_PHONE_HERO_PLUM} 16%, ${PROTO_PHONE_HERO_VIOLET} 34%, ${PROTO_PHONE_HERO_ORCHID} 48%, ${PROTO_PHONE_HERO_MAGENTA} 60%, ${PROTO_PHONE_HERO_ROSE} 72%, ${PROTO_PHONE_HERO_PEACH} 86%, ${PROTO_PHONE_HERO_GLOW} 100%)`,
-  `radial-gradient(ellipse 118% 92% at 16% 94%, rgba(224, 102, 152, 0.58) 0%, rgba(110, 72, 200, 0.3) 36%, transparent 66%)`,
+  `linear-gradient(0deg, ${PROTO_PHONE_HERO_VOID} 0%, ${PROTO_PHONE_HERO_PLUM} 16%, ${PROTO_PHONE_HERO_VIOLET} 36%, ${PROTO_PHONE_HERO_ORCHID} 52%, ${PROTO_PHONE_HERO_LILAC} 64%, ${PROTO_PHONE_HERO_PERIWINKLE} 76%, ${PROTO_PHONE_HERO_BRONZE} 88%, ${PROTO_PHONE_HERO_GLOW} 100%)`,
+  `radial-gradient(ellipse 118% 92% at 16% 94%, rgba(122, 82, 208, 0.5) 0%, rgba(110, 72, 200, 0.26) 38%, transparent 66%)`,
   `radial-gradient(ellipse 68% 52% at 90% 10%, rgba(110, 72, 200, 0.44) 0%, rgba(58, 40, 104, 0.2) 42%, transparent 70%)`,
   `radial-gradient(ellipse 130% 96% at 50% 50%, transparent 40%, rgba(8, 6, 18, 0.42) 100%)`,
 ].join(", ");
