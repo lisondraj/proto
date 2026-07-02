@@ -1,5 +1,3 @@
-import { shouldLockProtoTouchPhoneLayout } from "@/lib/proto/proto-page-context";
-
 /** iPhone 14-class layout reference — matches native doe.care mobile scaling. */
 export const PHONE_LAYOUT_REFERENCE_WIDTH = 390;
 
@@ -22,10 +20,6 @@ export function shouldUseNarrowPhoneLayoutViewport(width = readLayoutViewportWid
 }
 
 export function phoneLayoutViewportContent(width = readLayoutViewportWidth()): string {
-  if (shouldLockProtoTouchPhoneLayout()) {
-    return PHONE_NARROW_LAYOUT_VIEWPORT;
-  }
-
   return shouldUseNarrowPhoneLayoutViewport(width)
     ? PHONE_NARROW_LAYOUT_VIEWPORT
     : PHONE_DEVICE_VIEWPORT;
@@ -42,5 +36,5 @@ export function phoneLayoutViewportBootstrapScript(): string {
   const narrow = PHONE_NARROW_LAYOUT_VIEWPORT;
   const device = PHONE_DEVICE_VIEWPORT;
 
-  return `(function(){try{var m=document.querySelector('meta[name="viewport"]');if(!m)return;var touch=navigator.maxTouchPoints>0;if(touch){m.setAttribute("content",${JSON.stringify(narrow)});return;}var w=Math.max(280,document.documentElement.clientWidth||window.innerWidth);m.setAttribute("content",w>${ref + 32}?${JSON.stringify(narrow)}:${JSON.stringify(device)});}catch(e){}})();`;
+  return `(function(){try{var m=document.querySelector('meta[name="viewport"]');if(!m)return;var w=Math.max(280,document.documentElement.clientWidth||window.innerWidth);m.setAttribute("content",w>${ref + 32}?${JSON.stringify(narrow)}:${JSON.stringify(device)});}catch(e){}})();`;
 }

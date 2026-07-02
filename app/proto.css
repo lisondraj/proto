@@ -18,6 +18,11 @@ html[data-proto-page]:has(.doephone-mobile-root) {
   background-color: #121819 !important;
 }
 
+html[data-proto-page]:has(.doephone-mobile-root) {
+  /* Match global 80% design scale — doephone’s 14.5px root oversizes proto at 100% zoom. */
+  font-size: 80%;
+}
+
 html[data-proto-page] body,
 html[data-proto-page]:has(.doephone-mobile-root) body {
   background-color: #121819 !important;
@@ -25,11 +30,6 @@ html[data-proto-page]:has(.doephone-mobile-root) body {
 
 html[data-proto-page] .doephone-mobile-root {
   background-color: #121819;
-  /*
-   * Match the global 80% design scale on iPhone — doephone’s 14.5px root and
-   * --app-vw nav tokens otherwise render ~25% larger than the tuned layout.
-   */
-  zoom: 0.8;
 }
 
 html[data-proto-page] .proto-section-band {
@@ -59,19 +59,11 @@ html[data-proto-page] .proto-feature-section__inner {
   min-height: 0 !important;
   padding-top: max(
     2.35rem,
-    calc(env(safe-area-inset-top, 0px) + calc(var(--app-vh, 100lvh) * 0.0525))
+    calc(env(safe-area-inset-top, 0px) + 5.25vmin)
   ) !important;
   padding-bottom: max(
     2.35rem,
-    calc(env(safe-area-inset-bottom, 0px) + calc(var(--app-vh, 100lvh) * 0.0525))
-  ) !important;
-  padding-left: max(
-    2.35rem,
-    calc(env(safe-area-inset-left, 0px) + calc(var(--app-vw, 100vw) * 0.0525))
-  ) !important;
-  padding-right: max(
-    2.35rem,
-    calc(env(safe-area-inset-right, 0px) + calc(var(--app-vw, 100vw) * 0.0525))
+    calc(env(safe-area-inset-bottom, 0px) + 5.25vmin)
   ) !important;
 }
 
@@ -193,215 +185,13 @@ html[data-proto-page] .proto-feature-section__description {
   color: #ffffff !important;
 }
 
-/* Nav bar — scaled up with locked viewport tokens. */
+/* Nav — keep proto logo font; gutters come from NavChromeStrip (pinchSafe vmin). */
 html[data-proto-page] nav.doephone-site-nav {
   padding-top: env(safe-area-inset-top, 0px) !important;
 }
 
-html[data-proto-page] nav.doephone-site-nav > div > div {
-  padding-top: clamp(
-    1.15rem,
-    calc(0.72rem + calc(var(--app-vw, 100vw) * 0.0215)),
-    2.65rem
-  ) !important;
-  padding-bottom: clamp(
-    1.15rem,
-    calc(0.72rem + calc(var(--app-vw, 100vw) * 0.0215)),
-    2.65rem
-  ) !important;
-  padding-left: max(
-    1.65rem,
-    calc(env(safe-area-inset-left, 0px) + calc(var(--app-vw, 100vw) * 0.038))
-  ) !important;
-  padding-right: max(
-    1.65rem,
-    calc(env(safe-area-inset-right, 0px) + calc(var(--app-vw, 100vw) * 0.038))
-  ) !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav > div > div > .absolute[class*="top-1/2"] {
-  left: max(
-    1.65rem,
-    calc(env(safe-area-inset-left, 0px) + calc(var(--app-vw, 100vw) * 0.038))
-  ) !important;
+html[data-proto-page] nav.doephone-site-nav .absolute.top-1\/2 {
   font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
-  font-size: clamp(
-    2.45rem,
-    calc(1.35rem + calc(var(--app-vw, 100vw) * 0.048)),
-    4.2rem
-  ) !important;
-  font-weight: 400 !important;
-  letter-spacing: -0.04em !important;
-  line-height: 1 !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav > div > div > .flex.shrink-0.items-center {
-  gap: clamp(0.85rem, calc(var(--app-vw, 100vw) * 0.011), 1.25rem) !important;
-}
-
-/* Nav mail button — square, scaled up. */
-html[data-proto-page] nav.doephone-site-nav button.aspect-square.rounded-md {
-  min-height: clamp(
-    5.85rem,
-    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
-    7.1rem
-  ) !important;
-  min-width: clamp(
-    5.85rem,
-    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
-    7.1rem
-  ) !important;
-  width: clamp(
-    5.85rem,
-    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
-    7.1rem
-  ) !important;
-  padding-top: clamp(
-    1.45rem,
-    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.0165)),
-    1.85rem
-  ) !important;
-  padding-bottom: clamp(
-    1.45rem,
-    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.0165)),
-    1.85rem
-  ) !important;
-  border-radius: clamp(0.62rem, calc(var(--app-vw, 100vw) * 0.016), 0.82rem) !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav button.aspect-square.rounded-md svg {
-  width: clamp(
-    1.85rem,
-    calc(1.58rem + calc(var(--app-vw, 100vw) * 0.011)),
-    2.2rem
-  ) !important;
-  height: clamp(
-    1.85rem,
-    calc(1.58rem + calc(var(--app-vw, 100vw) * 0.011)),
-    2.2rem
-  ) !important;
-}
-
-/* Nav For Investors — attached label + chevron in one split control. */
-html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md {
-  display: flex !important;
-  align-items: stretch !important;
-  overflow: hidden !important;
-  border-radius: clamp(0.62rem, calc(var(--app-vw, 100vw) * 0.016), 0.82rem) !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > a.inline-flex.rounded-none,
-html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > button.aspect-square.rounded-none {
-  min-height: clamp(
-    5.85rem,
-    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
-    7.1rem
-  ) !important;
-  height: auto !important;
-  align-self: stretch !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  border-radius: 0 !important;
-  line-height: 1 !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > a.inline-flex.rounded-none {
-  padding-left: clamp(
-    1.55rem,
-    calc(1.2rem + calc(var(--app-vw, 100vw) * 0.016)),
-    2rem
-  ) !important;
-  padding-right: clamp(
-    1.15rem,
-    calc(0.92rem + calc(var(--app-vw, 100vw) * 0.012)),
-    1.45rem
-  ) !important;
-  font-size: clamp(
-    1.48rem,
-    calc(1.28rem + calc(var(--app-vw, 100vw) * 0.0095)),
-    1.78rem
-  ) !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > button.aspect-square.rounded-none {
-  min-width: clamp(
-    5.85rem,
-    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
-    7.1rem
-  ) !important;
-  width: clamp(
-    5.85rem,
-    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
-    7.1rem
-  ) !important;
-  max-width: clamp(
-    5.85rem,
-    calc(4.75rem + calc(var(--app-vw, 100vw) * 0.052)),
-    7.1rem
-  ) !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.22) !important;
-  flex-shrink: 0 !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav .flex.items-stretch.overflow-hidden.rounded-md > button.aspect-square.rounded-none svg {
-  width: clamp(
-    1.28rem,
-    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.008)),
-    1.55rem
-  ) !important;
-  height: clamp(
-    1.28rem,
-    calc(1.1rem + calc(var(--app-vw, 100vw) * 0.008)),
-    1.55rem
-  ) !important;
-}
-
-/* Nav dropdowns — email copy + investors menu. */
-html[data-proto-page] nav.doephone-site-nav [role="menu"],
-html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] {
-  padding-top: clamp(0.55rem, calc(var(--app-vw, 100vw) * 0.012), 0.85rem) !important;
-  padding-bottom: clamp(0.55rem, calc(var(--app-vw, 100vw) * 0.012), 0.85rem) !important;
-  border-radius: clamp(0.55rem, calc(var(--app-vw, 100vw) * 0.014), 0.72rem) !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav [role="menuitem"],
-html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] p,
-html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] a {
-  font-size: clamp(
-    1.38rem,
-    calc(1.18rem + calc(var(--app-vw, 100vw) * 0.0088)),
-    1.65rem
-  ) !important;
-  padding-left: clamp(
-    1.42rem,
-    calc(1.12rem + calc(var(--app-vw, 100vw) * 0.014)),
-    1.75rem
-  ) !important;
-  padding-right: clamp(
-    1.42rem,
-    calc(1.12rem + calc(var(--app-vw, 100vw) * 0.014)),
-    1.75rem
-  ) !important;
-  padding-top: clamp(
-    1.08rem,
-    calc(0.88rem + calc(var(--app-vw, 100vw) * 0.011)),
-    1.35rem
-  ) !important;
-  padding-bottom: clamp(
-    1.08rem,
-    calc(0.88rem + calc(var(--app-vw, 100vw) * 0.011)),
-    1.35rem
-  ) !important;
-}
-
-html[data-proto-page] nav.doephone-site-nav .absolute.top-\[calc\(100\%\+0\.5rem\)\] svg {
-  width: clamp(1.32rem, calc(var(--app-vw, 100vw) * 0.032), 1.55rem) !important;
-  height: clamp(1.32rem, calc(var(--app-vw, 100vw) * 0.032), 1.55rem) !important;
 }
 
 /* Footer — page background, top rule. */
