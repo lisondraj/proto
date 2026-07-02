@@ -72,15 +72,16 @@ export const PROTO_PHONE_HERO_VOID = PROTO_PHONE_PRISM_PALETTE.void;
 
 const P = PROTO_PHONE_PRISM_PALETTE;
 
-/** Warm-to-cool sweep — mirrors reception 7-stop front-desk flow in prism tones. */
-const PROTO_PHONE_PRISM_FULL_STOPS = [
-  `${P.glow} 0%`,
-  `${P.bronze} 15%`,
-  `${P.periwinkle} 30%`,
-  `${P.lilac} 45%`,
-  `${P.orchid} 60%`,
-  `${P.violet} 75%`,
-  `${P.void} 100%`,
+/** Evenly spaced sweep — all eight prism stops visible in circular / band flows. */
+const PROTO_PHONE_FULL_STOPS = [
+  `${P.void} 0%`,
+  `${P.plum} 14%`,
+  `${P.violet} 28%`,
+  `${P.orchid} 42%`,
+  `${P.lilac} 56%`,
+  `${P.periwinkle} 68%`,
+  `${P.bronze} 82%`,
+  `${P.glow} 100%`,
 ].join(", ");
 
 /** iPhone home hero — twilight prism: void base, violet surge, champagne crest (portrait flow). */
@@ -97,72 +98,80 @@ export const PROTO_ABOUT_HERO_PHONE_GRADIENT = [
   `linear-gradient(135deg, ${P.void} 0%, ${P.orchid} 22%, ${P.orchid} 48%, ${P.lilac} 78%, ${P.bronze} 100%)`,
 ].join(", ");
 
-/** iPhone feature boxes — original desktop flows with twilight prism palette. */
-const PROTO_PHONE_AGENTS_GRADIENT = `radial-gradient(ellipse 125% 110% at 14% 12%, ${P.bronze} 0%, ${P.lilac} 36%, ${P.orchid} 70%, ${P.void} 100%)`;
+/** Feature boxes — unique prism flows; all eight stops in every band. */
+const PROTO_FEATURE_AGENTS_GRADIENT = `radial-gradient(circle at 50% 44%, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 24%, ${P.lilac} 36%, ${P.orchid} 48%, ${P.violet} 62%, ${P.plum} 78%, ${P.void} 100%)`;
 
-const PROTO_PHONE_FRONT_DESK_GRADIENT = `linear-gradient(225deg, ${PROTO_PHONE_PRISM_FULL_STOPS})`;
+const PROTO_FEATURE_FRONT_DESK_GRADIENT = `linear-gradient(90deg, ${PROTO_PHONE_FULL_STOPS})`;
 
-const PROTO_PHONE_INBOX_GRADIENT = `linear-gradient(135deg, ${P.void} 0%, ${P.orchid} 24%, ${P.lilac} 58%, ${P.bronze} 100%)`;
+const PROTO_FEATURE_INBOX_GRADIENT = `linear-gradient(180deg, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
 
-const PROTO_PHONE_AMBIENT_GRADIENT = `radial-gradient(ellipse 100% 88% at 22% 18%, ${P.bronze} 0%, ${P.lilac} 45%, ${P.orchid} 72%, ${P.void} 100%)`;
+const PROTO_FEATURE_AMBIENT_GRADIENT = `radial-gradient(ellipse 108% 96% at 84% 16%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
 
-const PROTO_PHONE_BILLING_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 26%, ${P.lilac} 40%, ${P.orchid} 56%, ${P.violet} 72%, ${P.void} 100%)`;
+const PROTO_FEATURE_BILLING_GRADIENT = `radial-gradient(ellipse 112% 102% at 16% 90%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
 
-const PROTO_PHONE_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${P.periwinkle} 0%, ${P.orchid} 26%, ${P.lilac} 58%, ${P.bronze} 100%)`;
+const PROTO_FEATURE_PROTOTYPE_GRADIENT = [
+  `radial-gradient(circle at 68% 32%, ${P.periwinkle} 0%, ${P.lilac} 24%, transparent 58%)`,
+  `linear-gradient(152deg, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`,
+].join(", ");
 
-const PROTO_PHONE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${P.void} 0%, ${P.plum} 26%, ${P.violet} 46%, ${P.orchid} 66%, ${P.lilac} 84%, ${P.bronze} 100%)`;
+const PROTO_FEATURE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 122% 108% at 50% 112%, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`;
 
-const PROTO_PHONE_VALIDATE_GRADIENT = `linear-gradient(145deg, ${P.void} 0%, ${P.orchid} 30%, ${P.lilac} 62%, ${P.bronze} 100%)`;
+const PROTO_FEATURE_VALIDATE_GRADIENT = `linear-gradient(270deg, ${PROTO_PHONE_FULL_STOPS})`;
 
-const PROTO_PHONE_SHORTLIST_GRADIENT = `linear-gradient(205deg, ${P.void} 0%, ${P.violet} 34%, ${P.orchid} 58%, ${P.lilac} 82%, ${P.bronze} 100%)`;
+const PROTO_FEATURE_SHORTLIST_GRADIENT = [
+  `linear-gradient(205deg, ${P.void} 0%, ${P.plum} 12%, ${P.violet} 26%, ${P.orchid} 40%, ${P.lilac} 54%, ${P.periwinkle} 66%, ${P.bronze} 80%, ${P.glow} 100%)`,
+  `radial-gradient(ellipse 72% 64% at 22% 78%, ${P.lilac} 0%, ${P.orchid} 32%, transparent 68%)`,
+].join(", ");
 
 export const PROTO_COMMUNICATION_PHONE_GRADIENTS = {
-  agents: PROTO_PHONE_AGENTS_GRADIENT,
-  "front-desk": PROTO_PHONE_FRONT_DESK_GRADIENT,
-  inbox: PROTO_PHONE_INBOX_GRADIENT,
-  ambient: PROTO_PHONE_AMBIENT_GRADIENT,
-  billing: PROTO_PHONE_BILLING_GRADIENT,
-  prototype: PROTO_PHONE_PROTOTYPE_GRADIENT,
-  integrate: PROTO_PHONE_INTEGRATE_GRADIENT,
-  validate: PROTO_PHONE_VALIDATE_GRADIENT,
-  shortlist: PROTO_PHONE_SHORTLIST_GRADIENT,
+  agents: PROTO_FEATURE_AGENTS_GRADIENT,
+  "front-desk": PROTO_FEATURE_FRONT_DESK_GRADIENT,
+  inbox: PROTO_FEATURE_INBOX_GRADIENT,
+  ambient: PROTO_FEATURE_AMBIENT_GRADIENT,
+  billing: PROTO_FEATURE_BILLING_GRADIENT,
+  prototype: PROTO_FEATURE_PROTOTYPE_GRADIENT,
+  integrate: PROTO_FEATURE_INTEGRATE_GRADIENT,
+  validate: PROTO_FEATURE_VALIDATE_GRADIENT,
+  shortlist: PROTO_FEATURE_SHORTLIST_GRADIENT,
 } as const satisfies Record<string, string>;
 
-/** Prototype validation — cool upper arc into warm copper/gold. */
-const PROTO_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_RECEPTION_PALETTE.blue} 26%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
+/** Desktop feature boxes — same prism flows as iPhone. */
+export const PROTO_COMMUNICATION_GRADIENTS = PROTO_COMMUNICATION_PHONE_GRADIENTS;
+
+export type ProtoCommunicationSlideId = keyof typeof PROTO_COMMUNICATION_GRADIENTS;
+
+/** Prototype validation — cool upper arc into warm bronze/glow. */
+const PROTO_PROTOTYPE_GRADIENT = PROTO_FEATURE_PROTOTYPE_GRADIENT;
 
 export const PROTO_PROTOTYPE_BACKDROP = {
   slideIndex: 6,
   label: "Prototype",
   gradient: PROTO_PROTOTYPE_GRADIENT,
   grid: "dot" as const,
+  lineOverlayOpacity: 0.2,
 };
 
-/** Shortlist — cool base into warm highlight. */
-const PROTO_SHORTLIST_GRADIENT = `linear-gradient(205deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_AGENTS_MID_BLUE} 34%, ${PROTO_RECEPTION_PALETTE.blue} 58%, ${PROTO_RECEPTION_PALETTE.copper} 82%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
+/** Shortlist — cool void base into warm highlight. */
+const PROTO_SHORTLIST_GRADIENT = PROTO_FEATURE_SHORTLIST_GRADIENT;
 
 export const PROTO_SHORTLIST_BACKDROP = {
   slideIndex: 8,
   label: "Shortlist",
   gradient: PROTO_SHORTLIST_GRADIENT,
   grid: "wave" as const,
+  lineOverlayOpacity: 0.14,
 };
 
-/** Validate — warm documents sweep for the pre-shortlist full band. */
-const PROTO_VALIDATE_GRADIENT = `linear-gradient(145deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 30%, ${PROTO_RECEPTION_PALETTE.copper} 62%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
+/** Validate — full prism sweep. */
+const PROTO_VALIDATE_GRADIENT = PROTO_FEATURE_VALIDATE_GRADIENT;
 
 export const PROTO_VALIDATE_BACKDROP = {
   slideIndex: 7,
   label: "Validate",
   gradient: PROTO_VALIDATE_GRADIENT,
   grid: "crosshatch" as const,
+  lineOverlayOpacity: 0.16,
 };
-
-/** Patient chart — Documents palette flipped; warm upper-left → cool edge. */
-const PROTO_AMBIENT_RADIAL = `radial-gradient(ellipse 125% 110% at 14% 12%, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 36%, ${PROTO_RECEPTION_PALETTE.blue} 70%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
-
-/** Documents — 135° cool → warm (Documents pile up). */
-export const PROTO_DOCUMENTS_GRADIENT = `linear-gradient(135deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 24%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
 /** Hero — Documents palette; light blue anchored to the top-left edge. */
 export const PROTO_HERO_GRADIENT = [
@@ -170,42 +179,44 @@ export const PROTO_HERO_GRADIENT = [
   `linear-gradient(135deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 22%, ${PROTO_RECEPTION_PALETTE.blue} 48%, ${PROTO_RECEPTION_PALETTE.copper} 78%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`,
 ].join(", ");
 
-/** Reception — warm upper-left ellipse (The phone won't stop). */
-const PROTO_FRONT_DESK_GRADIENT = `radial-gradient(ellipse 100% 88% at 22% 18%, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 45%, ${PROTO_RECEPTION_PALETTE.blue} 72%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
-
-/** /proto section 2 — home gradient shapes; Reception colours only. */
-export const PROTO_COMMUNICATION_GRADIENTS = {
-  agents: PROTO_AMBIENT_RADIAL,
-  "front-desk": PROTO_AGENTS_GRADIENT,
-  inbox: PROTO_DOCUMENTS_GRADIENT,
-  ambient: PROTO_FRONT_DESK_GRADIENT,
-  billing: PROTO_PRIOR_AUTH_GRADIENT,
-  prototype: PROTO_PROTOTYPE_GRADIENT,
-  integrate: PROTO_INTEGRATE_GRADIENT,
-  validate: PROTO_VALIDATE_GRADIENT,
-  shortlist: PROTO_SHORTLIST_GRADIENT,
-} as const satisfies Record<string, string>;
-
-export type ProtoCommunicationSlideId = keyof typeof PROTO_COMMUNICATION_GRADIENTS;
-
 /** Grid overlays for /proto feature bands. */
 export const PROTO_COMMUNICATION_GRIDS: Partial<
   Record<ProtoCommunicationSlideId, WorkflowCarouselGridKind>
 > = {
+  agents: "dot",
+  "front-desk": "hex",
+  inbox: "crosshatch",
+  ambient: "polar",
+  billing: "hex",
   prototype: "dot",
   integrate: "hex",
   validate: "crosshatch",
   shortlist: "wave",
 };
 
-export function protoCommunicationGradient(
-  slideId: string,
-  platform: "desktop" | "phone" = "desktop",
-): string | undefined {
-  const gradients =
-    platform === "phone" ? PROTO_COMMUNICATION_PHONE_GRADIENTS : PROTO_COMMUNICATION_GRADIENTS;
-  if (slideId in gradients) {
-    return gradients[slideId as ProtoCommunicationSlideId];
+/** Line overlay opacity tuned for prism surfaces. */
+export const PROTO_COMMUNICATION_LINE_OPACITY: Partial<Record<ProtoCommunicationSlideId, number>> = {
+  agents: 0.2,
+  "front-desk": 0.13,
+  inbox: 0.16,
+  ambient: 0.18,
+  billing: 0.13,
+  prototype: 0.2,
+  integrate: 0.14,
+  validate: 0.16,
+  shortlist: 0.14,
+};
+
+export function protoCommunicationLineOpacity(slideId: string): number | undefined {
+  if (slideId in PROTO_COMMUNICATION_LINE_OPACITY) {
+    return PROTO_COMMUNICATION_LINE_OPACITY[slideId as ProtoCommunicationSlideId];
+  }
+  return undefined;
+}
+
+export function protoCommunicationGradient(slideId: string): string | undefined {
+  if (slideId in PROTO_COMMUNICATION_GRADIENTS) {
+    return PROTO_COMMUNICATION_GRADIENTS[slideId as ProtoCommunicationSlideId];
   }
   return undefined;
 }

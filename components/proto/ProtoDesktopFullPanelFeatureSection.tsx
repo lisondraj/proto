@@ -11,6 +11,7 @@ import {
 import {
   protoCommunicationGradient,
   protoCommunicationGrid,
+  protoCommunicationLineOpacity,
 } from "@/lib/proto/proto-communication-gradients";
 import {
   protoFeatureRevealClass,
@@ -40,6 +41,7 @@ export function ProtoDesktopFullPanelFeatureSection({
             slide={slide}
             gradientOverride={protoCommunicationGradient(slide.id)}
             gridOverride={protoCommunicationGrid(slide.id)}
+            lineOverlayOpacity={protoCommunicationLineOpacity(slide.id)}
           />
         </div>
       </div>

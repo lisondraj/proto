@@ -116,7 +116,7 @@ function PolarGridOverlay({
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full"
         viewBox={`0 0 ${POLAR_VIEW} ${POLAR_VIEW}`}
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="xMidYMid meet"
         style={patternScale !== 1 ? { transform: `scale(${patternScale})`, transformOrigin: "center" } : undefined}
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -193,7 +193,7 @@ function WaveGridOverlay({
         }}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="-40 0 780 716"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="xMidYMid meet"
       >
         {Array.from({ length: 12 }, (_, w) => (
           <path
@@ -279,6 +279,7 @@ export function WorkflowCarouselDesignBackdrop({
   hideGridOverlay = false,
   introOnLoad = false,
   surface = "orange",
+  lineOverlayOpacity,
 }: {
   backdrop: WorkflowCarouselDesignBackdrop;
   className?: string;
@@ -304,9 +305,12 @@ export function WorkflowCarouselDesignBackdrop({
   introOnLoad?: boolean;
   /** Beige uses solid fill and taupe line overlays instead of orange gradient + white lines. */
   surface?: WorkflowCarouselSurface;
+  /** Overrides backdrop.lineOverlayOpacity for grid line weight. */
+  lineOverlayOpacity?: number;
 }) {
   const isBeige = surface === "beige";
   const fill = isBeige ? WORKFLOW_BEIGE_SURFACE_FILL : (gradientOverride ?? backdrop.gradient);
+  const gridLineOpacity = lineOverlayOpacity ?? backdrop.lineOverlayOpacity;
   const rootClass = embedded
     ? `absolute inset-0 overflow-hidden ${className}`.trim()
     : `fixed inset-0 min-h-[100dvh] min-w-full overflow-hidden ${className}`.trim();
@@ -365,7 +369,7 @@ export function WorkflowCarouselDesignBackdrop({
           polarCenterY={backdrop.polarCenterY}
           introOnLoad={introOnLoad}
           surface={surface}
-          lineOverlayOpacity={backdrop.lineOverlayOpacity}
+          lineOverlayOpacity={gridLineOpacity}
           clipClassName={layerClass}
           insetClassName={layerInsetClass}
         />

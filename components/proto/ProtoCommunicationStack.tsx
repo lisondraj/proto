@@ -4,7 +4,7 @@ import { DoePhoneCommunicationCarouselCard } from "@/components/doephone/DoePhon
 import { ProtoFeatureSectionCopy } from "@/components/proto/ProtoFeatureSectionCopy";
 import { PROTO_COMMUNICATION_SLIDES } from "@/lib/proto/proto-communication-slides";
 import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
-import { protoCommunicationGradient, protoCommunicationGrid } from "@/lib/proto/proto-communication-gradients";
+import { protoCommunicationGradient, protoCommunicationGrid, protoCommunicationLineOpacity } from "@/lib/proto/proto-communication-gradients";
 import {
   PROTO_HERO_BACKDROP,
   PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
@@ -37,8 +37,9 @@ export function ProtoCommunicationStack() {
                     className="proto-carousel-card"
                     showExpandControls={false}
                     uiInteractive={false}
-                    gradientOverride={protoCommunicationGradient(slide.id, "phone")}
+                    gradientOverride={protoCommunicationGradient(slide.id)}
                     gridOverride={protoCommunicationGrid(slide.id)}
+                    backdropLineOverlayOpacity={protoCommunicationLineOpacity(slide.id)}
                     backdropPatternScale={PROTO_PHONE_BACKDROP_PATTERN_SCALE}
                     backdropGradientScale={PROTO_PHONE_BACKDROP_GRADIENT_SCALE}
                     backdropGrainSize={PROTO_PHONE_BACKDROP_GRAIN_SIZE}

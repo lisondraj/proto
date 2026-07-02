@@ -238,6 +238,7 @@ export function DoePhoneCommunicationCarouselCard({
   backdropGradientScale = 1,
   backdropGrainSize,
   backdropGrainImage,
+  backdropLineOverlayOpacity,
   uiScaleClass,
   uiInteractive = true,
 }: {
@@ -260,6 +261,7 @@ export function DoePhoneCommunicationCarouselCard({
   backdropGradientScale?: number;
   backdropGrainSize?: string;
   backdropGrainImage?: string;
+  backdropLineOverlayOpacity?: number;
   uiScaleClass?: string;
 }) {
   const [panelPhase, setPanelPhase] = useState<PanelPhase>("idle");
@@ -311,6 +313,7 @@ export function DoePhoneCommunicationCarouselCard({
         gradientScale={backdropGradientScale}
         grainBackgroundSize={backdropGrainSize}
         grainBackgroundImage={backdropGrainImage}
+        lineOverlayOpacity={backdropLineOverlayOpacity}
       />
       {expandable && panelOpen ? <CarouselSlideFrostOverlay closing={isClosing} /> : null}
       <CarouselMenuOverlay

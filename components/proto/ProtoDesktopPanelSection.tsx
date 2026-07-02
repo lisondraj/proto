@@ -9,7 +9,9 @@ import {
 } from "@/lib/doephone/section-styles";
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
 import {
+  PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE,
   PROTO_DESKTOP_BACKDROP_GRAIN_SIZE,
+  PROTO_DESKTOP_BACKDROP_PATTERN_SCALE,
   PROTO_GRAIN_BG,
 } from "@/lib/proto/proto-hero-backdrop";
 
@@ -19,12 +21,18 @@ export function ProtoDesktopPanelSection({
   gradientOverride,
   gridOverride,
   bleedEdge,
+  patternScale = PROTO_DESKTOP_BACKDROP_PATTERN_SCALE,
+  gradientScale = PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE,
+  lineOverlayOpacity,
 }: {
   slide: DoePhoneCommunicationSlide;
   gradientOverride?: string;
   gridOverride?: WorkflowCarouselGridKind;
   /** Edge-bleed band — square flush to viewport; round only the inner corners. */
   bleedEdge?: "left" | "right";
+  patternScale?: number;
+  gradientScale?: number;
+  lineOverlayOpacity?: number;
 }) {
   const radiusClass =
     bleedEdge === "left"
@@ -51,8 +59,11 @@ export function ProtoDesktopPanelSection({
         className={`proto-desktop-carousel-backdrop ${radiusClass}`.trim()}
         gradientOverride={gradientOverride}
         gridOverride={gridOverride}
+        patternScale={patternScale}
+        gradientScale={gradientScale}
         grainBackgroundSize={PROTO_DESKTOP_BACKDROP_GRAIN_SIZE}
         grainBackgroundImage={PROTO_GRAIN_BG}
+        lineOverlayOpacity={lineOverlayOpacity}
       />
 
       <div className="proto-feature-box-ui absolute inset-0 z-[15] flex items-center justify-center px-[clamp(1.25rem,2.5vw,2.5rem)]">

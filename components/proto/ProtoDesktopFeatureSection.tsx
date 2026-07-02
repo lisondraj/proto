@@ -16,6 +16,7 @@ import { PROTO_PAGE_BG } from "@/lib/proto/proto-chrome-colors";
 import {
   protoCommunicationGradient,
   protoCommunicationGrid,
+  protoCommunicationLineOpacity,
 } from "@/lib/proto/proto-communication-gradients";
 import {
   protoFeatureRevealClass,
@@ -37,6 +38,7 @@ function FeaturePanel({
         slide={slide}
         gradientOverride={protoCommunicationGradient(slide.id)}
         gridOverride={protoCommunicationGrid(slide.id)}
+        lineOverlayOpacity={protoCommunicationLineOpacity(slide.id)}
       />
     </div>
   );

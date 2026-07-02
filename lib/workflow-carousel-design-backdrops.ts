@@ -228,7 +228,7 @@ export function getWorkflowGridOverlayStyle(
       return {
         ...crosshatchGridStyle(surface, crosshatchLineOpacity, crosshatchDotOpacity),
         backgroundSize: `${scaleSize(CROSSHATCH_CELL_PX)} ${scaleSize(CROSSHATCH_CELL_PX)}`,
-        backgroundPosition: `${(CROSSHATCH_CELL_PX * patternScale) / 2}px ${(CROSSHATCH_CELL_PX * patternScale) / 2}px, 0 0, 0 0`,
+        backgroundPosition: "center center, center center, center center",
       };
     case "diagonal":
       return {

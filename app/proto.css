@@ -271,6 +271,22 @@ html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
   --proto-grain-tile-size: 208px;
 }
 
+/* Feature box line grids — matched density and centering on iPhone + desktop. */
+html[data-proto-page] .doephone-carousel-backdrop > .pointer-events-none.z-\[2\],
+html[data-proto-page] .proto-desktop-carousel-backdrop > .pointer-events-none.z-\[2\] {
+  inset: 0 !important;
+}
+
+html[data-proto-page] .doephone-carousel-backdrop > .pointer-events-none.z-\[2\] svg,
+html[data-proto-page] .proto-desktop-carousel-backdrop > .pointer-events-none.z-\[2\] svg {
+  transform-origin: center center !important;
+}
+
+html[data-proto-page] .doephone-carousel-backdrop > .pointer-events-none.z-\[2\][style*="background"],
+html[data-proto-page] .proto-desktop-carousel-backdrop > .pointer-events-none.z-\[2\][style*="background"] {
+  background-position: center center !important;
+}
+
 /* Feature box UI mocks — display-only (no selection or control clicks). */
 html[data-proto-page] .proto-feature-box-ui,
 html[data-proto-page] .proto-feature-box-ui * {
