@@ -3,6 +3,7 @@ import type { WorkflowCarouselDesignBackdrop } from "@/lib/workflow-carousel-des
 import {
   PROTO_COMMUNICATION_GRIDS,
   PROTO_HOME_HERO_GRADIENT,
+  PROTO_HOME_HERO_PHONE_GRADIENT,
   PROTO_HERO_GRADIENT,
 } from "@/lib/proto/proto-communication-gradients";
 import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/proto/proto-phone-grain";
@@ -14,6 +15,14 @@ export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
   gradient: PROTO_HOME_HERO_GRADIENT,
+  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
+};
+
+/** iPhone home hero — twilight prism palette; portrait bottom-weighted flow. */
+export const PROTO_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
+  slideIndex: 4,
+  label: "Proto hero phone",
+  gradient: PROTO_HOME_HERO_PHONE_GRADIENT,
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 

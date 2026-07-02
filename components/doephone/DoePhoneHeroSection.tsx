@@ -18,6 +18,7 @@ import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 import {
   PROTO_HERO_BACKDROP,
   PROTO_HERO_GRAIN_SIZE,
+  PROTO_HERO_PHONE_BACKDROP,
   PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
   PROTO_PHONE_BACKDROP_PATTERN_SCALE,
   PROTO_PHONE_GRAIN_BG,
@@ -75,7 +76,11 @@ export function DoePhoneHeroSection({
   const gradientZoom = introDone ? 1 : introZoom;
   const isDesktop = variant === "desktop";
   const isProto = proto;
-  const heroBackdrop = isProto ? PROTO_HERO_BACKDROP : CARE_COORDINATION_BACKDROP;
+  const heroBackdrop = isProto
+    ? isDesktop
+      ? PROTO_HERO_BACKDROP
+      : PROTO_HERO_PHONE_BACKDROP
+    : CARE_COORDINATION_BACKDROP;
   const heroHeight = isDesktop
     ? DOEPHONE_HERO_DESKTOP_HEIGHT
     : isProto
@@ -93,7 +98,7 @@ export function DoePhoneHeroSection({
   return (
     <section
       className={`doephone-hero-section relative w-full overflow-hidden ${
-        isProto ? "bg-[#0B1528]" : "bg-[#D2774C]"
+        isProto ? (isDesktop ? "bg-[#0B1528]" : "bg-[#080612]") : "bg-[#D2774C]"
       }`}
       style={
         {
