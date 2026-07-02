@@ -11,7 +11,7 @@ import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/pro
 
 export { PROTO_HERO_GRADIENT };
 
-/** Home hero — integrate flow with subdued top blue and copper-aligned warm sweep. */
+/** Home hero — integrate flow with yellow arch above copper. */
 export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
