@@ -337,7 +337,8 @@ export default function DoeIphoneSiteNav({
   /** Drives enter/exit opacity + slide on the sheet layer. */
   const [navSheetVisualOpen, setNavSheetVisualOpen] = useState(false);
   const [mobileNavFooterSlide, setMobileNavFooterSlide] = useState(0);
-  const [navFrosted, setNavFrosted] = useState(false);
+  const [navFrostProgress, setNavFrostProgress] = useState(0);
+  const [protoNavScrolled, setProtoNavScrolled] = useState(false);
   const mobileNavFooterCarouselRef = useRef<HTMLDivElement>(null);
   /** Carousel width when the sheet first opens — `zoom` shrinks uniformly if the window gets narrower (matches home `app/page.tsx`). */
   const mobileNavFooterWidthBaselineRef = useRef(0);
@@ -392,20 +393,25 @@ export default function DoeIphoneSiteNav({
     if (!frostedScrollNav) return;
 
     let raf = 0;
-    const computeFrosted = () => {
+    const computeFrostProgress = () => {
       if (frostedScrollPastHero) {
         const hero = document.querySelector<HTMLElement>(".doephone-hero-section");
         if (hero) {
-          return hero.getBoundingClientRect().bottom <= 1;
+          const bottom = hero.getBoundingClientRect().bottom;
+          const range = 96;
+          return Math.min(1, Math.max(0, (range - bottom) / range));
         }
       }
-      return window.scrollY > 6;
+      const range = 56;
+      return Math.min(1, Math.max(0, window.scrollY / range));
     };
 
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        setNavFrosted(computeFrosted());
+        const next = computeFrostProgress();
+        setNavFrostProgress(next);
+        setProtoNavScrolled((prev) => (prev ? next > 0.68 : next >= 0.88));
       });
     };
 
@@ -582,7 +588,6 @@ export default function DoeIphoneSiteNav({
   const navBorderColor = navChromeTheme === "dark" ? "#2A3538" : "#E6E6E6";
   const navSheetTransition = `opacity ${NAV_SHEET_MS}ms ${NAV_SHEET_EASE}, transform ${NAV_SHEET_MS}ms ${NAV_SHEET_EASE}`;
   const navFooterCarouselZoom = pinchSafe ? 1 : mobileNavFooterZoom;
-  const protoNavScrolled = frostedScrollNav && navFrosted;
 
   const navChromeStrip = (
     <NavChromeStrip
@@ -803,35 +808,24 @@ export default function DoeIphoneSiteNav({
         }fixed top-0 left-0 right-0 iphone-page:pt-[env(safe-area-inset-top,0px)] ${
           navSheetLive ? "z-[200]" : "z-50"
         } ${pinchSafe ? "translate-z-0" : ""}`}
-        style={{
-          backgroundColor: frostedScrollNav
-            ? protoNavScrolled
-              ? undefined
-              : navBackground
-            : protoNavScrolled
-              ? "transparent"
-              : navBackground,
-          borderBottom: frostedScrollNav
-            ? protoNavScrolled
-              ? undefined
-              : `1px solid ${navBorderColor}`
-            : protoNavScrolled
-              ? "1px solid transparent"
-              : `1px solid ${navBorderColor}`,
-          boxShadow:
-            frostedScrollNav
-              ? protoNavScrolled
-                ? undefined
-                : `0 -120px 0 120px ${navBackground}`
-              : protoNavScrolled
-                ? undefined
-                : pinchSafe
-                  ? `0 -120px 0 120px ${navBackground}`
-                  : undefined,
-          transition: frostedScrollNav && !navMotionReady
-            ? "none"
-            : "border-bottom 280ms ease-out, border-color 280ms ease-out, background-color 320ms ease-out, box-shadow 320ms ease-out",
-        }}
+        style={
+          frostedScrollNav
+            ? {
+                ["--proto-nav-frost-progress" as string]: navFrostProgress,
+              }
+            : {
+                backgroundColor: protoNavScrolled ? "transparent" : navBackground,
+                borderBottom: protoNavScrolled
+                  ? "1px solid transparent"
+                  : `1px solid ${navBorderColor}`,
+                boxShadow: protoNavScrolled
+                  ? undefined
+                  : pinchSafe
+                    ? `0 -120px 0 120px ${navBackground}`
+                    : undefined,
+                transition: "border-bottom 320ms cubic-bezier(0.22, 1, 0.36, 1), border-color 320ms cubic-bezier(0.22, 1, 0.36, 1), background-color 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1)",
+              }
+        }
       >
         {frostedScrollNav ? (
           <div className="proto-nav-frost-shell">{navChromeStrip}</div>

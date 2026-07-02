@@ -17,7 +17,7 @@ import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-f
 
 /** Desktop /proto — dark home layout aligned with the iPhone proto review. */
 export function ProtoDesktopHome() {
-  const [navSolid, setNavSolid] = useState(false);
+  const [navSolid, setNavSolid] = useState(0);
   const [navHeightPx, setNavHeightPx] = useState(88);
   const navRef = useRef<HTMLElement>(null);
 
@@ -46,7 +46,10 @@ export function ProtoDesktopHome() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        setNavSolid(window.scrollY > window.innerHeight * 0.72);
+        const threshold = window.innerHeight * 0.62;
+        const range = window.innerHeight * 0.14;
+        const progress = (window.scrollY - threshold) / range;
+        setNavSolid(Math.min(1, Math.max(0, progress)));
       });
     };
 
@@ -70,10 +73,12 @@ export function ProtoDesktopHome() {
 
         <nav
           ref={navRef}
-          className="fixed top-0 left-0 right-0 z-[50] transition-[background-color,border-color] duration-300 ease-out"
+          className="fixed top-0 left-0 right-0 z-[50]"
           style={{
-            backgroundColor: navSolid ? PROTO_PAGE_BG : "transparent",
-            borderBottom: navSolid ? "1px solid #2A3538" : "1px solid transparent",
+            ["--proto-desktop-nav-solid" as string]: navSolid,
+            backgroundColor: `color-mix(in srgb, ${PROTO_PAGE_BG} calc(var(--proto-desktop-nav-solid, 0) * 100%), transparent)`,
+            borderBottom: `1px solid color-mix(in srgb, #2A3538 calc(var(--proto-desktop-nav-solid, 0) * 100%), transparent)`,
+            transition: "background-color 60ms linear, border-color 60ms linear",
           }}
           aria-label="Primary"
         >
