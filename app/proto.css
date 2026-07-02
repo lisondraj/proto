@@ -464,34 +464,40 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Past hero — square dropdown panel; pill radius on short wide menus reads as a stadium. */
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open,
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > div,
+/* Past hero — keep pill trigger shape when open; soften dropdown corners only. */
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open {
+  border-radius: 9999px !important;
+  overflow: visible !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > div {
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > a,
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > button {
-  border-radius: 6px !important;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > button,
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > div > a,
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > div > button {
+  border-radius: 9999px !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell .proto-nav-cta-dropdown,
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"],
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
-  top: calc(100% + 0.12rem) !important;
-  border-radius: 0 !important;
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
-  border-bottom-left-radius: 6px !important;
-  border-bottom-right-radius: 6px !important;
+  top: calc(100% + 0.22rem) !important;
+  border-radius: clamp(0.45rem, 0.36rem + 0.34vmin, 0.58rem) !important;
+  border-top-left-radius: clamp(0.16rem, 0.12rem + 0.12vmin, 0.22rem) !important;
+  border-top-right-radius: clamp(0.16rem, 0.12rem + 0.12vmin, 0.22rem) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"] {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  padding-top: clamp(0.12rem, 0.06rem + 0.22vmin, 0.2rem) !important;
+  padding-bottom: clamp(0.12rem, 0.06rem + 0.22vmin, 0.2rem) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"] [role="menuitem"] {
-  border-radius: 0 !important;
+  border-radius: clamp(0.2rem, 0.16rem + 0.14vmin, 0.28rem) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
