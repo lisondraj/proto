@@ -100,6 +100,7 @@ function NavChromeStrip({
   brandName = "Doe",
   brandFontClass,
   investorsHref,
+  frostedScrollChrome = false,
 }: {
   navTextColor: string;
   mobileNavOpen: boolean;
@@ -117,6 +118,8 @@ function NavChromeStrip({
   brandName?: string;
   brandFontClass?: string;
   investorsHref?: string;
+  /** Proto iPhone — hooks for compact pill chrome on scroll. */
+  frostedScrollChrome?: boolean;
 }) {
   const pageInsetX = DOEPHONE_SECTION_CAROUSEL_INSET_X;
   const pageDoeLeft =
@@ -146,7 +149,7 @@ function NavChromeStrip({
     : pinchSafe
       ? "left-11 iphone-page:left-[max(1.65rem,calc(env(safe-area-inset-left,0px)+3.8vmin))]"
       : "left-8 iphone-page:left-[max(1.25rem,calc(env(safe-area-inset-left,0px)+2.85vmin))]";
-  const doeClassName = `absolute top-1/2 -translate-y-1/2 ${doeLeft} font-normal z-[1] min-w-0 whitespace-nowrap ${brandFontClass ?? lora.className} text-4xl iphone-page:text-[clamp(1.85rem,1.05rem+3.55vmin,3.9rem)] iphone-page:leading-none`;
+  const doeClassName = `absolute top-1/2 -translate-y-1/2 ${doeLeft} font-normal z-[1] min-w-0 whitespace-nowrap ${frostedScrollChrome ? "proto-nav-chrome-logo " : ""}${brandFontClass ?? lora.className} text-4xl iphone-page:text-[clamp(1.85rem,1.05rem+3.55vmin,3.9rem)] iphone-page:leading-none`;
   const navRightInset = pinchSafe
     ? "right-11 iphone-page:right-[max(1.65rem,env(safe-area-inset-right,0px)+3.8vmin)]"
     : "right-8 iphone-page:right-[max(1.25rem,calc(env(safe-area-inset-right,0px)+2.85vmin))]";
@@ -179,7 +182,7 @@ function NavChromeStrip({
       </div>
 
       <div
-        className={`flex shrink-0 items-center ${navRowGap} ${subpageAnchored ? `absolute top-1/2 z-[2] -translate-y-1/2 ${subpageRight}` : ""} ${tripleCtaAnchored ? `absolute top-1/2 z-[2] -translate-y-1/2 ${navRightInset}` : ""}`}
+        className={`flex shrink-0 items-center ${navRowGap} ${frostedScrollChrome ? "proto-nav-chrome-actions " : ""}${subpageAnchored ? `absolute top-1/2 z-[2] -translate-y-1/2 ${subpageRight}` : ""} ${tripleCtaAnchored ? `absolute top-1/2 z-[2] -translate-y-1/2 ${navRightInset}` : ""}`}
       >
         {subpageVariant ? (
           <SubpageMobileNavRow variant={subpageVariant} showLinks={!showMenu || !subpageWithButton} />
@@ -564,6 +567,7 @@ export default function DoeIphoneSiteNav({
       brandName={brandName}
       brandFontClass={brandFontClass}
       investorsHref={investorsHref}
+      frostedScrollChrome={frostedScrollNav}
     />
   );
 
@@ -747,6 +751,7 @@ export default function DoeIphoneSiteNav({
           brandName={brandName}
           brandFontClass={brandFontClass}
           investorsHref={investorsHref}
+          frostedScrollChrome={frostedScrollNav}
         />
       </header>,
       document.body
