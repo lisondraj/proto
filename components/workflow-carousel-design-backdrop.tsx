@@ -341,7 +341,7 @@ export function WorkflowCarouselDesignBackdrop({
             backgroundSize: grainBackgroundSize,
             backgroundRepeat: "repeat",
             ...(grainBackgroundImage
-              ? { mixBlendMode: "soft-light" as const, opacity: 0.44 }
+              ? { mixBlendMode: "overlay" as const, opacity: 0.22 }
               : null),
           }}
           aria-hidden
