@@ -34,6 +34,13 @@ export function ProtoDesktopHome() {
   }, []);
 
   useEffect(() => {
+    document.documentElement.style.setProperty("--proto-desktop-nav-h", `${navHeightPx}px`);
+    return () => {
+      document.documentElement.style.removeProperty("--proto-desktop-nav-h");
+    };
+  }, [navHeightPx]);
+
+  useEffect(() => {
     let raf = 0;
 
     const onScroll = () => {
@@ -56,12 +63,7 @@ export function ProtoDesktopHome() {
   return (
     <div
       className={`proto-desktop-root relative ${PROTO_FONT_CLASS}`}
-      style={
-        {
-          backgroundColor: PROTO_PAGE_BG,
-          "--proto-desktop-nav-h": `${navHeightPx}px`,
-        } as React.CSSProperties
-      }
+      style={{ backgroundColor: PROTO_PAGE_BG }}
     >
       <div className="relative z-[40]">
         <DoePhoneHeroSection variant="desktop" proto />

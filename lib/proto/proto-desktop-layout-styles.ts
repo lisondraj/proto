@@ -30,7 +30,7 @@ export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
 
 /** Full-width gradient band — vertical inset + page gutters on the shell. */
 export const PROTO_DESKTOP_FULL_PANEL_SHELL_TW =
-  "proto-desktop-feature__full-panel-shell box-border flex flex-1 min-h-0 w-full flex-col";
+  "proto-desktop-feature__full-panel-shell box-border flex min-h-0 w-full flex-1 flex-col";
 
 export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW =
   "min-h-0 w-full flex-1 overflow-hidden";

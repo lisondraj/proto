@@ -803,11 +803,11 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
   box-sizing: border-box !important;
   display: flex !important;
-  flex: 1 1 auto !important;
+  flex: 1 1 0% !important;
   flex-direction: column !important;
-  height: auto !important;
+  height: 0 !important;
   min-height: 0 !important;
-  max-height: 100% !important;
+  overflow: hidden !important;
   width: 100% !important;
   padding-top: 1.25rem !important;
   padding-bottom: 1.25rem !important;
@@ -874,20 +874,19 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__panel--full {
   aspect-ratio: auto !important;
   display: flex !important;
-  flex: 1 1 0 !important;
+  flex: 1 1 0% !important;
   flex-direction: column !important;
   width: 100% !important;
   min-height: 0 !important;
-  max-height: 100% !important;
-  height: auto !important;
+  height: 0 !important;
   overflow: hidden !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__panel--full > * {
   flex: 1 1 auto !important;
   min-height: 0 !important;
-  height: 100% !important;
-  max-height: 100% !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline,
