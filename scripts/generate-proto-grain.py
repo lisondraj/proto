@@ -24,60 +24,19 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
     )
 
 
-def lerp(a: float, b: float, t: float) -> float:
-    return a + (b - a) * t
-
-
-def sample_lattice(lattice: list[list[float]], x: float, y: float, n: int) -> float:
-    x0 = int(x) % n
-    y0 = int(y) % n
-    x1 = (x0 + 1) % n
-    y1 = (y0 + 1) % n
-    fx = x - int(x)
-    fy = y - int(y)
-    return lerp(
-        lerp(lattice[y0][x0], lattice[y0][x1], fx),
-        lerp(lattice[y1][x0], lattice[y1][x1], fx),
-        fy,
-    )
-
-
-def make_lattice(n: int, rng: random.Random, spread: float) -> list[list[float]]:
-    return [[rng.gauss(0, spread) for _ in range(n)] for _ in range(n)]
-
-
-def film_grain_pixel(
-    x: int,
-    y: int,
-    size: int,
-    lattices: list[tuple[list[list[float]], int, float]],
-    fine_rng: random.Random,
-) -> int:
-    value = 128.0
-    for lattice, cells, weight in lattices:
-        lx = (x / size) * cells
-        ly = (y / size) * cells
-        value += sample_lattice(lattice, lx, ly, cells) * weight
-    value += fine_rng.gauss(0, 11)
-    return int(max(0, min(255, value)))
+def film_grain_value(rng: random.Random) -> int:
+    fine = rng.gauss(0, 22)
+    coarse = rng.gauss(0, 38)
+    return int(max(0, min(255, 128 + fine + coarse * 0.62)))
 
 
 def write_grain_png(path: Path, size: int, seed: int = GRAIN_SEED) -> None:
     rng = random.Random(seed)
-    fine_rng = random.Random(seed ^ 0x9E3779B9)
-
-    # Toroidal value-noise octaves — tiles seamlessly, reads as film grain not digital noise.
-    lattices: list[tuple[list[list[float]], int, float]] = [
-        (make_lattice(16, rng, 1.0), 16, 34.0),
-        (make_lattice(32, rng, 1.0), 32, 20.0),
-        (make_lattice(64, rng, 1.0), 64, 9.5),
-    ]
-
     rows: list[bytes] = []
-    for y in range(size):
+    for _ in range(size):
         row = b"\x00"
-        for x in range(size):
-            v = film_grain_pixel(x, y, size, lattices, fine_rng)
+        for _ in range(size):
+            v = film_grain_value(rng)
             row += bytes((v, v, v, 255))
         rows.append(row)
 
