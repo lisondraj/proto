@@ -696,8 +696,17 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature.proto-featur
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--split .proto-desktop-feature__panel {
   aspect-ratio: 1 / 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
   max-height: min(72vh, 100%) !important;
   height: auto !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--split .proto-desktop-feature__panel > * {
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  width: 100% !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--split .proto-desktop-feature__copy {
