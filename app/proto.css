@@ -457,7 +457,7 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-dropdown,
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
   top: calc(100% + 0.38rem) !important;
-  border-radius: 9999px !important;
+  border-radius: clamp(0.62rem, 0.5rem + 0.48vmin, 0.78rem) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
   background-color: rgba(18, 24, 25, 0.94) !important;
   backdrop-filter: blur(56px) saturate(1.12);
@@ -473,7 +473,7 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"] [role="menuitem"] {
-  border-radius: 9999px !important;
+  border-radius: clamp(0.4rem, 0.32rem + 0.32vmin, 0.52rem) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
