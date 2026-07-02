@@ -2,6 +2,7 @@
 
 import { DoePhoneHeroHeadline } from "@/components/doephone/DoePhoneHeroHeadline";
 import { WorkflowCarouselDesignBackdrop } from "@/components/workflow-carousel-design-backdrop";
+import { ProtoHomeHeroGradient } from "@/components/proto/ProtoHomeHeroGradient";
 import {
   DOEPHONE_HERO_INTRO_GRADIENT_MS,
   DOEPHONE_HERO_INTRO_GRADIENT_START,
@@ -14,15 +15,8 @@ import {
 } from "@/lib/doephone/section-styles";
 import { CARE_COORDINATION_BACKDROP } from "@/lib/workflow-carousel-design-backdrops";
 import { PROTO_HERO_HEIGHT } from "@/lib/proto/proto-hero-layout";
+import { PROTO_HOME_HERO_SHADER_COLOR_BACK } from "@/lib/proto/proto-home-hero-shader";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
-import {
-  PROTO_HERO_BACKDROP,
-  PROTO_HERO_GRAIN_SIZE,
-  PROTO_HERO_PHONE_BACKDROP,
-  PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
-  PROTO_PHONE_BACKDROP_PATTERN_SCALE,
-  PROTO_PHONE_GRAIN_BG,
-} from "@/lib/proto/proto-hero-backdrop";
 import { useEffect, useState, type CSSProperties } from "react";
 
 /** Hero — slightly below full viewport so Safari bottom bar does not clip; section 2 stays full height. */
@@ -76,11 +70,6 @@ export function DoePhoneHeroSection({
   const gradientZoom = introDone ? 1 : introZoom;
   const isDesktop = variant === "desktop";
   const isProto = proto;
-  const heroBackdrop = isProto
-    ? isDesktop
-      ? PROTO_HERO_BACKDROP
-      : PROTO_HERO_PHONE_BACKDROP
-    : CARE_COORDINATION_BACKDROP;
   const heroHeight = isDesktop
     ? DOEPHONE_HERO_DESKTOP_HEIGHT
     : isProto
@@ -98,27 +87,28 @@ export function DoePhoneHeroSection({
   return (
     <section
       className={`doephone-hero-section relative w-full overflow-hidden ${
-        isProto ? (isDesktop ? "bg-[#0B1528]" : "bg-[#080612]") : "bg-[#D2774C]"
+        isProto ? "" : "bg-[#D2774C]"
       }`}
       style={
         {
           minHeight: heroHeight,
           height: heroHeight,
+          ...(isProto ? { backgroundColor: PROTO_HOME_HERO_SHADER_COLOR_BACK } : {}),
           ...doephoneHeroIntroStyleVars(),
         } as CSSProperties
       }
       aria-label="Hero"
     >
-      <WorkflowCarouselDesignBackdrop
-        backdrop={heroBackdrop}
-        embedded
-        className={isProto ? "doephone-hero-backdrop" : ""}
-        introOnLoad={!isProto}
-        gradientScale={isProto ? PROTO_PHONE_BACKDROP_GRADIENT_SCALE : gradientZoom}
-        patternScale={isProto ? PROTO_PHONE_BACKDROP_PATTERN_SCALE : 1}
-        grainBackgroundSize={isProto ? PROTO_HERO_GRAIN_SIZE : undefined}
-        grainBackgroundImage={isProto ? PROTO_PHONE_GRAIN_BG : undefined}
-      />
+      {isProto ? (
+        <ProtoHomeHeroGradient />
+      ) : (
+        <WorkflowCarouselDesignBackdrop
+          backdrop={CARE_COORDINATION_BACKDROP}
+          embedded
+          introOnLoad
+          gradientScale={gradientZoom}
+        />
+      )}
 
       <div
         className={`absolute left-0 right-0 z-[3] ${copyInset} ${copyBottom}`}
