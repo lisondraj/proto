@@ -797,7 +797,7 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel 
   overflow: hidden !important;
   min-height: 100dvh !important;
   height: 100dvh !important;
-  padding-top: 5.5rem !important;
+  padding-top: var(--proto-desktop-nav-h, 5.5rem) !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {

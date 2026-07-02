@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { DoePhoneHeroSection } from "@/components/doephone/DoePhoneHeroSection";
 import { ProtoDesktopFeatureStack } from "@/components/proto/ProtoDesktopFeatureStack";
@@ -18,6 +18,20 @@ import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-f
 /** Desktop /proto — dark home layout aligned with the iPhone proto review. */
 export function ProtoDesktopHome() {
   const [navSolid, setNavSolid] = useState(false);
+  const [navHeightPx, setNavHeightPx] = useState(88);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    const measure = () => setNavHeightPx(nav.getBoundingClientRect().height);
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let raf = 0;
@@ -40,11 +54,20 @@ export function ProtoDesktopHome() {
   }, []);
 
   return (
-    <div className={`proto-desktop-root relative ${PROTO_FONT_CLASS}`} style={{ backgroundColor: PROTO_PAGE_BG }}>
+    <div
+      className={`proto-desktop-root relative ${PROTO_FONT_CLASS}`}
+      style={
+        {
+          backgroundColor: PROTO_PAGE_BG,
+          "--proto-desktop-nav-h": `${navHeightPx}px`,
+        } as React.CSSProperties
+      }
+    >
       <div className="relative z-[40]">
         <DoePhoneHeroSection variant="desktop" proto />
 
         <nav
+          ref={navRef}
           className="fixed top-0 left-0 right-0 z-[50] transition-[background-color,border-color] duration-300 ease-out"
           style={{
             backgroundColor: navSolid ? PROTO_PAGE_BG : "transparent",
