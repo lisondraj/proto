@@ -44,7 +44,7 @@ import {
 } from "@/lib/proto-invest/proto-invest-layout-styles";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 import {
-  PROTO_HERO_BACKDROP,
+  PROTO_ABOUT_HERO_BACKDROP,
   PROTO_DESKTOP_BACKDROP_GRADIENT_SCALE,
 } from "@/lib/proto/proto-hero-backdrop";
 
@@ -72,7 +72,7 @@ export function ProtoInvestDesktopView() {
 
           <div className={ABOUT_DESKTOP_HERO_WRAP}>
             <BlogHeroVisual
-              backdrop={PROTO_HERO_BACKDROP}
+              backdrop={PROTO_ABOUT_HERO_BACKDROP}
               variant="hero"
               boxClassName={PROTO_INVEST_DESKTOP_HERO_BOX_TW}
               gapClassName=""

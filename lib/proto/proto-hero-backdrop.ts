@@ -1,19 +1,27 @@
 import type { WorkflowCarouselDesignBackdrop } from "@/lib/workflow-carousel-design-backdrops";
 
 import {
-  PROTO_COMMUNICATION_GRADIENTS,
   PROTO_COMMUNICATION_GRIDS,
+  PROTO_HOME_HERO_GRADIENT,
   PROTO_HERO_GRADIENT,
 } from "@/lib/proto/proto-communication-gradients";
 import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/proto/proto-phone-grain";
 
 export { PROTO_HERO_GRADIENT };
 
-/** Home hero — same gradient as the “Built on top of your stack” feature band. */
+/** Home hero — integrate band (slightly cooled at the top edge). */
 export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
-  gradient: PROTO_COMMUNICATION_GRADIENTS.integrate,
+  gradient: PROTO_HOME_HERO_GRADIENT,
+  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
+};
+
+/** /about hero visual — prior documents palette; overlays disabled in BlogHeroVisual. */
+export const PROTO_ABOUT_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
+  slideIndex: 4,
+  label: "Proto about hero",
+  gradient: PROTO_HERO_GRADIENT,
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 
