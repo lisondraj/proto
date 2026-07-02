@@ -339,6 +339,7 @@ export default function DoeIphoneSiteNav({
   const [mobileNavFooterSlide, setMobileNavFooterSlide] = useState(0);
   const [navFrostProgress, setNavFrostProgress] = useState(0);
   const [protoNavScrolled, setProtoNavScrolled] = useState(false);
+  const [protoNavHero, setProtoNavHero] = useState(true);
   const mobileNavFooterCarouselRef = useRef<HTMLDivElement>(null);
   /** Carousel width when the sheet first opens — `zoom` shrinks uniformly if the window gets narrower (matches home `app/page.tsx`). */
   const mobileNavFooterWidthBaselineRef = useRef(0);
@@ -411,6 +412,7 @@ export default function DoeIphoneSiteNav({
       raf = requestAnimationFrame(() => {
         const next = computeFrostProgress();
         setNavFrostProgress(next);
+        setProtoNavHero((prev) => (prev ? next < 0.03 : next < 0.008));
         setProtoNavScrolled((prev) => (prev ? next > 0.68 : next >= 0.88));
       });
     };
@@ -804,8 +806,8 @@ export default function DoeIphoneSiteNav({
         className={`${pinchSafe ? "doephone-site-nav " : ""}${
           frostedScrollNav ? "proto-nav-scroll-frost " : ""
         }${frostedScrollNav && navMotionReady ? "proto-nav--motion-ready " : ""}${
-          protoNavScrolled ? "proto-nav--scrolled " : ""
-        }fixed top-0 left-0 right-0 iphone-page:pt-[env(safe-area-inset-top,0px)] ${
+          protoNavHero ? "proto-nav--hero " : ""
+        }${protoNavScrolled ? "proto-nav--scrolled " : ""}fixed top-0 left-0 right-0 iphone-page:pt-[env(safe-area-inset-top,0px)] ${
           navSheetLive ? "z-[200]" : "z-50"
         } ${pinchSafe ? "translate-z-0" : ""}`}
         style={
