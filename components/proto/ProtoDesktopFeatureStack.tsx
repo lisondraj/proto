@@ -8,11 +8,11 @@ import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
 export function ProtoDesktopFeatureStack() {
   return (
     <>
-      {PROTO_COMMUNICATION_SLIDES.map((slide) => {
+      {PROTO_COMMUNICATION_SLIDES.map((slide, index) => {
         const copy = protoFeatureCopy(slide.id);
         if (!copy) return null;
 
-        return <ProtoDesktopFeatureSection key={slide.id} slide={slide} copy={copy} />;
+        return <ProtoDesktopFeatureSection key={slide.id} slide={slide} copy={copy} index={index} />;
       })}
     </>
   );

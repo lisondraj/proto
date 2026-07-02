@@ -531,6 +531,14 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature.proto-featur
   padding-bottom: 0 !important;
 }
 
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel {
+  aspect-ratio: 1 / 1 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__copy {
+  max-width: min(42rem, 100%) !important;
+}
+
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-feature-section__description {
   margin-top: 0 !important;
 }
