@@ -37,6 +37,7 @@ function ProtoFooterWordmarkPhone() {
     measure.setAttribute("aria-hidden", "true");
     measure.textContent = WORDMARK;
     measure.className = `proto-footer-wordmark proto-footer-wordmark--measure pointer-events-none absolute left-0 top-0 whitespace-nowrap opacity-0 ${PROTO_NAV_LOGO_FONT_CLASS}`;
+    measure.style.letterSpacing = "-0.045em";
     container.appendChild(measure);
 
     let rafId = 0;
@@ -45,12 +46,14 @@ function ProtoFooterWordmarkPhone() {
       const available = container.clientWidth;
       if (available <= 0) return;
 
+      const target = Math.max(8, available - 1);
+
       let lo = 8;
-      let hi = Math.floor(available);
+      let hi = Math.floor(target);
       while (lo < hi) {
         const mid = Math.ceil((lo + hi) / 2);
         measure.style.fontSize = `${mid}px`;
-        if (measure.scrollWidth <= available) lo = mid;
+        if (measure.scrollWidth <= target) lo = mid;
         else hi = mid - 1;
       }
 
