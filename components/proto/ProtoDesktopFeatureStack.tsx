@@ -1,6 +1,7 @@
 "use client";
 
 import { ProtoDesktopFeatureSection } from "@/components/proto/ProtoDesktopFeatureSection";
+import { ProtoDesktopFullPanelFeatureSection } from "@/components/proto/ProtoDesktopFullPanelFeatureSection";
 import { PROTO_COMMUNICATION_SLIDES } from "@/lib/proto/proto-communication-slides";
 import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
 import { PROTO_FEATURE_SECTION_LAYOUTS } from "@/lib/proto/proto-feature-section-layout";
@@ -11,7 +12,11 @@ export function ProtoDesktopFeatureStack() {
     <>
       {PROTO_COMMUNICATION_SLIDES.map((slide, index) => {
         const layout = PROTO_FEATURE_SECTION_LAYOUTS[index];
-        if (!layout || layout.kind !== "split") return null;
+        if (!layout) return null;
+
+        if (layout.kind === "full-panel") {
+          return <ProtoDesktopFullPanelFeatureSection key={slide.id} slide={slide} />;
+        }
 
         const copy = protoFeatureCopy(slide.id);
         if (!copy) return null;
@@ -22,7 +27,6 @@ export function ProtoDesktopFeatureStack() {
             slide={slide}
             copy={copy}
             boxOnLeft={layout.boxOnLeft}
-            boxBleedToMargin={layout.boxBleedToMargin}
           />
         );
       })}
