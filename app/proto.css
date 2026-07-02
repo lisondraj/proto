@@ -222,14 +222,12 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
 
 html[data-proto-page] {
   --proto-grain-image: url("/proto-grain-tile.png");
-  --proto-grain-opacity: 0.32;
+  --proto-grain-image: image-set(
+    url("/proto-grain-tile.png") 2x,
+    url("/proto-grain-tile-3x.png") 3x
+  );
+  --proto-grain-opacity: 0.31;
   --proto-grain-tile-size: 256px;
-}
-
-@media (-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 2.5dppx) {
-  html[data-proto-page] {
-    --proto-grain-image: url("/proto-grain-tile-3x.png");
-  }
 }
 
 html[data-proto-page] .proto-grain-layer,
@@ -243,6 +241,27 @@ html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
   background-size: var(--proto-grain-tile-size) var(--proto-grain-tile-size) !important;
   background-repeat: repeat !important;
   image-rendering: auto !important;
+}
+
+/* Stagger tile phase per band so repeats are less obvious across sections. */
+html[data-proto-page] .doephone-hero-backdrop .proto-grain-layer,
+html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\] {
+  background-position: 41px 97px !important;
+}
+
+html[data-proto-page] .doephone-carousel-backdrop .proto-grain-layer,
+html[data-proto-page] .doephone-carousel-backdrop > div.z-\[1\] {
+  background-position: 118px 23px !important;
+}
+
+html[data-proto-page] .proto-invest-hero-backdrop .proto-grain-layer,
+html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
+  background-position: 67px 144px !important;
+}
+
+html[data-proto-page] .proto-desktop-carousel-backdrop .proto-grain-layer,
+html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
+  background-position: 29px 61px !important;
 }
 
 /* Feature box UI mocks — display-only (no selection or control clicks). */

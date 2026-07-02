@@ -339,10 +339,7 @@ export function WorkflowCarouselDesignBackdrop({
           }`.trim()}
           style={
             grainBackgroundImage
-              ? {
-                  backgroundSize: grainBackgroundSize,
-                  backgroundRepeat: "repeat",
-                }
+              ? undefined
               : {
                   ...WORKFLOW_CAROUSEL_GRAIN_STYLE,
                   backgroundSize: grainBackgroundSize,
