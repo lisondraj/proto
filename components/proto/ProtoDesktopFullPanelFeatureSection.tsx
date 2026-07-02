@@ -3,11 +3,9 @@
 import { ProtoDesktopPanelSection } from "@/components/proto/ProtoDesktopPanelSection";
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
 import {
-  PROTO_DESKTOP_FEATURE_BAND_H,
-  PROTO_DESKTOP_FEATURE_PANEL_FULL_TW,
-  PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y,
+  PROTO_DESKTOP_FULL_PANEL_BAND_H,
   PROTO_DESKTOP_FULL_PANEL_SHELL_TW,
-  PROTO_DESKTOP_PAGE_INSET_X,
+  PROTO_DESKTOP_FEATURE_PANEL_FULL_TW,
 } from "@/lib/proto/proto-desktop-layout-styles";
 import {
   protoCommunicationGradient,
@@ -29,12 +27,10 @@ export function ProtoDesktopFullPanelFeatureSection({
   return (
     <section
       ref={ref}
-      className={`proto-desktop-feature proto-desktop-feature--full-panel flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FEATURE_BAND_H}`}
+      className={`proto-desktop-feature proto-desktop-feature--full-panel flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FULL_PANEL_BAND_H}`}
       aria-label={slide.menuLabel}
     >
-      <div
-        className={`${PROTO_DESKTOP_FULL_PANEL_SHELL_TW} ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y}`}
-      >
+      <div className={PROTO_DESKTOP_FULL_PANEL_SHELL_TW}>
         <div
           className={`proto-desktop-feature__panel proto-desktop-feature__panel--full ${PROTO_DESKTOP_FEATURE_PANEL_FULL_TW} ${protoFeatureRevealClass(revealed, "title")}`}
         >

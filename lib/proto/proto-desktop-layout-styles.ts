@@ -1,10 +1,17 @@
 import {
+  DESKTOP_HOME_FIXED_NAV_HEIGHT,
   DOEPHONE_DESKTOP_PAGE_INSET_X,
 } from "@/lib/doephone/section-styles";
 import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-font";
 
-/** Desktop /proto feature band — split panel + copy within one viewport-tall section. */
+/** Desktop /proto split band — one viewport-tall section. */
 export const PROTO_DESKTOP_FEATURE_BAND_H = "min-h-[112vh] h-[112vh]";
+
+/** Desktop /proto full-panel band — one viewport; shell pads below fixed nav. */
+export const PROTO_DESKTOP_FULL_PANEL_BAND_H = "min-h-[100dvh] h-[100dvh]";
+
+/** Nav clearance used in full-panel shell top padding (matches fixed nav bar). */
+export const PROTO_DESKTOP_FULL_PANEL_NAV_CLEARANCE = DESKTOP_HOME_FIXED_NAV_HEIGHT;
 
 /** Split bands — page gutters on the grid; column gap separates copy and panel. */
 export const PROTO_DESKTOP_SPLIT_SECTION_GRID = `grid h-full min-h-0 w-full grid-cols-2 items-center gap-8 md:gap-10 lg:gap-12 xl:gap-14 ${DOEPHONE_DESKTOP_PAGE_INSET_X} py-8 md:py-10 lg:py-12`;
@@ -21,14 +28,12 @@ export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT = `${PROTO_DESKTOP_SPLIT_BOX_C
 export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
   "aspect-square h-auto w-full max-h-full max-w-full";
 
-/** Full-width gradient band between page margins — vertical inset within the section. */
-export const PROTO_DESKTOP_FULL_PANEL_SECTION_PAD_Y =
-  "py-12 md:py-16 lg:py-20 xl:py-24";
-
+/** Full-width gradient band — flex child fills shell between padded edges. */
 export const PROTO_DESKTOP_FULL_PANEL_SHELL_TW =
   "proto-desktop-feature__full-panel-shell box-border flex h-full min-h-0 w-full flex-col";
 
-export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW = "h-full w-full min-h-0 flex-1";
+export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW =
+  "min-h-0 w-full flex-1 overflow-hidden";
 
 export const PROTO_DESKTOP_FEATURE_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(2.65rem,4.05vw,4.05rem)] md:text-[clamp(2.78rem,3.75vw,4.28rem)] lg:text-[clamp(2.92rem,3.5vw,4.52rem)] ${PROTO_FONT_CLASS}`;
 

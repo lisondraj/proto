@@ -602,24 +602,60 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel.proto
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel {
   overflow: hidden !important;
+  min-height: 100dvh !important;
+  height: 100dvh !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
   box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
   height: 100% !important;
   min-height: 0 !important;
-  padding-top: clamp(3rem, 4.5vh, 5.5rem) !important;
-  padding-bottom: clamp(3rem, 4.5vh, 5.5rem) !important;
+  width: 100% !important;
+  padding-top: calc(5.5rem + clamp(1.5rem, 2.75vh, 2.75rem)) !important;
+  padding-bottom: clamp(2rem, 3.5vh, 3.5rem) !important;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
+}
+
+@media (min-width: 768px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
+    padding-left: 7rem !important;
+    padding-right: 7rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
+    padding-left: 9rem !important;
+    padding-right: 9rem !important;
+  }
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--full {
   aspect-ratio: auto !important;
+  display: flex !important;
   flex: 1 1 auto !important;
-  height: auto !important;
+  flex-direction: column !important;
   width: 100% !important;
   min-height: 0 !important;
   max-height: 100% !important;
-  max-width: none !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--full > * {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline,
