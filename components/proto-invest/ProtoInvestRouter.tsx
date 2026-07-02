@@ -1,66 +1,55 @@
 "use client";
 
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 import { ProtoInvestDesktopView } from "@/components/proto-invest/ProtoInvestDesktopView";
 import { ProtoInvestMobileView } from "@/components/proto-invest/ProtoInvestMobileView";
 import {
-  applyPhoneLayoutViewportMeta,
-  PHONE_DEVICE_VIEWPORT,
-  phoneLayoutViewportContent,
-} from "@/lib/doephone/phone-layout-viewport";
-import { useJoinPageVariant, type JoinPageVariant } from "@/lib/join/use-join-page-variant";
+  DOEPHONE_DESKTOP_MEDIA_QUERY,
+  resolveDoePhoneVariant,
+  type DoePhoneVariant,
+} from "@/lib/doephone/resolve-doe-phone-variant";
+import { shouldLockDesignersTouchPhoneLayout } from "@/lib/designers/designers-page-context";
+import {
+  applyProtoDesktopDocumentAttrs,
+  applyProtoPhoneDocumentAttrs,
+  clearProtoPhonePinchViewport,
+  markProtoRouteDocument,
+  syncProtoPhoneViewport,
+} from "@/lib/proto/proto-route-document";
+import { shouldLockProtoTouchPhoneLayout } from "@/lib/proto/proto-page-context";
 
-function applyPhoneDocumentAttrs() {
-  const html = document.documentElement;
-  const body = document.body;
-  html.setAttribute("data-doeforvc-always-phone", "true");
-  html.removeAttribute("data-layout");
-  body.classList.remove("desktop-route");
-}
-
-function applyDesktopDocumentAttrs() {
-  const html = document.documentElement;
-  const body = document.body;
-  const meta = document.querySelector('meta[name="viewport"]');
-  html.removeAttribute("data-doeforvc-always-phone");
-  html.removeAttribute("data-doephone-pinching");
-  html.setAttribute("data-layout", "desktop");
-  body.classList.add("desktop-route");
-  body.classList.remove("doephone-route");
-  html.style.removeProperty("--app-vw");
-  html.style.removeProperty("--app-vh");
-  html.style.removeProperty("--app-vv-offset-top");
-  meta?.setAttribute("content", PHONE_DEVICE_VIEWPORT);
-}
-
-function applyPhonePinchViewport() {
-  const html = document.documentElement;
-  const body = document.body;
-  const meta = document.querySelector('meta[name="viewport"]');
-  html.setAttribute("data-doephone-pinching", "true");
-  body.classList.add("doephone-route");
-  meta?.setAttribute("content", phoneLayoutViewportContent());
-}
-
-/** /about — phone or desktop layout based on viewport, matching Doe /about routing. */
-export function ProtoInvestRouter({ initialVariant }: { initialVariant: JoinPageVariant }) {
-  const variant = useJoinPageVariant(initialVariant);
+/** /about — phone or desktop layout based on viewport, matching main proto routing. */
+export function ProtoInvestRouter() {
+  const [variant, setVariant] = useState<DoePhoneVariant>("phone");
 
   useLayoutEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-    html.setAttribute("data-proto-page", "true");
-    body.classList.add("proto-route");
+    setVariant(resolveDoePhoneVariant());
+  }, []);
 
-    if (variant === "desktop") {
-      applyDesktopDocumentAttrs();
+  useEffect(() => {
+    const sync = () => setVariant(resolveDoePhoneVariant());
+    sync();
+
+    if (shouldLockDesignersTouchPhoneLayout() || shouldLockProtoTouchPhoneLayout()) {
       return;
     }
 
-    applyPhoneDocumentAttrs();
-    applyPhoneLayoutViewportMeta();
-    applyPhonePinchViewport();
+    const mq = window.matchMedia(DOEPHONE_DESKTOP_MEDIA_QUERY);
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useLayoutEffect(() => {
+    markProtoRouteDocument();
+
+    if (variant === "phone") {
+      applyProtoPhoneDocumentAttrs();
+      syncProtoPhoneViewport();
+      return;
+    }
+
+    applyProtoDesktopDocumentAttrs();
   }, [variant]);
 
   useEffect(() => {
@@ -70,14 +59,8 @@ export function ProtoInvestRouter({ initialVariant }: { initialVariant: JoinPage
     const prevViewport = meta?.getAttribute("content") ?? "";
 
     return () => {
-      const html = document.documentElement;
-      const body = document.body;
-      html.removeAttribute("data-doephone-pinching");
-      body.classList.remove("doephone-route");
-      if (meta) {
-        if (prevViewport) meta.setAttribute("content", prevViewport);
-        else meta.removeAttribute("content");
-      }
+      clearProtoPhonePinchViewport(prevViewport);
+      applyProtoPhoneDocumentAttrs();
     };
   }, [variant]);
 

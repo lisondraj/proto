@@ -25,6 +25,11 @@ html[data-proto-page]:has(.doephone-mobile-root) body {
 
 html[data-proto-page] .doephone-mobile-root {
   background-color: #121819;
+  /*
+   * Match the global 80% design scale on iPhone — doephone’s 14.5px root and
+   * --app-vw nav tokens otherwise render ~25% larger than the tuned layout.
+   */
+  zoom: 0.8;
 }
 
 html[data-proto-page] .proto-section-band {

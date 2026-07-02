@@ -5,53 +5,19 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { DoePhoneMobileView } from "@/components/doephone/DoePhoneMobileView";
 import { ProtoDesktopHome } from "@/components/proto/ProtoDesktopHome";
 import {
-  applyPhoneLayoutViewportMeta,
-  phoneLayoutViewportContent,
-} from "@/lib/doephone/phone-layout-viewport";
-import {
   DOEPHONE_DESKTOP_MEDIA_QUERY,
   resolveDoePhoneVariant,
   type DoePhoneVariant,
 } from "@/lib/doephone/resolve-doe-phone-variant";
 import { shouldLockDesignersTouchPhoneLayout } from "@/lib/designers/designers-page-context";
+import {
+  applyProtoDesktopDocumentAttrs,
+  applyProtoPhoneDocumentAttrs,
+  clearProtoPhonePinchViewport,
+  markProtoRouteDocument,
+  syncProtoPhoneViewport,
+} from "@/lib/proto/proto-route-document";
 import { shouldLockProtoTouchPhoneLayout } from "@/lib/proto/proto-page-context";
-
-function applyPhoneDocumentAttrs() {
-  const html = document.documentElement;
-  const body = document.body;
-  html.setAttribute("data-doeforvc-always-phone", "true");
-  html.removeAttribute("data-layout");
-  body.classList.remove("desktop-route");
-}
-
-function applyDesktopDocumentAttrs() {
-  const html = document.documentElement;
-  const body = document.body;
-  html.removeAttribute("data-doeforvc-always-phone");
-  html.setAttribute("data-layout", "desktop");
-  body.classList.add("desktop-route");
-}
-
-function applyPhonePinchViewport() {
-  const html = document.documentElement;
-  const body = document.body;
-  const meta = document.querySelector('meta[name="viewport"]');
-  html.setAttribute("data-doephone-pinching", "true");
-  body.classList.add("doephone-route");
-  meta?.setAttribute("content", phoneLayoutViewportContent());
-}
-
-function clearPhonePinchViewport(prevViewport: string) {
-  const html = document.documentElement;
-  const body = document.body;
-  const meta = document.querySelector('meta[name="viewport"]');
-  html.removeAttribute("data-doephone-pinching");
-  body.classList.remove("doephone-route");
-  if (meta) {
-    if (prevViewport) meta.setAttribute("content", prevViewport);
-    else meta.removeAttribute("content");
-  }
-}
 
 /** /proto — phone or desktop layout based on viewport, matching Doe home routing. */
 export function ProtoRouter() {
@@ -76,19 +42,15 @@ export function ProtoRouter() {
   }, []);
 
   useLayoutEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-    html.setAttribute("data-proto-page", "true");
-    body.classList.add("proto-route");
+    markProtoRouteDocument();
 
     if (variant === "phone") {
-      applyPhoneDocumentAttrs();
-      applyPhoneLayoutViewportMeta();
-      applyPhonePinchViewport();
+      applyProtoPhoneDocumentAttrs();
+      syncProtoPhoneViewport();
       return;
     }
 
-    applyDesktopDocumentAttrs();
+    applyProtoDesktopDocumentAttrs();
   }, [variant]);
 
   useEffect(() => {
@@ -98,8 +60,8 @@ export function ProtoRouter() {
     const prevViewport = meta?.getAttribute("content") ?? "";
 
     return () => {
-      clearPhonePinchViewport(prevViewport);
-      applyPhoneDocumentAttrs();
+      clearProtoPhonePinchViewport(prevViewport);
+      applyProtoPhoneDocumentAttrs();
     };
   }, [variant]);
 
