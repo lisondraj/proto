@@ -1,16 +1,26 @@
 import type { WorkflowCarouselDesignBackdrop } from "@/lib/workflow-carousel-design-backdrops";
 
-import { PROTO_HERO_GRADIENT, PROTO_LINE_GRID } from "@/lib/proto/proto-communication-gradients";
+import {
+  PROTO_COMMUNICATION_GRADIENTS,
+  PROTO_COMMUNICATION_GRIDS,
+  PROTO_HERO_GRADIENT,
+} from "@/lib/proto/proto-communication-gradients";
 import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/proto/proto-phone-grain";
 
 export { PROTO_HERO_GRADIENT };
 
+/** Home hero — same gradient as the “Built on top of your stack” feature band. */
 export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
-  gradient: PROTO_HERO_GRADIENT,
-  grid: PROTO_LINE_GRID,
+  gradient: PROTO_COMMUNICATION_GRADIENTS.integrate,
+  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
+
+/** Hero-only grain — slightly finer tile and lower opacity than feature cards. */
+export const PROTO_HERO_GRAIN_TILE_PX = 224;
+export const PROTO_HERO_GRAIN_SIZE = `${PROTO_HERO_GRAIN_TILE_PX}px ${PROTO_HERO_GRAIN_TILE_PX}px`;
+export const PROTO_HERO_GRAIN_OPACITY = 0.26;
 
 /** iPhone proto backdrops — gradient must stay full-bleed; patternScale > 1 spreads line grids. */
 export const PROTO_PHONE_BACKDROP_GRADIENT_SCALE = 1;

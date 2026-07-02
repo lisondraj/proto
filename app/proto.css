@@ -245,6 +245,13 @@ html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
   image-rendering: auto !important;
 }
 
+/* Home hero only — lighter, finer grain than feature cards. */
+html[data-proto-page] .doephone-hero-backdrop .proto-grain-layer,
+html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\] {
+  --proto-grain-opacity: 0.26;
+  --proto-grain-tile-size: 224px;
+}
+
 /* Feature box UI mocks — display-only (no selection or control clicks). */
 html[data-proto-page] .proto-feature-box-ui,
 html[data-proto-page] .proto-feature-box-ui * {

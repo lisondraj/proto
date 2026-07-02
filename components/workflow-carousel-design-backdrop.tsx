@@ -275,6 +275,8 @@ export function WorkflowCarouselDesignBackdrop({
   gridOverride,
   grainBackgroundSize = "200px 200px",
   grainBackgroundImage,
+  hideGrainOverlay = false,
+  hideGridOverlay = false,
   introOnLoad = false,
   surface = "orange",
 }: {
@@ -294,6 +296,10 @@ export function WorkflowCarouselDesignBackdrop({
   grainBackgroundSize?: string;
   /** Optional grain SVG — proto phone uses a sharper tile at native resolution. */
   grainBackgroundImage?: string;
+  /** Skips the grain layer entirely (e.g. /about hero visual). */
+  hideGrainOverlay?: boolean;
+  /** Skips line/grid overlays — gradient only. */
+  hideGridOverlay?: boolean;
   /** Staggered fade-in for polar line overlay on load. */
   introOnLoad?: boolean;
   /** Beige uses solid fill and taupe line overlays instead of orange gradient + white lines. */
@@ -332,7 +338,7 @@ export function WorkflowCarouselDesignBackdrop({
         }}
         aria-hidden
       />
-      {!isBeige ? (
+      {!isBeige && !hideGrainOverlay ? (
         <div
           className={`pointer-events-none ${layerInsetClass} z-[1] ${layerClass}${
             grainBackgroundImage ? " proto-grain-layer" : ""
@@ -352,16 +358,18 @@ export function WorkflowCarouselDesignBackdrop({
           aria-hidden
         />
       ) : null}
-      <GridOverlay
-        kind={gridOverride ?? backdrop.grid}
-        patternScale={patternScale}
-        polarCenterY={backdrop.polarCenterY}
-        introOnLoad={introOnLoad}
-        surface={surface}
-        lineOverlayOpacity={backdrop.lineOverlayOpacity}
-        clipClassName={layerClass}
-        insetClassName={layerInsetClass}
-      />
+      {!hideGridOverlay ? (
+        <GridOverlay
+          kind={gridOverride ?? backdrop.grid}
+          patternScale={patternScale}
+          polarCenterY={backdrop.polarCenterY}
+          introOnLoad={introOnLoad}
+          surface={surface}
+          lineOverlayOpacity={backdrop.lineOverlayOpacity}
+          clipClassName={layerClass}
+          insetClassName={layerInsetClass}
+        />
+      ) : null}
     </Root>
   );
 }

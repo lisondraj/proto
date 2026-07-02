@@ -17,8 +17,8 @@ import { PROTO_HERO_HEIGHT } from "@/lib/proto/proto-hero-layout";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 import {
   PROTO_HERO_BACKDROP,
+  PROTO_HERO_GRAIN_SIZE,
   PROTO_PHONE_BACKDROP_GRADIENT_SCALE,
-  PROTO_PHONE_BACKDROP_GRAIN_SIZE,
   PROTO_PHONE_BACKDROP_PATTERN_SCALE,
   PROTO_PHONE_GRAIN_BG,
 } from "@/lib/proto/proto-hero-backdrop";
@@ -111,7 +111,7 @@ export function DoePhoneHeroSection({
         introOnLoad={!isProto}
         gradientScale={isProto ? PROTO_PHONE_BACKDROP_GRADIENT_SCALE : gradientZoom}
         patternScale={isProto ? PROTO_PHONE_BACKDROP_PATTERN_SCALE : 1}
-        grainBackgroundSize={isProto ? PROTO_PHONE_BACKDROP_GRAIN_SIZE : undefined}
+        grainBackgroundSize={isProto ? PROTO_HERO_GRAIN_SIZE : undefined}
         grainBackgroundImage={isProto ? PROTO_PHONE_GRAIN_BG : undefined}
       />
 
