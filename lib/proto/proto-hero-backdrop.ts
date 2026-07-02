@@ -1,7 +1,7 @@
 import type { WorkflowCarouselDesignBackdrop } from "@/lib/workflow-carousel-design-backdrops";
 
 import { PROTO_HERO_GRADIENT, PROTO_LINE_GRID } from "@/lib/proto/proto-communication-gradients";
-import { PROTO_GRAIN_BG, PROTO_GRAIN_SIZE } from "@/lib/proto/proto-phone-grain";
+import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/proto/proto-phone-grain";
 
 export { PROTO_HERO_GRADIENT };
 
