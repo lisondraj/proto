@@ -5,19 +5,17 @@ import { ProtoFeatureSectionCopy } from "@/components/proto/ProtoFeatureSectionC
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
 import type { ProtoFeatureCopy } from "@/lib/proto/proto-feature-copy";
 import {
-  PROTO_DESKTOP_CONTENT_MAX_W,
   PROTO_DESKTOP_FEATURE_BAND_H,
-  PROTO_DESKTOP_FEATURE_COPY_COL_TW,
   PROTO_DESKTOP_FEATURE_PANEL_BLEED_TW,
   PROTO_DESKTOP_FEATURE_PANEL_SIZE,
-  PROTO_DESKTOP_FEATURE_SECTION_PAD,
-  PROTO_DESKTOP_FEATURE_SPLIT_GAP,
-  PROTO_DESKTOP_PAGE_INSET_X,
   PROTO_DESKTOP_SPLIT_BOX_COLUMN,
   PROTO_DESKTOP_SPLIT_BOX_COLUMN_LEFT_BLEED,
   PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT_BLEED,
+  PROTO_DESKTOP_SPLIT_SECTION_GRID,
   PROTO_DESKTOP_SPLIT_SECTION_GRID_BLEED,
+  PROTO_DESKTOP_SPLIT_TEXT_COLUMN_LEFT,
   PROTO_DESKTOP_SPLIT_TEXT_COLUMN_LEFT_BLEED,
+  PROTO_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT,
   PROTO_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT_BLEED,
 } from "@/lib/proto/proto-desktop-layout-styles";
 import {
@@ -58,7 +56,7 @@ function FeaturePanel({
 
 function FeatureCopy({ copy, revealed }: { copy: ProtoFeatureCopy; revealed: boolean }) {
   return (
-    <div className={`proto-desktop-feature__copy w-full min-w-0 ${PROTO_DESKTOP_FEATURE_COPY_COL_TW}`}>
+    <div className="proto-desktop-feature__copy w-full min-w-0">
       <ProtoFeatureSectionCopy copy={copy} layout="desktop" revealed={revealed} />
     </div>
   );
@@ -117,13 +115,22 @@ export function ProtoDesktopFeatureSection({
     );
   }
 
-  const panelColumn = (
-    <div className={PROTO_DESKTOP_SPLIT_BOX_COLUMN}>
-      <FeaturePanel slide={slide} revealed={revealed} />
+  const textColumnClass = boxOnLeft
+    ? PROTO_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT
+    : PROTO_DESKTOP_SPLIT_TEXT_COLUMN_LEFT;
+  const boxColumnClass = PROTO_DESKTOP_SPLIT_BOX_COLUMN;
+
+  const textColumn = (
+    <div className={textColumnClass}>
+      <FeatureCopy copy={copy} revealed={revealed} />
     </div>
   );
 
-  const copyColumn = <FeatureCopy copy={copy} revealed={revealed} />;
+  const boxColumn = (
+    <div className={boxColumnClass}>
+      <FeaturePanel slide={slide} revealed={revealed} />
+    </div>
+  );
 
   return (
     <section
@@ -131,22 +138,18 @@ export function ProtoDesktopFeatureSection({
       className={`proto-desktop-feature proto-desktop-feature--split flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FEATURE_BAND_H}`}
       aria-label={slide.menuLabel}
     >
-      <div className={`flex h-full min-h-0 flex-1 ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FEATURE_SECTION_PAD}`}>
-        <div
-          className={`proto-desktop-feature__inner grid h-full min-h-0 w-full grid-cols-2 items-center ${PROTO_DESKTOP_FEATURE_SPLIT_GAP} ${PROTO_DESKTOP_CONTENT_MAX_W}`}
-        >
-          {boxOnLeft ? (
-            <>
-              {panelColumn}
-              {copyColumn}
-            </>
-          ) : (
-            <>
-              {copyColumn}
-              {panelColumn}
-            </>
-          )}
-        </div>
+      <div className={PROTO_DESKTOP_SPLIT_SECTION_GRID}>
+        {boxOnLeft ? (
+          <>
+            {boxColumn}
+            {textColumn}
+          </>
+        ) : (
+          <>
+            {textColumn}
+            {boxColumn}
+          </>
+        )}
       </div>
     </section>
   );

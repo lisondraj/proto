@@ -8,7 +8,6 @@ import { ProtoDesktopFeatureStack } from "@/components/proto/ProtoDesktopFeature
 import { ProtoDesktopNavActionRow } from "@/components/proto/ProtoDesktopNavActionRow";
 import { ProtoFooter } from "@/components/proto/ProtoFooter";
 import {
-  PROTO_DESKTOP_CONTENT_MAX_W,
   PROTO_DESKTOP_NAV_LOGO_TW,
   PROTO_DESKTOP_PAGE_INSET_X,
 } from "@/lib/proto/proto-desktop-layout-styles";
@@ -52,7 +51,7 @@ export function ProtoDesktopHome() {
           aria-label="Primary"
         >
           <div
-            className={`flex items-center justify-between py-6 ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_CONTENT_MAX_W}`}
+            className={`flex items-center justify-between py-6 ${PROTO_DESKTOP_PAGE_INSET_X}`}
           >
             <Link href="/" className={`proto-nav-logo ${PROTO_NAV_LOGO_FONT_CLASS} ${PROTO_DESKTOP_NAV_LOGO_TW}`}>
               Proto

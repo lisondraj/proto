@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { DOEPHONE_FOOTER_CONTENT_INSET } from "@/lib/doephone/section-styles";
 import {
-  PROTO_DESKTOP_CONTENT_MAX_W,
   PROTO_DESKTOP_FOOTER_COLUMN_LINK_TW,
   PROTO_DESKTOP_FOOTER_COLUMN_TITLE_TW,
   PROTO_DESKTOP_FOOTER_CORP_BRAND_TW,
@@ -71,10 +70,9 @@ function FooterColumns({
 function ProtoFooterDesktop() {
   return (
     <footer className="proto-footer relative z-10 mt-0 w-full overflow-visible pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
-      <div className={`${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FOOTER_PAD_Y}`}>
-        <div
-          className={`proto-footer-inner proto-footer-inner--desktop flex w-full items-end justify-between ${PROTO_DESKTOP_FOOTER_ROW_GAP} ${PROTO_DESKTOP_CONTENT_MAX_W}`}
-        >
+      <div
+        className={`proto-footer-inner proto-footer-inner--desktop flex w-full items-end justify-between ${PROTO_DESKTOP_FOOTER_ROW_GAP} ${PROTO_DESKTOP_PAGE_INSET_X} ${PROTO_DESKTOP_FOOTER_PAD_Y}`}
+      >
         <div className="proto-footer-desktop-brand shrink-0">
           <ProtoFooterWordmark layout="desktop" />
         </div>
@@ -97,7 +95,6 @@ function ProtoFooterDesktop() {
             titleClassName={PROTO_DESKTOP_FOOTER_COLUMN_TITLE_TW}
             linkClassName={PROTO_DESKTOP_FOOTER_COLUMN_LINK_TW}
           />
-        </div>
         </div>
       </div>
     </footer>

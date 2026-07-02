@@ -9,6 +9,7 @@ import {
 } from "@/lib/doephone/hero-intro-timing";
 import {
   DOEPHONE_DESKTOP_PAGE_INSET_LEFT,
+  DOEPHONE_DESKTOP_PAGE_INSET_X,
   DOEPHONE_HERO_COPY_INSET,
 } from "@/lib/doephone/section-styles";
 import { CARE_COORDINATION_BACKDROP } from "@/lib/workflow-carousel-design-backdrops";
@@ -74,7 +75,11 @@ export function DoePhoneHeroSection({
     : isProto
       ? PROTO_HERO_HEIGHT
       : DOEPHONE_HERO_HEIGHT;
-  const copyInset = isDesktop ? DOEPHONE_DESKTOP_PAGE_INSET_LEFT : DOEPHONE_HERO_COPY_INSET;
+  const copyInset = isDesktop
+    ? isProto
+      ? DOEPHONE_DESKTOP_PAGE_INSET_X
+      : DOEPHONE_DESKTOP_PAGE_INSET_LEFT
+    : DOEPHONE_HERO_COPY_INSET;
   const copyBottom = isDesktop
     ? "bottom-[clamp(5rem,16vh,10rem)]"
     : "bottom-[clamp(2.75rem,9vmin,4.25rem)]";
