@@ -571,6 +571,28 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel.proto
   transform: translateY(-7px);
 }
 
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--bleed-only {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--bleed {
+  height: 100% !important;
+  width: auto !important;
+  max-width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--bleed-right {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--bleed-left {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
 html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline,
 html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline-line {
   font-size: clamp(2.85rem, 4.75vw, 4.85rem) !important;

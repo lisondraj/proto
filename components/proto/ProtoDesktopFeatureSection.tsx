@@ -52,14 +52,12 @@ function FeatureCopy({ copy, revealed }: { copy: ProtoFeatureCopy; revealed: boo
 export function ProtoDesktopFeatureSection({
   slide,
   copy,
-  index,
+  boxOnLeft,
 }: {
   slide: DoePhoneCommunicationSlide;
   copy: ProtoFeatureCopy;
-  /** Feature band index — section 2 (index 0) places the panel on the left, then alternates. */
-  index: number;
+  boxOnLeft: boolean;
 }) {
-  const boxOnLeft = index % 2 === 0;
   const { ref, revealed } = useProtoFeatureScrollReveal(0.18);
 
   return (

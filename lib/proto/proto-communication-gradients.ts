@@ -1,4 +1,6 @@
 /** Reception reference palette — reused across section 2 slide shapes. */
+import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
+
 export const PROTO_RECEPTION_PALETTE = {
   lightYellow: "#F7E8A8",
   wheat: "#F2CF7A",
@@ -55,6 +57,16 @@ export const PROTO_PROTOTYPE_BACKDROP = {
   grid: "diagonal" as const,
 };
 
+/** Shortlist — cool base into warm highlight. */
+const PROTO_SHORTLIST_GRADIENT = `linear-gradient(205deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_AGENTS_MID_BLUE} 34%, ${PROTO_RECEPTION_PALETTE.blue} 58%, ${PROTO_RECEPTION_PALETTE.copper} 82%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
+
+export const PROTO_SHORTLIST_BACKDROP = {
+  slideIndex: 7,
+  label: "Shortlist",
+  gradient: PROTO_SHORTLIST_GRADIENT,
+  grid: "dot" as const,
+};
+
 /** Patient chart — Documents palette flipped; warm upper-left → cool edge. */
 const PROTO_AMBIENT_RADIAL = `radial-gradient(ellipse 125% 110% at 14% 12%, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 36%, ${PROTO_RECEPTION_PALETTE.blue} 70%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
 
@@ -79,14 +91,18 @@ export const PROTO_COMMUNICATION_GRADIENTS = {
   billing: PROTO_PRIOR_AUTH_GRADIENT,
   prototype: PROTO_PROTOTYPE_GRADIENT,
   integrate: PROTO_INTEGRATE_GRADIENT,
+  shortlist: PROTO_SHORTLIST_GRADIENT,
 } as const satisfies Record<string, string>;
 
 export type ProtoCommunicationSlideId = keyof typeof PROTO_COMMUNICATION_GRADIENTS;
 
 /** Grid overlays for /proto feature bands. */
-export const PROTO_COMMUNICATION_GRIDS: Partial<Record<ProtoCommunicationSlideId, "hex" | "diagonal">> = {
+export const PROTO_COMMUNICATION_GRIDS: Partial<
+  Record<ProtoCommunicationSlideId, WorkflowCarouselGridKind>
+> = {
   prototype: "diagonal",
   integrate: "hex",
+  shortlist: "dot",
 };
 
 export function protoCommunicationGradient(slideId: string): string | undefined {

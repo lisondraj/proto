@@ -14,20 +14,37 @@ export function ProtoDesktopPanelSection({
   slide,
   gradientOverride,
   gridOverride,
+  bleedEdge,
 }: {
   slide: DoePhoneCommunicationSlide;
   gradientOverride?: string;
   gridOverride?: WorkflowCarouselGridKind;
+  /** Edge-bleed band — square flush to viewport; round only the inner corners. */
+  bleedEdge?: "left" | "right";
 }) {
+  const radiusClass =
+    bleedEdge === "left"
+      ? "rounded-none rounded-r-[0.875rem]"
+      : bleedEdge === "right"
+        ? "rounded-none rounded-l-[0.875rem]"
+        : DOEPHONE_SECTION_CAROUSEL_RADIUS;
+
+  const borderClass =
+    bleedEdge === "left"
+      ? "border border-[#2A3538] border-l-0"
+      : bleedEdge === "right"
+        ? "border border-[#2A3538] border-r-0"
+        : "border border-[#2A3538]";
+
   return (
     <div
-      className={`relative isolate h-full w-full overflow-hidden border border-[#2A3538] shadow-[0_10px_32px_rgba(0,0,0,0.28)] ${DOEPHONE_SECTION_CAROUSEL_RADIUS}`}
+      className={`relative isolate h-full w-full overflow-hidden shadow-[0_10px_32px_rgba(0,0,0,0.28)] ${radiusClass} ${borderClass}`}
       style={DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE}
     >
       <WorkflowCarouselDesignBackdrop
         backdrop={slide.backdrop}
         embedded
-        className={DOEPHONE_SECTION_CAROUSEL_RADIUS}
+        className={radiusClass}
         gradientOverride={gradientOverride}
         gridOverride={gridOverride}
       />

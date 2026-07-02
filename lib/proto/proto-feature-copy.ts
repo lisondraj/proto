@@ -51,6 +51,12 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
     description:
       "EMRs, billing platforms, and clinical tools you already rely on, connected without ripping out what is in place. Proto meets your team where they work instead of forcing a rip-and-replace.",
   },
+  shortlist: {
+    titleLine1: "Your shortlist,",
+    titleLine2: "always current.",
+    description:
+      "Proto keeps a live ranked list of every candidate who cleared your sandbox bar. Scores refresh as new work lands, so hiring managers always know who to call next without rebuilding a spreadsheet.",
+  },
 };
 
 export function protoFeatureCopy(slideId: string): ProtoFeatureCopy | undefined {
