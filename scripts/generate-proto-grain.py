@@ -25,9 +25,15 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 
 
 def film_grain_value(rng: random.Random) -> int:
-    fine = rng.gauss(0, 22)
-    coarse = rng.gauss(0, 38)
-    return int(max(0, min(255, 128 + fine + coarse * 0.62)))
+    """Per-pixel film grain — high-frequency only; no spatial blur or upsampling."""
+    v = 128.0 + rng.gauss(0, 24.0)
+    roll = rng.random()
+    if roll < 0.055:
+        v += rng.choice([-1.0, 1.0]) * rng.uniform(34.0, 56.0)
+    elif roll < 0.105:
+        v += rng.choice([-1.0, 1.0]) * rng.uniform(14.0, 26.0)
+    v = 128.0 + (v - 128.0) * 1.1
+    return int(max(0, min(255, v)))
 
 
 def write_grain_png(path: Path, size: int, seed: int = GRAIN_SEED) -> None:
