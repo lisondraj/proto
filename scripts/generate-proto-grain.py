@@ -27,7 +27,10 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 def film_grain_value(rng: random.Random) -> int:
     v = 128.0 + rng.gauss(0, 26.0) + rng.gauss(0, 32.0) * 0.68
     v = 128.0 + (v - 128.0) * 1.24
-    return int(max(0, min(255, v)))
+    # Compress the dark tail so hard-light specks stay subtler on gradients.
+    if v < 128.0:
+        v = 128.0 - (128.0 - v) * 0.45
+    return int(max(114, min(255, v)))
 
 
 def write_grain_png(path: Path, size: int, seed: int = GRAIN_SEED) -> None:
