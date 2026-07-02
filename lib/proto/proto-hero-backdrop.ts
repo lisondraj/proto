@@ -9,7 +9,7 @@ import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/pro
 
 export { PROTO_HERO_GRADIENT };
 
-/** Home hero — integrate band (slightly cooled at the top edge). */
+/** Home hero — integrate flow with deep top cap and warm band shifted lower. */
 export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
