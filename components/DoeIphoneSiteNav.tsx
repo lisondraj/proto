@@ -296,6 +296,7 @@ export default function DoeIphoneSiteNav({
   brandFontClass,
   navChromeTheme = "light",
   investorsHref,
+  frostedScrollNav = false,
 }: {
   pinchSafe?: boolean;
   homeHref?: string;
@@ -312,6 +313,8 @@ export default function DoeIphoneSiteNav({
   brandFontClass?: string;
   navChromeTheme?: "light" | "dark";
   investorsHref?: string;
+  /** Proto iPhone — solid bar at top; frosted pill between page gutters on scroll. */
+  frostedScrollNav?: boolean;
 }) {
   const resolvedNavSheetItems: readonly NavSheetItem[] =
     navSheetItems ??
@@ -328,6 +331,7 @@ export default function DoeIphoneSiteNav({
   /** Drives enter/exit opacity + slide on the sheet layer. */
   const [navSheetVisualOpen, setNavSheetVisualOpen] = useState(false);
   const [mobileNavFooterSlide, setMobileNavFooterSlide] = useState(0);
+  const [navFrosted, setNavFrosted] = useState(false);
   const mobileNavFooterCarouselRef = useRef<HTMLDivElement>(null);
   /** Carousel width when the sheet first opens — `zoom` shrinks uniformly if the window gets narrower (matches home `app/page.tsx`). */
   const mobileNavFooterWidthBaselineRef = useRef(0);
@@ -359,6 +363,25 @@ export default function DoeIphoneSiteNav({
     const t = window.setTimeout(() => setNavSheetLive(false), NAV_SHEET_MS);
     return () => window.clearTimeout(t);
   }, [mobileNavOpen]);
+
+  useEffect(() => {
+    if (!frostedScrollNav) return;
+
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        setNavFrosted(window.scrollY > 6);
+      });
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [frostedScrollNav]);
 
   useEffect(() => {
     if (pinchSafe) {
@@ -521,6 +544,28 @@ export default function DoeIphoneSiteNav({
   const navBorderColor = navChromeTheme === "dark" ? "#2A3538" : "#E6E6E6";
   const navSheetTransition = `opacity ${NAV_SHEET_MS}ms ${NAV_SHEET_EASE}, transform ${NAV_SHEET_MS}ms ${NAV_SHEET_EASE}`;
   const navFooterCarouselZoom = pinchSafe ? 1 : mobileNavFooterZoom;
+  const protoNavScrolled = frostedScrollNav && navFrosted;
+
+  const navChromeStrip = (
+    <NavChromeStrip
+      navTextColor={navTextColor}
+      mobileNavOpen={mobileNavOpen}
+      toggleMenu={() => setMobileNavOpen((o) => !o)}
+      pinchSafe={pinchSafe}
+      homeHref={homeHref}
+      joinHref={joinHref}
+      showJoinCta={showJoinCta}
+      showApplyScrollCta={showApplyScrollCta}
+      logoLink={logoLink}
+      showMenu={showMenu}
+      ctaLayout={ctaLayout}
+      mobileNavChrome={mobileNavChrome}
+      navActionLinksEnabled={navActionLinksEnabled}
+      brandName={brandName}
+      brandFontClass={brandFontClass}
+      investorsHref={investorsHref}
+    />
+  );
 
   const mobileMenuLayerContent = navSheetLive ? (
     <>
@@ -711,47 +756,48 @@ export default function DoeIphoneSiteNav({
     <>
       <nav
         ref={navBarRowRef}
-        className={`${pinchSafe ? "doephone-site-nav " : ""}fixed top-0 left-0 right-0 iphone-page:pt-[env(safe-area-inset-top,0px)] ${
+        className={`${pinchSafe ? "doephone-site-nav " : ""}${
+          frostedScrollNav ? "proto-nav-scroll-frost " : ""
+        }${protoNavScrolled ? "proto-nav--scrolled " : ""}fixed top-0 left-0 right-0 iphone-page:pt-[env(safe-area-inset-top,0px)] ${
           navSheetLive ? "z-[200]" : "z-50"
         } ${pinchSafe ? "translate-z-0" : ""}`}
         style={{
-          backgroundColor: navBackground,
-          borderBottom: `1px solid ${navBorderColor}`,
-          boxShadow: pinchSafe ? `0 -120px 0 120px ${navBackground}` : undefined,
-          transition: "border-bottom 100ms ease-out, border-color 100ms ease-out, background-color 180ms ease-out",
+          backgroundColor: frostedScrollNav ? undefined : protoNavScrolled ? "transparent" : navBackground,
+          borderBottom: frostedScrollNav
+            ? undefined
+            : protoNavScrolled
+              ? "1px solid transparent"
+              : `1px solid ${navBorderColor}`,
+          boxShadow:
+            frostedScrollNav
+              ? undefined
+              : protoNavScrolled
+                ? undefined
+                : pinchSafe
+                  ? `0 -120px 0 120px ${navBackground}`
+                  : undefined,
+          transition:
+            "border-bottom 280ms ease-out, border-color 280ms ease-out, background-color 320ms ease-out, box-shadow 320ms ease-out",
         }}
       >
-        <div
-          className={pinchSafe ? undefined : "transition-opacity duration-[320ms] ease-[cubic-bezier(0.32,0.72,0,1)]"}
-          style={
-            pinchSafe
-              ? undefined
-              : {
-                  opacity: navSheetLive ? 0 : 1,
-                  pointerEvents: navSheetLive ? "none" : "auto",
-                }
-          }
-          aria-hidden={pinchSafe ? undefined : navSheetLive ? true : undefined}
-        >
-          <NavChromeStrip
-            navTextColor={navTextColor}
-            mobileNavOpen={mobileNavOpen}
-            toggleMenu={() => setMobileNavOpen((o) => !o)}
-            pinchSafe={pinchSafe}
-            homeHref={homeHref}
-            joinHref={joinHref}
-            showJoinCta={showJoinCta}
-            showApplyScrollCta={showApplyScrollCta}
-            logoLink={logoLink}
-            showMenu={showMenu}
-            ctaLayout={ctaLayout}
-            mobileNavChrome={mobileNavChrome}
-            navActionLinksEnabled={navActionLinksEnabled}
-            brandName={brandName}
-            brandFontClass={brandFontClass}
-            investorsHref={investorsHref}
-          />
-        </div>
+        {frostedScrollNav ? (
+          <div className="proto-nav-frost-shell">{navChromeStrip}</div>
+        ) : (
+          <div
+            className={pinchSafe ? undefined : "transition-opacity duration-[320ms] ease-[cubic-bezier(0.32,0.72,0,1)]"}
+            style={
+              pinchSafe
+                ? undefined
+                : {
+                    opacity: navSheetLive ? 0 : 1,
+                    pointerEvents: navSheetLive ? "none" : "auto",
+                  }
+            }
+            aria-hidden={pinchSafe ? undefined : navSheetLive ? true : undefined}
+          >
+            {navChromeStrip}
+          </div>
+        )}
       </nav>
       {pinchSafe && showMenu ? mobileMenuLayerContent : null}
       {mobileMenuLayer}
