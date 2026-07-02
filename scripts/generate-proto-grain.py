@@ -7,10 +7,10 @@ import struct
 import zlib
 from pathlib import Path
 
-GRAIN_ASSET_PX = 1024
-GRAIN_DISPLAY_PX = 288
+# 768px tile @ 256px display — 1:1 on 3× phone, mild downscale on 2× desktop (sharp, not mushy).
+GRAIN_ASSET_PX = 768
+GRAIN_DISPLAY_PX = 256
 GRAIN_SEED = 0x50726F746F
-GRAIN_BLUR_RADIUS = 0.85
 
 
 def png_chunk(tag: bytes, data: bytes) -> bytes:
@@ -23,39 +23,19 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 
 
 def film_grain_value(rng: random.Random) -> int:
-    """Two-octave monochrome noise — visible contrast, smooth when downscaled."""
-    fine = rng.gauss(0, 17)
-    coarse = rng.gauss(0, 40)
-    return int(max(0, min(255, 128 + fine + coarse * 0.55)))
-
-
-def build_noise_grid(size: int, rng: random.Random) -> list[int]:
-    return [film_grain_value(rng) for _ in range(size * size)]
-
-
-def soften_grid(grid: list[int], size: int) -> list[int]:
-    """Light gaussian blur removes pixel speckle while keeping film grain."""
-    try:
-        from PIL import Image, ImageFilter
-    except ImportError:
-        return grid
-
-    image = Image.new("L", (size, size))
-    image.putdata(grid)
-    softened = image.filter(ImageFilter.GaussianBlur(radius=GRAIN_BLUR_RADIUS))
-    return list(softened.getdata())
+    """Two-octave noise — crisp specks, no post-blur."""
+    fine = rng.gauss(0, 21)
+    coarse = rng.gauss(0, 37)
+    return int(max(0, min(255, 128 + fine + coarse * 0.6)))
 
 
 def write_grain_png(path: Path, size: int = GRAIN_ASSET_PX) -> None:
     rng = random.Random(GRAIN_SEED)
-    grid = soften_grid(build_noise_grid(size, rng), size)
-
     rows: list[bytes] = []
-    for y in range(size):
+    for _ in range(size):
         row = b"\x00"
-        offset = y * size
-        for x in range(size):
-            v = grid[offset + x]
+        for _ in range(size):
+            v = film_grain_value(rng)
             row += bytes((v, v, v, 255))
         rows.append(row)
 
