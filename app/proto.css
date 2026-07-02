@@ -221,7 +221,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
 }
 
 html[data-proto-page] {
-  --proto-grain-opacity: 0.17;
+  --proto-grain-opacity: 0.13;
 }
 
 html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\],
