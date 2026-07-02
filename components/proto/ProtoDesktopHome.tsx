@@ -58,7 +58,7 @@ export function ProtoDesktopHome() {
 
       <ProtoDesktopFeatureStack />
 
-      <ProtoFooter />
+      <ProtoFooter layout="desktop" />
     </div>
   );
 }

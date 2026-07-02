@@ -4,12 +4,29 @@ import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
 
 import { DOEPHONE_FOOTER_CONTENT_INSET } from "@/lib/doephone/section-styles";
+import { PROTO_DESKTOP_FOOTER_WORDMARK_TW } from "@/lib/proto/proto-desktop-layout-styles";
 import { PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-font";
 
 const WORDMARK = "Proto";
 
-/** Footer wordmark — scales to fill the same horizontal gutters as footer copy. */
-export function ProtoFooterWordmark() {
+/** Footer wordmark — full-width on phone; fixed scale on desktop. */
+export function ProtoFooterWordmark({
+  layout = "phone",
+}: {
+  layout?: "phone" | "desktop";
+}) {
+  if (layout === "desktop") {
+    return (
+      <Link href="/" className={`proto-footer-wordmark proto-footer-wordmark--desktop ${PROTO_DESKTOP_FOOTER_WORDMARK_TW}`}>
+        {WORDMARK}
+      </Link>
+    );
+  }
+
+  return <ProtoFooterWordmarkPhone />;
+}
+
+function ProtoFooterWordmarkPhone() {
   const fitRef = useRef<HTMLDivElement>(null);
   const [fontSizePx, setFontSizePx] = useState<number | null>(null);
 

@@ -555,30 +555,35 @@ html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-he
   font-size: clamp(2.85rem, 4.75vw, 4.85rem) !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-main,
-html[data-proto-page][data-layout="desktop"] .proto-footer-wordmark-wrap {
-  padding-left: clamp(2.5rem, 5vw, 9rem) !important;
-  padding-right: clamp(2.5rem, 5vw, 9rem) !important;
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop {
+  padding-top: clamp(2.5rem, 2rem + 1.5vw, 3.5rem) !important;
+  padding-bottom: clamp(2rem, 1.5rem + 1vw, 3rem) !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-contact__brand {
-  font-size: clamp(1.35rem, 1.15rem + 0.55vw, 1.75rem) !important;
+html[data-proto-page][data-layout="desktop"] .proto-footer-wordmark--desktop {
+  display: inline-block !important;
+  width: auto !important;
+  font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+  white-space: nowrap !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-contact__line,
-html[data-proto-page][data-layout="desktop"] .proto-footer-column__link {
-  font-size: clamp(0.98rem, 0.92rem + 0.22vw, 1.12rem) !important;
+html[data-proto-page][data-layout="desktop"] .proto-footer-desktop-nav {
+  margin-left: auto !important;
 }
 
-html[data-proto-page][data-layout="desktop"] .proto-footer-column__title {
-  font-size: clamp(1.02rem, 0.96rem + 0.25vw, 1.18rem) !important;
-}
-
-html[data-proto-page][data-layout="desktop"] .proto-footer-inner {
-  padding-top: clamp(3.5rem, 3rem + 2vw, 5rem) !important;
+html[data-proto-page][data-layout="desktop"] .proto-footer-corp {
+  min-width: 10.5rem !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-columns {
-  margin-top: 1.25rem !important;
-  max-width: 28rem;
+  margin-top: 0 !important;
+  max-width: none !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-contact__email {
+  padding-bottom: 0 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-main {
+  margin-bottom: 0 !important;
 }
