@@ -28,12 +28,12 @@ export const PROTO_DESKTOP_SPLIT_BOX_COLUMN_RIGHT = `${PROTO_DESKTOP_SPLIT_BOX_C
 export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
   "aspect-square h-auto w-full max-h-full max-w-full";
 
-/** Full-width gradient band — gutters on the section; shell fills the inset. */
+/** Full-width gradient band — grid inset; gutters applied in proto.css. */
 export const PROTO_DESKTOP_FULL_PANEL_SHELL_TW =
-  "proto-desktop-feature__full-panel-shell box-border flex min-h-0 w-full flex-1 flex-col";
+  "proto-desktop-feature__full-panel-shell box-border flex min-h-0 min-w-0 flex-col";
 
 export const PROTO_DESKTOP_FEATURE_PANEL_FULL_TW =
-  "min-h-0 w-full flex-1 overflow-hidden";
+  "min-h-0 min-w-0 flex-1 overflow-hidden";
 
 export const PROTO_DESKTOP_FEATURE_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(2.65rem,4.05vw,4.05rem)] md:text-[clamp(2.78rem,3.75vw,4.28rem)] lg:text-[clamp(2.92rem,3.5vw,4.52rem)] ${PROTO_FONT_CLASS}`;
 

@@ -745,45 +745,56 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel.proto
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel {
   box-sizing: border-box !important;
-  display: flex !important;
-  flex-direction: column !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) !important;
   overflow: hidden !important;
   min-height: 100dvh !important;
   height: 100dvh !important;
-  padding-top: var(--proto-desktop-nav-h, 5.5rem) !important;
-  padding-right: 0 !important;
-  padding-bottom: 0 !important;
-  padding-left: 0 !important;
+  padding-top: calc(var(--proto-desktop-nav-h, 5.5rem) + 1.25rem) !important;
+  padding-bottom: 1.25rem !important;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
+}
+
+@media (min-width: 768px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel {
+    padding-top: calc(var(--proto-desktop-nav-h, 5.5rem) + 2.5rem) !important;
+    padding-bottom: 2.5rem !important;
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel {
+    padding-top: calc(var(--proto-desktop-nav-h, 5.5rem) + 3.5rem) !important;
+    padding-bottom: 3.5rem !important;
+    padding-left: 7rem !important;
+    padding-right: 7rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel {
+    padding-top: calc(var(--proto-desktop-nav-h, 5.5rem) + 4.5rem) !important;
+    padding-bottom: 4.5rem !important;
+    padding-left: 9rem !important;
+    padding-right: 9rem !important;
+  }
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
   box-sizing: border-box !important;
   display: flex !important;
-  flex: 1 1 auto !important;
   flex-direction: column !important;
   min-height: 0 !important;
+  min-width: 0 !important;
   overflow: hidden !important;
-  width: auto !important;
-  margin: 1.25rem 2.5rem !important;
+  margin: 0 !important;
   padding: 0 !important;
-}
-
-@media (min-width: 768px) {
-  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
-    margin: 2.5rem 5rem !important;
-  }
-}
-
-@media (min-width: 1024px) {
-  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
-    margin: 3.5rem 7rem !important;
-  }
-}
-
-@media (min-width: 1280px) {
-  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
-    margin: 4.5rem 9rem !important;
-  }
+  width: 100% !important;
+  height: 100% !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
@@ -821,8 +832,9 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel 
   flex: 1 1 auto !important;
   flex-direction: column !important;
   width: 100% !important;
+  height: 100% !important;
   min-height: 0 !important;
-  height: auto !important;
+  min-width: 0 !important;
   overflow: hidden !important;
 }
 
