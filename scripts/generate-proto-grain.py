@@ -25,18 +25,9 @@ def png_chunk(tag: bytes, data: bytes) -> bytes:
 
 
 def film_grain_value(rng: random.Random) -> int:
-    """Per-pixel film grain — light-biased so blend modes do not muddy gradients."""
-    midpoint = 142.0
-    v = midpoint + rng.gauss(0, 21.0)
-    roll = rng.random()
-    if roll < 0.05:
-        v += rng.uniform(22.0, 44.0)
-    elif roll < 0.07:
-        v -= rng.uniform(8.0, 16.0)
-    elif roll < 0.1:
-        v += rng.uniform(10.0, 20.0)
-    v = midpoint + (v - midpoint) * 1.04
-    return int(max(0, min(255, v)))
+    fine = rng.gauss(0, 22)
+    coarse = rng.gauss(0, 38)
+    return int(max(0, min(255, 128 + fine + coarse * 0.62)))
 
 
 def write_grain_png(path: Path, size: int, seed: int = GRAIN_SEED) -> None:
