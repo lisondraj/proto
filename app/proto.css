@@ -557,9 +557,14 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel.proto
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
   overflow: hidden !important;
   min-height: 100dvh !important;
   height: 100dvh !important;
+  padding-top: clamp(2rem, 3.5vh, 3.5rem) !important;
+  padding-bottom: clamp(2rem, 3.5vh, 3.5rem) !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
@@ -594,12 +599,13 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-split-section-grid {
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature--full-panel .proto-desktop-feature__full-panel-shell {
   box-sizing: border-box !important;
   display: flex !important;
+  flex: 1 1 auto !important;
   flex-direction: column !important;
-  height: 100% !important;
+  height: auto !important;
   min-height: 0 !important;
   width: 100% !important;
-  padding-top: calc(5.5rem + clamp(1.5rem, 2.75vh, 2.75rem)) !important;
-  padding-bottom: clamp(3rem, 4.5vh, 5.5rem) !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
 }
@@ -632,7 +638,7 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--full
   flex-direction: column !important;
   width: 100% !important;
   min-height: 0 !important;
-  max-height: 100% !important;
+  max-height: none !important;
   height: auto !important;
   overflow: hidden !important;
 }
@@ -640,7 +646,7 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--full
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel--full > * {
   flex: 1 1 auto !important;
   min-height: 0 !important;
-  height: auto !important;
+  height: 100% !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-hero-headline,

@@ -27,7 +27,7 @@ export function ProtoDesktopFullPanelFeatureSection({
   return (
     <section
       ref={ref}
-      className={`proto-desktop-feature proto-desktop-feature--full-panel flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FULL_PANEL_BAND_H}`}
+      className={`proto-desktop-feature proto-desktop-feature--full-panel box-border flex w-full flex-col bg-[#151c1f] ${PROTO_DESKTOP_FULL_PANEL_BAND_H}`}
       aria-label={slide.menuLabel}
     >
       <div className={PROTO_DESKTOP_FULL_PANEL_SHELL_TW}>
