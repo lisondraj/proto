@@ -51,7 +51,7 @@ function FooterColumns({
           <p className={`proto-footer-column__title font-semibold text-white ${titleClassName ?? ""}`.trim()}>
             {column.title}
           </p>
-          <nav className="proto-footer-column__links mt-2.5 flex flex-col gap-1.5" aria-label={column.title}>
+          <nav className="proto-footer-column__links mt-3 flex flex-col gap-2" aria-label={column.title}>
             {column.links.map((item) => (
               <Link
                 key={item.label}
@@ -82,12 +82,12 @@ function ProtoFooterDesktop() {
         <div className={`proto-footer-desktop-nav flex shrink-0 items-start ${PROTO_DESKTOP_FOOTER_NAV_GAP}`}>
           <div className={`proto-footer-corp min-w-0 text-left ${PROTO_FONT_CLASS}`}>
             <p className={`proto-footer-contact__brand ${PROTO_DESKTOP_FOOTER_CORP_BRAND_TW}`}>Proto</p>
-            <p className={`proto-footer-contact__line mt-2 ${PROTO_DESKTOP_FOOTER_CORP_LINE_TW}`}>
+            <p className={`proto-footer-contact__line mt-2.5 ${PROTO_DESKTOP_FOOTER_CORP_LINE_TW}`}>
               Delaware C-Corporation
             </p>
             <a
               href="mailto:ask@proto.jobs"
-              className={`proto-footer-contact__email proto-footer-contact__line mt-2 inline-block ${PROTO_DESKTOP_FOOTER_CORP_LINE_TW}`}
+              className={`proto-footer-contact__email proto-footer-contact__line mt-2.5 inline-block ${PROTO_DESKTOP_FOOTER_CORP_LINE_TW}`}
             >
               ask@proto.jobs
             </a>

@@ -599,8 +599,9 @@ html[data-proto-page][data-layout="desktop"] .doephone-hero-section .doephone-he
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop {
-  padding-top: clamp(2.5rem, 2rem + 1.5vw, 3.5rem) !important;
-  padding-bottom: clamp(2rem, 1.5rem + 1vw, 3rem) !important;
+  padding-top: clamp(3.5rem, 2.75rem + 2vw, 5.25rem) !important;
+  padding-bottom: clamp(3rem, 2.25rem + 1.75vw, 4.5rem) !important;
+  min-height: clamp(14rem, 12rem + 8vw, 20rem) !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-wordmark--desktop {
@@ -615,7 +616,16 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-desktop-nav {
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-corp {
+  min-width: 13.5rem !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-column {
   min-width: 10.5rem !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-column__links {
+  margin-top: 0.875rem !important;
+  gap: 0.625rem !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-columns {
@@ -633,7 +643,7 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-main {
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__brand {
   color: #ffffff !important;
-  font-size: clamp(0.9rem, 0.86rem + 0.18vw, 1.02rem) !important;
+  font-size: clamp(1.08rem, 0.98rem + 0.35vw, 1.28rem) !important;
   font-weight: 600 !important;
   letter-spacing: -0.015em !important;
 }
@@ -641,21 +651,22 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__line,
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__email {
   color: rgba(255, 255, 255, 0.78) !important;
-  font-size: clamp(0.82rem, 0.78rem + 0.16vw, 0.95rem) !important;
+  font-size: clamp(0.98rem, 0.9rem + 0.3vw, 1.14rem) !important;
   font-weight: 400 !important;
   line-height: 1.45 !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__title {
   color: #ffffff !important;
-  font-size: clamp(0.84rem, 0.8rem + 0.14vw, 0.96rem) !important;
+  font-size: clamp(1.05rem, 0.95rem + 0.35vw, 1.22rem) !important;
   font-weight: 600 !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link {
   color: rgba(255, 255, 255, 0.78) !important;
-  font-size: clamp(0.8rem, 0.76rem + 0.12vw, 0.9rem) !important;
+  font-size: clamp(0.98rem, 0.9rem + 0.28vw, 1.1rem) !important;
   font-weight: 400 !important;
+  line-height: 1.4 !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link:hover {
