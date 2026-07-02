@@ -32,7 +32,7 @@ export function ProtoDesktopFullPanelFeatureSection({
         <div
           className={`proto-desktop-feature__panel proto-desktop-feature__panel--full ${PROTO_DESKTOP_FEATURE_PANEL_FULL_TW} ${protoFeatureRevealClass(revealed, "title")}`}
         >
-          <ProtoDesktopPanelSection slide={slide} shaderAnimate={false} />
+          <ProtoDesktopPanelSection slide={slide} />
         </div>
       </div>
     </section>

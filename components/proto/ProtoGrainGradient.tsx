@@ -13,26 +13,19 @@ import {
   type ProtoGrainGradientVariant,
 } from "@/lib/proto/proto-grain-gradient";
 
-function isHeroVariant(variant: ProtoGrainGradientVariant) {
-  return variant === "home-hero" || variant === "about-hero";
-}
-
-/** /proto — Paper GrainGradient; heroes animate when visible, feature bands stay static unless overridden. */
+/** /proto — Paper GrainGradient; animates when in view, pauses off-screen or when tab is hidden. */
 export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   variant,
   className = "",
-  animate: animateProp,
 }: {
   variant: ProtoGrainGradientVariant;
   className?: string;
-  /** Override motion — desktop split panels pass true; full-panel bands pass false. */
-  animate?: boolean;
 }) {
   const preset = PROTO_GRAIN_GRADIENT_PRESETS[variant];
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [tabVisible, setTabVisible] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const wantsMotion = animateProp ?? isHeroVariant(variant);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -43,8 +36,13 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   }, []);
 
   useEffect(() => {
-    if (!wantsMotion) return;
+    const sync = () => setTabVisible(document.visibilityState === "visible");
+    sync();
+    document.addEventListener("visibilitychange", sync);
+    return () => document.removeEventListener("visibilitychange", sync);
+  }, []);
 
+  useEffect(() => {
     const node = containerRef.current;
     if (!node) return;
 
@@ -54,10 +52,10 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [wantsMotion]);
+  }, []);
 
   const targetSpeed = preset.speed ?? PROTO_GRAIN_GRADIENT_SPEED;
-  const shouldAnimate = !reducedMotion && targetSpeed > 0 && wantsMotion && isVisible;
+  const shouldAnimate = !reducedMotion && targetSpeed > 0 && isVisible && tabVisible;
 
   return (
     <div

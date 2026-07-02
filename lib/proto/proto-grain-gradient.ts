@@ -5,7 +5,7 @@ export const PROTO_GRAIN_GRADIENT_COLORS = ["#c6750c", "#beae60", "#d7cbc6"] as 
 
 export const PROTO_GRAIN_GRADIENT_COLOR_BACK = "#000a0f";
 
-/** Default speed for hero bands; feature presets omit speed so they stay static. */
+/** Default animation speed when a preset omits speed. */
 export const PROTO_GRAIN_GRADIENT_SPEED = 1;
 
 export const PROTO_GRAIN_GRADIENT_WORLD_WIDTH = 1280;

@@ -29,7 +29,7 @@ function FeaturePanel({
     <div
       className={`proto-desktop-feature__panel ${PROTO_DESKTOP_FEATURE_PANEL_SIZE} ${protoFeatureRevealClass(revealed, "title")}`}
     >
-      <ProtoDesktopPanelSection slide={slide} shaderAnimate />
+      <ProtoDesktopPanelSection slide={slide} />
     </div>
   );
 }
