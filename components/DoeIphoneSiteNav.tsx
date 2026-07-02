@@ -300,6 +300,7 @@ export default function DoeIphoneSiteNav({
   navChromeTheme = "light",
   investorsHref,
   frostedScrollNav = false,
+  frostedScrollPastHero = false,
 }: {
   pinchSafe?: boolean;
   homeHref?: string;
@@ -318,6 +319,8 @@ export default function DoeIphoneSiteNav({
   investorsHref?: string;
   /** Proto iPhone — solid bar at top; frosted pill between page gutters on scroll. */
   frostedScrollNav?: boolean;
+  /** Proto home — delay frosted pill until the hero section has scrolled past. */
+  frostedScrollPastHero?: boolean;
 }) {
   const resolvedNavSheetItems: readonly NavSheetItem[] =
     navSheetItems ??
@@ -371,20 +374,34 @@ export default function DoeIphoneSiteNav({
     if (!frostedScrollNav) return;
 
     let raf = 0;
+    const computeFrosted = () => {
+      if (frostedScrollPastHero) {
+        const hero = document.querySelector<HTMLElement>(".doephone-hero-section");
+        if (hero) {
+          return hero.getBoundingClientRect().bottom <= 1;
+        }
+      }
+      return window.scrollY > 6;
+    };
+
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        setNavFrosted(window.scrollY > 6);
+        setNavFrosted(computeFrosted());
       });
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    window.addEventListener("orientationchange", onScroll);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("orientationchange", onScroll);
     };
-  }, [frostedScrollNav]);
+  }, [frostedScrollNav, frostedScrollPastHero]);
 
   useEffect(() => {
     if (pinchSafe) {
