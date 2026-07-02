@@ -48,10 +48,10 @@ const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%,
 /** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
 const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
-/** Home hero — integrate flow; subdued top blue cap, yellow arch over copper. */
+/** Home hero — integrate flow; subdued top blue cap, wide yellow arch over a thin copper stop. */
 export const PROTO_HOME_HERO_GRADIENT = [
   `linear-gradient(180deg, ${PROTO_HUMIRA_COLORS.bridgeDeep} 0%, ${PROTO_AGENTS_MID_BLUE} 16%, ${PROTO_RECEPTION_PALETTE.blue} 28%, transparent 38%)`,
-  `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 62%, ${PROTO_RECEPTION_PALETTE.copper} 64%, ${PROTO_HUMIRA_COLORS.amber} 68%, ${PROTO_RECEPTION_PALETTE.gold} 72%, ${PROTO_RECEPTION_PALETTE.wheat} 78%, ${PROTO_RECEPTION_PALETTE.lightYellow} 84%, ${PROTO_RECEPTION_PALETTE.lightYellow} 94%)`,
+  `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 62%, ${PROTO_RECEPTION_PALETTE.copper} 64%, ${PROTO_HUMIRA_COLORS.amber} 65.5%, ${PROTO_RECEPTION_PALETTE.gold} 69%, ${PROTO_RECEPTION_PALETTE.wheat} 75%, ${PROTO_RECEPTION_PALETTE.lightYellow} 82%, ${PROTO_RECEPTION_PALETTE.lightYellow} 100%)`,
 ].join(", ");
 
 /** iPhone home hero — same reception colouring as desktop. */
