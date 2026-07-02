@@ -13,10 +13,13 @@ import { protoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
 export function ProtoDesktopPanelSection({
   slide,
   bleedEdge,
+  shaderStatic,
 }: {
   slide: DoePhoneCommunicationSlide;
   /** Edge-bleed band — square flush to viewport; round only the inner corners. */
   bleedEdge?: "left" | "right";
+  /** Desktop full-panel bands — static shader (no motion). */
+  shaderStatic?: boolean;
 }) {
   const shaderVariant = protoGrainGradientVariant(slide.id);
 
@@ -40,7 +43,7 @@ export function ProtoDesktopPanelSection({
       style={DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE}
     >
       {shaderVariant ? (
-        <ProtoGrainGradient variant={shaderVariant} className={radiusClass} />
+        <ProtoGrainGradient variant={shaderVariant} className={radiusClass} static={shaderStatic} />
       ) : null}
 
       <div className="proto-feature-box-ui absolute inset-0 z-[15] flex items-center justify-center px-[clamp(1.25rem,2.5vw,2.5rem)]">

@@ -23,9 +23,12 @@ function isHeroVariant(variant: ProtoGrainGradientVariant) {
 export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   variant,
   className = "",
+  static: staticShader = false,
 }: {
   variant: ProtoGrainGradientVariant;
   className?: string;
+  /** Desktop full-panel bands — freeze gradient motion. */
+  static?: boolean;
 }) {
   const preset = PROTO_GRAIN_GRADIENT_PRESETS[variant];
   const containerRef = useRef<HTMLDivElement>(null);
@@ -85,7 +88,8 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   }, [hero]);
 
   const targetSpeed = preset.speed ?? PROTO_GRAIN_GRADIENT_SPEED;
-  const shouldAnimate = !reducedMotion && targetSpeed > 0 && isVisible && tabVisible && isMounted;
+  const shouldAnimate =
+    !staticShader && !reducedMotion && targetSpeed > 0 && isVisible && tabVisible && isMounted;
 
   return (
     <div
