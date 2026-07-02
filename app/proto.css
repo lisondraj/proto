@@ -234,8 +234,8 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [ar
 
 html[data-proto-page] {
   --proto-grain-image: url("/proto-grain-tile.png");
-  --proto-grain-opacity: 0.52;
-  --proto-grain-tile-size: 192px;
+  --proto-grain-opacity: 0.58;
+  --proto-grain-tile-size: 200px;
 }
 
 @media (-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 2.5dppx) {
@@ -255,20 +255,21 @@ html[data-proto-page] .proto-desktop-carousel-backdrop > div.z-\[1\] {
   background-size: var(--proto-grain-tile-size) var(--proto-grain-tile-size) !important;
   background-repeat: repeat !important;
   image-rendering: auto !important;
+  pointer-events: none !important;
 }
 
-/* Home hero — lighter film grain. */
+/* Home hero — slightly lighter grain. */
 html[data-proto-page] .doephone-hero-backdrop .proto-grain-layer,
 html[data-proto-page] .doephone-hero-backdrop > div.z-\[1\] {
-  --proto-grain-opacity: 0.46;
-  --proto-grain-tile-size: 192px;
+  --proto-grain-opacity: 0.5;
+  --proto-grain-tile-size: 200px;
 }
 
-/* /about hero gradient box — same grain treatment as main feature cards. */
+/* /about hero gradient box — same grain as feature cards. */
 html[data-proto-page] .proto-invest-hero-backdrop .proto-grain-layer,
 html[data-proto-page] .proto-invest-hero-backdrop > div.z-\[1\] {
-  --proto-grain-opacity: 0.52;
-  --proto-grain-tile-size: 192px;
+  --proto-grain-opacity: 0.58;
+  --proto-grain-tile-size: 200px;
 }
 
 /* Feature box line grids — matched density and centering on iPhone + desktop. */

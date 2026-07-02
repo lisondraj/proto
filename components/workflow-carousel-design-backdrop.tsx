@@ -350,6 +350,7 @@ export function WorkflowCarouselDesignBackdrop({
           style={
             grainBackgroundImage
               ? {
+                  backgroundImage: grainBackgroundImage,
                   backgroundSize: grainBackgroundSize,
                   backgroundRepeat: "repeat",
                 }
