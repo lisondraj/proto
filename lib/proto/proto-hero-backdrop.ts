@@ -11,7 +11,7 @@ import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/pro
 
 export { PROTO_HERO_GRADIENT };
 
-/** Home hero — diagonal aurora with subdued hex grid overlay. */
+/** Home hero — integrate flow with subdued top blue and copper-aligned warm sweep. */
 export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
@@ -19,7 +19,7 @@ export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 
-/** iPhone home hero — twilight prism palette; portrait bottom-weighted flow. */
+/** iPhone home hero — same reception colouring as desktop. */
 export const PROTO_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero phone",
@@ -27,7 +27,7 @@ export const PROTO_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 
-/** /about hero visual — prior documents palette; overlays disabled in BlogHeroVisual. */
+/** /about hero visual — documents reception palette. */
 export const PROTO_ABOUT_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto about hero",
@@ -35,7 +35,7 @@ export const PROTO_ABOUT_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 
-/** iPhone /about hero — original documents flow with twilight prism tones. */
+/** iPhone /about hero — same documents reception colouring as desktop. */
 export const PROTO_ABOUT_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto about hero phone",

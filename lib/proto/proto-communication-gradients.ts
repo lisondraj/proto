@@ -1,33 +1,33 @@
 /** Reception reference palette — reused across section 2 slide shapes. */
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
 
-/** Aurora palette — ink through electric sky into coral-gold (shared across hero + feature boxes). */
+/** Vibrant reception hues — light blue through gold/copper (same gradient flows). */
 export const PROTO_RECEPTION_PALETTE = {
-  lightYellow: "#FFE08A",
-  wheat: "#FFC960",
-  gold: "#FFAA35",
-  copper: "#E45B52",
-  blue: "#3A9FD4",
-  deep: "#0B1528",
+  lightYellow: "#FFF0B0",
+  wheat: "#F8D66A",
+  gold: "#F2B838",
+  copper: "#DD6F42",
+  blue: "#6FA8D4",
+  deep: "#1E3D52",
 } as const;
 
 /** Reception hex grid — same line overlay as the front-desk (The phone won't stop) slide. */
 export const PROTO_LINE_GRID = "hex" as const;
 
-/** Humira / TELUS — aurora bridge tones between ink and sky. */
+/** Humira / TELUS — exact shared colour stops (solid hex). */
 export const PROTO_HUMIRA_COLORS = {
   deep: PROTO_RECEPTION_PALETTE.deep,
-  bridgeDeep: "#162A48",
+  bridgeDeep: "#356B85",
   blue: PROTO_RECEPTION_PALETTE.blue,
-  bridgeBlue: "#5CB8E8",
+  bridgeBlue: "#9FD4F0",
   copper: PROTO_RECEPTION_PALETTE.copper,
-  amber: "#F07840",
+  amber: "#E89238",
   gold: PROTO_RECEPTION_PALETTE.gold,
   wheat: PROTO_RECEPTION_PALETTE.wheat,
 } as const;
 
-/** Agents roster — teal mid-tone; linear 225° (not center radial). */
-const PROTO_AGENTS_MID_BLUE = "#1F5A7A";
+/** Agents roster — exact legacy colours; linear 225° (not center radial). */
+const PROTO_AGENTS_MID_BLUE = "#4D85A8";
 
 /** Every colour in the phone won't stop (front-desk) gradient — shared across billing + integrate. */
 const PROTO_RECEPTION_FULL_STOPS = [
@@ -48,88 +48,19 @@ const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%,
 /** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
 const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
-/** Home hero — diagonal aurora: ink base, electric sky crest, coral-gold surge. */
+/** Home hero — integrate flow; subdued top blue cap, warm hues sweep with copper. */
 export const PROTO_HOME_HERO_GRADIENT = [
-  `linear-gradient(118deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 12%, ${PROTO_AGENTS_MID_BLUE} 26%, ${PROTO_RECEPTION_PALETTE.blue} 40%, ${PROTO_HUMIRA_COLORS.bridgeBlue} 48%, ${PROTO_RECEPTION_PALETTE.copper} 62%, ${PROTO_HUMIRA_COLORS.amber} 74%, ${PROTO_RECEPTION_PALETTE.gold} 88%, ${PROTO_RECEPTION_PALETTE.lightYellow} 100%)`,
-  `radial-gradient(ellipse 88% 72% at 82% 96%, rgba(255, 200, 75, 0.72) 0%, rgba(240, 105, 60, 0.38) 32%, transparent 64%)`,
-  `radial-gradient(ellipse 62% 54% at 6% 8%, rgba(92, 184, 232, 0.55) 0%, rgba(31, 90, 122, 0.22) 42%, transparent 70%)`,
-  `radial-gradient(ellipse 40% 35% at 92% 42%, rgba(228, 91, 82, 0.28) 0%, transparent 68%)`,
+  `linear-gradient(180deg, ${PROTO_HUMIRA_COLORS.bridgeDeep} 0%, ${PROTO_AGENTS_MID_BLUE} 16%, ${PROTO_RECEPTION_PALETTE.blue} 28%, transparent 38%)`,
+  `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 62%, ${PROTO_RECEPTION_PALETTE.copper} 66%, ${PROTO_HUMIRA_COLORS.amber} 70%, ${PROTO_RECEPTION_PALETTE.gold} 74%, ${PROTO_RECEPTION_PALETTE.wheat} 80%, ${PROTO_RECEPTION_PALETTE.lightYellow} 86%, ${PROTO_RECEPTION_PALETTE.lightYellow} 94%)`,
 ].join(", ");
 
-/** iPhone twilight prism — shared palette (home hero + feature boxes + /about). */
-export const PROTO_PHONE_PRISM_PALETTE = {
-  void: "#080612",
-  plum: "#18102E",
-  violet: "#3A2868",
-  orchid: "#6E48C8",
-  lilac: "#8E62D8",
-  periwinkle: "#A484DC",
-  bronze: "#B89068",
-  glow: "#E8DCC8",
-} as const;
+/** iPhone home hero — same reception colouring as desktop. */
+export const PROTO_HOME_HERO_PHONE_GRADIENT = PROTO_HOME_HERO_GRADIENT;
 
-export const PROTO_PHONE_HERO_VOID = PROTO_PHONE_PRISM_PALETTE.void;
+export const PROTO_PHONE_HERO_VOID = PROTO_RECEPTION_PALETTE.deep;
 
-const P = PROTO_PHONE_PRISM_PALETTE;
-
-/** iPhone home hero — twilight prism: void base, violet surge, champagne crest (portrait flow). */
-export const PROTO_HOME_HERO_PHONE_GRADIENT = [
-  `linear-gradient(0deg, ${P.void} 0%, ${P.plum} 16%, ${P.violet} 36%, ${P.orchid} 52%, ${P.lilac} 64%, ${P.periwinkle} 76%, ${P.bronze} 88%, ${P.glow} 100%)`,
-  `radial-gradient(ellipse 118% 92% at 16% 94%, rgba(122, 82, 208, 0.5) 0%, rgba(110, 72, 200, 0.26) 38%, transparent 66%)`,
-  `radial-gradient(ellipse 68% 52% at 90% 10%, rgba(110, 72, 200, 0.44) 0%, rgba(58, 40, 104, 0.2) 42%, transparent 70%)`,
-  `radial-gradient(ellipse 130% 96% at 50% 50%, transparent 40%, rgba(8, 6, 18, 0.42) 100%)`,
-].join(", ");
-
-/** iPhone /about hero — original documents flow with twilight prism tones. */
-export const PROTO_ABOUT_HERO_PHONE_GRADIENT = [
-  `radial-gradient(ellipse 74% 60% at 0% 0%, ${P.periwinkle} 0%, ${P.periwinkle} 24%, transparent 70%)`,
-  `linear-gradient(135deg, ${P.void} 0%, ${P.orchid} 22%, ${P.orchid} 48%, ${P.lilac} 78%, ${P.bronze} 100%)`,
-].join(", ");
-
-/** Feature boxes — cinematic prism flows; palette unchanged. */
-const PROTO_FEATURE_AGENTS_GRADIENT = `radial-gradient(ellipse 96% 90% at 40% 36%, ${P.glow} 0%, ${P.bronze} 11%, ${P.periwinkle} 24%, ${P.lilac} 38%, ${P.orchid} 52%, ${P.violet} 66%, ${P.plum} 80%, ${P.void} 100%)`;
-
-const PROTO_FEATURE_FRONT_DESK_GRADIENT = `linear-gradient(96deg, ${P.void} 0%, ${P.plum} 9%, ${P.violet} 24%, ${P.orchid} 40%, ${P.lilac} 54%, ${P.periwinkle} 66%, ${P.bronze} 80%, ${P.glow} 96%)`;
-
-const PROTO_FEATURE_INBOX_GRADIENT = `linear-gradient(168deg, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 26%, ${P.lilac} 42%, ${P.orchid} 58%, ${P.violet} 74%, ${P.plum} 88%, ${P.void} 100%)`;
-
-const PROTO_FEATURE_AMBIENT_GRADIENT = `radial-gradient(ellipse 92% 84% at 90% 10%, ${P.glow} 0%, ${P.bronze} 14%, ${P.lilac} 32%, ${P.orchid} 52%, ${P.violet} 72%, ${P.plum} 88%, ${P.void} 100%)`;
-
-const PROTO_FEATURE_BILLING_GRADIENT = `radial-gradient(ellipse 104% 96% at 10% 90%, ${P.glow} 0%, ${P.bronze} 13%, ${P.orchid} 34%, ${P.violet} 54%, ${P.plum} 74%, ${P.void} 100%)`;
-
-const PROTO_FEATURE_PROTOTYPE_GRADIENT = [
-  `radial-gradient(ellipse 58% 52% at 76% 24%, ${P.periwinkle} 0%, ${P.lilac} 26%, transparent 62%)`,
-  `linear-gradient(138deg, ${P.void} 0%, ${P.plum} 16%, ${P.violet} 34%, ${P.orchid} 52%, ${P.lilac} 68%, ${P.bronze} 84%, ${P.glow} 100%)`,
-].join(", ");
-
-const PROTO_FEATURE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 88% 124% at 50% 102%, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 30%, ${P.orchid} 48%, ${P.lilac} 64%, ${P.periwinkle} 78%, ${P.bronze} 90%, ${P.glow} 100%)`;
-
-const PROTO_FEATURE_VALIDATE_GRADIENT = `linear-gradient(258deg, ${P.glow} 0%, ${P.bronze} 10%, ${P.periwinkle} 26%, ${P.lilac} 42%, ${P.orchid} 58%, ${P.violet} 74%, ${P.plum} 88%, ${P.void} 100%)`;
-
-const PROTO_FEATURE_SHORTLIST_GRADIENT = [
-  `radial-gradient(ellipse 68% 60% at 26% 76%, ${P.lilac} 0%, ${P.orchid} 28%, transparent 66%)`,
-  `linear-gradient(198deg, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 30%, ${P.orchid} 48%, ${P.lilac} 64%, ${P.bronze} 82%, ${P.glow} 100%)`,
-].join(", ");
-
-export const PROTO_COMMUNICATION_PHONE_GRADIENTS = {
-  agents: PROTO_FEATURE_AGENTS_GRADIENT,
-  "front-desk": PROTO_FEATURE_FRONT_DESK_GRADIENT,
-  inbox: PROTO_FEATURE_INBOX_GRADIENT,
-  ambient: PROTO_FEATURE_AMBIENT_GRADIENT,
-  billing: PROTO_FEATURE_BILLING_GRADIENT,
-  prototype: PROTO_FEATURE_PROTOTYPE_GRADIENT,
-  integrate: PROTO_FEATURE_INTEGRATE_GRADIENT,
-  validate: PROTO_FEATURE_VALIDATE_GRADIENT,
-  shortlist: PROTO_FEATURE_SHORTLIST_GRADIENT,
-} as const satisfies Record<string, string>;
-
-/** Desktop feature boxes — same prism flows as iPhone. */
-export const PROTO_COMMUNICATION_GRADIENTS = PROTO_COMMUNICATION_PHONE_GRADIENTS;
-
-export type ProtoCommunicationSlideId = keyof typeof PROTO_COMMUNICATION_GRADIENTS;
-
-/** Prototype validation — cool upper arc into warm bronze/glow. */
-const PROTO_PROTOTYPE_GRADIENT = PROTO_FEATURE_PROTOTYPE_GRADIENT;
+/** Prototype validation — cool upper arc into warm copper/gold. */
+const PROTO_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_RECEPTION_PALETTE.blue} 26%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
 export const PROTO_PROTOTYPE_BACKDROP = {
   slideIndex: 6,
@@ -139,8 +70,8 @@ export const PROTO_PROTOTYPE_BACKDROP = {
   lineOverlayOpacity: 0.2,
 };
 
-/** Shortlist — cool void base into warm highlight. */
-const PROTO_SHORTLIST_GRADIENT = PROTO_FEATURE_SHORTLIST_GRADIENT;
+/** Shortlist — cool base into warm highlight. */
+const PROTO_SHORTLIST_GRADIENT = `linear-gradient(205deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_AGENTS_MID_BLUE} 34%, ${PROTO_RECEPTION_PALETTE.blue} 58%, ${PROTO_RECEPTION_PALETTE.copper} 82%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
 export const PROTO_SHORTLIST_BACKDROP = {
   slideIndex: 8,
@@ -150,8 +81,8 @@ export const PROTO_SHORTLIST_BACKDROP = {
   lineOverlayOpacity: 0.14,
 };
 
-/** Validate — full prism sweep. */
-const PROTO_VALIDATE_GRADIENT = PROTO_FEATURE_VALIDATE_GRADIENT;
+/** Validate — warm documents sweep for the pre-shortlist full band. */
+const PROTO_VALIDATE_GRADIENT = `linear-gradient(145deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 30%, ${PROTO_RECEPTION_PALETTE.copper} 62%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
 export const PROTO_VALIDATE_BACKDROP = {
   slideIndex: 7,
@@ -161,11 +92,41 @@ export const PROTO_VALIDATE_BACKDROP = {
   lineOverlayOpacity: 0.16,
 };
 
+/** Patient chart — Documents palette flipped; warm upper-left → cool edge. */
+const PROTO_AMBIENT_RADIAL = `radial-gradient(ellipse 125% 110% at 14% 12%, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 36%, ${PROTO_RECEPTION_PALETTE.blue} 70%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
+
+/** Documents — 135° cool → warm (Documents pile up). */
+export const PROTO_DOCUMENTS_GRADIENT = `linear-gradient(135deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 24%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
+
 /** Hero — Documents palette; light blue anchored to the top-left edge. */
 export const PROTO_HERO_GRADIENT = [
   `radial-gradient(ellipse 74% 60% at 0% 0%, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_HUMIRA_COLORS.bridgeBlue} 24%, transparent 70%)`,
   `linear-gradient(135deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 22%, ${PROTO_RECEPTION_PALETTE.blue} 48%, ${PROTO_RECEPTION_PALETTE.copper} 78%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`,
 ].join(", ");
+
+/** iPhone /about hero — same documents reception colouring as desktop. */
+export const PROTO_ABOUT_HERO_PHONE_GRADIENT = PROTO_HERO_GRADIENT;
+
+/** Reception — warm upper-left ellipse (The phone won't stop). */
+const PROTO_FRONT_DESK_GRADIENT = `radial-gradient(ellipse 100% 88% at 22% 18%, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 45%, ${PROTO_RECEPTION_PALETTE.blue} 72%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
+
+/** /proto section 2 — home gradient shapes; reception colours only. */
+export const PROTO_COMMUNICATION_GRADIENTS = {
+  agents: PROTO_AMBIENT_RADIAL,
+  "front-desk": PROTO_AGENTS_GRADIENT,
+  inbox: PROTO_DOCUMENTS_GRADIENT,
+  ambient: PROTO_FRONT_DESK_GRADIENT,
+  billing: PROTO_PRIOR_AUTH_GRADIENT,
+  prototype: PROTO_PROTOTYPE_GRADIENT,
+  integrate: PROTO_INTEGRATE_GRADIENT,
+  validate: PROTO_VALIDATE_GRADIENT,
+  shortlist: PROTO_SHORTLIST_GRADIENT,
+} as const satisfies Record<string, string>;
+
+/** iPhone feature boxes — same reception colouring as desktop. */
+export const PROTO_COMMUNICATION_PHONE_GRADIENTS = PROTO_COMMUNICATION_GRADIENTS;
+
+export type ProtoCommunicationSlideId = keyof typeof PROTO_COMMUNICATION_GRADIENTS;
 
 /** Grid overlays for /proto feature bands. */
 export const PROTO_COMMUNICATION_GRIDS: Partial<
@@ -182,7 +143,7 @@ export const PROTO_COMMUNICATION_GRIDS: Partial<
   shortlist: "wave",
 };
 
-/** Line overlay opacity tuned for prism surfaces. */
+/** Line overlay opacity tuned for reception surfaces. */
 export const PROTO_COMMUNICATION_LINE_OPACITY: Partial<Record<ProtoCommunicationSlideId, number>> = {
   agents: 0.2,
   "front-desk": 0.13,
