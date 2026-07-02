@@ -17,18 +17,22 @@ function isHeroVariant(variant: ProtoGrainGradientVariant) {
   return variant === "home-hero" || variant === "about-hero";
 }
 
-/** /proto — Paper GrainGradient; heroes animate when visible, feature bands stay static. */
+/** /proto — Paper GrainGradient; heroes animate when visible, feature bands stay static unless overridden. */
 export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   variant,
   className = "",
+  animate: animateProp,
 }: {
   variant: ProtoGrainGradientVariant;
   className?: string;
+  /** Override motion — desktop split panels pass true; full-panel bands pass false. */
+  animate?: boolean;
 }) {
   const preset = PROTO_GRAIN_GRADIENT_PRESETS[variant];
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const wantsMotion = animateProp ?? isHeroVariant(variant);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -39,7 +43,7 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   }, []);
 
   useEffect(() => {
-    if (!isHeroVariant(variant)) return;
+    if (!wantsMotion) return;
 
     const node = containerRef.current;
     if (!node) return;
@@ -50,13 +54,10 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [variant]);
+  }, [wantsMotion]);
 
   const targetSpeed = preset.speed ?? PROTO_GRAIN_GRADIENT_SPEED;
-  const shouldAnimate =
-    !reducedMotion &&
-    targetSpeed > 0 &&
-    (isHeroVariant(variant) ? isVisible : false);
+  const shouldAnimate = !reducedMotion && targetSpeed > 0 && wantsMotion && isVisible;
 
   return (
     <div
