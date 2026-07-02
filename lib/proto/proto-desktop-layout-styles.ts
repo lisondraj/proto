@@ -20,7 +20,7 @@ export const PROTO_DESKTOP_FEATURE_PANEL_SIZE =
 
 export const PROTO_DESKTOP_FEATURE_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(2.65rem,4.05vw,4.05rem)] md:text-[clamp(2.78rem,3.75vw,4.28rem)] lg:text-[clamp(2.92rem,3.5vw,4.52rem)] ${PROTO_FONT_CLASS}`;
 
-export const PROTO_DESKTOP_FEATURE_DESC_TW = `mt-5 max-w-[36rem] text-[clamp(1.05rem,0.95rem+0.35vw,1.28rem)] md:text-[clamp(1.12rem,1rem+0.4vw,1.38rem)] font-normal leading-[1.52] tracking-[-0.012em] text-white ${PROTO_FONT_CLASS}`;
+export const PROTO_DESKTOP_FEATURE_DESC_TW = `mt-0 max-w-[36rem] text-[clamp(0.98rem,0.9rem+0.28vw,1.18rem)] md:text-[clamp(1.02rem,0.94rem+0.32vw,1.26rem)] font-normal leading-[1.5] tracking-[-0.012em] text-white ${PROTO_FONT_CLASS}`;
 
 export const PROTO_DESKTOP_FEATURE_COPY_COL_TW =
   "flex min-h-0 min-w-0 flex-col justify-center px-[clamp(0.5rem,1.5vw,1.5rem)]";

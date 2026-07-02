@@ -161,13 +161,13 @@ html[data-proto-page] .proto-feature-reveal .doephone-hero-headline-line {
 html[data-proto-page] .proto-feature-section__description {
   margin: 0 !important;
   margin-top: max(
-    0.85rem,
-    calc(var(--app-vh, 100lvh) * 0.018)
+    1rem,
+    calc(var(--app-vh, 100lvh) * 0.022)
   ) !important;
   font-family: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif !important;
-  font-size: clamp(1.62rem, calc(1.32rem + 1.55vmin), 2.08rem) !important;
+  font-size: clamp(1.48rem, calc(1.22rem + 1.35vmin), 1.92rem) !important;
   font-weight: 400 !important;
-  line-height: 1.52 !important;
+  line-height: 1.5 !important;
   letter-spacing: -0.012em !important;
   color: #ffffff !important;
 }
@@ -564,7 +564,15 @@ html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__copy {
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-feature-section__description {
-  margin-top: 0 !important;
+  margin-top: clamp(1.1rem, 0.85rem + 0.6vw, 1.45rem) !important;
+  font-size: clamp(0.98rem, 0.9rem + 0.28vw, 1.18rem) !important;
+  line-height: 1.5 !important;
+}
+
+@media (min-width: 768px) {
+  html[data-proto-page][data-layout="desktop"] .proto-desktop-feature .proto-feature-section__description {
+    font-size: clamp(1.02rem, 0.94rem + 0.32vw, 1.26rem) !important;
+  }
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-desktop-feature__panel.proto-feature-reveal--in:hover {
