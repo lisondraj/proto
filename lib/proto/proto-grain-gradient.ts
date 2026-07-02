@@ -5,7 +5,14 @@ export const PROTO_GRAIN_GRADIENT_COLORS = ["#c6750c", "#beae60", "#d7cbc6"] as 
 
 export const PROTO_GRAIN_GRADIENT_COLOR_BACK = "#000a0f";
 
-export const PROTO_GRAIN_GRADIENT_SPEED = 1;
+/** Feature boxes stay static; only hero bands animate when visible. */
+export const PROTO_GRAIN_GRADIENT_SPEED = 0;
+
+export const PROTO_SHADER_MIN_PIXEL_RATIO = 1;
+
+export const PROTO_SHADER_MAX_PIXEL_COUNT_HERO = 1280 * 720;
+
+export const PROTO_SHADER_MAX_PIXEL_COUNT_FEATURE = 640 * 400;
 
 export const PROTO_GRAIN_GRADIENT_WORLD_WIDTH = 1280;
 
@@ -45,6 +52,7 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     softness: 0.7,
     intensity: 0.15,
     fit: "cover",
+    speed: 1,
   },
   "about-hero": {
     shape: "ripple",
@@ -55,6 +63,7 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     offsetX: 0.12,
     offsetY: -0.18,
     scale: 1.08,
+    speed: 1,
   },
   agents: {
     shape: "blob",
