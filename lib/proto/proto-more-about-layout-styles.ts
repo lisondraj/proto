@@ -45,7 +45,7 @@ export const PROTO_MORE_ABOUT_CARD_META_PHONE_TW = `mt-1.5 text-left font-medium
 export const PROTO_MORE_ABOUT_CARD_META_DESKTOP_TW = `mt-2 text-left font-medium leading-[1.35] text-white/55 text-[clamp(1.08rem,0.98vw,1.22rem)] md:text-[clamp(1.14rem,1.02vw,1.28rem)] ${PROTO_FONT_CLASS}`;
 
 export const PROTO_MORE_ABOUT_TRACK_PHONE_TW =
-  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-[var(--proto-phone-gutter-left)] iphone-page:gap-6 [scrollbar-width:none] [-ms-overflow-style:none] [touch-action:pan-y_pinch-zoom] [&::-webkit-scrollbar]:hidden";
+  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-[var(--proto-phone-gutter-left)] iphone-page:gap-6 [scrollbar-width:none] [-ms-overflow-style:none] [touch-action:pan-x_pan-y] [&::-webkit-scrollbar]:hidden";
 
 export const PROTO_MORE_ABOUT_TRACK_DESKTOP_TW =
   "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-10 md:scroll-pl-20 lg:scroll-pl-28 xl:scroll-pl-36 lg:gap-7 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden";

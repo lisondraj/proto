@@ -157,12 +157,14 @@ function CarouselMenuOverlay({
   showContent,
   description,
   layout,
+  uiScaleClass,
 }: {
   children: React.ReactNode;
   expanded: boolean;
   showContent: boolean;
   description?: string;
   layout: CarouselCardLayout;
+  uiScaleClass?: string;
 }) {
   const tokens = LAYOUT[layout];
 
@@ -182,7 +184,9 @@ function CarouselMenuOverlay({
           style={{ maxWidth: tokens.contentMaxWidth }}
         >
           <div className="w-full shrink-0">
-            <div className="flex w-full items-center justify-center">{children}</div>
+            <div className={`flex w-full items-center justify-center ${uiScaleClass ?? ""}`.trim()}>
+              {children}
+            </div>
           </div>
           {description ? (
             <p
@@ -225,6 +229,10 @@ export function DoePhoneCommunicationCarouselCard({
   badgeCrop700,
   gradientOverride,
   gridOverride,
+  backdropClassName = "",
+  backdropPatternScale = 1,
+  backdropGradientScale = 1,
+  uiScaleClass,
 }: {
   slide: DoePhoneCommunicationSlide;
   isActive?: boolean;
@@ -238,6 +246,10 @@ export function DoePhoneCommunicationCarouselCard({
   gradientOverride?: string;
   /** Replaces only the backdrop grid overlay. */
   gridOverride?: WorkflowCarouselGridKind;
+  backdropClassName?: string;
+  backdropPatternScale?: number;
+  backdropGradientScale?: number;
+  uiScaleClass?: string;
 }) {
   const [panelPhase, setPanelPhase] = useState<PanelPhase>("idle");
   const closeTimerRef = useRef<number | undefined>(undefined);
@@ -281,9 +293,11 @@ export function DoePhoneCommunicationCarouselCard({
       <WorkflowCarouselDesignBackdrop
         backdrop={slide.backdrop}
         embedded
-        className={DOEPHONE_SECTION_CAROUSEL_RADIUS}
+        className={`doephone-carousel-backdrop ${DOEPHONE_SECTION_CAROUSEL_RADIUS} ${backdropClassName}`.trim()}
         gradientOverride={gradientOverride}
         gridOverride={gridOverride}
+        patternScale={backdropPatternScale}
+        gradientScale={backdropGradientScale}
       />
       {expandable && panelOpen ? <CarouselSlideFrostOverlay closing={isClosing} /> : null}
       <CarouselMenuOverlay
@@ -291,6 +305,7 @@ export function DoePhoneCommunicationCarouselCard({
         showContent={panelPhase === "open"}
         description={expandable ? slide.description : undefined}
         layout={layout}
+        uiScaleClass={uiScaleClass}
       >
         <DoePhoneCommunicationSlideVisual slideId={slide.id} layout={layout} />
       </CarouselMenuOverlay>

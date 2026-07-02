@@ -59,10 +59,6 @@ html[data-proto-page] .proto-section-band {
   background-color: #151c1f !important;
 }
 
-html[data-proto-page] .proto-feature-section.proto-section-band + .proto-feature-section.proto-section-band {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-}
-
 /* Feature stack — one slide per full-viewport section on iPhone. */
 html[data-proto-page] .proto-feature-section {
   display: flex !important;
@@ -213,7 +209,26 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__copy .d
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephone-hero-headline {
-  font-size: clamp(3.15rem, 1.68rem + 9.25vmin, 5.35rem) !important;
+  font-size: clamp(2.45rem, 1.32rem + 7.35vmin, 4.05rem) !important;
+}
+
+/* Hero + feature cards — pull gradient / line grids back (less zoomed). */
+html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephone-hero-backdrop [aria-hidden]:first-child,
+html[data-proto-page]:has(.doephone-mobile-root) .proto-carousel-card .doephone-carousel-backdrop [aria-hidden]:first-child {
+  background-size: 86% 86% !important;
+  background-position: center center !important;
+}
+
+/* Scale down mock UI inside feature boxes. */
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card .proto-carousel-ui-scale {
+  transform: scale(0.84);
+  transform-origin: center center;
+  width: 100%;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card .absolute.z-30.rounded-full {
+  transform: scale(0.86) !important;
+  transform-origin: bottom right !important;
 }
 
 /* Nav — align strip + logo to proto phone gutters. */
@@ -229,6 +244,22 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav > div > d
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .absolute.top-1\/2 {
   left: var(--proto-phone-gutter-left) !important;
   font-family: var(--font-outfit), "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+}
+
+/* Nav CTAs — proto dark chrome borders on investors + email controls. */
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell {
+  border: 1px solid #2a3538 !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell [role="menu"],
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-email-dropdown {
+  border: 1px solid #2a3538 !important;
+  background-color: #151c1f !important;
+  color: #e8edef !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell button[class*="border-l"] {
+  border-left-color: #2a3538 !important;
 }
 
 /* Hero copy — same horizontal gutters as sections. */
@@ -323,9 +354,10 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-wrap {
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark {
-  width: auto !important;
-  max-width: 100% !important;
-  font-size: clamp(2.85rem, calc(2.35rem + 3.25vmin), 4.15rem) !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  font-size: inherit !important;
 }
 
 html[data-proto-page] .proto-footer-wordmark-fit {
@@ -346,8 +378,12 @@ html[data-proto-page] .proto-footer-wordmark {
   text-align: left !important;
 }
 
-/* Hero — Documents gradient stretched for full-viewport band. */
+/* Hero — Documents gradient; proto mobile uses component scale (see .doephone-hero-backdrop). */
 html[data-proto-page] .doephone-hero-section > div > div[aria-hidden]:first-of-type {
+  background-position: center center !important;
+}
+
+html[data-proto-page]:not(:has(.doephone-mobile-root)) .doephone-hero-section > div > div[aria-hidden]:first-of-type {
   background-size: 100% 118% !important;
   background-position: center top !important;
 }
@@ -615,6 +651,12 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto
 /* More about Proto — horizontal post row above footer. */
 html[data-proto-page] .proto-more-about__track {
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y !important;
+  overscroll-behavior-x: contain;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-more-about__track {
+  scroll-snap-type: x mandatory;
 }
 
 html[data-proto-page] .proto-more-about__track-spacer {

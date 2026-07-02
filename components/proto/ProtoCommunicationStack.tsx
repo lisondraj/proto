@@ -27,9 +27,13 @@ export function ProtoCommunicationStack() {
                     slide={slide}
                     isActive
                     layout="phone"
+                    className="proto-carousel-card"
                     showExpandControls={false}
                     gradientOverride={protoCommunicationGradient(slide.id)}
                     gridOverride={protoCommunicationGrid(slide.id)}
+                    backdropPatternScale={0.74}
+                    backdropGradientScale={0.86}
+                    uiScaleClass="proto-carousel-ui-scale"
                   />
                 </div>
                 <ProtoFeatureSectionCopy copy={copy} />

@@ -58,6 +58,12 @@ export function DoePhoneMobileView() {
         logoLink
         navActionLinksEnabled
         investorsHref={PROTO_INVEST_PATH}
+        mobileNavChrome={{
+          bg: "#151c1f",
+          fg: "#E8EDEF",
+          divider: "#2A3538",
+          shadow: "none",
+        }}
       />
 
       <DoePhoneHeroSection variant="mobile" proto />

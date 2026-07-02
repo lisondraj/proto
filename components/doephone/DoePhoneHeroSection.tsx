@@ -101,8 +101,10 @@ export function DoePhoneHeroSection({
       <WorkflowCarouselDesignBackdrop
         backdrop={heroBackdrop}
         embedded
+        className={isProto ? "doephone-hero-backdrop" : ""}
         introOnLoad={!isProto}
-        gradientScale={isProto ? 1 : gradientZoom}
+        gradientScale={isProto ? 0.86 : gradientZoom}
+        patternScale={isProto ? 0.74 : 1}
       />
 
       <div
