@@ -444,7 +444,11 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell .proto-nav-cta-dropdown,
-html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"],
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"] {
+  top: calc(100% + 0.22rem) !important;
+  border-radius: clamp(0.62rem, 0.52rem + 0.42vmin, 0.82rem) !important;
+}
+
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
   top: calc(100% + 0.22rem) !important;
   border-radius: clamp(0.45rem, 0.38rem + 0.32vmin, 0.62rem) !important;
