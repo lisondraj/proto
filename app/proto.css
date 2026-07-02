@@ -742,3 +742,9 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto
 html[data-proto-page] .proto-more-about__track {
   -webkit-overflow-scrolling: touch;
 }
+
+html[data-proto-page] .proto-more-about__track-spacer {
+  flex: 0 0 auto;
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+}

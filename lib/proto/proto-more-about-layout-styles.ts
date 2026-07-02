@@ -6,6 +6,19 @@ export const PROTO_MORE_ABOUT_PHONE_INSET_X = DOEPHONE_SECTION_CAROUSEL_INSET_X;
 
 export const PROTO_MORE_ABOUT_DESKTOP_INSET_X = PROTO_DESKTOP_PAGE_INSET_X;
 
+/** Scroll track spacers — match title left/right gutters without nested padding. */
+export const PROTO_MORE_ABOUT_PHONE_TRACK_START_SPACER =
+  "proto-more-about__track-spacer shrink-0 w-14 iphone-page:w-[max(2.35rem,calc(env(safe-area-inset-left,0px)+5.25vmin))]";
+
+export const PROTO_MORE_ABOUT_PHONE_TRACK_END_SPACER =
+  "proto-more-about__track-spacer shrink-0 w-14 iphone-page:w-[max(2.35rem,calc(env(safe-area-inset-left,0px)+5.25vmin))]";
+
+export const PROTO_MORE_ABOUT_DESKTOP_TRACK_START_SPACER =
+  "proto-more-about__track-spacer shrink-0 w-10 md:w-20 lg:w-28 xl:w-36";
+
+export const PROTO_MORE_ABOUT_DESKTOP_TRACK_END_SPACER =
+  "proto-more-about__track-spacer shrink-0 w-10 md:w-20 lg:w-28 xl:w-36";
+
 export const PROTO_MORE_ABOUT_SECTION_PAD_Y =
   "py-12 iphone-page:py-14 md:py-16 lg:py-20";
 
@@ -28,10 +41,10 @@ export const PROTO_MORE_ABOUT_CARD_META_PHONE_TW = `mt-2 text-left font-medium l
 export const PROTO_MORE_ABOUT_CARD_META_DESKTOP_TW = `mt-2 text-left font-medium leading-[1.35] text-white/55 text-[clamp(1.08rem,0.98vw,1.22rem)] md:text-[clamp(1.14rem,1.02vw,1.28rem)] ${PROTO_FONT_CLASS}`;
 
 export const PROTO_MORE_ABOUT_TRACK_PHONE_TW =
-  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row gap-4 overflow-x-auto overflow-y-visible scroll-smooth iphone-page:gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [touch-action:pan-y_pinch-zoom] [&::-webkit-scrollbar]:hidden";
+  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-14 iphone-page:scroll-pl-[max(2.35rem,calc(env(safe-area-inset-left,0px)+5.25vmin))] iphone-page:gap-6 [scrollbar-width:none] [-ms-overflow-style:none] [touch-action:pan-y_pinch-zoom] [&::-webkit-scrollbar]:hidden";
 
 export const PROTO_MORE_ABOUT_TRACK_DESKTOP_TW =
-  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row gap-5 overflow-x-auto overflow-y-visible scroll-smooth lg:gap-6 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden";
+  "proto-more-about__track flex w-full snap-x snap-mandatory flex-row items-start gap-5 overflow-x-auto overflow-y-visible scroll-smooth scroll-pl-10 md:scroll-pl-20 lg:scroll-pl-28 xl:scroll-pl-36 lg:gap-7 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden";
 
 export const PROTO_MORE_ABOUT_CARD_PHONE_TW =
   "proto-more-about__card w-[min(88vw,27rem)] shrink-0 snap-start";
