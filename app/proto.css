@@ -335,6 +335,7 @@ html[data-proto-page] .proto-footer-contact__brand {
 }
 
 html[data-proto-page] .proto-footer-contact__line {
+  color: rgba(255, 255, 255, 0.78) !important;
   font-size: clamp(1.62rem, calc(1.32rem + 1vmin), 2rem) !important;
   font-weight: 400 !important;
   line-height: 1.38 !important;
@@ -373,10 +374,16 @@ html[data-proto-page] .proto-footer-column__title {
 }
 
 html[data-proto-page] .proto-footer-column__link {
+  color: rgba(255, 255, 255, 0.78) !important;
   font-size: clamp(1.38rem, calc(1.14rem + 0.82vmin), 1.68rem) !important;
   font-weight: 400 !important;
   line-height: 1.32 !important;
   letter-spacing: -0.01em !important;
+}
+
+html[data-proto-page] .proto-footer-column__link:hover,
+html[data-proto-page] .proto-footer-contact__email:hover {
+  color: #ffffff !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-footer-wordmark-wrap {
@@ -659,11 +666,11 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-desktop-nav {
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-corp {
-  min-width: 13.5rem !important;
+  min-width: 12.25rem !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-column {
-  min-width: 10.5rem !important;
+  min-width: 9.5rem !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-column__links {
@@ -686,7 +693,7 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-main {
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__brand {
   color: #ffffff !important;
-  font-size: clamp(1.08rem, 0.98rem + 0.35vw, 1.28rem) !important;
+  font-size: clamp(1rem, 0.92rem + 0.32vw, 1.18rem) !important;
   font-weight: 600 !important;
   letter-spacing: -0.015em !important;
 }
@@ -694,20 +701,20 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__line,
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__email {
   color: rgba(255, 255, 255, 0.78) !important;
-  font-size: clamp(0.98rem, 0.9rem + 0.3vw, 1.14rem) !important;
+  font-size: clamp(0.92rem, 0.85rem + 0.28vw, 1.06rem) !important;
   font-weight: 400 !important;
   line-height: 1.45 !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__title {
   color: #ffffff !important;
-  font-size: clamp(1.05rem, 0.95rem + 0.35vw, 1.22rem) !important;
+  font-size: clamp(0.98rem, 0.88rem + 0.32vw, 1.14rem) !important;
   font-weight: 600 !important;
 }
 
 html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link {
   color: rgba(255, 255, 255, 0.78) !important;
-  font-size: clamp(0.98rem, 0.9rem + 0.28vw, 1.1rem) !important;
+  font-size: clamp(0.92rem, 0.85rem + 0.25vw, 1.02rem) !important;
   font-weight: 400 !important;
   line-height: 1.4 !important;
 }

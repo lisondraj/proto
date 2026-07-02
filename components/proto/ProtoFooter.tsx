@@ -47,7 +47,7 @@ function FooterColumns({
     <>
       {FOOTER_COLUMNS.map((column) => (
         <div key={column.title} className="proto-footer-column min-w-0">
-          <p className={`proto-footer-column__title font-semibold text-white ${titleClassName ?? ""}`.trim()}>
+          <p className={`proto-footer-column__title font-semibold ${titleClassName ?? "text-white"}`.trim()}>
             {column.title}
           </p>
           <nav className="proto-footer-column__links mt-3 flex flex-col gap-2" aria-label={column.title}>
@@ -55,7 +55,7 @@ function FooterColumns({
               <Link
                 key={item.label}
                 href={item.href}
-                className={`proto-footer-column__link text-white/88 no-underline transition-colors hover:text-white ${linkClassName ?? ""}`.trim()}
+                className={`proto-footer-column__link no-underline transition-colors ${linkClassName ?? "text-white/88 hover:text-white"}`.trim()}
               >
                 {item.label}
               </Link>

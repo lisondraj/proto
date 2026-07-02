@@ -53,12 +53,12 @@ export const PROTO_DESKTOP_FOOTER_NAV_GAP =
 
 export const PROTO_DESKTOP_FOOTER_WORDMARK_TW = `text-[clamp(3.25rem,5.25vw,5.75rem)] font-normal leading-none tracking-[-0.045em] text-[#f7f6f3] no-underline transition-opacity hover:opacity-90 ${PROTO_NAV_LOGO_FONT_CLASS}`;
 
-export const PROTO_DESKTOP_FOOTER_CORP_BRAND_TW = `text-[clamp(1.08rem,0.98rem+0.35vw,1.28rem)] font-semibold leading-[1.2] tracking-[-0.015em] text-white ${PROTO_FONT_CLASS}`;
+export const PROTO_DESKTOP_FOOTER_CORP_BRAND_TW = `text-[clamp(1rem,0.92rem+0.32vw,1.18rem)] font-semibold leading-[1.2] tracking-[-0.015em] !text-white ${PROTO_FONT_CLASS}`;
 
-export const PROTO_DESKTOP_FOOTER_CORP_LINE_TW = `text-[clamp(0.98rem,0.9rem+0.3vw,1.14rem)] font-normal leading-[1.45] tracking-[-0.01em] text-white/78 ${PROTO_FONT_CLASS}`;
+export const PROTO_DESKTOP_FOOTER_CORP_LINE_TW = `text-[clamp(0.92rem,0.85rem+0.28vw,1.06rem)] font-normal leading-[1.45] tracking-[-0.01em] !text-white/78 no-underline transition-colors hover:!text-white ${PROTO_FONT_CLASS}`;
 
-export const PROTO_DESKTOP_FOOTER_COLUMN_TITLE_TW = `text-[clamp(1.05rem,0.95rem+0.35vw,1.22rem)] font-semibold leading-[1.2] tracking-[-0.015em] text-white ${PROTO_FONT_CLASS}`;
+export const PROTO_DESKTOP_FOOTER_COLUMN_TITLE_TW = `text-[clamp(0.98rem,0.88rem+0.32vw,1.14rem)] font-semibold leading-[1.2] tracking-[-0.015em] !text-white ${PROTO_FONT_CLASS}`;
 
-export const PROTO_DESKTOP_FOOTER_COLUMN_LINK_TW = `text-[clamp(0.98rem,0.9rem+0.28vw,1.1rem)] font-normal leading-[1.4] tracking-[-0.01em] text-white/78 no-underline transition-colors hover:text-white ${PROTO_FONT_CLASS}`;
+export const PROTO_DESKTOP_FOOTER_COLUMN_LINK_TW = `text-[clamp(0.92rem,0.85rem+0.25vw,1.02rem)] font-normal leading-[1.4] tracking-[-0.01em] !text-white/78 no-underline transition-colors hover:!text-white ${PROTO_FONT_CLASS}`;
 
 export const PROTO_CONTACT_EMAIL = "ask@proto.jobs";
