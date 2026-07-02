@@ -80,23 +80,23 @@ export const PROTO_HOME_HERO_PHONE_GRADIENT = [
   `radial-gradient(ellipse 130% 96% at 50% 50%, transparent 40%, rgba(8, 6, 18, 0.42) 100%)`,
 ].join(", ");
 
-/** iPhone feature + /about boxes — lavender steel palette (heroes keep twilight prism). */
+/** iPhone feature + /about boxes — terracotta dusk palette (heroes keep twilight prism). */
 export const PROTO_PHONE_REEF_PALETTE = {
-  lightYellow: "#EEECD8",
-  wheat: "#E0D090",
-  gold: "#C8A060",
-  copper: "#A88878",
-  blue: "#6A6A90",
-  deep: "#0E0E14",
+  lightYellow: "#F2E8D0",
+  wheat: "#E8C878",
+  gold: "#D8A040",
+  copper: "#C87850",
+  blue: "#987060",
+  deep: "#100C0A",
 } as const;
 
 const PROTO_PHONE_REEF_BRIDGE = {
-  bridgeDeep: "#1C1C2C",
-  bridgeBlue: "#B0B0D0",
-  amber: "#8888A8",
+  bridgeDeep: "#281C18",
+  bridgeBlue: "#D8B8A0",
+  amber: "#A87858",
 } as const;
 
-const PROTO_PHONE_REEF_MID = "#38384F";
+const PROTO_PHONE_REEF_MID = "#4A3828";
 
 const R = PROTO_PHONE_REEF_PALETTE;
 const RB = PROTO_PHONE_REEF_BRIDGE;
@@ -111,13 +111,13 @@ const PROTO_PHONE_REEF_FULL_STOPS = [
   `${R.deep} 100%`,
 ].join(", ");
 
-/** iPhone /about hero — original documents flow with lavender steel tones. */
+/** iPhone /about hero — original documents flow with terracotta dusk tones. */
 export const PROTO_ABOUT_HERO_PHONE_GRADIENT = [
   `radial-gradient(ellipse 74% 60% at 0% 0%, ${RB.bridgeBlue} 0%, ${RB.bridgeBlue} 24%, transparent 70%)`,
   `linear-gradient(135deg, ${R.deep} 0%, ${R.blue} 22%, ${R.blue} 48%, ${R.copper} 78%, ${R.gold} 100%)`,
 ].join(", ");
 
-/** iPhone feature boxes — original desktop flows with lavender steel palette. */
+/** iPhone feature boxes — original desktop flows with terracotta dusk palette. */
 const PROTO_PHONE_AGENTS_GRADIENT = `radial-gradient(ellipse 125% 110% at 14% 12%, ${R.gold} 0%, ${R.copper} 36%, ${R.blue} 70%, ${R.deep} 100%)`;
 
 const PROTO_PHONE_FRONT_DESK_GRADIENT = `linear-gradient(225deg, ${PROTO_PHONE_REEF_FULL_STOPS})`;
