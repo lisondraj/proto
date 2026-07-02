@@ -6,6 +6,7 @@ import { DOEPHONE_FOOTER_CONTENT_INSET } from "@/lib/doephone/section-styles";
 import {
   PROTO_DESKTOP_FOOTER_COLUMN_LINK_TW,
   PROTO_DESKTOP_FOOTER_COLUMN_TITLE_TW,
+  PROTO_DESKTOP_FOOTER_CORP_BRAND_TW,
   PROTO_DESKTOP_FOOTER_CORP_LINE_TW,
   PROTO_DESKTOP_FOOTER_NAV_GAP,
   PROTO_DESKTOP_FOOTER_PAD_Y,
@@ -78,7 +79,8 @@ function ProtoFooterDesktop() {
 
         <div className={`proto-footer-desktop-nav flex shrink-0 items-start ${PROTO_DESKTOP_FOOTER_NAV_GAP}`}>
           <div className={`proto-footer-corp min-w-0 text-left ${PROTO_FONT_CLASS}`}>
-            <p className={`proto-footer-contact__line ${PROTO_DESKTOP_FOOTER_CORP_LINE_TW}`}>
+            <p className={`proto-footer-contact__brand ${PROTO_DESKTOP_FOOTER_CORP_BRAND_TW}`}>Proto</p>
+            <p className={`proto-footer-contact__line mt-2 ${PROTO_DESKTOP_FOOTER_CORP_LINE_TW}`}>
               Delaware C-Corporation
             </p>
             <a

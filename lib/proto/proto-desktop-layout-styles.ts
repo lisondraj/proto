@@ -32,6 +32,8 @@ export const PROTO_DESKTOP_FOOTER_NAV_GAP =
 
 export const PROTO_DESKTOP_FOOTER_WORDMARK_TW = `text-[clamp(3rem,5vw,5.25rem)] font-normal leading-none tracking-[-0.045em] text-[#f7f6f3] no-underline transition-opacity hover:opacity-90 ${PROTO_NAV_LOGO_FONT_CLASS}`;
 
+export const PROTO_DESKTOP_FOOTER_CORP_BRAND_TW = `text-[clamp(0.9rem,0.86rem+0.18vw,1.02rem)] font-semibold leading-[1.2] tracking-[-0.015em] text-white ${PROTO_FONT_CLASS}`;
+
 export const PROTO_DESKTOP_FOOTER_CORP_LINE_TW = `text-[clamp(0.82rem,0.78rem+0.16vw,0.95rem)] font-normal leading-[1.45] tracking-[-0.01em] text-white/78 ${PROTO_FONT_CLASS}`;
 
 export const PROTO_DESKTOP_FOOTER_COLUMN_TITLE_TW = `text-[clamp(0.84rem,0.8rem+0.14vw,0.96rem)] font-semibold leading-[1.2] tracking-[-0.015em] text-white ${PROTO_FONT_CLASS}`;

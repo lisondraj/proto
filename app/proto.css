@@ -601,3 +601,34 @@ html[data-proto-page][data-layout="desktop"] .proto-footer-contact__email {
 html[data-proto-page][data-layout="desktop"] .proto-footer-main {
   margin-bottom: 0 !important;
 }
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__brand {
+  color: #ffffff !important;
+  font-size: clamp(0.9rem, 0.86rem + 0.18vw, 1.02rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__line,
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-contact__email {
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-size: clamp(0.82rem, 0.78rem + 0.16vw, 0.95rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.45 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__title {
+  color: #ffffff !important;
+  font-size: clamp(0.84rem, 0.8rem + 0.14vw, 0.96rem) !important;
+  font-weight: 600 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link {
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-size: clamp(0.8rem, 0.76rem + 0.12vw, 0.9rem) !important;
+  font-weight: 400 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-footer-inner--desktop .proto-footer-column__link:hover {
+  color: #ffffff !important;
+}
