@@ -464,6 +464,31 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
 }
 
+/* Past hero — compact corners; wide short menus read as pills if radius is too large. */
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-dropdown,
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
+  top: calc(100% + 0.32rem) !important;
+  border-radius: clamp(0.28rem, 0.22rem + 0.22vmin, 0.36rem) !important;
+  border-top-left-radius: clamp(0.14rem, 0.1rem + 0.1vmin, 0.2rem) !important;
+  border-top-right-radius: clamp(0.14rem, 0.1rem + 0.1vmin, 0.2rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"] {
+  padding-top: clamp(0.14rem, 0.08rem + 0.28vmin, 0.24rem) !important;
+  padding-bottom: clamp(0.14rem, 0.08rem + 0.28vmin, 0.24rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"] [role="menuitem"] {
+  border-radius: clamp(0.14rem, 0.1rem + 0.1vmin, 0.2rem) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
+  padding-top: clamp(0.62rem, 0.48rem + 0.55vmin, 0.82rem) !important;
+  padding-bottom: clamp(0.62rem, 0.48rem + 0.55vmin, 0.82rem) !important;
+  padding-left: clamp(0.85rem, 0.7rem + 0.65vmin, 1.05rem) !important;
+  padding-right: clamp(0.85rem, 0.7rem + 0.65vmin, 1.05rem) !important;
+}
+
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-nav-cta-shell button[class*="border-l"] {
   border-left-color: var(--proto-nav-cta-border) !important;
 }
