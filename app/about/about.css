@@ -64,6 +64,22 @@ html[data-proto-page] .proto-invest-tam-highlight {
   background: #151c1f;
 }
 
+/* iPhone /about — match home proto scale (typography via layout tokens). */
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main .proto-invest-hero-backdrop [aria-hidden]:first-child {
+  background-size: 86% 86% !important;
+  background-position: center center !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main .proto-invest-graphic-panel svg {
+  transform: scale(0.84);
+  transform-origin: center center;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main h1,
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main h2 {
+  max-width: 100%;
+}
+
 /* Desktop /about — full-viewport split bands with proto dark chrome. */
 html[data-proto-page][data-layout="desktop"] .proto-invest-desktop {
   overflow: visible !important;

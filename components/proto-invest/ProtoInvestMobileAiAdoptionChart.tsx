@@ -13,7 +13,7 @@ import {
 /** /proto-invest — AI adoption horizontal bars. */
 export function ProtoInvestMobileAiAdoptionChart() {
   return (
-    <div className="proto-invest-chart-zone mt-10 iphone-page:mt-12">
+    <div className="proto-invest-chart-zone mt-8 iphone-page:mt-9">
       <ArticleBarChart
         title={PROTO_INVEST_AI_ADOPTION_CHART.title}
         bars={PROTO_INVEST_AI_ADOPTION_CHART.bars}

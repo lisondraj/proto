@@ -29,7 +29,7 @@ export function ProtoInvestMobileFaqTabs() {
               type="button"
               aria-expanded={isOpen}
               onClick={() => setOpenIndex(index)}
-              className={`w-full py-4 text-left transition-colors duration-300 ease-out iphone-page:py-5 ${
+              className={`w-full py-3.5 text-left transition-colors duration-300 ease-out iphone-page:py-4 ${
                 isOpen ? "font-medium text-white" : "font-normal text-white/45 active:text-white/70"
               } ${PROTO_INVEST_FAQ_ITEM_TW}`}
             >

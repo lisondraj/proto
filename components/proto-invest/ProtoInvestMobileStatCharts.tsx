@@ -27,7 +27,7 @@ export function ProtoInvestMobileStatCharts() {
         theme="proto"
       />
 
-      <div className="mt-8 iphone-page:mt-10">
+      <div className="mt-6 iphone-page:mt-7">
         <ArticleBarChart
           title={PROTO_INVEST_BAR_CHART.title}
           bars={PROTO_INVEST_BAR_CHART.bars}

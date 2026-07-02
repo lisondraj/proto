@@ -8,6 +8,7 @@ export function BlogHeroVisual({
   boxClassName,
   gapClassName,
   patternScale,
+  gradientScale,
   children,
 }: {
   backdrop: WorkflowCarouselDesignBackdropType;
@@ -15,6 +16,7 @@ export function BlogHeroVisual({
   boxClassName?: string;
   gapClassName?: string;
   patternScale?: number;
+  gradientScale?: number;
   children?: React.ReactNode;
 }) {
   const gap = gapClassName ?? (variant === "hero" ? BLOG_TITLE_VISUAL_GAP : "");
@@ -27,8 +29,9 @@ export function BlogHeroVisual({
       <WorkflowCarouselDesignBackdrop
         backdrop={backdrop}
         embedded
-        className="absolute inset-0 h-full w-full"
+        className="proto-invest-hero-backdrop absolute inset-0 h-full w-full"
         patternScale={patternScale}
+        gradientScale={gradientScale}
       />
       {children}
     </div>

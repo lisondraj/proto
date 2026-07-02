@@ -71,6 +71,8 @@ export function ProtoInvestMobileContent() {
           variant="hero"
           boxClassName={PROTO_INVEST_HERO_BOX_TW}
           gapClassName=""
+          patternScale={0.74}
+          gradientScale={0.86}
         />
       </div>
 

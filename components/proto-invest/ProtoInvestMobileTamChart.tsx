@@ -27,7 +27,7 @@ export function ProtoInvestMobileTamChart() {
   return (
     <figure className="proto-invest-chart-zone">
       <figcaption
-        className={`mb-5 font-medium leading-snug tracking-[-0.01em] text-white ${PROTO_INVEST_CHART_TITLE_TW} iphone-page:mb-6 ${PROTO_FONT_CLASS}`}
+        className={`mb-4 font-medium leading-snug tracking-[-0.01em] text-white ${PROTO_INVEST_CHART_TITLE_TW} iphone-page:mb-5 ${PROTO_FONT_CLASS}`}
       >
         {PROTO_INVEST_TAM_CHART.title}
       </figcaption>
@@ -100,19 +100,19 @@ export function ProtoInvestMobileTamChart() {
         </div>
       </div>
 
-      <div className="proto-invest-tam-highlight mt-6 border border-[#2A3538] px-4 py-4 iphone-page:mt-7 iphone-page:px-5 iphone-page:py-5">
+      <div className="proto-invest-tam-highlight mt-5 border border-[#2A3538] px-4 py-3.5 iphone-page:mt-6 iphone-page:px-4 iphone-page:py-4">
         <p
-          className={`font-medium leading-none tracking-[-0.03em] text-white ${PROTO_FONT_CLASS} text-[clamp(2.55rem,2rem+2.35vmin,3.35rem)] iphone-page:text-[clamp(2.85rem,2.2rem+2.75vmin,3.75rem)]`}
+          className={`font-medium leading-none tracking-[-0.03em] text-white ${PROTO_FONT_CLASS} text-[clamp(2.55rem,2rem+2.35vmin,3.35rem)] iphone-page:text-[clamp(2.15rem,1.72rem+1.85vmin,2.85rem)]`}
         >
           ${PROTO_INVEST_TAM_CHART.highlight.valueB}B
         </p>
         <p
-          className={`mt-2 font-medium leading-snug tracking-[-0.02em] text-white ${PROTO_FONT_CLASS} text-[clamp(1.08rem,0.92rem+0.75vmin,1.32rem)] iphone-page:mt-2.5 iphone-page:text-[clamp(1.22rem,1.02rem+0.95vmin,1.48rem)]`}
+          className={`mt-1.5 font-medium leading-snug tracking-[-0.02em] text-white ${PROTO_FONT_CLASS} text-[clamp(1.08rem,0.92rem+0.75vmin,1.32rem)] iphone-page:mt-2 iphone-page:text-[clamp(1.08rem,0.92rem+0.72vmin,1.28rem)]`}
         >
           {PROTO_INVEST_TAM_CHART.highlight.tamLabel}
         </p>
         <p
-          className={`mt-1.5 font-normal leading-snug text-[clamp(1rem,0.88rem+0.58vmin,1.18rem)] iphone-page:mt-2 iphone-page:text-[clamp(1.12rem,0.96rem+0.72vmin,1.32rem)] ${PROTO_FONT_CLASS}`}
+          className={`mt-1 font-normal leading-snug text-[clamp(1rem,0.88rem+0.58vmin,1.18rem)] iphone-page:mt-1.5 iphone-page:text-[clamp(1.02rem,0.88rem+0.62vmin,1.18rem)] ${PROTO_FONT_CLASS}`}
           style={{ color: PROTO_INVEST_CHART_COLORS.labelMuted }}
         >
           {PROTO_INVEST_TAM_CHART.highlight.headline}
