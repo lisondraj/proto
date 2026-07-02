@@ -2,43 +2,18 @@
 
 import { DoePhoneCommunicationCarouselCard } from "@/components/doephone/DoePhoneCommunicationCarouselCard";
 import { ProtoFeatureSectionCopy } from "@/components/proto/ProtoFeatureSectionCopy";
-import { ProtoPhoneFullPanelFeatureSection } from "@/components/proto/ProtoPhoneFullPanelFeatureSection";
 import { PROTO_COMMUNICATION_SLIDES } from "@/lib/proto/proto-communication-slides";
 import { DOEPHONE_SECTION_CAROUSEL_INSET_X } from "@/lib/doephone/section-styles";
 import { protoFeatureCopy } from "@/lib/proto/proto-feature-copy";
-import { protoFeatureSectionLayout } from "@/lib/proto/proto-feature-section-layout";
 import { protoCommunicationGradient, protoCommunicationGrid } from "@/lib/proto/proto-communication-gradients";
 
-/** /proto — feature slides stacked vertically, one section each (no carousel or menu). */
+/** /proto iPhone — feature slides stacked vertically: box, title, description per section. */
 export function ProtoCommunicationStack() {
   return (
     <>
-      {PROTO_COMMUNICATION_SLIDES.map((slide, index) => {
-        const layout = protoFeatureSectionLayout(index);
-
-        if (layout?.kind === "full-panel") {
-          return <ProtoPhoneFullPanelFeatureSection key={slide.id} slide={slide} />;
-        }
-
+      {PROTO_COMMUNICATION_SLIDES.map((slide) => {
         const copy = protoFeatureCopy(slide.id);
-        if (!copy || layout?.kind !== "split") return null;
-
-        const boxOnTop = layout.boxOnTop ?? layout.boxOnLeft;
-
-        const card = (
-          <div className="proto-feature-section__card w-full min-h-0">
-            <DoePhoneCommunicationCarouselCard
-              slide={slide}
-              isActive
-              layout="phone"
-              showExpandControls={false}
-              gradientOverride={protoCommunicationGradient(slide.id)}
-              gridOverride={protoCommunicationGrid(slide.id)}
-            />
-          </div>
-        );
-
-        const copyBlock = <ProtoFeatureSectionCopy copy={copy} />;
+        if (!copy) return null;
 
         return (
           <section
@@ -48,17 +23,17 @@ export function ProtoCommunicationStack() {
           >
             <div className={`${DOEPHONE_SECTION_CAROUSEL_INSET_X} proto-feature-section__inner`}>
               <div className="proto-feature-section__stack w-full min-h-0">
-                {boxOnTop ? (
-                  <>
-                    {card}
-                    {copyBlock}
-                  </>
-                ) : (
-                  <>
-                    {copyBlock}
-                    {card}
-                  </>
-                )}
+                <div className="proto-feature-section__card w-full min-h-0">
+                  <DoePhoneCommunicationCarouselCard
+                    slide={slide}
+                    isActive
+                    layout="phone"
+                    showExpandControls={false}
+                    gradientOverride={protoCommunicationGradient(slide.id)}
+                    gridOverride={protoCommunicationGrid(slide.id)}
+                  />
+                </div>
+                <ProtoFeatureSectionCopy copy={copy} />
               </div>
             </div>
           </section>
