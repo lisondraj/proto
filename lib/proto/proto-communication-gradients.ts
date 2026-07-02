@@ -48,10 +48,22 @@ const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%,
 /** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
 const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
-/** Home hero — integrate flow; subdued top blue cap, warm hues sweep with copper. */
+/** Home hero — diagonal aurora: ink base, electric sky crest, coral-gold surge. */
+const PROTO_HERO_INK = "#0B1528";
+const PROTO_HERO_NAVY = "#162A48";
+const PROTO_HERO_TEAL = "#1F5A7A";
+const PROTO_HERO_SKY = "#3A9FD4";
+const PROTO_HERO_CYAN = "#5CB8E8";
+const PROTO_HERO_CORAL = "#E45B52";
+const PROTO_HERO_FLAME = "#F07840";
+const PROTO_HERO_SUN = "#FFAA35";
+const PROTO_HERO_CREAM = "#FFE08A";
+
 export const PROTO_HOME_HERO_GRADIENT = [
-  `linear-gradient(180deg, ${PROTO_HUMIRA_COLORS.bridgeDeep} 0%, ${PROTO_AGENTS_MID_BLUE} 16%, ${PROTO_RECEPTION_PALETTE.blue} 28%, transparent 38%)`,
-  `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 44%, ${PROTO_RECEPTION_PALETTE.blue} 62%, ${PROTO_RECEPTION_PALETTE.copper} 66%, ${PROTO_HUMIRA_COLORS.amber} 70%, ${PROTO_RECEPTION_PALETTE.gold} 74%, ${PROTO_RECEPTION_PALETTE.wheat} 80%, ${PROTO_RECEPTION_PALETTE.lightYellow} 86%, ${PROTO_RECEPTION_PALETTE.lightYellow} 94%)`,
+  `linear-gradient(118deg, ${PROTO_HERO_INK} 0%, ${PROTO_HERO_NAVY} 12%, ${PROTO_HERO_TEAL} 26%, ${PROTO_HERO_SKY} 40%, ${PROTO_HERO_CYAN} 48%, ${PROTO_HERO_CORAL} 62%, ${PROTO_HERO_FLAME} 74%, ${PROTO_HERO_SUN} 88%, ${PROTO_HERO_CREAM} 100%)`,
+  `radial-gradient(ellipse 88% 72% at 82% 96%, rgba(255, 200, 75, 0.72) 0%, rgba(240, 105, 60, 0.38) 32%, transparent 64%)`,
+  `radial-gradient(ellipse 62% 54% at 6% 8%, rgba(92, 184, 232, 0.55) 0%, rgba(31, 90, 122, 0.22) 42%, transparent 70%)`,
+  `radial-gradient(ellipse 40% 35% at 92% 42%, rgba(228, 91, 82, 0.28) 0%, transparent 68%)`,
 ].join(", ");
 
 /** Prototype validation — cool upper arc into warm copper/gold. */
