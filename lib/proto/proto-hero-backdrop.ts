@@ -35,7 +35,7 @@ export const PROTO_ABOUT_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 
-/** iPhone /about hero — horizontal prism sweep with overhead bloom. */
+/** iPhone /about hero — original documents flow with twilight prism tones. */
 export const PROTO_ABOUT_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto about hero phone",

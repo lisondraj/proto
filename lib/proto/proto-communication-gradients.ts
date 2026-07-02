@@ -72,16 +72,15 @@ export const PROTO_PHONE_HERO_VOID = PROTO_PHONE_PRISM_PALETTE.void;
 
 const P = PROTO_PHONE_PRISM_PALETTE;
 
-/** Evenly spaced sweep so every prism stop is visible. */
-const PROTO_PHONE_FULL_STOPS = [
-  `${P.void} 0%`,
-  `${P.plum} 14%`,
-  `${P.violet} 28%`,
-  `${P.orchid} 42%`,
-  `${P.lilac} 56%`,
-  `${P.periwinkle} 68%`,
-  `${P.bronze} 82%`,
-  `${P.glow} 100%`,
+/** Warm-to-cool sweep — mirrors reception 7-stop front-desk flow in prism tones. */
+const PROTO_PHONE_PRISM_FULL_STOPS = [
+  `${P.glow} 0%`,
+  `${P.bronze} 15%`,
+  `${P.periwinkle} 30%`,
+  `${P.lilac} 45%`,
+  `${P.orchid} 60%`,
+  `${P.violet} 75%`,
+  `${P.void} 100%`,
 ].join(", ");
 
 /** iPhone home hero — twilight prism: void base, violet surge, champagne crest (portrait flow). */
@@ -92,37 +91,30 @@ export const PROTO_HOME_HERO_PHONE_GRADIENT = [
   `radial-gradient(ellipse 130% 96% at 50% 50%, transparent 40%, rgba(8, 6, 18, 0.42) 100%)`,
 ].join(", ");
 
-/** iPhone /about hero — horizontal prism sweep with soft overhead bloom. */
+/** iPhone /about hero — original documents flow with twilight prism tones. */
 export const PROTO_ABOUT_HERO_PHONE_GRADIENT = [
-  `linear-gradient(90deg, ${PROTO_PHONE_FULL_STOPS})`,
-  `radial-gradient(ellipse 92% 78% at 50% -8%, ${P.glow} 0%, ${P.periwinkle} 22%, ${P.orchid} 42%, transparent 72%)`,
-  `radial-gradient(ellipse 55% 48% at 8% 92%, ${P.lilac} 0%, ${P.violet} 38%, ${P.void} 100%)`,
+  `radial-gradient(ellipse 74% 60% at 0% 0%, ${P.periwinkle} 0%, ${P.periwinkle} 24%, transparent 70%)`,
+  `linear-gradient(135deg, ${P.void} 0%, ${P.orchid} 22%, ${P.orchid} 48%, ${P.lilac} 78%, ${P.bronze} 100%)`,
 ].join(", ");
 
-/** iPhone feature boxes — unique flows; all eight prism stops in every band. */
-const PROTO_PHONE_AGENTS_GRADIENT = `radial-gradient(circle at 50% 44%, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 24%, ${P.lilac} 36%, ${P.orchid} 48%, ${P.violet} 62%, ${P.plum} 78%, ${P.void} 100%)`;
+/** iPhone feature boxes — original desktop flows with twilight prism palette. */
+const PROTO_PHONE_AGENTS_GRADIENT = `radial-gradient(ellipse 125% 110% at 14% 12%, ${P.bronze} 0%, ${P.lilac} 36%, ${P.orchid} 70%, ${P.void} 100%)`;
 
-const PROTO_PHONE_FRONT_DESK_GRADIENT = `linear-gradient(90deg, ${PROTO_PHONE_FULL_STOPS})`;
+const PROTO_PHONE_FRONT_DESK_GRADIENT = `linear-gradient(225deg, ${PROTO_PHONE_PRISM_FULL_STOPS})`;
 
-const PROTO_PHONE_INBOX_GRADIENT = `linear-gradient(180deg, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+const PROTO_PHONE_INBOX_GRADIENT = `linear-gradient(135deg, ${P.void} 0%, ${P.orchid} 24%, ${P.lilac} 58%, ${P.bronze} 100%)`;
 
-const PROTO_PHONE_AMBIENT_GRADIENT = `radial-gradient(ellipse 108% 96% at 84% 16%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+const PROTO_PHONE_AMBIENT_GRADIENT = `radial-gradient(ellipse 100% 88% at 22% 18%, ${P.bronze} 0%, ${P.lilac} 45%, ${P.orchid} 72%, ${P.void} 100%)`;
 
-const PROTO_PHONE_BILLING_GRADIENT = `radial-gradient(ellipse 112% 102% at 16% 90%, ${P.glow} 0%, ${P.bronze} 14%, ${P.periwinkle} 28%, ${P.lilac} 42%, ${P.orchid} 56%, ${P.violet} 70%, ${P.plum} 84%, ${P.void} 100%)`;
+const PROTO_PHONE_BILLING_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%, ${P.glow} 0%, ${P.bronze} 12%, ${P.periwinkle} 26%, ${P.lilac} 40%, ${P.orchid} 56%, ${P.violet} 72%, ${P.void} 100%)`;
 
-const PROTO_PHONE_PROTOTYPE_GRADIENT = [
-  `radial-gradient(circle at 68% 32%, ${P.periwinkle} 0%, ${P.lilac} 24%, transparent 58%)`,
-  `linear-gradient(152deg, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`,
-].join(", ");
+const PROTO_PHONE_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${P.periwinkle} 0%, ${P.orchid} 26%, ${P.lilac} 58%, ${P.bronze} 100%)`;
 
-const PROTO_PHONE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 122% 108% at 50% 112%, ${P.void} 0%, ${P.plum} 14%, ${P.violet} 28%, ${P.orchid} 42%, ${P.lilac} 56%, ${P.periwinkle} 68%, ${P.bronze} 82%, ${P.glow} 100%)`;
+const PROTO_PHONE_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${P.void} 0%, ${P.plum} 26%, ${P.violet} 46%, ${P.orchid} 66%, ${P.lilac} 84%, ${P.bronze} 100%)`;
 
-const PROTO_PHONE_VALIDATE_GRADIENT = `linear-gradient(270deg, ${PROTO_PHONE_FULL_STOPS})`;
+const PROTO_PHONE_VALIDATE_GRADIENT = `linear-gradient(145deg, ${P.void} 0%, ${P.orchid} 30%, ${P.lilac} 62%, ${P.bronze} 100%)`;
 
-const PROTO_PHONE_SHORTLIST_GRADIENT = [
-  `linear-gradient(205deg, ${P.void} 0%, ${P.plum} 12%, ${P.violet} 26%, ${P.orchid} 40%, ${P.lilac} 54%, ${P.periwinkle} 66%, ${P.bronze} 80%, ${P.glow} 100%)`,
-  `radial-gradient(ellipse 72% 64% at 22% 78%, ${P.lilac} 0%, ${P.orchid} 32%, transparent 68%)`,
-].join(", ");
+const PROTO_PHONE_SHORTLIST_GRADIENT = `linear-gradient(205deg, ${P.void} 0%, ${P.violet} 34%, ${P.orchid} 58%, ${P.lilac} 82%, ${P.bronze} 100%)`;
 
 export const PROTO_COMMUNICATION_PHONE_GRADIENTS = {
   agents: PROTO_PHONE_AGENTS_GRADIENT,

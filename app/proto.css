@@ -227,7 +227,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section .doephon
   background-position: center bottom !important;
 }
 
-/* iPhone /about hero — center horizontal prism sweep. */
+/* iPhone /about hero — documents flow with top-left bloom. */
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-hero-backdrop [aria-hidden]:first-child {
   background-position: center center !important;
 }
