@@ -75,11 +75,15 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc {
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-closing {
+  overflow: hidden;
+  width: var(--proto-floating-toc-closed-size) !important;
+  height: var(--proto-floating-toc-closed-size) !important;
   transition:
     opacity 480ms var(--proto-floating-toc-ease),
     transform 480ms var(--proto-floating-toc-ease),
     visibility 480ms,
-    width var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease);
+    width var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
+    height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease);
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-visible {
@@ -110,14 +114,10 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__fro
     saturate(calc(1 + var(--proto-nav-frost-progress) * 0.12));
   -webkit-backdrop-filter: blur(calc(var(--proto-nav-frost-progress) * 56px))
     saturate(calc(1 + var(--proto-nav-frost-progress) * 0.12));
-  box-shadow:
-    0 calc(var(--proto-nav-frost-progress) * 10px) calc(var(--proto-nav-frost-progress) * 36px)
-      rgba(0, 0, 0, calc(var(--proto-nav-frost-progress) * 0.28)),
-    inset 0 1px 0 rgba(255, 255, 255, calc(var(--proto-nav-frost-progress) * 0.07));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, calc(var(--proto-nav-frost-progress) * 0.07));
   padding: var(--proto-floating-toc-frost-pad);
   width: 100%;
   max-height: var(--proto-floating-toc-closed-size);
-  transform-origin: bottom right;
   transition:
     border-radius var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
     max-height var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
@@ -133,6 +133,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc:not(
   min-height: var(--proto-floating-toc-closed-size);
   max-height: var(--proto-floating-toc-closed-size);
   padding: var(--proto-floating-toc-frost-pad);
+  box-shadow: none;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-open .proto-invest-floating-toc__frost {
@@ -154,23 +155,18 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-o
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-closing .proto-invest-floating-toc__frost {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  border-radius: 9999px;
   padding: var(--proto-floating-toc-frost-pad);
-  height: var(--proto-floating-toc-closed-size);
-  min-height: var(--proto-floating-toc-closed-size);
-  max-height: var(--proto-floating-toc-closed-size);
+  box-shadow: none;
   transition:
     border-radius var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
-    height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
-    min-height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
-    max-height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
-    padding var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
-    gap var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease);
+    padding var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease);
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-closing .proto-invest-floating-toc__panel {
@@ -180,9 +176,9 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-c
   overflow: hidden;
   pointer-events: none;
   transition:
-    opacity 200ms ease,
+    opacity 120ms ease,
     max-height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
-    visibility 0s linear 200ms;
+    visibility 0s linear 120ms;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__panel {
@@ -413,8 +409,8 @@ html[data-proto-page]:has(.doephone-mobile-root) {
   );
   --proto-floating-toc-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --proto-floating-toc-duration: 920ms;
-  --proto-floating-toc-close-duration: 820ms;
-  --proto-floating-toc-close-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --proto-floating-toc-close-duration: 520ms;
+  --proto-floating-toc-close-ease: cubic-bezier(0.32, 0.94, 0.38, 1);
   --proto-floating-toc-trigger: clamp(4.55rem, 3.75rem + 3.85vmin, 5.45rem);
   --proto-floating-toc-frost-pad: clamp(0.26rem, 0.17rem + 0.42vmin, 0.36rem);
   --proto-floating-toc-closed-size: calc(var(--proto-floating-toc-trigger) + 2 * var(--proto-floating-toc-frost-pad));

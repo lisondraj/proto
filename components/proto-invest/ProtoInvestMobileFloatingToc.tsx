@@ -7,8 +7,8 @@ import { ProtoInvestMobileTocPanel } from "@/components/proto-invest/ProtoInvest
 import { PROTO_INVEST_MOBILE_TOC_LABEL } from "@/lib/proto-invest/proto-invest-content";
 
 const PANEL_REVEAL_MS = 780;
-const PANEL_HIDE_MS = 320;
-const PANEL_COLLAPSE_MS = 820;
+const PANEL_HIDE_MS = 180;
+const PANEL_COLLAPSE_MS = 520;
 
 function TocIcon() {
   return (
@@ -50,6 +50,27 @@ export function ProtoInvestMobileFloatingToc() {
   const hideTimerRef = useRef<number | null>(null);
   const collapseTimerRef = useRef<number | null>(null);
 
+  const clearCollapseStyles = useCallback(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    root.style.width = "";
+    root.style.height = "";
+  }, []);
+
+  const beginCollapse = useCallback(() => {
+    const root = rootRef.current;
+    if (root) {
+      const { width, height } = root.getBoundingClientRect();
+      root.style.width = `${width}px`;
+      root.style.height = `${height}px`;
+    }
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setCollapsing(true);
+      });
+    });
+  }, []);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -66,6 +87,10 @@ export function ProtoInvestMobileFloatingToc() {
           setPanelRevealed(false);
           setOpen(false);
           setCollapsing(false);
+          if (rootRef.current) {
+            rootRef.current.style.width = "";
+            rootRef.current.style.height = "";
+          }
         }
       });
     };
@@ -96,15 +121,16 @@ export function ProtoInvestMobileFloatingToc() {
     }
     setPanelRevealed(false);
     hideTimerRef.current = window.setTimeout(() => {
-      setCollapsing(true);
+      beginCollapse();
       hideTimerRef.current = null;
       collapseTimerRef.current = window.setTimeout(() => {
         setOpen(false);
         setCollapsing(false);
+        clearCollapseStyles();
         collapseTimerRef.current = null;
       }, PANEL_COLLAPSE_MS);
     }, PANEL_HIDE_MS);
-  }, []);
+  }, [beginCollapse, clearCollapseStyles]);
 
   const openToc = useCallback(() => {
     if (revealTimerRef.current !== null) {
@@ -119,13 +145,14 @@ export function ProtoInvestMobileFloatingToc() {
       collapseTimerRef.current = null;
     }
     setCollapsing(false);
+    clearCollapseStyles();
     setOpen(true);
     setPanelRevealed(false);
     revealTimerRef.current = window.setTimeout(() => {
       setPanelRevealed(true);
       revealTimerRef.current = null;
     }, PANEL_REVEAL_MS);
-  }, []);
+  }, [clearCollapseStyles]);
 
   const toggleToc = useCallback(() => {
     if (open) {
