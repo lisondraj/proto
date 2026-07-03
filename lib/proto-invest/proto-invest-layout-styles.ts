@@ -123,23 +123,7 @@ export const PROTO_INVEST_MOBILE_TOC_TEXT_TW = `min-w-0 flex-1 font-normal leadi
 
 export const PROTO_INVEST_MOBILE_TOC_AUDIO_DIVIDER_TW = "mt-3 border-t border-[#2A3538]/55 pt-3 iphone-page:mt-2.5 iphone-page:pt-2.5";
 
-export const PROTO_INVEST_MOBILE_TOC_LISTEN_LABEL_TW = `mb-2.5 font-medium uppercase tracking-[0.16em] !text-white/45 text-[0.68rem] iphone-page:mb-2 ${PROTO_FONT_CLASS}`;
-
-export const PROTO_INVEST_MOBILE_TOC_LISTEN_ROW_TW = `flex w-full items-center gap-3 text-left iphone-page:gap-2.5 ${PROTO_FONT_CLASS}`;
-
-export const PROTO_INVEST_MOBILE_TOC_LISTEN_PLAY_TW =
-  "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2A3538] bg-[#151c1f] !text-white/80 transition-colors duration-200 ease-out active:!text-white active:border-[#3a474b] iphone-page:h-8 iphone-page:w-8";
-
-export const PROTO_INVEST_MOBILE_TOC_LISTEN_COPY_TW = "min-w-0 flex-1";
-
-export const PROTO_INVEST_MOBILE_TOC_LISTEN_TITLE_TW =
-  "block font-normal leading-snug tracking-[-0.01em] !text-white/72 text-[clamp(0.98rem,0.88rem+0.48vmin,1.1rem)] iphone-page:text-[clamp(0.94rem,0.84rem+0.42vmin,1.04rem)]";
-
-export const PROTO_INVEST_MOBILE_TOC_LISTEN_META_TW =
-  "mt-0.5 block font-normal leading-snug tracking-[-0.01em] !text-white/45 text-[clamp(0.86rem,0.78rem+0.35vmin,0.96rem)] iphone-page:text-[clamp(0.82rem,0.74rem+0.32vmin,0.9rem)]";
-
-export const PROTO_INVEST_MOBILE_TOC_LISTEN_DURATION_TW =
-  "shrink-0 font-normal tabular-nums leading-none tracking-[-0.01em] !text-white/45 text-[clamp(0.86rem,0.78rem+0.35vmin,0.96rem)] iphone-page:text-[clamp(0.82rem,0.74rem+0.32vmin,0.9rem)]";
+export const PROTO_INVEST_MOBILE_TOC_AUDIO_TW = `flex w-full items-center gap-2.5 text-left font-normal leading-snug tracking-[-0.01em] !text-white/55 transition-colors duration-200 ease-out active:!text-white/72 iphone-page:gap-2 text-[clamp(0.94rem,0.84rem+0.45vmin,1.06rem)] iphone-page:text-[clamp(0.9rem,0.82rem+0.38vmin,1rem)] ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_BYLINE_GAP = "mt-5 iphone-page:mt-6";
 

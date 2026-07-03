@@ -55,10 +55,6 @@ html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc button:active 
   color: rgba(255, 255, 255, 0.72) !important;
 }
 
-html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc button:disabled {
-  opacity: 0.72;
-}
-
 /* Hero + graphic panels — unified proto border. */
 html[data-proto-page] .proto-invest-main .relative.w-full.overflow-hidden.rounded-\[0\.875rem\] {
   border-color: #2a3538 !important;

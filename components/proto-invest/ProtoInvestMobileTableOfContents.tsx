@@ -1,20 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import {
   PROTO_INVEST_MOBILE_TOC_AUDIO_DIVIDER_TW,
+  PROTO_INVEST_MOBILE_TOC_AUDIO_TW,
   PROTO_INVEST_MOBILE_TOC_BOX_TW,
   PROTO_INVEST_MOBILE_TOC_INDEX_TW,
   PROTO_INVEST_MOBILE_TOC_LABEL_TW,
   PROTO_INVEST_MOBILE_TOC_LINK_TW,
-  PROTO_INVEST_MOBILE_TOC_LISTEN_COPY_TW,
-  PROTO_INVEST_MOBILE_TOC_LISTEN_DURATION_TW,
-  PROTO_INVEST_MOBILE_TOC_LISTEN_LABEL_TW,
-  PROTO_INVEST_MOBILE_TOC_LISTEN_META_TW,
-  PROTO_INVEST_MOBILE_TOC_LISTEN_PLAY_TW,
-  PROTO_INVEST_MOBILE_TOC_LISTEN_ROW_TW,
-  PROTO_INVEST_MOBILE_TOC_LISTEN_TITLE_TW,
   PROTO_INVEST_MOBILE_TOC_LIST_TW,
   PROTO_INVEST_MOBILE_TOC_TEXT_TW,
   PROTO_INVEST_MOBILE_TOC_WRAP,
@@ -24,8 +18,6 @@ import {
   PROTO_INVEST_MOBILE_TOC_ITEMS,
   PROTO_INVEST_MOBILE_TOC_LABEL,
 } from "@/lib/proto-invest/proto-invest-content";
-
-const PROTO_INVEST_MOBILE_TOC_LISTEN_LABEL = "Listen" as const;
 
 function ChevronIcon() {
   return (
@@ -52,72 +44,48 @@ function PlayIcon() {
   );
 }
 
-function PauseIcon() {
-  return (
-    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden>
-      <path d="M2.75 2.1h1.65v6.8H2.75V2.1Zm3.85 0H8.25v6.8H6.6V2.1Z" fill="currentColor" />
-    </svg>
-  );
-}
-
-function ArticleListenPlayer() {
+function ArticleAudioRow({ audioSrc }: { audioSrc?: string }) {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioSrc = PROTO_INVEST_MOBILE_ARTICLE_AUDIO.src;
-  const { title, narrators, duration } = PROTO_INVEST_MOBILE_ARTICLE_AUDIO;
+  const playIcon = (
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#2A3538]/70 !text-white/45">
+      <PlayIcon />
+    </span>
+  );
 
-  const togglePlayback = () => {
-    const audio = audioRef.current;
-    if (!audio || !audioSrc) return;
-    if (audio.paused) {
-      void audio.play();
-    } else {
-      audio.pause();
-    }
-  };
+  if (audioSrc) {
+    return (
+      <button
+        type="button"
+        className={PROTO_INVEST_MOBILE_TOC_AUDIO_TW}
+        onClick={() => {
+          const audio = audioRef.current;
+          if (!audio) return;
+          if (audio.paused) {
+            void audio.play();
+          } else {
+            audio.pause();
+          }
+        }}
+      >
+        {playIcon}
+        <span>{PROTO_INVEST_MOBILE_ARTICLE_AUDIO.label}</span>
+        <audio ref={audioRef} src={audioSrc} preload="metadata" className="hidden" />
+      </button>
+    );
+  }
 
   return (
-    <div className={PROTO_INVEST_MOBILE_TOC_AUDIO_DIVIDER_TW}>
-      <p className={PROTO_INVEST_MOBILE_TOC_LISTEN_LABEL_TW}>{PROTO_INVEST_MOBILE_TOC_LISTEN_LABEL}</p>
-
-      <div className={PROTO_INVEST_MOBILE_TOC_LISTEN_ROW_TW}>
-        <button
-          type="button"
-          className={PROTO_INVEST_MOBILE_TOC_LISTEN_PLAY_TW}
-          aria-label={isPlaying ? "Pause article recording" : "Play article recording"}
-          onClick={togglePlayback}
-          disabled={!audioSrc}
-        >
-          {isPlaying ? <PauseIcon /> : <PlayIcon />}
-        </button>
-
-        <div className={PROTO_INVEST_MOBILE_TOC_LISTEN_COPY_TW}>
-          <span className={PROTO_INVEST_MOBILE_TOC_LISTEN_TITLE_TW}>{title}</span>
-          <span className={PROTO_INVEST_MOBILE_TOC_LISTEN_META_TW}>{narrators}</span>
-        </div>
-
-        <span className={PROTO_INVEST_MOBILE_TOC_LISTEN_DURATION_TW} aria-hidden>
-          {duration}
-        </span>
-      </div>
-
-      {audioSrc ? (
-        <audio
-          ref={audioRef}
-          src={audioSrc}
-          preload="metadata"
-          className="hidden"
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          onEnded={() => setIsPlaying(false)}
-        />
-      ) : null}
-    </div>
+    <p className={PROTO_INVEST_MOBILE_TOC_AUDIO_TW}>
+      {playIcon}
+      <span>{PROTO_INVEST_MOBILE_ARTICLE_AUDIO.label}</span>
+    </p>
   );
 }
 
 /** iPhone /about — compact in-page table of contents below the hero shader. */
 export function ProtoInvestMobileTableOfContents() {
+  const audioSrc = PROTO_INVEST_MOBILE_ARTICLE_AUDIO.src;
+
   return (
     <nav aria-label="Table of contents" className={PROTO_INVEST_MOBILE_TOC_WRAP}>
       <div className={PROTO_INVEST_MOBILE_TOC_BOX_TW}>
@@ -137,7 +105,9 @@ export function ProtoInvestMobileTableOfContents() {
           ))}
         </ol>
 
-        <ArticleListenPlayer />
+        <div className={PROTO_INVEST_MOBILE_TOC_AUDIO_DIVIDER_TW}>
+          <ArticleAudioRow audioSrc={audioSrc} />
+        </div>
       </div>
     </nav>
   );

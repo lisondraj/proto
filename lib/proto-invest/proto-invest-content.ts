@@ -54,11 +54,8 @@ export const PROTO_INVEST_MOBILE_TOC_ITEMS = [
 
 export const PROTO_INVEST_MOBILE_TOC_LABEL = "Contents" as const;
 
-/** iPhone /about — single full-article voice recording (not per-section). */
 export const PROTO_INVEST_MOBILE_ARTICLE_AUDIO = {
-  title: "Full article",
-  narrators: "James & others",
-  duration: "12:24",
+  label: "Listen to the voice recording of the article",
   /** Wire when the recording is hosted under /public. */
   src: undefined as string | undefined,
 } as const;
