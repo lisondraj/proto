@@ -58,6 +58,8 @@ export function DoePhoneMobileView() {
         logoLink
         navActionLinksEnabled
         investorsHref={PROTO_INVEST_PATH}
+        frostedScrollNav
+        frostedScrollPastHero
       />
 
       <DoePhoneHeroSection variant="mobile" proto />
