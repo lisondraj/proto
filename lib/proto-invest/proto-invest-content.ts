@@ -56,6 +56,7 @@ export const PROTO_INVEST_MOBILE_TOC_LABEL = "Contents" as const;
 
 export const PROTO_INVEST_MOBILE_ARTICLE_AUDIO = {
   label: "Listen to the voice recording of the article",
+  navLines: ["Listen to the voice", "recording of the article"] as const,
   /** Wire when the recording is hosted under /public. */
   src: undefined as string | undefined,
 } as const;

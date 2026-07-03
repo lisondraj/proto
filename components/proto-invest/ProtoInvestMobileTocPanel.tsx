@@ -39,15 +39,31 @@ function ChevronIcon() {
   );
 }
 
-function PlayIcon() {
+function PlayIcon({ size = 11 }: { size?: number }) {
   return (
-    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden className="ml-px">
+    <svg width={size} height={size} viewBox="0 0 11 11" fill="none" aria-hidden className="ml-px">
       <path
         d="M2.5 1.85c0-.72.82-.34 1.3-.06l5.3 3.02c.48.28.48.97 0 1.25l-5.3 3.02c-.48.28-1.3-.1-1.3-.82V1.85Z"
         fill="currentColor"
       />
     </svg>
   );
+}
+
+function ArticleAudioCopy({ variant }: { variant: "inline" | "nav" }) {
+  if (variant === "nav") {
+    return (
+      <span className="proto-invest-floating-toc__audio-copy">
+        {PROTO_INVEST_MOBILE_ARTICLE_AUDIO.navLines.map((line) => (
+          <span key={line} className="proto-invest-floating-toc__audio-line">
+            {line}
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  return <span>{PROTO_INVEST_MOBILE_ARTICLE_AUDIO.label}</span>;
 }
 
 function ArticleAudioRow({
@@ -66,7 +82,7 @@ function ArticleAudioRow({
           : "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#2A3538]/70 !text-white/45"
       }
     >
-      <PlayIcon />
+      <PlayIcon size={variant === "nav" ? 13 : 11} />
     </span>
   );
   const rowClass =
@@ -88,7 +104,7 @@ function ArticleAudioRow({
         }}
       >
         {playIcon}
-        <span>{PROTO_INVEST_MOBILE_ARTICLE_AUDIO.label}</span>
+        <ArticleAudioCopy variant={variant} />
         <audio ref={audioRef} src={audioSrc} preload="metadata" className="hidden" />
       </button>
     );
@@ -97,7 +113,7 @@ function ArticleAudioRow({
   return (
     <p className={rowClass}>
       {playIcon}
-      <span>{PROTO_INVEST_MOBILE_ARTICLE_AUDIO.label}</span>
+      <ArticleAudioCopy variant={variant} />
     </p>
   );
 }

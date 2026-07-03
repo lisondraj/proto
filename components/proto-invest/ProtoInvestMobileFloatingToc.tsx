@@ -7,7 +7,8 @@ import { ProtoInvestMobileTocPanel } from "@/components/proto-invest/ProtoInvest
 import { PROTO_INVEST_MOBILE_TOC_LABEL } from "@/lib/proto-invest/proto-invest-content";
 
 const PANEL_REVEAL_MS = 780;
-const PANEL_HIDE_MS = 280;
+const PANEL_HIDE_MS = 320;
+const PANEL_COLLAPSE_MS = 780;
 
 function TocIcon() {
   return (
@@ -43,9 +44,11 @@ export function ProtoInvestMobileFloatingToc() {
   const [navPunchedOut, setNavPunchedOut] = useState(false);
   const [open, setOpen] = useState(false);
   const [panelRevealed, setPanelRevealed] = useState(false);
+  const [collapsing, setCollapsing] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const revealTimerRef = useRef<number | null>(null);
   const hideTimerRef = useRef<number | null>(null);
+  const collapseTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -62,6 +65,7 @@ export function ProtoInvestMobileFloatingToc() {
         if (!punchedOut) {
           setPanelRevealed(false);
           setOpen(false);
+          setCollapsing(false);
         }
       });
     };
@@ -86,10 +90,19 @@ export function ProtoInvestMobileFloatingToc() {
     if (hideTimerRef.current !== null) {
       window.clearTimeout(hideTimerRef.current);
     }
+    if (collapseTimerRef.current !== null) {
+      window.clearTimeout(collapseTimerRef.current);
+      collapseTimerRef.current = null;
+    }
     setPanelRevealed(false);
     hideTimerRef.current = window.setTimeout(() => {
       setOpen(false);
+      setCollapsing(true);
       hideTimerRef.current = null;
+      collapseTimerRef.current = window.setTimeout(() => {
+        setCollapsing(false);
+        collapseTimerRef.current = null;
+      }, PANEL_COLLAPSE_MS);
     }, PANEL_HIDE_MS);
   }, []);
 
@@ -101,6 +114,11 @@ export function ProtoInvestMobileFloatingToc() {
       window.clearTimeout(hideTimerRef.current);
       hideTimerRef.current = null;
     }
+    if (collapseTimerRef.current !== null) {
+      window.clearTimeout(collapseTimerRef.current);
+      collapseTimerRef.current = null;
+    }
+    setCollapsing(false);
     setOpen(true);
     setPanelRevealed(false);
     revealTimerRef.current = window.setTimeout(() => {
@@ -148,6 +166,9 @@ export function ProtoInvestMobileFloatingToc() {
       if (hideTimerRef.current !== null) {
         window.clearTimeout(hideTimerRef.current);
       }
+      if (collapseTimerRef.current !== null) {
+        window.clearTimeout(collapseTimerRef.current);
+      }
     };
   }, []);
 
@@ -158,7 +179,7 @@ export function ProtoInvestMobileFloatingToc() {
   return createPortal(
     <div
       ref={rootRef}
-      className={`proto-invest-floating-toc${navPunchedOut ? " is-visible" : ""}${open ? " is-open" : ""}${panelRevealed ? " is-revealed" : ""}`}
+      className={`proto-invest-floating-toc${navPunchedOut ? " is-visible" : ""}${open ? " is-open" : ""}${panelRevealed ? " is-revealed" : ""}${collapsing ? " is-closing" : ""}`}
       aria-live="polite"
       aria-hidden={!navPunchedOut}
     >
@@ -173,16 +194,18 @@ export function ProtoInvestMobileFloatingToc() {
           </div>
         ) : null}
 
-        <button
-          type="button"
-          className="proto-invest-floating-toc__trigger"
-          aria-expanded={open}
-          aria-label={open ? "Close table of contents" : "Open table of contents"}
-          onClick={toggleToc}
-          tabIndex={navPunchedOut ? 0 : -1}
-        >
-          <TocIcon />
-        </button>
+        {!open && !collapsing ? (
+          <button
+            type="button"
+            className="proto-invest-floating-toc__trigger"
+            aria-expanded={open}
+            aria-label="Open table of contents"
+            onClick={toggleToc}
+            tabIndex={navPunchedOut ? 0 : -1}
+          >
+            <TocIcon />
+          </button>
+        ) : null}
       </div>
     </div>,
     document.body,
