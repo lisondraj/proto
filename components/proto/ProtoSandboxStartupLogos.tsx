@@ -2,7 +2,7 @@
 
 import type { ReactNode, SVGProps } from "react";
 
-import { inter, plusJakartaSans } from "@/lib/home/fonts";
+import { inter, lora, plusJakartaSans } from "@/lib/home/fonts";
 
 const INK = "#2C2419";
 const MUTED = "#8A7D6E";
@@ -182,7 +182,7 @@ export function HarmonyHealthLogo({
         <HarmonyIcon theme={theme} style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
         <div className="flex min-w-0 items-baseline" style={{ gap: "0.28em" }}>
           <span
-            className={plusJakartaSans.className}
+            className={lora.className}
             style={{
               color: ink,
               fontSize: "1.08em",
@@ -194,7 +194,7 @@ export function HarmonyHealthLogo({
             Harmony
           </span>
           <span
-            className={inter.className}
+            className={lora.className}
             style={{
               color: muted,
               fontSize: "1.08em",

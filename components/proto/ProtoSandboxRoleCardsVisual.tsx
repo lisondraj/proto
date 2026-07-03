@@ -110,7 +110,7 @@ const PHONE_TOKENS: VisualTokens = {
   tagPadY: "0.22rem",
   tagGap: "0.2rem",
   bodyGap: "0.32rem",
-  checklistGap: "0.1rem",
+  checklistGap: "0",
   tagRowMarginTop: "0.36rem",
 };
 
@@ -128,7 +128,7 @@ const DESKTOP_TOKENS: VisualTokens = {
   tagPadY: "clamp(0.22rem, 0.26vw, 0.28rem)",
   tagGap: "clamp(0.18rem, 0.22vw, 0.24rem)",
   bodyGap: "clamp(0.3rem, 0.36vw, 0.38rem)",
-  checklistGap: "clamp(0.08rem, 0.1vw, 0.12rem)",
+  checklistGap: "0",
   tagRowMarginTop: "clamp(0.34rem, 0.4vw, 0.42rem)",
 };
 
@@ -454,7 +454,7 @@ function FeaturedRoleCard({
     tagPadX: "0.52rem",
     tagPadY: "0.26rem",
     tagGap: "0.26rem",
-    checklistGap: "0.12rem",
+    checklistGap: "0",
     tagRowMarginTop: "0.48rem",
     bodyGap: "0.4rem",
   };
@@ -473,7 +473,7 @@ function FeaturedRoleCard({
       <article
         className={`w-full flex flex-col ${plusJakartaSans.className}`}
         style={{
-          padding: "0.55rem 0.72rem",
+          padding: "0.42rem 0.72rem",
           borderRadius: tokens.cardRadius,
           boxSizing: "border-box",
           background: glass.background,
@@ -497,18 +497,20 @@ function FeaturedRoleCard({
           className="grid w-full"
           style={{
             gridTemplateColumns: "minmax(0, 1fr) auto",
-            columnGap: "0.7rem",
-            rowGap: "0.1rem",
+            columnGap: "0.75rem",
+            rowGap: "0.14rem",
             alignItems: "baseline",
           }}
         >
+          {/* Row 1 — role (primary) · location (meta) */}
           <BounceLine active={active} order={1} reduceMotion={reduceMotion}>
             <h3
-              className="m-0 font-semibold tracking-[-0.025em]"
+              className={`${suisseIntl.className} m-0 font-semibold tracking-[-0.025em]`}
               style={{
                 color: GLASS_INK,
-                fontSize: tokens.role,
-                lineHeight: 1.2,
+                fontSize: "0.9rem",
+                lineHeight: 1.15,
+                fontWeight: 600,
               }}
             >
               {card.role}
@@ -518,11 +520,12 @@ function FeaturedRoleCard({
           {summary ? (
             <BounceLine active={active} order={4} reduceMotion={reduceMotion}>
               <span
-                className={`${inter.className} whitespace-nowrap text-right font-medium`}
+                className={`${inter.className} whitespace-nowrap text-right`}
                 style={{
                   color: GLASS_MUTED,
-                  fontSize: tokens.checklist,
-                  lineHeight: 1.2,
+                  fontSize: "0.66rem",
+                  lineHeight: 1.15,
+                  fontWeight: 400,
                 }}
               >
                 {summary.location}
@@ -532,14 +535,16 @@ function FeaturedRoleCard({
             <span />
           )}
 
+          {/* Row 2 — pay (secondary) · type (meta) */}
           {summary ? (
             <BounceLine active={active} order={2} reduceMotion={reduceMotion}>
               <p
-                className="m-0 font-semibold tracking-[-0.02em]"
+                className="m-0 tracking-[-0.015em]"
                 style={{
                   color: GLASS_INK,
-                  fontSize: tokens.task,
-                  lineHeight: 1.2,
+                  fontSize: "0.74rem",
+                  lineHeight: 1.15,
+                  fontWeight: 500,
                 }}
               >
                 {summary.pay}
@@ -550,11 +555,12 @@ function FeaturedRoleCard({
           {summary ? (
             <BounceLine active={active} order={5} reduceMotion={reduceMotion}>
               <span
-                className={`${inter.className} whitespace-nowrap text-right font-medium`}
+                className={`${inter.className} whitespace-nowrap text-right`}
                 style={{
                   color: GLASS_MUTED,
-                  fontSize: tokens.checklist,
-                  lineHeight: 1.2,
+                  fontSize: "0.66rem",
+                  lineHeight: 1.15,
+                  fontWeight: 400,
                 }}
               >
                 {summary.type}
@@ -562,6 +568,7 @@ function FeaturedRoleCard({
             </BounceLine>
           ) : null}
 
+          {/* Row 3 — equity (tertiary) */}
           {summary ? (
             <BounceLine
               active={active}
@@ -570,11 +577,12 @@ function FeaturedRoleCard({
               style={{ gridColumn: "1 / 2" }}
             >
               <p
-                className={`${inter.className} m-0 font-normal`}
+                className={`${inter.className} m-0`}
                 style={{
                   color: GLASS_MUTED,
-                  fontSize: tokens.checklist,
-                  lineHeight: 1.2,
+                  fontSize: "0.66rem",
+                  lineHeight: 1.15,
+                  fontWeight: 400,
                 }}
               >
                 {summary.equity}
