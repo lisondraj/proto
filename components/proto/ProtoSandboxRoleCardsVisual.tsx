@@ -102,13 +102,21 @@ const DESKTOP_CARD_LAYOUT: readonly CardPosition[] = [
   { top: "clamp(19.2rem, 57vmin, 22.8rem)", left: "18%", zIndex: 3 },
 ];
 
-function RoleCardTag({ label, tokens }: { label: string; tokens: VisualTokens }) {
+function RoleCardTag({
+  label,
+  tokens,
+  onDark = false,
+}: {
+  label: string;
+  tokens: VisualTokens;
+  onDark?: boolean;
+}) {
   return (
     <span
       className={`${dmSans.className} inline-flex shrink-0 items-center whitespace-nowrap font-medium leading-none`}
       style={{
-        background: TAG_BG,
-        color: TAG_INK,
+        background: onDark ? "rgba(255,249,242,0.14)" : TAG_BG,
+        color: onDark ? "rgba(255,249,242,0.82)" : TAG_INK,
         fontSize: tokens.tag,
         padding: `${tokens.tagPadY} ${tokens.tagPadX}`,
         borderRadius: "999px",
@@ -123,21 +131,34 @@ function RoleCardTaskRail({
   taskBrief,
   items,
   tokens,
+  onDark = false,
+  flushTop = false,
 }: {
   taskBrief: string;
   items: readonly [string, string, string];
   tokens: VisualTokens;
+  onDark?: boolean;
+  flushTop?: boolean;
 }) {
+  const ink = onDark ? "#FFF9F2" : INK;
+  const muted = onDark ? "rgba(255,249,242,0.72)" : MUTED;
+  const dot = onDark ? "rgba(255,249,242,0.55)" : TASK_DOT;
+  const rail = onDark ? "rgba(255,249,242,0.28)" : RAIL_LINE;
+  const face = onDark ? "transparent" : CARD_FACE;
+
   return (
-    <div className={`${dmSans.className} min-w-0`} style={{ marginTop: tokens.bodyGap }}>
+    <div
+      className={`${dmSans.className} min-w-0`}
+      style={{ marginTop: flushTop ? 0 : tokens.bodyGap }}
+    >
       <div className="flex min-w-0 items-start" style={{ gap: "0.52em" }}>
         <div
           className="mt-[0.34em] shrink-0 rounded-full"
           style={{
             width: "0.4em",
             height: "0.4em",
-            border: `1px solid ${TASK_DOT}`,
-            background: CARD_FACE,
+            border: `1px solid ${dot}`,
+            background: face,
             boxSizing: "border-box",
           }}
           aria-hidden
@@ -146,7 +167,7 @@ function RoleCardTaskRail({
           className="min-w-0 whitespace-nowrap font-semibold leading-snug"
           style={{
             margin: 0,
-            color: INK,
+            color: ink,
             fontSize: tokens.task,
           }}
         >
@@ -166,7 +187,7 @@ function RoleCardTaskRail({
           className="absolute bottom-[0.2em] top-[0.2em] w-px"
           style={{
             left: "0.28em",
-            background: RAIL_LINE,
+            background: rail,
           }}
           aria-hidden
         />
@@ -180,7 +201,7 @@ function RoleCardTaskRail({
               key={item}
               className="whitespace-nowrap leading-snug"
               style={{
-                color: MUTED,
+                color: muted,
                 fontSize: tokens.checklist,
               }}
             >
@@ -193,7 +214,15 @@ function RoleCardTaskRail({
   );
 }
 
-function RoleCardTags({ card, tokens }: { card: ProtoSandboxRoleCard; tokens: VisualTokens }) {
+function RoleCardTags({
+  card,
+  tokens,
+  onDark = false,
+}: {
+  card: ProtoSandboxRoleCard;
+  tokens: VisualTokens;
+  onDark?: boolean;
+}) {
   const tags = [
     card.timeLimit,
     card.model,
@@ -207,7 +236,7 @@ function RoleCardTags({ card, tokens }: { card: ProtoSandboxRoleCard; tokens: Vi
       style={{ gap: tokens.tagGap, marginTop: tokens.tagRowMarginTop }}
     >
       {tags.map((label) => (
-        <RoleCardTag key={label} label={label} tokens={tokens} />
+        <RoleCardTag key={label} label={label} tokens={tokens} onDark={onDark} />
       ))}
     </div>
   );
@@ -217,10 +246,12 @@ function SandboxRoleCard({
   card,
   tokens,
   position,
+  hideLogo = false,
 }: {
   card: ProtoSandboxRoleCard;
   tokens: VisualTokens;
   position?: CardPosition;
+  hideLogo?: boolean;
 }) {
   const positioned = Boolean(position);
 
@@ -235,7 +266,7 @@ function SandboxRoleCard({
               zIndex: position.zIndex,
             }
           : undefined),
-        width: tokens.cardWidth,
+        width: positioned ? tokens.cardWidth : "100%",
         padding: tokens.cardPad,
         borderRadius: tokens.cardRadius,
         boxSizing: "border-box",
@@ -243,14 +274,14 @@ function SandboxRoleCard({
         boxShadow: "inset 0 1px 0 rgba(255,253,249,0.95), inset 0 -1px 0 rgba(44,36,25,0.035)",
       }}
     >
-      <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} />
+      {hideLogo ? null : <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} />}
 
       <h3
         className="whitespace-nowrap font-semibold leading-tight tracking-[-0.02em]"
         style={{
           color: INK,
           fontSize: tokens.role,
-          marginTop: tokens.bodyGap,
+          marginTop: hideLogo ? 0 : tokens.bodyGap,
         }}
       >
         {card.role}
@@ -287,7 +318,109 @@ function CardCluster({ layout, tokens }: { layout: VisualLayout; tokens: VisualT
 
 const LEDGER_CARD = PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "ledger")!;
 
-/** Single Ledger card — same UI/size as in the first box, centered in the second shader box. */
+/** First shader — logo above card; role facts inside; task + tags below. */
+function LedgerCardWithExternalLogo({ tokens }: { tokens: VisualTokens }) {
+  const summary = LEDGER_CARD.roleSummary;
+  const belowTokens: VisualTokens = {
+    ...tokens,
+    task: "0.92rem",
+    checklist: "0.82rem",
+    tag: "0.76rem",
+    tagPadX: "0.52rem",
+    tagPadY: "0.26rem",
+    tagGap: "0.26rem",
+    checklistGap: "0.24rem",
+    tagRowMarginTop: "0.48rem",
+    bodyGap: "0.4rem",
+  };
+
+  return (
+    <div className="flex flex-col items-start" style={{ width: tokens.cardWidth }}>
+      <div style={{ marginBottom: "0.42rem" }}>
+        <ProtoSandboxStartupLogo id="ledger" height={tokens.logoHeight} theme="light" />
+      </div>
+
+      <article
+        className={`w-full flex flex-col ${suisseIntl.className}`}
+        style={{
+          padding: "0.55rem 0.72rem",
+          borderRadius: tokens.cardRadius,
+          boxSizing: "border-box",
+          background: CARD_SURFACE,
+          boxShadow: "inset 0 1px 0 rgba(255,253,249,0.95), inset 0 -1px 0 rgba(44,36,25,0.035)",
+        }}
+      >
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h3
+              className="font-semibold leading-tight tracking-[-0.02em]"
+              style={{
+                color: INK,
+                fontSize: tokens.role,
+              }}
+            >
+              {LEDGER_CARD.role}
+            </h3>
+
+            {summary ? (
+              <div className={`${dmSans.className}`} style={{ marginTop: "0.14rem" }}>
+                <p
+                  className="m-0 font-semibold leading-snug tracking-[-0.02em]"
+                  style={{ color: INK, fontSize: tokens.task }}
+                >
+                  {summary.pay}
+                </p>
+                <p
+                  className="m-0 leading-snug"
+                  style={{
+                    color: MUTED,
+                    fontSize: tokens.checklist,
+                    marginTop: "0.08rem",
+                  }}
+                >
+                  {summary.equity}
+                </p>
+              </div>
+            ) : null}
+          </div>
+
+          {summary ? (
+            <div
+              className={`${dmSans.className} flex shrink-0 flex-col items-end text-right`}
+              style={{ gap: "0.1rem" }}
+            >
+              <span
+                className="whitespace-nowrap leading-snug"
+                style={{ color: MUTED, fontSize: tokens.checklist }}
+              >
+                {summary.location}
+              </span>
+              <span
+                className="whitespace-nowrap leading-snug"
+                style={{ color: MUTED, fontSize: tokens.checklist }}
+              >
+                {summary.type}
+              </span>
+            </div>
+          ) : null}
+        </div>
+      </article>
+
+      <div className="w-full" style={{ marginTop: "0.65rem" }}>
+        <RoleCardTaskRail
+          taskBrief={LEDGER_CARD.taskBrief}
+          items={LEDGER_CARD.checklist}
+          tokens={belowTokens}
+          onDark
+          flushTop
+        />
+        <RoleCardTags card={LEDGER_CARD} tokens={belowTokens} onDark />
+      </div>
+    </div>
+  );
+}
+
+/** Single Ledger card — full stack centered on the y-axis in the first shader. */
 export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: VisualLayout }) {
   const tokens = layout === "desktop" ? DESKTOP_TOKENS : PHONE_TOKENS;
 
@@ -297,12 +430,13 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
           height={PHONE_ARTBOARD_HEIGHT_PX}
+          fitScale={1}
         >
           <div
-            className="flex w-full items-center justify-center"
-            style={{ height: tokens.clusterHeight }}
+            className="flex justify-center"
+            style={{ width: PHONE_ARTBOARD_WIDTH_PX }}
           >
-            <SandboxRoleCard card={LEDGER_CARD} tokens={tokens} />
+            <LedgerCardWithExternalLogo tokens={tokens} />
           </div>
         </ProtoPhoneScaledArtboard>
       </div>
@@ -315,7 +449,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
       style={{ maxWidth: "min(100%, 26rem)" }}
       aria-hidden
     >
-      <SandboxRoleCard card={LEDGER_CARD} tokens={tokens} />
+      <LedgerCardWithExternalLogo tokens={tokens} />
     </div>
   );
 }

@@ -14,29 +14,37 @@ function getFitHost(node: HTMLElement): HTMLElement {
   );
 }
 
-function measureContentBounds(root: HTMLElement, fallbackWidth: number, fallbackHeight: number) {
-  const articles = root.querySelectorAll<HTMLElement>("article");
-  if (articles.length > 0) {
-    let maxRight = 0;
-    let maxBottom = 0;
-    articles.forEach((card) => {
-      maxRight = Math.max(maxRight, card.offsetLeft + card.offsetWidth);
-      maxBottom = Math.max(maxBottom, card.offsetTop + card.offsetHeight);
-    });
-    return {
-      width: Math.max(maxRight, fallbackWidth),
-      height: Math.max(maxBottom, 1),
-    };
+function offsetWithin(root: HTMLElement, node: HTMLElement) {
+  let left = 0;
+  let top = 0;
+  let el: HTMLElement | null = node;
+  while (el && el !== root) {
+    left += el.offsetLeft;
+    top += el.offsetTop;
+    el = el.offsetParent as HTMLElement | null;
   }
+  return { left, top };
+}
 
+function measureContentBounds(root: HTMLElement, fallbackWidth: number, fallbackHeight: number) {
   const content = root.firstElementChild as HTMLElement | null;
-  if (!content) {
-    return { width: fallbackWidth, height: fallbackHeight };
-  }
+  let maxRight = content
+    ? Math.max(content.offsetWidth, content.scrollWidth)
+    : 0;
+  let maxBottom = content
+    ? Math.max(content.offsetHeight, content.scrollHeight)
+    : 0;
+
+  // Absolute card clusters — include each article’s true extent inside the artboard.
+  root.querySelectorAll<HTMLElement>("article").forEach((card) => {
+    const { left, top } = offsetWithin(root, card);
+    maxRight = Math.max(maxRight, left + card.offsetWidth);
+    maxBottom = Math.max(maxBottom, top + card.offsetHeight);
+  });
 
   return {
-    width: Math.max(content.offsetWidth, content.scrollWidth, fallbackWidth),
-    height: Math.max(content.offsetHeight, content.scrollHeight, 1),
+    width: Math.max(maxRight, fallbackWidth),
+    height: Math.max(maxBottom, 1),
   };
 }
 
@@ -48,10 +56,13 @@ export function ProtoPhoneScaledArtboard({
   width,
   height,
   children,
+  fitScale = FIT_SCALE,
 }: {
   width: number;
   height: number;
   children: ReactNode;
+  /** Multiplier on the fit-to-card scale (default 0.9). */
+  fitScale?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const artboardRef = useRef<HTMLDivElement>(null);
@@ -72,7 +83,7 @@ export function ProtoPhoneScaledArtboard({
       const fitWidth = Math.max(host.clientWidth - FIT_PAD_PX * 2, 1);
       const fitHeight = Math.max(host.clientHeight - FIT_PAD_PX * 2, 1);
       const nextScale =
-        Math.min(fitWidth / nextBounds.width, fitHeight / nextBounds.height) * FIT_SCALE;
+        Math.min(fitWidth / nextBounds.width, fitHeight / nextBounds.height) * fitScale;
       setScale(nextScale > 0 ? nextScale : 0.5);
     };
 
@@ -82,7 +93,7 @@ export function ProtoPhoneScaledArtboard({
     observer.observe(artboard);
     if (host !== container) observer.observe(container);
     return () => observer.disconnect();
-  }, [width, height]);
+  }, [width, height, fitScale]);
 
   const scaledWidth = bounds.width * scale;
   const scaledHeight = bounds.height * scale;

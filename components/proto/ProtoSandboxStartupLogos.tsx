@@ -6,6 +6,11 @@ import { lora, outfit, suisseIntl } from "@/lib/home/fonts";
 
 const INK = "#2C2419";
 const MUTED = "#8A7D6E";
+/** Light lockup for dark shader backgrounds. */
+const LIGHT_INK = "#FFF9F2";
+const LIGHT_MUTED = "rgba(255, 249, 242, 0.72)";
+
+type LogoTheme = "default" | "light";
 
 function LogoFrame({ children, height }: { children: ReactNode; height: string }) {
   return (
@@ -30,14 +35,39 @@ function HarmonyIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function LedgerIcon(props: SVGProps<SVGSVGElement>) {
+function LedgerIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const isLight = theme === "light";
+  const primary = isLight ? LIGHT_INK : INK;
+  const secondary = isLight ? "rgba(255, 249, 242, 0.55)" : INK;
+  const secondaryOpacity = isLight ? 1 : 0.42;
+  const line = isLight ? LIGHT_INK : "#FFFFFF";
+
   return (
     <svg viewBox="0 0 32 32" fill="none" {...props}>
-      <rect x="4" y="5" width="9" height="9" rx="2.2" fill={INK} />
-      <rect x="17" y="5" width="11" height="9" rx="2.2" fill={INK} opacity="0.42" />
-      <rect x="4" y="18" width="11" height="9" rx="2.2" fill={INK} opacity="0.42" />
-      <rect x="19" y="18" width="9" height="9" rx="2.2" fill={INK} />
-      <path d="M13.5 9.5h5M13.5 22.5h5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="4" y="5" width="9" height="9" rx="2.2" fill={primary} />
+      <rect
+        x="17"
+        y="5"
+        width="11"
+        height="9"
+        rx="2.2"
+        fill={secondary}
+        opacity={secondaryOpacity}
+      />
+      <rect
+        x="4"
+        y="18"
+        width="11"
+        height="9"
+        rx="2.2"
+        fill={secondary}
+        opacity={secondaryOpacity}
+      />
+      <rect x="19" y="18" width="9" height="9" rx="2.2" fill={primary} />
+      <path d="M13.5 9.5h5M13.5 22.5h5" stroke={line} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -71,23 +101,28 @@ function LogoLockup({
   height,
   fontClassName,
   textSize = "0.92em",
+  theme = "default",
 }: {
-  Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  Icon: (props: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) => JSX.Element;
   primary: string;
   secondary?: string;
   height: string;
   fontClassName: string;
   textSize?: string;
+  theme?: LogoTheme;
 }) {
+  const ink = theme === "light" ? LIGHT_INK : INK;
+  const muted = theme === "light" ? LIGHT_MUTED : MUTED;
+
   return (
     <LogoFrame height={height}>
       <div className="flex min-w-0 items-center" style={{ gap: "0.55em" }}>
-        <Icon style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
+        <Icon theme={theme} style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
         {secondary ? (
           <div className={`flex min-w-0 items-baseline ${fontClassName}`} style={{ gap: "0.28em" }}>
             <span
               style={{
-                color: INK,
+                color: ink,
                 fontSize: textSize,
                 fontWeight: 700,
                 letterSpacing: "-0.035em",
@@ -98,7 +133,7 @@ function LogoLockup({
             </span>
             <span
               style={{
-                color: MUTED,
+                color: muted,
                 fontSize: textSize,
                 fontWeight: 500,
                 letterSpacing: "-0.02em",
@@ -112,7 +147,7 @@ function LogoLockup({
           <span
             className={fontClassName}
             style={{
-              color: INK,
+              color: ink,
               fontSize: textSize,
               fontWeight: 700,
               letterSpacing: "-0.035em",
@@ -161,7 +196,13 @@ export function HarmonyHealthLogo({ height = "2.35rem" }: { height?: string }) {
   );
 }
 
-export function LedgerAiLogo({ height = "2.35rem" }: { height?: string }) {
+export function LedgerAiLogo({
+  height = "2.35rem",
+  theme = "default",
+}: {
+  height?: string;
+  theme?: LogoTheme;
+}) {
   return (
     <LogoLockup
       Icon={LedgerIcon}
@@ -169,6 +210,7 @@ export function LedgerAiLogo({ height = "2.35rem" }: { height?: string }) {
       height={height}
       fontClassName={suisseIntl.className}
       textSize="1.08em"
+      theme={theme}
     />
   );
 }
@@ -195,10 +237,15 @@ const LOGO_BY_ID = {
 export function ProtoSandboxStartupLogo({
   id,
   height,
+  theme = "default",
 }: {
   id: keyof typeof LOGO_BY_ID;
   height?: string;
+  theme?: LogoTheme;
 }) {
   const Logo = LOGO_BY_ID[id];
+  if (id === "ledger") {
+    return <LedgerAiLogo height={height} theme={theme} />;
+  }
   return <Logo height={height} />;
 }

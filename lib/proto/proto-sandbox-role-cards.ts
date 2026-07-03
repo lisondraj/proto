@@ -1,3 +1,10 @@
+export type ProtoSandboxRoleSummary = {
+  pay: string;
+  equity: string;
+  location: string;
+  type: string;
+};
+
 export type ProtoSandboxRoleCard = {
   id: "harmony" | "ledger" | "northwind";
   startupName: string;
@@ -8,6 +15,8 @@ export type ProtoSandboxRoleCard = {
   model: string;
   canConnectMcp: boolean;
   videoRecordedPushToMain: boolean;
+  /** Role facts shown inside the card body (second shader Ledger layout). */
+  roleSummary?: ProtoSandboxRoleSummary;
 };
 
 /** First /proto feature box — three live sandbox roles shown in staggered cards. */
@@ -41,6 +50,12 @@ export const PROTO_SANDBOX_ROLE_CARDS: readonly ProtoSandboxRoleCard[] = [
     model: "GPT-4o",
     canConnectMcp: true,
     videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$180–220k",
+      equity: "0.15–0.25% equity",
+      location: "Remote (US)",
+      type: "Full-time",
+    },
   },
   {
     id: "northwind",

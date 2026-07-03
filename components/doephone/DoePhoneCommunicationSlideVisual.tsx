@@ -8,10 +8,7 @@ import { DoePhoneIntegrateVisual } from "@/components/doephone/DoePhoneIntegrate
 import { DoePhoneProtoShortlistVisual } from "@/components/doephone/DoePhoneProtoShortlistVisual";
 import { DoePhoneProtoValidateVisual } from "@/components/doephone/DoePhoneProtoValidateVisual";
 import { DoePhoneWorkflowVisual } from "@/components/doephone/DoePhoneWorkflowVisual";
-import {
-  ProtoSandboxLedgerCardVisual,
-  ProtoSandboxRoleCardsVisual,
-} from "@/components/proto/ProtoSandboxRoleCardsVisual";
+import { ProtoSandboxLedgerCardVisual } from "@/components/proto/ProtoSandboxRoleCardsVisual";
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
 
 export function DoePhoneCommunicationSlideVisual({
@@ -27,18 +24,14 @@ export function DoePhoneCommunicationSlideVisual({
   switch (slideId) {
     case "agents":
       return protoSite ? (
-        <ProtoSandboxRoleCardsVisual layout={layout} />
+        <ProtoSandboxLedgerCardVisual layout={layout} />
       ) : (
         <DoePhoneClinicAgentsVisual layout={layout} />
       );
     case "inbox":
       return <DoePhoneWorkflowVisual layout={layout} />;
     case "front-desk":
-      return protoSite ? (
-        <ProtoSandboxLedgerCardVisual layout={layout} />
-      ) : (
-        <DoePhoneFrontDeskInboxVisual layout={layout} />
-      );
+      return <DoePhoneFrontDeskInboxVisual layout={layout} />;
     case "ambient":
       return <DoePhoneAmbientVisual />;
     case "integrate":
