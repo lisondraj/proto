@@ -27,28 +27,19 @@ const CARD_FACE = "#FFF9F2";
 const CARD_SURFACE =
   "linear-gradient(180deg, #FFFCF7 0%, #FFF9F2 52%, #F9F1E6 100%)";
 
-/** Frosted glass panels for featured position cards — no border; depth from light only. */
-const FEATURED_GLASS_BY_ID: Record<
-  ProtoSandboxRoleCard["id"],
-  { background: string; shadow: string }
-> = {
+/** Frosted glass panels for featured position cards — no border, no shadow. */
+const FEATURED_GLASS_BY_ID: Record<ProtoSandboxRoleCard["id"], { background: string }> = {
   ledger: {
     background:
       "linear-gradient(160deg, rgba(255,255,255,0.88) 0%, rgba(255,250,244,0.72) 42%, rgba(255,244,232,0.52) 100%)",
-    shadow:
-      "inset 0 1px 0 rgba(255,255,255,0.72), inset 0 -10px 18px rgba(255,255,255,0.12), 0 10px 28px rgba(0,0,0,0.12)",
   },
   harmony: {
     background:
       "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,252,248,0.74) 42%, rgba(255,248,240,0.54) 100%)",
-    shadow:
-      "inset 0 1px 0 rgba(255,255,255,0.78), inset 0 -10px 18px rgba(255,255,255,0.14), 0 10px 28px rgba(0,0,0,0.11)",
   },
   northwind: {
     background:
       "linear-gradient(160deg, rgba(255,252,246,0.9) 0%, rgba(255,246,236,0.7) 42%, rgba(255,240,226,0.5) 100%)",
-    shadow:
-      "inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -10px 18px rgba(255,255,255,0.1), 0 10px 28px rgba(0,0,0,0.12)",
   },
 };
 
@@ -310,7 +301,6 @@ function SandboxRoleCard({
         borderRadius: tokens.cardRadius,
         boxSizing: "border-box",
         background: CARD_SURFACE,
-        boxShadow: "inset 0 1px 0 rgba(255,253,249,0.95), inset 0 -1px 0 rgba(44,36,25,0.035)",
       }}
     >
       {hideLogo ? null : <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} />}
@@ -393,7 +383,6 @@ function FeaturedRoleCard({
           borderRadius: tokens.cardRadius,
           boxSizing: "border-box",
           background: glass.background,
-          boxShadow: glass.shadow,
           // Blur only on the visible card — avoids 3× backdrop-filter cost during switches.
           ...(active
             ? {
