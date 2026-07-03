@@ -17,7 +17,7 @@ const GLASS_BG =
 const PANEL_WIDTH = "78%";
 
 const PHONE_ARTBOARD_WIDTH_PX = 360;
-const PHONE_ARTBOARD_HEIGHT_PX = 280;
+const PHONE_ARTBOARD_HEIGHT_PX = 360;
 const PANEL_HEIGHT_PX = 92;
 const CODE_VIEWPORT_HEIGHT_PX = PHONE_ARTBOARD_HEIGHT_PX - PANEL_HEIGHT_PX;
 
@@ -33,15 +33,16 @@ type CodeLine = { text: string; section: number };
 
 type SectionNote = {
   section: number;
-  summary: string;
-  papers: readonly [string, string];
+  /** Why this block was written — plain intent, not marketing copy. */
+  intent: string;
 };
 
 /**
  * 0 setup        — context above (never highlighted)
- * 1 invoice      — paid invoices credit the ledger
- * 2 subscription — status changes stay in sync
- * 3 dispatch     — one map, two paths
+ * 1 invoice      — ≤6 lines
+ * 2 subscription — ≤6 lines
+ * 3 dispatch     — ≤6 lines
+ * 4 trailing     — context below (never highlighted)
  */
 const CODE_LINES: readonly CodeLine[] = [
   { text: "import { NextRequest } from \"next/server\"", section: 0 },
@@ -52,69 +53,72 @@ const CODE_LINES: readonly CodeLine[] = [
   { text: "const stripe = new Stripe(process.env.STRIPE_KEY!)", section: 0 },
   { text: "", section: 0 },
 
+  // 1 — invoice (5 lines)
   { text: "async function onInvoicePaid(event: Stripe.Event) {", section: 1 },
   { text: "  const invoice = event.data.object as Stripe.Invoice", section: 1 },
-  { text: "", section: 1 },
-  { text: "  await ledger.recordPayment({", section: 1 },
-  { text: "    sourceId: invoice.id,", section: 1 },
-  { text: "    customerId: String(invoice.customer),", section: 1 },
-  { text: "    amount: invoice.amount_paid,", section: 1 },
-  { text: "    currency: invoice.currency,", section: 1 },
-  { text: "  })", section: 1 },
+  { text: "  await ledger.recordPayment(", section: 1 },
+  { text: "    invoice.id, invoice.amount_paid)", section: 1 },
   { text: "}", section: 1 },
-  { text: "", section: 1 },
 
+  { text: "", section: 4 },
+
+  // 2 — subscription (5 lines)
   { text: "async function onSubscriptionUpdated(event: Stripe.Event) {", section: 2 },
   { text: "  const sub = event.data.object as Stripe.Subscription", section: 2 },
-  { text: "", section: 2 },
-  { text: "  await ledger.syncSubscription({", section: 2 },
-  { text: "    subscriptionId: sub.id,", section: 2 },
-  { text: "    customerId: String(sub.customer),", section: 2 },
-  { text: "    status: sub.status,", section: 2 },
-  { text: "    periodEnd: sub.current_period_end,", section: 2 },
-  { text: "  })", section: 2 },
+  { text: "  await ledger.syncSubscription(", section: 2 },
+  { text: "    sub.id, sub.status, sub.current_period_end)", section: 2 },
   { text: "}", section: 2 },
-  { text: "", section: 2 },
 
-  { text: "const handlers: Record<", section: 3 },
-  { text: "  string,", section: 3 },
-  { text: "  (event: Stripe.Event) => Promise<void>", section: 3 },
-  { text: "> = {", section: 3 },
+  { text: "", section: 4 },
+
+  // 3 — dispatch (5 lines)
+  { text: "const handlers = {", section: 3 },
   { text: '  "invoice.paid": onInvoicePaid,', section: 3 },
   { text: '  "customer.subscription.updated": onSubscriptionUpdated,', section: 3 },
   { text: "}", section: 3 },
-  { text: "", section: 3 },
-  { text: "async function dispatch(event: Stripe.Event) {", section: 3 },
-  { text: "  const handle = handlers[event.type]", section: 3 },
-  { text: "  if (!handle) return", section: 3 },
-  { text: "  await handle(event)", section: 3 },
-  { text: "}", section: 3 },
-  { text: "", section: 3 },
-  { text: "export async function POST(req: NextRequest) {", section: 3 },
-  { text: "  const event = await readStripeEvent(req)", section: 3 },
-  { text: "  await dispatch(event)", section: 3 },
-  { text: "  return new Response(\"ok\")", section: 3 },
-  { text: "}", section: 3 },
+  { text: "await handlers[event.type]?.(event)", section: 3 },
+
+  { text: "", section: 4 },
+
+  // trailing context (never highlighted)
+  { text: "export async function POST(req: NextRequest) {", section: 4 },
+  { text: "  const payload = await req.text()", section: 4 },
+  { text: "  const sig = req.headers.get(\"stripe-signature\")", section: 4 },
+  { text: "  const event = stripe.webhooks.constructEvent(", section: 4 },
+  { text: "    payload,", section: 4 },
+  { text: "    sig!,", section: 4 },
+  { text: "    process.env.STRIPE_WEBHOOK_SECRET!,", section: 4 },
+  { text: "  )", section: 4 },
+  { text: "  if (await db.events.has(event.id)) return ok()", section: 4 },
+  { text: "  await db.events.insert(event.id)", section: 4 },
+  { text: "  await handlers[event.type]?.(event)", section: 4 },
+  { text: "  return ok()", section: 4 },
+  { text: "}", section: 4 },
 ];
 
 /** Highlight trail: invoice → subscription → dispatch. Setup stays above as context. */
 const HIGHLIGHT_SECTIONS = [1, 2, 3] as const;
 
+const APPLICANT = {
+  name: "Jordan Park",
+  score: "91",
+  time: "9m",
+  location: "NYC",
+  initials: "JP",
+} as const;
+
 const SECTION_NOTES: readonly SectionNote[] = [
   {
     section: 1,
-    summary: "Ledger is credited when the invoice is paid—not when it’s opened.",
-    papers: ["Payment Reconciliation", "Double-Entry Basics"],
+    intent: "Paid invoices write the credit.",
   },
   {
     section: 2,
-    summary: "Subscription status and period end move in the same write.",
-    papers: ["Subscription Lifecycles", "Recurring Billing"],
+    intent: "Subscription changes update status and period.",
   },
   {
     section: 3,
-    summary: "Event type picks the function. No long switch statement.",
-    papers: ["Event-Driven Design", "Webhook Patterns"],
+    intent: "Event type picks the handler.",
   },
 ];
 
@@ -128,25 +132,6 @@ function sectionRange(section: number) {
     }
   });
   return { start, end };
-}
-
-function PaperTag({ label }: { label: string }) {
-  return (
-    <span
-      className={`${inter.className} inline-flex shrink-0 items-center whitespace-nowrap`}
-      style={{
-        background: "rgba(28, 22, 16, 0.06)",
-        color: GLASS_MUTED,
-        fontSize: "0.58rem",
-        fontWeight: 500,
-        lineHeight: 1,
-        padding: "0.22rem 0.38rem",
-        borderRadius: "999px",
-      }}
-    >
-      {label}
-    </span>
-  );
 }
 
 function ExplanationPanel({ activeSection }: { activeSection: number }) {
@@ -175,7 +160,7 @@ function ExplanationPanel({ activeSection }: { activeSection: number }) {
             key={note.section}
             className="absolute inset-0 flex flex-col justify-center"
             style={{
-              padding: "0.55rem 0.7rem",
+              padding: "0.4rem 0.58rem",
               opacity: active ? 1 : 0,
               transition: reduceMotion
                 ? undefined
@@ -184,24 +169,74 @@ function ExplanationPanel({ activeSection }: { activeSection: number }) {
             }}
           >
             <p
-              className={`${plusJakartaSans.className} m-0`}
+              className={`${suisseIntl.className} m-0`}
               style={{
                 color: GLASS_INK,
-                fontSize: "0.72rem",
+                fontSize: "0.8rem",
                 fontWeight: 500,
-                lineHeight: 1.35,
-                letterSpacing: "-0.015em",
+                lineHeight: 1.2,
+                letterSpacing: "-0.02em",
               }}
             >
-              {note.summary}
+              {note.intent}
             </p>
+
             <div
-              className="flex flex-wrap items-center"
-              style={{ gap: "0.28rem", marginTop: "0.38rem" }}
+              className="flex items-center"
+              style={{ gap: "0.38rem", marginTop: "0.32rem" }}
             >
-              {note.papers.map((paper) => (
-                <PaperTag key={paper} label={paper} />
-              ))}
+              <div
+                className={`${inter.className} flex shrink-0 items-center justify-center rounded-full`}
+                style={{
+                  width: "1.15rem",
+                  height: "1.15rem",
+                  background: "rgba(28, 22, 16, 0.1)",
+                  color: GLASS_INK,
+                  fontSize: "0.48rem",
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                }}
+                aria-hidden
+              >
+                {APPLICANT.initials}
+              </div>
+              <span
+                className={`${inter.className} truncate`}
+                style={{
+                  color: GLASS_MUTED,
+                  fontSize: "0.62rem",
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                {APPLICANT.name}
+              </span>
+              <span
+                aria-hidden
+                style={{
+                  width: "0.2rem",
+                  height: "0.2rem",
+                  borderRadius: "999px",
+                  background: "rgba(28, 22, 16, 0.18)",
+                  flexShrink: 0,
+                }}
+              />
+              <span
+                className={`${inter.className} shrink-0 tabular-nums`}
+                style={{
+                  color: GLASS_MUTED,
+                  fontSize: "0.62rem",
+                  fontWeight: 500,
+                  lineHeight: 1,
+                }}
+              >
+                {APPLICANT.score}
+                <span style={{ margin: "0 0.22em", opacity: 0.35 }}>·</span>
+                {APPLICANT.time}
+                <span style={{ margin: "0 0.22em", opacity: 0.35 }}>·</span>
+                {APPLICANT.location}
+              </span>
             </div>
           </div>
         );
@@ -306,9 +341,9 @@ function CodeScene({
           width,
           height: codeViewportHeight,
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 88%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 88%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%)",
         }}
       >
         <CodeSnippet
@@ -365,7 +400,11 @@ export function ProtoSandboxCodeSnippetVisual({
     >
       <div className="flex h-full w-full items-center justify-center px-4">
         <div className="w-full max-w-[22rem]">
-          <CodeScene activeSection={activeSection} width={360} height={280} />
+          <CodeScene
+            activeSection={activeSection}
+            width={PHONE_ARTBOARD_WIDTH_PX}
+            height={PHONE_ARTBOARD_HEIGHT_PX}
+          />
         </div>
       </div>
     </div>
