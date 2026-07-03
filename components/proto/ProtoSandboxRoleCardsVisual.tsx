@@ -39,7 +39,6 @@ type CardPosition = {
 type VisualTokens = {
   clusterHeight: string;
   cardWidth: string;
-  cardHeight: string;
   cardPad: string;
   cardRadius: string;
   logoHeight: string;
@@ -55,11 +54,9 @@ type VisualTokens = {
   tagRowMarginTop: string;
 };
 
-/** Shared box size — matches Harmony Health’s natural footprint. */
 const PHONE_TOKENS: VisualTokens = {
   clusterHeight: `${PHONE_CLUSTER_HEIGHT_REM}rem`,
-  cardWidth: "18.25rem",
-  cardHeight: "11.5rem",
+  cardWidth: "78%",
   cardPad: "0.82rem 0.88rem",
   cardRadius: "0.72rem",
   logoHeight: "2.35rem",
@@ -77,8 +74,7 @@ const PHONE_TOKENS: VisualTokens = {
 
 const DESKTOP_TOKENS: VisualTokens = {
   clusterHeight: "clamp(28.5rem, 84%, 33rem)",
-  cardWidth: "18.25rem",
-  cardHeight: "11.5rem",
+  cardWidth: "76%",
   cardPad: "clamp(0.78rem, 0.95vw, 0.92rem) clamp(0.82rem, 1vw, 0.96rem)",
   cardRadius: "clamp(0.7rem, 0.84vw, 0.84rem)",
   logoHeight: "clamp(2.1rem, 2.45vw, 2.55rem)",
@@ -339,7 +335,6 @@ function SandboxRoleCard({
         left: position.left,
         zIndex: position.zIndex,
         width: tokens.cardWidth,
-        height: tokens.cardHeight,
         padding: tokens.cardPad,
         borderRadius: tokens.cardRadius,
         boxSizing: "border-box",
