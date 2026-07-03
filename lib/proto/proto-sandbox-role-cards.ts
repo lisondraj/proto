@@ -24,7 +24,7 @@ export const PROTO_SANDBOX_ROLE_CARDS: readonly ProtoSandboxRoleCard[] = [
   {
     id: "harmony",
     startupName: "Harmony Health",
-    role: "Product Manager",
+    role: "Product Manager II",
     taskBrief: "Ship the patient intake flow",
     checklist: [
       "Define completion metrics",
