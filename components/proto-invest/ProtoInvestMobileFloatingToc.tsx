@@ -33,11 +33,12 @@ function TocIcon() {
   );
 }
 
-function isPastNavRevealThreshold() {
-  return window.scrollY > 56;
+function isProtoNavPunchedOut() {
+  const nav = document.querySelector("nav.doephone-site-nav.proto-nav-scroll-frost");
+  return nav?.classList.contains("proto-nav--scrolled") ?? false;
 }
 
-/** iPhone /about — frosted TOC circle fixed bottom-right; visible after scroll. */
+/** iPhone /about — frosted TOC circle fixed bottom-right; visible with punched-out nav only. */
 export function ProtoInvestMobileFloatingToc() {
   const [mounted, setMounted] = useState(false);
   const [navPunchedOut, setNavPunchedOut] = useState(false);
@@ -80,7 +81,7 @@ export function ProtoInvestMobileFloatingToc() {
     const sync = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const punchedOut = isPastNavRevealThreshold();
+        const punchedOut = isProtoNavPunchedOut();
         setNavPunchedOut(punchedOut);
         if (!punchedOut) {
           setPanelRevealed(false);
