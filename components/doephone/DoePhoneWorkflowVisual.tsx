@@ -1,7 +1,11 @@
 "use client";
 
+import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 import { inter, suisseIntl } from "@/lib/home/fonts";
 import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
+
+const PHONE_ARTBOARD_WIDTH_PX = 360;
+const PHONE_ARTBOARD_HEIGHT_PX = 400;
 
 const { ink: INK, accent: DOE_ORANGE, divider: DIVIDER } = CAROUSEL_MENU_UI;
 
@@ -291,10 +295,66 @@ function HeaderButton({
   );
 }
 
+function WorkflowCard({ headingSize }: { headingSize: string }) {
+  return (
+    <div
+      className={`w-full border bg-white ${OUTER_RADIUS}`}
+      style={{ borderColor: BORDER, padding: CARD_PAD }}
+    >
+      <div
+        className="flex items-center justify-between"
+        style={{ gap: "clamp(0.55rem,1.65vmin,0.72rem)", marginBottom: "clamp(0.78rem,2.45vmin,0.95rem)" }}
+      >
+        <p
+          className="min-w-0 truncate font-semibold leading-none tracking-[-0.015em]"
+          style={{ color: INK, fontSize: headingSize }}
+        >
+          Documents Workflow
+        </p>
+
+        <div className="flex shrink-0 items-center" style={{ gap: "clamp(0.28rem,0.85vmin,0.36rem)" }}>
+          <HeaderButton label="Review" />
+          <HeaderButton label="Deploy" variant="solid" />
+        </div>
+      </div>
+
+      <IncomingDocsFlow />
+
+      <div className="flex justify-center">
+        <FlowConnector />
+      </div>
+
+      <ClinicalOutcomesColumn />
+    </div>
+  );
+}
+
 /** Incoming document flow web — Inbox carousel slide. */
 export function DoePhoneWorkflowVisual({ layout = "phone" }: { layout?: "phone" | "desktop" }) {
   const headingSize = "clamp(1.02rem,3.15vmin,1.22rem)";
-  const cardScale = layout === "desktop" ? 0.78 : 0.9;
+
+  if (layout === "phone") {
+    return (
+      <div className={`mx-auto h-full w-full ${suisseIntl.className}`} aria-hidden>
+        <ProtoPhoneScaledArtboard
+          width={PHONE_ARTBOARD_WIDTH_PX}
+          height={PHONE_ARTBOARD_HEIGHT_PX}
+          fitScale={1.06}
+          fixedBounds
+        >
+          <div
+            className="flex h-full w-full items-center justify-center px-3"
+            style={{
+              width: PHONE_ARTBOARD_WIDTH_PX,
+              height: PHONE_ARTBOARD_HEIGHT_PX,
+            }}
+          >
+            <WorkflowCard headingSize={headingSize} />
+          </div>
+        </ProtoPhoneScaledArtboard>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -302,39 +362,8 @@ export function DoePhoneWorkflowVisual({ layout = "phone" }: { layout?: "phone" 
       style={{ maxWidth: CAROUSEL_MENU_UI.maxWidthPhone }}
       aria-hidden
     >
-      <div
-        className="w-full origin-center"
-        style={{ transform: `scale(${cardScale})` }}
-      >
-        <div
-          className={`w-full border bg-white ${OUTER_RADIUS}`}
-          style={{ borderColor: BORDER, padding: CARD_PAD }}
-        >
-        <div
-          className="flex items-center justify-between"
-          style={{ gap: "clamp(0.55rem,1.65vmin,0.72rem)", marginBottom: "clamp(0.78rem,2.45vmin,0.95rem)" }}
-        >
-          <p
-            className="min-w-0 truncate font-semibold leading-none tracking-[-0.015em]"
-            style={{ color: INK, fontSize: headingSize }}
-          >
-            Documents Workflow
-          </p>
-
-          <div className="flex shrink-0 items-center" style={{ gap: "clamp(0.28rem,0.85vmin,0.36rem)" }}>
-            <HeaderButton label="Review" />
-            <HeaderButton label="Deploy" variant="solid" />
-          </div>
-        </div>
-
-        <IncomingDocsFlow />
-
-        <div className="flex justify-center">
-          <FlowConnector />
-        </div>
-
-        <ClinicalOutcomesColumn />
-        </div>
+      <div className="w-full origin-center" style={{ transform: "scale(0.78)" }}>
+        <WorkflowCard headingSize={headingSize} />
       </div>
     </div>
   );

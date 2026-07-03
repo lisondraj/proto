@@ -402,7 +402,7 @@ function FeaturedRoleCard({
           }}
         >
           <h3
-            className={`${suisseIntl.className} m-0 font-semibold tracking-[-0.025em]`}
+            className={`${plusJakartaSans.className} m-0 font-semibold tracking-[-0.025em]`}
             style={{
               color: GLASS_INK,
               fontSize: "0.9rem",

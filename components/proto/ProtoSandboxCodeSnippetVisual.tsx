@@ -18,7 +18,7 @@ const PANEL_WIDTH = "78%";
 
 const PHONE_ARTBOARD_WIDTH_PX = 360;
 const PHONE_ARTBOARD_HEIGHT_PX = 360;
-const PANEL_HEIGHT_PX = 92;
+const PANEL_HEIGHT_PX = 82;
 const PROFILE_LINE_PX = 28;
 const BOTTOM_STACK_PX = PANEL_HEIGHT_PX + PROFILE_LINE_PX;
 
@@ -162,7 +162,7 @@ function ExplanationPanel({ activeSection }: { activeSection: number }) {
             key={note.section}
             className="absolute inset-0 flex items-center"
             style={{
-              padding: "0.58rem 0.82rem",
+              padding: "0.82rem",
               opacity: active ? 1 : 0,
               transition: reduceMotion
                 ? undefined
