@@ -2,13 +2,13 @@
 
 import type { ReactNode, SVGProps } from "react";
 
-import { lora, outfit, suisseIntl } from "@/lib/home/fonts";
+import { inter, plusJakartaSans } from "@/lib/home/fonts";
 
 const INK = "#2C2419";
 const MUTED = "#8A7D6E";
 /** Light lockup for dark shader backgrounds. */
 const LIGHT_INK = "#FFF9F2";
-const LIGHT_MUTED = "rgba(255, 249, 242, 0.72)";
+const LIGHT_MUTED = "rgba(255, 249, 242, 0.88)";
 
 type LogoTheme = "default" | "light";
 
@@ -81,22 +81,15 @@ function NorthwindIcon({
   theme = "default",
   ...props
 }: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
-  const isLight = theme === "light";
-  const fill = isLight ? LIGHT_INK : INK;
-  const cutout = isLight ? "#1A2224" : "#FFFFFF";
-  const accent = isLight ? "rgba(255, 249, 242, 0.55)" : INK;
+  const ink = theme === "light" ? LIGHT_INK : INK;
 
+  // Compass ring + north pointer — reads as ops/navigation.
   return (
     <svg viewBox="0 0 32 32" fill="none" {...props}>
-      <path d="M16 4l10 22H19.2l-1.4-4.2H10.2L8.8 26H6L16 4z" fill={fill} />
-      <path d="M11.5 17.2h9L16 9.8 11.5 17.2z" fill={cutout} />
-      <path
-        d="M23.5 8.5l4.5 2.5M23.5 13l4.5 2M23.5 17.5l4.5 2.5"
-        stroke={accent}
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        opacity={isLight ? 1 : 0.55}
-      />
+      <circle cx="16" cy="16" r="11" stroke={ink} strokeWidth="1.8" />
+      <path d="M16 7.5l3.6 8.2H12.4L16 7.5z" fill={ink} />
+      <path d="M16 16.5v7" stroke={ink} strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="16" cy="16" r="1.6" fill={ink} />
     </svg>
   );
 }
@@ -108,7 +101,9 @@ function LogoLockup({
   height,
   fontClassName,
   textSize = "0.92em",
+  textGap = "0.28em",
   theme = "default",
+  allWhite = false,
 }: {
   Icon: (props: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) => JSX.Element;
   primary: string;
@@ -116,17 +111,19 @@ function LogoLockup({
   height: string;
   fontClassName: string;
   textSize?: string;
+  textGap?: string;
   theme?: LogoTheme;
+  allWhite?: boolean;
 }) {
-  const ink = theme === "light" ? LIGHT_INK : INK;
-  const muted = theme === "light" ? LIGHT_MUTED : MUTED;
+  const ink = theme === "light" || allWhite ? LIGHT_INK : INK;
+  const muted = theme === "light" && allWhite ? LIGHT_INK : theme === "light" ? LIGHT_MUTED : MUTED;
 
   return (
     <LogoFrame height={height}>
       <div className="flex min-w-0 items-center" style={{ gap: "0.55em" }}>
         <Icon theme={theme} style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
         {secondary ? (
-          <div className={`flex min-w-0 items-baseline ${fontClassName}`} style={{ gap: "0.28em" }}>
+          <div className={`flex min-w-0 items-baseline ${fontClassName}`} style={{ gap: textGap }}>
             <span
               style={{
                 color: ink,
@@ -183,28 +180,30 @@ export function HarmonyHealthLogo({
     <LogoFrame height={height}>
       <div className="flex min-w-0 items-center" style={{ gap: "0.55em" }}>
         <HarmonyIcon theme={theme} style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
-        <div className={`flex flex-col items-start ${lora.className}`} style={{ gap: "0.1em" }}>
+        <div className="flex min-w-0 items-baseline" style={{ gap: "0.28em" }}>
           <span
+            className={plusJakartaSans.className}
             style={{
               color: ink,
-              fontSize: "0.92em",
+              fontSize: "1.08em",
               fontWeight: 700,
-              letterSpacing: "-0.035em",
+              letterSpacing: "-0.03em",
               lineHeight: 1,
             }}
           >
-            harmony
+            Harmony
           </span>
           <span
+            className={inter.className}
             style={{
               color: muted,
-              fontSize: "0.92em",
+              fontSize: "1.08em",
               fontWeight: 500,
               letterSpacing: "-0.02em",
               lineHeight: 1,
             }}
           >
-            health
+            Health
           </span>
         </div>
       </div>
@@ -224,7 +223,7 @@ export function LedgerAiLogo({
       Icon={LedgerIcon}
       primary="Ledger"
       height={height}
-      fontClassName={suisseIntl.className}
+      fontClassName={plusJakartaSans.className}
       textSize="1.08em"
       theme={theme}
     />
@@ -239,15 +238,37 @@ export function NorthwindOpsLogo({
   theme?: LogoTheme;
 }) {
   return (
-    <LogoLockup
-      Icon={NorthwindIcon}
-      primary="NORTHWIND"
-      secondary="OPS"
-      height={height}
-      fontClassName={outfit.className}
-      textSize="1.08em"
-      theme={theme}
-    />
+    <LogoFrame height={height}>
+      <div className="flex min-w-0 items-center" style={{ gap: "0.55em" }}>
+        <NorthwindIcon theme={theme} style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
+        <div className="flex min-w-0 items-baseline" style={{ gap: "0.06em" }}>
+          <span
+            className={plusJakartaSans.className}
+            style={{
+              color: theme === "light" ? LIGHT_INK : INK,
+              fontSize: "1.08em",
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
+              lineHeight: 1,
+            }}
+          >
+            NORTHWIND
+          </span>
+          <span
+            className={inter.className}
+            style={{
+              color: theme === "light" ? LIGHT_INK : MUTED,
+              fontSize: "1.08em",
+              fontWeight: 500,
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+            }}
+          >
+            OPS
+          </span>
+        </div>
+      </div>
+    </LogoFrame>
   );
 }
 

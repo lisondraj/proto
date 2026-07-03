@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
-import { dmSans, suisseIntl } from "@/lib/home/fonts";
+import { dmSans, inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 import { ProtoSandboxStartupLogo } from "@/components/proto/ProtoSandboxStartupLogos";
 import {
@@ -11,8 +11,13 @@ import {
   type ProtoSandboxRoleCard,
 } from "@/lib/proto/proto-sandbox-role-cards";
 
-const FEATURED_HOLD_MS = 5200;
-const FEATURED_FADE_MS = 480;
+const FEATURED_HOLD_MS = 20000;
+const FEATURED_STAGGER_MS = 40;
+const FEATURED_BOUNCE_MS = 420;
+const FEATURED_LINE_COUNT = 11;
+const FEATURED_EXIT_MS =
+  FEATURED_BOUNCE_MS + FEATURED_STAGGER_MS * (FEATURED_LINE_COUNT - 1);
+const FEATURED_BOUNCE_EASE = "cubic-bezier(0.34, 1.45, 0.64, 1)";
 
 const INK = "#2C2419";
 const MUTED = "#7A6F63";
@@ -24,6 +29,35 @@ const CARD_FACE = "#FFF9F2";
 /** Soft cream wash — warm paper, not flat white. */
 const CARD_SURFACE =
   "linear-gradient(180deg, #FFFCF7 0%, #FFF9F2 52%, #F9F1E6 100%)";
+
+/** Frosted glass panels for featured position cards — no border; depth from light only. */
+const FEATURED_GLASS_BY_ID: Record<
+  ProtoSandboxRoleCard["id"],
+  { background: string; shadow: string }
+> = {
+  ledger: {
+    background:
+      "linear-gradient(160deg, rgba(255,255,255,0.88) 0%, rgba(255,250,244,0.72) 42%, rgba(255,244,232,0.52) 100%)",
+    shadow:
+      "inset 0 1px 0 rgba(255,255,255,0.72), inset 0 -10px 18px rgba(255,255,255,0.12), 0 10px 28px rgba(0,0,0,0.12)",
+  },
+  harmony: {
+    background:
+      "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,252,248,0.74) 42%, rgba(255,248,240,0.54) 100%)",
+    shadow:
+      "inset 0 1px 0 rgba(255,255,255,0.78), inset 0 -10px 18px rgba(255,255,255,0.14), 0 10px 28px rgba(0,0,0,0.11)",
+  },
+  northwind: {
+    background:
+      "linear-gradient(160deg, rgba(255,252,246,0.9) 0%, rgba(255,246,236,0.7) 42%, rgba(255,240,226,0.5) 100%)",
+    shadow:
+      "inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -10px 18px rgba(255,255,255,0.1), 0 10px 28px rgba(0,0,0,0.12)",
+  },
+};
+
+/** Text on frosted glass — clear warm ink, readable secondary. */
+const GLASS_INK = "#1C1610";
+const GLASS_MUTED = "#5E564C";
 
 /** iPhone artboard — fixed layout that scales as one unit (like a vector). */
 const PHONE_ARTBOARD_WIDTH_PX = 360;
@@ -67,7 +101,7 @@ const PHONE_TOKENS: VisualTokens = {
   cardWidth: "78%",
   cardPad: "0.82rem 0.88rem",
   cardRadius: "0.55rem",
-  logoHeight: "2.35rem",
+  logoHeight: "2.75rem",
   role: "0.84rem",
   task: "0.76rem",
   checklist: "0.68rem",
@@ -76,7 +110,7 @@ const PHONE_TOKENS: VisualTokens = {
   tagPadY: "0.22rem",
   tagGap: "0.2rem",
   bodyGap: "0.32rem",
-  checklistGap: "0.18rem",
+  checklistGap: "0.1rem",
   tagRowMarginTop: "0.36rem",
 };
 
@@ -85,7 +119,7 @@ const DESKTOP_TOKENS: VisualTokens = {
   cardWidth: "76%",
   cardPad: "clamp(0.78rem, 0.95vw, 0.92rem) clamp(0.82rem, 1vw, 0.96rem)",
   cardRadius: "clamp(0.52rem, 0.64vw, 0.64rem)",
-  logoHeight: "clamp(2.1rem, 2.45vw, 2.55rem)",
+  logoHeight: "clamp(2.45rem, 2.85vw, 2.95rem)",
   role: "clamp(0.78rem, 0.9vw, 0.9rem)",
   task: "clamp(0.7rem, 0.82vw, 0.82rem)",
   checklist: "clamp(0.62rem, 0.72vw, 0.74rem)",
@@ -94,7 +128,7 @@ const DESKTOP_TOKENS: VisualTokens = {
   tagPadY: "clamp(0.22rem, 0.26vw, 0.28rem)",
   tagGap: "clamp(0.18rem, 0.22vw, 0.24rem)",
   bodyGap: "clamp(0.3rem, 0.36vw, 0.38rem)",
-  checklistGap: "clamp(0.15rem, 0.18vw, 0.2rem)",
+  checklistGap: "clamp(0.08rem, 0.1vw, 0.12rem)",
   tagRowMarginTop: "clamp(0.34rem, 0.4vw, 0.42rem)",
 };
 
@@ -135,18 +169,60 @@ function RoleCardTag({
   );
 }
 
+function BounceLine({
+  active,
+  order,
+  reduceMotion,
+  children,
+  className,
+  style,
+}: {
+  active: boolean;
+  order: number;
+  reduceMotion: boolean;
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  const delay = reduceMotion
+    ? 0
+    : active
+      ? order * FEATURED_STAGGER_MS
+      : (FEATURED_LINE_COUNT - 1 - order) * FEATURED_STAGGER_MS;
+
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        opacity: active ? 1 : 0,
+        transform: active ? "translateY(0)" : "translateY(0.55rem)",
+        transition: reduceMotion
+          ? undefined
+          : `opacity ${FEATURED_BOUNCE_MS}ms ease, transform ${FEATURED_BOUNCE_MS}ms ${FEATURED_BOUNCE_EASE}`,
+        transitionDelay: `${delay}ms`,
+        willChange: reduceMotion ? undefined : "opacity, transform",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function RoleCardTaskRail({
   taskBrief,
   items,
   tokens,
   onDark = false,
   flushTop = false,
+  bounce,
 }: {
   taskBrief: string;
   items: readonly [string, string, string];
   tokens: VisualTokens;
   onDark?: boolean;
   flushTop?: boolean;
+  bounce?: { active: boolean; reduceMotion: boolean; baseOrder: number };
 }) {
   const ink = onDark ? "#FFF9F2" : INK;
   const muted = onDark ? "rgba(255,249,242,0.72)" : MUTED;
@@ -154,34 +230,50 @@ function RoleCardTaskRail({
   const rail = onDark ? "rgba(255,249,242,0.28)" : RAIL_LINE;
   const face = onDark ? "transparent" : CARD_FACE;
 
+  const wrapLine = (order: number, node: ReactNode) => {
+    if (!bounce) return node;
+    return (
+      <BounceLine
+        active={bounce.active}
+        order={bounce.baseOrder + order}
+        reduceMotion={bounce.reduceMotion}
+      >
+        {node}
+      </BounceLine>
+    );
+  };
+
   return (
     <div
       className={`${dmSans.className} min-w-0`}
       style={{ marginTop: flushTop ? 0 : tokens.bodyGap }}
     >
-      <div className="flex min-w-0 items-start" style={{ gap: "0.52em" }}>
-        <div
-          className="mt-[0.34em] shrink-0 rounded-full"
-          style={{
-            width: "0.4em",
-            height: "0.4em",
-            border: `1px solid ${dot}`,
-            background: face,
-            boxSizing: "border-box",
-          }}
-          aria-hidden
-        />
-        <p
-          className="min-w-0 whitespace-nowrap font-semibold leading-snug"
-          style={{
-            margin: 0,
-            color: ink,
-            fontSize: tokens.task,
-          }}
-        >
-          {taskBrief}
-        </p>
-      </div>
+      {wrapLine(
+        0,
+        <div className="flex min-w-0 items-start" style={{ gap: "0.52em" }}>
+          <div
+            className="mt-[0.34em] shrink-0 rounded-full"
+            style={{
+              width: "0.4em",
+              height: "0.4em",
+              border: `1px solid ${dot}`,
+              background: face,
+              boxSizing: "border-box",
+            }}
+            aria-hidden
+          />
+          <p
+            className="min-w-0 whitespace-nowrap font-semibold leading-snug"
+            style={{
+              margin: 0,
+              color: ink,
+              fontSize: tokens.task,
+            }}
+          >
+            {taskBrief}
+          </p>
+        </div>,
+      )}
 
       <div
         className="relative min-w-0"
@@ -196,6 +288,13 @@ function RoleCardTaskRail({
           style={{
             left: "0.28em",
             background: rail,
+            opacity: bounce && !bounce.active ? 0 : 1,
+            transition: bounce?.reduceMotion
+              ? undefined
+              : `opacity ${FEATURED_BOUNCE_MS}ms ease`,
+            transitionDelay: bounce
+              ? `${(bounce.active ? bounce.baseOrder : FEATURED_LINE_COUNT - 1 - bounce.baseOrder) * FEATURED_STAGGER_MS}ms`
+              : undefined,
           }}
           aria-hidden
         />
@@ -204,16 +303,20 @@ function RoleCardTaskRail({
           className="m-0 flex list-none flex-col p-0"
           style={{ gap: tokens.checklistGap }}
         >
-          {items.map((item) => (
-            <li
-              key={item}
-              className="whitespace-nowrap leading-snug"
-              style={{
-                color: muted,
-                fontSize: tokens.checklist,
-              }}
-            >
-              {item}
+          {items.map((item, itemIndex) => (
+            <li key={item} className="list-none">
+              {wrapLine(
+                1 + itemIndex,
+                <span
+                  className="whitespace-nowrap leading-snug"
+                  style={{
+                    color: muted,
+                    fontSize: tokens.checklist,
+                  }}
+                >
+                  {item}
+                </span>,
+              )}
             </li>
           ))}
         </ul>
@@ -328,11 +431,21 @@ function CardCluster({ layout, tokens }: { layout: VisualLayout; tokens: VisualT
 function FeaturedRoleCard({
   card,
   tokens,
+  active,
+  reduceMotion,
 }: {
   card: ProtoSandboxRoleCard;
   tokens: VisualTokens;
+  active: boolean;
+  reduceMotion: boolean;
 }) {
   const summary = card.roleSummary;
+  const glass = FEATURED_GLASS_BY_ID[card.id];
+  const glassDelay = reduceMotion
+    ? 0
+    : active
+      ? FEATURED_STAGGER_MS
+      : (FEATURED_LINE_COUNT - 2) * FEATURED_STAGGER_MS;
   const belowTokens: VisualTokens = {
     ...tokens,
     task: "0.92rem",
@@ -341,79 +454,132 @@ function FeaturedRoleCard({
     tagPadX: "0.52rem",
     tagPadY: "0.26rem",
     tagGap: "0.26rem",
-    checklistGap: "0.24rem",
+    checklistGap: "0.12rem",
     tagRowMarginTop: "0.48rem",
     bodyGap: "0.4rem",
   };
 
   return (
     <div className="flex w-full flex-col items-start">
-      <div style={{ marginBottom: "0.42rem" }}>
+      <BounceLine
+        active={active}
+        order={0}
+        reduceMotion={reduceMotion}
+        style={{ marginBottom: "0.2rem" }}
+      >
         <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} theme="light" />
-      </div>
+      </BounceLine>
 
       <article
-        className={`w-full flex flex-col ${suisseIntl.className}`}
+        className={`w-full flex flex-col ${plusJakartaSans.className}`}
         style={{
           padding: "0.55rem 0.72rem",
           borderRadius: tokens.cardRadius,
           boxSizing: "border-box",
-          background: CARD_SURFACE,
-          boxShadow: "inset 0 1px 0 rgba(255,253,249,0.95), inset 0 -1px 0 rgba(44,36,25,0.035)",
+          background: glass.background,
+          boxShadow: glass.shadow,
+          backdropFilter: active
+            ? "blur(18px) saturate(1.35) brightness(1.04)"
+            : "blur(5px) saturate(1.05)",
+          WebkitBackdropFilter: active
+            ? "blur(18px) saturate(1.35) brightness(1.04)"
+            : "blur(5px) saturate(1.05)",
+          opacity: active ? 1 : 0,
+          transform: active ? "translateY(0)" : "translateY(0.55rem)",
+          transition: reduceMotion
+            ? undefined
+            : `opacity ${FEATURED_BOUNCE_MS}ms ease, transform ${FEATURED_BOUNCE_MS}ms ${FEATURED_BOUNCE_EASE}, backdrop-filter ${FEATURED_BOUNCE_MS}ms ease, -webkit-backdrop-filter ${FEATURED_BOUNCE_MS}ms ease`,
+          transitionDelay: `${glassDelay}ms`,
+          willChange: reduceMotion ? undefined : "opacity, transform, backdrop-filter",
         }}
       >
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
+        <div
+          className="grid w-full"
+          style={{
+            gridTemplateColumns: "minmax(0, 1fr) auto",
+            columnGap: "0.7rem",
+            rowGap: "0.1rem",
+            alignItems: "baseline",
+          }}
+        >
+          <BounceLine active={active} order={1} reduceMotion={reduceMotion}>
             <h3
-              className="font-semibold leading-tight tracking-[-0.02em]"
+              className="m-0 font-semibold tracking-[-0.025em]"
               style={{
-                color: INK,
+                color: GLASS_INK,
                 fontSize: tokens.role,
+                lineHeight: 1.2,
               }}
             >
               {card.role}
             </h3>
-
-            {summary ? (
-              <div className={`${dmSans.className}`} style={{ marginTop: "0.14rem" }}>
-                <p
-                  className="m-0 font-semibold leading-snug tracking-[-0.02em]"
-                  style={{ color: INK, fontSize: tokens.task }}
-                >
-                  {summary.pay}
-                </p>
-                <p
-                  className="m-0 leading-snug"
-                  style={{
-                    color: MUTED,
-                    fontSize: tokens.checklist,
-                    marginTop: "0.08rem",
-                  }}
-                >
-                  {summary.equity}
-                </p>
-              </div>
-            ) : null}
-          </div>
+          </BounceLine>
 
           {summary ? (
-            <div
-              className={`${dmSans.className} flex shrink-0 flex-col items-end text-right`}
-              style={{ gap: "0.1rem" }}
-            >
+            <BounceLine active={active} order={4} reduceMotion={reduceMotion}>
               <span
-                className="whitespace-nowrap leading-snug"
-                style={{ color: MUTED, fontSize: tokens.checklist }}
+                className={`${inter.className} whitespace-nowrap text-right font-medium`}
+                style={{
+                  color: GLASS_MUTED,
+                  fontSize: tokens.checklist,
+                  lineHeight: 1.2,
+                }}
               >
                 {summary.location}
               </span>
+            </BounceLine>
+          ) : (
+            <span />
+          )}
+
+          {summary ? (
+            <BounceLine active={active} order={2} reduceMotion={reduceMotion}>
+              <p
+                className="m-0 font-semibold tracking-[-0.02em]"
+                style={{
+                  color: GLASS_INK,
+                  fontSize: tokens.task,
+                  lineHeight: 1.2,
+                }}
+              >
+                {summary.pay}
+              </p>
+            </BounceLine>
+          ) : null}
+
+          {summary ? (
+            <BounceLine active={active} order={5} reduceMotion={reduceMotion}>
               <span
-                className="whitespace-nowrap leading-snug"
-                style={{ color: MUTED, fontSize: tokens.checklist }}
+                className={`${inter.className} whitespace-nowrap text-right font-medium`}
+                style={{
+                  color: GLASS_MUTED,
+                  fontSize: tokens.checklist,
+                  lineHeight: 1.2,
+                }}
               >
                 {summary.type}
               </span>
-            </div>
+            </BounceLine>
+          ) : null}
+
+          {summary ? (
+            <BounceLine
+              active={active}
+              order={3}
+              reduceMotion={reduceMotion}
+              style={{ gridColumn: "1 / 2" }}
+            >
+              <p
+                className={`${inter.className} m-0 font-normal`}
+                style={{
+                  color: GLASS_MUTED,
+                  fontSize: tokens.checklist,
+                  lineHeight: 1.2,
+                }}
+              >
+                {summary.equity}
+              </p>
+            </BounceLine>
           ) : null}
         </div>
       </article>
@@ -425,8 +591,20 @@ function FeaturedRoleCard({
           tokens={belowTokens}
           onDark
           flushTop
+          bounce={{ active, reduceMotion, baseOrder: 6 }}
         />
-        <RoleCardTags card={card} tokens={belowTokens} onDark />
+        <BounceLine
+          active={active}
+          order={10}
+          reduceMotion={reduceMotion}
+          style={{ marginTop: belowTokens.tagRowMarginTop }}
+        >
+          <RoleCardTags
+            card={card}
+            tokens={{ ...belowTokens, tagRowMarginTop: "0" }}
+            onDark
+          />
+        </BounceLine>
       </div>
     </div>
   );
@@ -442,7 +620,7 @@ function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
     setReduceMotion(prefersReduced);
 
     let holdTimer: number | undefined;
-    let fadeTimer: number | undefined;
+    let exitTimer: number | undefined;
 
     const schedule = () => {
       holdTimer = window.setTimeout(() => {
@@ -453,11 +631,11 @@ function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
         }
 
         setVisible(false);
-        fadeTimer = window.setTimeout(() => {
+        exitTimer = window.setTimeout(() => {
           setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
           setVisible(true);
           schedule();
-        }, FEATURED_FADE_MS);
+        }, FEATURED_EXIT_MS);
       }, FEATURED_HOLD_MS);
     };
 
@@ -465,16 +643,15 @@ function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
 
     return () => {
       window.clearTimeout(holdTimer);
-      window.clearTimeout(fadeTimer);
+      window.clearTimeout(exitTimer);
     };
   }, []);
 
   return (
     // Stack every slide in one grid cell so height stays max(all) — no scale jump.
-    <div className="mx-auto grid" style={{ width: tokens.cardWidth }}>
+    <div className="grid" style={{ width: tokens.cardWidth }}>
       {PROTO_SANDBOX_FEATURED_CYCLE.map((card, slideIndex) => {
-        const active = slideIndex === index;
-        const shown = active && visible;
+        const active = slideIndex === index && visible;
 
         return (
           <div
@@ -483,13 +660,15 @@ function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
             style={{
               alignSelf: "start",
               justifySelf: "stretch",
-              opacity: shown ? 1 : 0,
-              transition: reduceMotion ? undefined : `opacity ${FEATURED_FADE_MS}ms ease`,
-              pointerEvents: shown ? "auto" : "none",
-              willChange: reduceMotion ? undefined : "opacity",
+              pointerEvents: active ? "auto" : "none",
             }}
           >
-            <FeaturedRoleCard card={card} tokens={tokens} />
+            <FeaturedRoleCard
+              card={card}
+              tokens={tokens}
+              active={active}
+              reduceMotion={reduceMotion}
+            />
           </div>
         );
       })}
@@ -507,7 +686,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
           height={PHONE_FEATURED_ARTBOARD_HEIGHT_PX}
-          fitScale={1}
+          fitScale={1.06}
           fixedBounds
         >
           <div

@@ -218,8 +218,12 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
 export function protoGrainGradientVariant(
   slideId: string,
 ): ProtoGrainGradientVariant | undefined {
-  if (slideId in PROTO_GRAIN_GRADIENT_PRESETS) {
-    return slideId as ProtoGrainGradientVariant;
+  // First two feature boxes under the hero swap shaders only (UI unchanged).
+  const resolvedId =
+    slideId === "agents" ? "front-desk" : slideId === "front-desk" ? "agents" : slideId;
+
+  if (resolvedId in PROTO_GRAIN_GRADIENT_PRESETS) {
+    return resolvedId as ProtoGrainGradientVariant;
   }
   return undefined;
 }
