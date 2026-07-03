@@ -6,7 +6,8 @@ import { createPortal } from "react-dom";
 import { ProtoInvestMobileTocPanel } from "@/components/proto-invest/ProtoInvestMobileTocPanel";
 import { PROTO_INVEST_MOBILE_TOC_LABEL } from "@/lib/proto-invest/proto-invest-content";
 
-const PANEL_REVEAL_MS = 740;
+const PANEL_REVEAL_MS = 780;
+const PANEL_HIDE_MS = 280;
 
 function TocIcon() {
   return (
@@ -31,26 +32,6 @@ function TocIcon() {
   );
 }
 
-function CloseIcon() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 18 18"
-      fill="none"
-      aria-hidden
-      className="proto-invest-floating-toc__icon"
-    >
-      <path
-        d="M4.75 4.75 13.25 13.25M13.25 4.75 4.75 13.25"
-        stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 function isProtoNavPunchedOut() {
   const nav = document.querySelector("nav.doephone-site-nav.proto-nav-scroll-frost");
   return nav?.classList.contains("proto-nav--scrolled") ?? false;
@@ -64,6 +45,7 @@ export function ProtoInvestMobileFloatingToc() {
   const [panelRevealed, setPanelRevealed] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const revealTimerRef = useRef<number | null>(null);
+  const hideTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -101,13 +83,23 @@ export function ProtoInvestMobileFloatingToc() {
       window.clearTimeout(revealTimerRef.current);
       revealTimerRef.current = null;
     }
+    if (hideTimerRef.current !== null) {
+      window.clearTimeout(hideTimerRef.current);
+    }
     setPanelRevealed(false);
-    window.setTimeout(() => setOpen(false), 200);
+    hideTimerRef.current = window.setTimeout(() => {
+      setOpen(false);
+      hideTimerRef.current = null;
+    }, PANEL_HIDE_MS);
   }, []);
 
   const openToc = useCallback(() => {
     if (revealTimerRef.current !== null) {
       window.clearTimeout(revealTimerRef.current);
+    }
+    if (hideTimerRef.current !== null) {
+      window.clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = null;
     }
     setOpen(true);
     setPanelRevealed(false);
@@ -116,6 +108,14 @@ export function ProtoInvestMobileFloatingToc() {
       revealTimerRef.current = null;
     }, PANEL_REVEAL_MS);
   }, []);
+
+  const toggleToc = useCallback(() => {
+    if (open) {
+      close();
+    } else {
+      openToc();
+    }
+  }, [close, open, openToc]);
 
   useEffect(() => {
     if (!open) return;
@@ -145,6 +145,9 @@ export function ProtoInvestMobileFloatingToc() {
       if (revealTimerRef.current !== null) {
         window.clearTimeout(revealTimerRef.current);
       }
+      if (hideTimerRef.current !== null) {
+        window.clearTimeout(hideTimerRef.current);
+      }
     };
   }, []);
 
@@ -165,32 +168,21 @@ export function ProtoInvestMobileFloatingToc() {
       >
         {open ? (
           <div className="proto-invest-floating-toc__panel" aria-hidden={!panelRevealed}>
-            <div className="proto-invest-floating-toc__header">
-              <p className="proto-invest-floating-toc__label">{PROTO_INVEST_MOBILE_TOC_LABEL}</p>
-              <button
-                type="button"
-                className="proto-invest-floating-toc__close"
-                aria-label="Close table of contents"
-                onClick={close}
-                tabIndex={panelRevealed ? 0 : -1}
-              >
-                <CloseIcon />
-              </button>
-            </div>
+            <p className="proto-invest-floating-toc__label">{PROTO_INVEST_MOBILE_TOC_LABEL}</p>
             <ProtoInvestMobileTocPanel variant="nav" omitLabel onItemClick={close} />
           </div>
-        ) : (
-          <button
-            type="button"
-            className="proto-invest-floating-toc__trigger"
-            aria-expanded={false}
-            aria-label="Open table of contents"
-            onClick={openToc}
-            tabIndex={navPunchedOut ? 0 : -1}
-          >
-            <TocIcon />
-          </button>
-        )}
+        ) : null}
+
+        <button
+          type="button"
+          className="proto-invest-floating-toc__trigger"
+          aria-expanded={open}
+          aria-label={open ? "Close table of contents" : "Open table of contents"}
+          onClick={toggleToc}
+          tabIndex={navPunchedOut ? 0 : -1}
+        >
+          <TocIcon />
+        </button>
       </div>
     </div>,
     document.body,

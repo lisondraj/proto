@@ -90,8 +90,10 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__fro
   position: relative;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: center;
+  gap: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, calc(var(--proto-nav-frost-progress) * 0.1));
   border-radius: 50%;
@@ -111,12 +113,14 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__fro
   transition:
     border-radius var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
     max-height var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
-    padding var(--proto-floating-toc-duration) var(--proto-floating-toc-ease);
+    padding var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
+    gap var(--proto-floating-toc-duration) var(--proto-floating-toc-ease);
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-open .proto-invest-floating-toc__frost {
   align-items: stretch;
-  justify-content: flex-start;
+  justify-content: flex-end;
+  gap: clamp(0.12rem, 0.08rem + 0.22vmin, 0.22rem);
   border-radius: clamp(0.95rem, 0.78rem + 0.72vmin, 1.18rem);
   padding: clamp(0.3rem, 0.2rem + 0.45vmin, 0.4rem);
   max-height: 28rem;
@@ -128,8 +132,8 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__pan
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity 260ms ease,
-    visibility 0s linear 260ms;
+    opacity 320ms ease,
+    visibility 0s linear 320ms;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-revealed .proto-invest-floating-toc__panel {
@@ -137,49 +141,18 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-r
   visibility: visible;
   pointer-events: auto;
   transition:
-    opacity 280ms ease,
+    opacity 360ms ease,
     visibility 0s;
-}
-
-html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.5rem var(--proto-floating-toc-rail-x) 0.42rem;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__label {
   margin: 0;
-  padding: 0;
+  padding: 0.5rem var(--proto-floating-toc-rail-x) 0.42rem;
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.45);
-}
-
-html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 0.75rem;
-  height: 0.75rem;
-  margin: 0;
-  padding: 0;
-  flex-shrink: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent !important;
-  color: rgba(255, 255, 255, 0.72) !important;
-  box-shadow: none !important;
-  line-height: 0;
-}
-
-html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__close:active {
-  color: #ffffff !important;
-  opacity: 0.85;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__list-wrap {
@@ -271,6 +244,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__tri
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
   box-sizing: border-box;
   width: var(--proto-floating-toc-trigger);
   height: var(--proto-floating-toc-trigger);
@@ -286,7 +260,11 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__tri
   transition:
     color 240ms ease,
     background-color 240ms ease,
-    transform 320ms var(--proto-floating-toc-ease);
+    transform 360ms var(--proto-floating-toc-ease);
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-open .proto-invest-floating-toc__trigger {
+  align-self: flex-end;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__icon {
@@ -348,8 +326,8 @@ html[data-proto-page]:has(.doephone-mobile-root) {
   --proto-about-nav-clearance: calc(
     env(safe-area-inset-top, 0px) + clamp(6.85rem, 5.85rem + 5.15vmin, 8.65rem)
   );
-  --proto-floating-toc-ease: cubic-bezier(0.33, 1, 0.68, 1);
-  --proto-floating-toc-duration: 820ms;
+  --proto-floating-toc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --proto-floating-toc-duration: 920ms;
   --proto-floating-toc-trigger: clamp(4.55rem, 3.75rem + 3.85vmin, 5.45rem);
   --proto-floating-toc-frost-pad: clamp(0.26rem, 0.17rem + 0.42vmin, 0.36rem);
   --proto-floating-toc-rail-x: clamp(0.82rem, 0.68rem + 0.55vmin, 0.95rem);
