@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
+import { inter, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 
 const CODE_INK = "#FFF9F2";
@@ -19,7 +19,8 @@ const PANEL_WIDTH = "78%";
 const PHONE_ARTBOARD_WIDTH_PX = 360;
 const PHONE_ARTBOARD_HEIGHT_PX = 360;
 const PANEL_HEIGHT_PX = 92;
-const CODE_VIEWPORT_HEIGHT_PX = PHONE_ARTBOARD_HEIGHT_PX - PANEL_HEIGHT_PX;
+const PROFILE_LINE_PX = 28;
+const BOTTOM_STACK_PX = PANEL_HEIGHT_PX + PROFILE_LINE_PX;
 
 const FONT_SIZE_PX = 9;
 const LINE_HEIGHT_PX = 14;
@@ -101,24 +102,25 @@ const HIGHLIGHT_SECTIONS = [1, 2, 3] as const;
 
 const APPLICANT = {
   name: "Jordan Park",
-  score: "91",
-  time: "9m",
-  location: "NYC",
+  location: "Palo Alto",
   initials: "JP",
 } as const;
 
 const SECTION_NOTES: readonly SectionNote[] = [
   {
     section: 1,
-    intent: "Paid invoices write the credit.",
+    intent:
+      "Jordan credits only on invoice.paid, not on create or send. That keeps unpaid invoices off the balance and keeps Stripe retries safe to replay on failure.",
   },
   {
     section: 2,
-    intent: "Subscription changes update status and period.",
+    intent:
+      "Status and period end update together in one write. That avoids the usual drift where a renewal leaves an active plan with an expired period still showing.",
   },
   {
     section: 3,
-    intent: "Event type picks the handler.",
+    intent:
+      "Each event type routes through a handlers map instead of a growing switch. New Stripe events are one line and the rest of the flow stays untouched by the change.",
   },
 ];
 
@@ -158,9 +160,9 @@ function ExplanationPanel({ activeSection }: { activeSection: number }) {
         return (
           <div
             key={note.section}
-            className="absolute inset-0 flex flex-col justify-center"
+            className="absolute inset-0 flex items-center"
             style={{
-              padding: "0.4rem 0.58rem",
+              padding: "0.58rem 0.82rem",
               opacity: active ? 1 : 0,
               transition: reduceMotion
                 ? undefined
@@ -169,78 +171,72 @@ function ExplanationPanel({ activeSection }: { activeSection: number }) {
             }}
           >
             <p
-              className={`${suisseIntl.className} m-0`}
+              className={`${inter.className} m-0 w-full`}
               style={{
                 color: GLASS_INK,
-                fontSize: "0.8rem",
-                fontWeight: 500,
-                lineHeight: 1.2,
-                letterSpacing: "-0.02em",
+                fontSize: "0.94rem",
+                fontWeight: 400,
+                lineHeight: 1.24,
+                letterSpacing: "-0.012em",
               }}
             >
               {note.intent}
             </p>
-
-            <div
-              className="flex items-center"
-              style={{ gap: "0.38rem", marginTop: "0.32rem" }}
-            >
-              <div
-                className={`${inter.className} flex shrink-0 items-center justify-center rounded-full`}
-                style={{
-                  width: "1.15rem",
-                  height: "1.15rem",
-                  background: "rgba(28, 22, 16, 0.1)",
-                  color: GLASS_INK,
-                  fontSize: "0.48rem",
-                  fontWeight: 600,
-                  letterSpacing: "-0.02em",
-                }}
-                aria-hidden
-              >
-                {APPLICANT.initials}
-              </div>
-              <span
-                className={`${inter.className} truncate`}
-                style={{
-                  color: GLASS_MUTED,
-                  fontSize: "0.62rem",
-                  fontWeight: 500,
-                  lineHeight: 1,
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {APPLICANT.name}
-              </span>
-              <span
-                aria-hidden
-                style={{
-                  width: "0.2rem",
-                  height: "0.2rem",
-                  borderRadius: "999px",
-                  background: "rgba(28, 22, 16, 0.18)",
-                  flexShrink: 0,
-                }}
-              />
-              <span
-                className={`${inter.className} shrink-0 tabular-nums`}
-                style={{
-                  color: GLASS_MUTED,
-                  fontSize: "0.62rem",
-                  fontWeight: 500,
-                  lineHeight: 1,
-                }}
-              >
-                {APPLICANT.score}
-                <span style={{ margin: "0 0.22em", opacity: 0.35 }}>·</span>
-                {APPLICANT.time}
-                <span style={{ margin: "0 0.22em", opacity: 0.35 }}>·</span>
-                {APPLICANT.location}
-              </span>
-            </div>
           </div>
         );
       })}
+    </div>
+  );
+}
+
+function ApplicantCredit() {
+  return (
+    <div
+      className="flex items-center justify-end"
+      style={{ gap: "0.4rem", marginTop: "0.32rem" }}
+    >
+      <div
+        className={`${inter.className} flex shrink-0 items-center justify-center rounded-full`}
+        style={{
+          width: "1.55rem",
+          height: "1.55rem",
+          background: "rgba(255, 249, 242, 0.14)",
+          color: "#FFF9F2",
+          fontSize: "0.52rem",
+          fontWeight: 600,
+          letterSpacing: "-0.02em",
+        }}
+        aria-hidden
+      >
+        {APPLICANT.initials}
+      </div>
+      <div className="min-w-0 text-left">
+        <p
+          className={`${suisseIntl.className} m-0`}
+          style={{
+            color: "#FFF9F2",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            lineHeight: 1.15,
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {APPLICANT.name}
+        </p>
+        <p
+          className={`${inter.className} m-0`}
+          style={{
+            color: "rgba(255, 249, 242, 0.68)",
+            fontSize: "0.6rem",
+            fontWeight: 500,
+            lineHeight: 1.15,
+            letterSpacing: "-0.01em",
+            marginTop: "0.08rem",
+          }}
+        >
+          {APPLICANT.location}
+        </p>
+      </div>
     </div>
   );
 }
@@ -328,7 +324,7 @@ function CodeScene({
   width: number;
   height: number;
 }) {
-  const codeViewportHeight = height - PANEL_HEIGHT_PX;
+  const codeViewportHeight = height - BOTTOM_STACK_PX;
 
   return (
     <div
@@ -357,10 +353,10 @@ function CodeScene({
         style={{
           width: PANEL_WIDTH,
           transform: "translateX(-50%)",
-          paddingBottom: "0",
         }}
       >
         <ExplanationPanel activeSection={activeSection} />
+        <ApplicantCredit />
       </div>
     </div>
   );
