@@ -11,7 +11,7 @@ import {
   type ProtoSandboxRoleCard,
 } from "@/lib/proto/proto-sandbox-role-cards";
 
-const FEATURED_HOLD_MS = 3400;
+const FEATURED_HOLD_MS = 5200;
 const FEATURED_FADE_MS = 480;
 
 const INK = "#2C2419";
@@ -33,6 +33,8 @@ const PHONE_CARD_STEP_REM = PHONE_CARD_HEIGHT_REM + PHONE_CARD_GAP_REM;
 const PHONE_CLUSTER_HEIGHT_REM =
   PHONE_CARD_STEP_REM * (PROTO_SANDBOX_ROLE_CARDS.length - 1) + PHONE_CARD_HEIGHT_REM;
 const PHONE_ARTBOARD_HEIGHT_PX = PHONE_CLUSTER_HEIGHT_REM * 16;
+/** Featured single-card stack — sized to the role UI, not the old 3-card cluster. */
+const PHONE_FEATURED_ARTBOARD_HEIGHT_PX = 340;
 
 type VisualLayout = "phone" | "desktop";
 
@@ -345,7 +347,7 @@ function FeaturedRoleCard({
   };
 
   return (
-    <div className="flex flex-col items-start" style={{ width: tokens.cardWidth }}>
+    <div className="flex w-full flex-col items-start">
       <div style={{ marginBottom: "0.42rem" }}>
         <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} theme="light" />
       </div>
@@ -433,18 +435,18 @@ function FeaturedRoleCard({
 function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
-    const reduceMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setReduceMotion(prefersReduced);
 
     let holdTimer: number | undefined;
     let fadeTimer: number | undefined;
 
     const schedule = () => {
       holdTimer = window.setTimeout(() => {
-        if (reduceMotion) {
+        if (prefersReduced) {
           setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
           schedule();
           return;
@@ -467,17 +469,30 @@ function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
     };
   }, []);
 
-  const card = PROTO_SANDBOX_FEATURED_CYCLE[index] ?? PROTO_SANDBOX_FEATURED_CYCLE[0];
-
   return (
-    <div
-      style={{
-        opacity: visible ? 1 : 0,
-        transition: `opacity ${FEATURED_FADE_MS}ms ease`,
-        willChange: "opacity",
-      }}
-    >
-      <FeaturedRoleCard card={card} tokens={tokens} />
+    // Stack every slide in one grid cell so height stays max(all) — no scale jump.
+    <div className="mx-auto grid" style={{ width: tokens.cardWidth }}>
+      {PROTO_SANDBOX_FEATURED_CYCLE.map((card, slideIndex) => {
+        const active = slideIndex === index;
+        const shown = active && visible;
+
+        return (
+          <div
+            key={card.id}
+            className="col-start-1 row-start-1"
+            style={{
+              alignSelf: "start",
+              justifySelf: "stretch",
+              opacity: shown ? 1 : 0,
+              transition: reduceMotion ? undefined : `opacity ${FEATURED_FADE_MS}ms ease`,
+              pointerEvents: shown ? "auto" : "none",
+              willChange: reduceMotion ? undefined : "opacity",
+            }}
+          >
+            <FeaturedRoleCard card={card} tokens={tokens} />
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -491,12 +506,16 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
       <div className={`mx-auto h-full w-full ${suisseIntl.className}`} aria-hidden>
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
-          height={PHONE_ARTBOARD_HEIGHT_PX}
+          height={PHONE_FEATURED_ARTBOARD_HEIGHT_PX}
           fitScale={1}
+          fixedBounds
         >
           <div
-            className="flex justify-center"
-            style={{ width: PHONE_ARTBOARD_WIDTH_PX }}
+            className="flex h-full w-full items-center justify-center"
+            style={{
+              width: PHONE_ARTBOARD_WIDTH_PX,
+              height: PHONE_FEATURED_ARTBOARD_HEIGHT_PX,
+            }}
           >
             <FeaturedRoleCycle tokens={tokens} />
           </div>

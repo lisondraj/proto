@@ -57,12 +57,15 @@ export function ProtoPhoneScaledArtboard({
   height,
   children,
   fitScale = FIT_SCALE,
+  fixedBounds = false,
 }: {
   width: number;
   height: number;
   children: ReactNode;
   /** Multiplier on the fit-to-card scale (default 0.9). */
   fitScale?: number;
+  /** When true, always use width/height — ignores content reflow between slides. */
+  fixedBounds?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const artboardRef = useRef<HTMLDivElement>(null);
@@ -77,7 +80,9 @@ export function ProtoPhoneScaledArtboard({
     const host = getFitHost(container);
 
     const updateScale = () => {
-      const nextBounds = measureContentBounds(artboard, width, height);
+      const nextBounds = fixedBounds
+        ? { width, height }
+        : measureContentBounds(artboard, width, height);
       setBounds(nextBounds);
 
       const fitWidth = Math.max(host.clientWidth - FIT_PAD_PX * 2, 1);
@@ -90,10 +95,10 @@ export function ProtoPhoneScaledArtboard({
     updateScale();
     const observer = new ResizeObserver(updateScale);
     observer.observe(host);
-    observer.observe(artboard);
+    if (!fixedBounds) observer.observe(artboard);
     if (host !== container) observer.observe(container);
     return () => observer.disconnect();
-  }, [width, height, fitScale]);
+  }, [width, height, fitScale, fixedBounds]);
 
   const scaledWidth = bounds.width * scale;
   const scaledHeight = bounds.height * scale;
