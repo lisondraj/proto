@@ -61,7 +61,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc {
   right: var(--proto-phone-gutter-right, 2rem);
   bottom: max(1.15rem, calc(env(safe-area-inset-bottom, 0px) + 0.65rem));
   z-index: 180;
-  width: calc(var(--proto-floating-toc-trigger) + 2 * var(--proto-floating-toc-frost-pad));
+  width: var(--proto-floating-toc-closed-size);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -116,13 +116,23 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__fro
     inset 0 1px 0 rgba(255, 255, 255, calc(var(--proto-nav-frost-progress) * 0.07));
   padding: var(--proto-floating-toc-frost-pad);
   width: 100%;
-  max-height: calc(var(--proto-floating-toc-trigger) + 2 * var(--proto-floating-toc-frost-pad));
+  max-height: var(--proto-floating-toc-closed-size);
   transform-origin: bottom right;
   transition:
     border-radius var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
     max-height var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
     padding var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
     gap var(--proto-floating-toc-duration) var(--proto-floating-toc-ease);
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc:not(.is-open):not(.is-closing) .proto-invest-floating-toc__frost {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  height: var(--proto-floating-toc-closed-size);
+  min-height: var(--proto-floating-toc-closed-size);
+  max-height: var(--proto-floating-toc-closed-size);
+  padding: var(--proto-floating-toc-frost-pad);
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-open .proto-invest-floating-toc__frost {
@@ -269,10 +279,9 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__pla
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__trigger {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  align-self: center;
   box-sizing: border-box;
   width: var(--proto-floating-toc-trigger);
   height: var(--proto-floating-toc-trigger);
@@ -291,13 +300,18 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__tri
     transform 360ms var(--proto-floating-toc-ease);
 }
 
-html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-open .proto-invest-floating-toc__trigger {
-  align-self: flex-end;
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc:not(.is-open):not(.is-closing) .proto-invest-floating-toc__trigger {
+  position: absolute;
+  inset: var(--proto-floating-toc-frost-pad);
+  width: auto;
+  height: auto;
+  transform-origin: center center;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__icon {
   display: block;
   flex-shrink: 0;
+  margin: 0;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__trigger:active {
@@ -360,6 +374,7 @@ html[data-proto-page]:has(.doephone-mobile-root) {
   --proto-floating-toc-close-ease: cubic-bezier(0.33, 0.86, 0.2, 1);
   --proto-floating-toc-trigger: clamp(4.55rem, 3.75rem + 3.85vmin, 5.45rem);
   --proto-floating-toc-frost-pad: clamp(0.26rem, 0.17rem + 0.42vmin, 0.36rem);
+  --proto-floating-toc-closed-size: calc(var(--proto-floating-toc-trigger) + 2 * var(--proto-floating-toc-frost-pad));
   --proto-floating-toc-rail-x: clamp(0.82rem, 0.68rem + 0.55vmin, 0.95rem);
   --proto-floating-toc-index-w: 1.45rem;
   --proto-floating-toc-play-w: 2.25rem;
