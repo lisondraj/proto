@@ -10,6 +10,7 @@ import { ProtoInvestMobileAiAdoptionChart } from "@/components/proto-invest/Prot
 import { ProtoInvestMobileFaqTabs } from "@/components/proto-invest/ProtoInvestMobileFaqTabs";
 import { ProtoInvestMobileQuote } from "@/components/proto-invest/ProtoInvestMobileQuote";
 import { ProtoInvestMobileStatCharts } from "@/components/proto-invest/ProtoInvestMobileStatCharts";
+import { ProtoInvestMobileTableOfContents } from "@/components/proto-invest/ProtoInvestMobileTableOfContents";
 import { ProtoInvestMobileTamChart } from "@/components/proto-invest/ProtoInvestMobileTamChart";
 import { ABOUT_PAGE_MOBILE_BYLINE, ABOUT_PAGE_MOBILE_DATE } from "@/lib/about/about-page-article";
 import { ABOUT_PAGE_SUBHEADING_LINES } from "@/lib/about/about-layout-styles";
@@ -20,8 +21,8 @@ import {
   PROTO_INVEST_CONTENT_GAP,
   PROTO_INVEST_ARTICLE_TOP_PT,
   PROTO_INVEST_HERO_AFTER_BYLINE,
-  PROTO_INVEST_HERO_BEFORE_ARTICLE,
   PROTO_INVEST_HERO_BOX_TW,
+  PROTO_INVEST_SECTION_ANCHOR,
   PROTO_INVEST_HERO_HEADLINE_PT,
   PROTO_INVEST_HERO_HEADLINE_WRAP,
   PROTO_INVEST_MAIN_PB,
@@ -34,6 +35,7 @@ import {
   PROTO_INVEST_TITLE_TW,
 } from "@/lib/proto-invest/proto-invest-layout-styles";
 import {
+  PROTO_INVEST_MOBILE_SECTION_IDS,
   PROTO_INVEST_FOUNDERS_HEADLINE_LINES,
   PROTO_INVEST_FOUNDERS_PARAGRAPHS,
   PROTO_INVEST_FOUNDERS_QUOTE,
@@ -70,17 +72,22 @@ export function ProtoInvestMobileContent() {
         {ABOUT_PAGE_MOBILE_DATE}
       </p>
 
-      <div className={`${PROTO_INVEST_HERO_AFTER_BYLINE} ${PROTO_INVEST_HERO_BEFORE_ARTICLE}`}>
+      <div className={`${PROTO_INVEST_HERO_AFTER_BYLINE} ${PROTO_INVEST_PRODUCT_PANEL_STACK_WRAP}`}>
         <BlogHeroVisual
           variant="hero"
           boxClassName={PROTO_INVEST_HERO_BOX_TW}
           gapClassName=""
           protoShaderVariant="about-hero"
         />
+
+        <ProtoInvestMobileTableOfContents />
       </div>
 
       <div className={PROTO_INVEST_SECTION_GAP}>
-        <div className={PROTO_INVEST_CONTENT_GAP}>
+        <div
+          id={PROTO_INVEST_MOBILE_SECTION_IDS.introduction}
+          className={`${PROTO_INVEST_CONTENT_GAP} ${PROTO_INVEST_SECTION_ANCHOR}`}
+        >
           <ProtoInvestIntroLead lines={PROTO_INVEST_INTRO_LEAD_LINES} />
           {PROTO_INVEST_INTRO_PARAGRAPHS.map((paragraph) => (
             <p key={paragraph} className={PROTO_INVEST_BODY_TW}>
@@ -95,11 +102,19 @@ export function ProtoInvestMobileContent() {
 
         <div className={PROTO_INVEST_PRODUCT_PANEL_STACK_WRAP}>
           <ProtoInvestProductTeamGrid />
-          <ProtoInvestProductShaderPanel className={PROTO_INVEST_PRODUCT_SHADER_PANEL_TW} />
+          <div
+            id={PROTO_INVEST_MOBILE_SECTION_IDS.product}
+            className={PROTO_INVEST_SECTION_ANCHOR}
+          >
+            <ProtoInvestProductShaderPanel className={PROTO_INVEST_PRODUCT_SHADER_PANEL_TW} />
+          </div>
           <ProtoInvestProductStackBoxes />
         </div>
 
-        <h2 className={PROTO_INVEST_SECTION_HEADLINE_TW}>
+        <h2
+          id={PROTO_INVEST_MOBILE_SECTION_IDS.founders}
+          className={`${PROTO_INVEST_SECTION_HEADLINE_TW} ${PROTO_INVEST_SECTION_ANCHOR}`}
+        >
           <span className="block">{PROTO_INVEST_FOUNDERS_HEADLINE_LINES[0]}</span>
           <span className="block">{PROTO_INVEST_FOUNDERS_HEADLINE_LINES[1]}</span>
         </h2>
@@ -119,7 +134,10 @@ export function ProtoInvestMobileContent() {
 
         <ProtoInvestGraphicPanel graphic={1} />
 
-        <h2 className={PROTO_INVEST_SECTION_HEADLINE_TW}>
+        <h2
+          id={PROTO_INVEST_MOBILE_SECTION_IDS.productMarket}
+          className={`${PROTO_INVEST_SECTION_HEADLINE_TW} ${PROTO_INVEST_SECTION_ANCHOR}`}
+        >
           <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[0]}</span>
           <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[1]}</span>
         </h2>
@@ -128,7 +146,10 @@ export function ProtoInvestMobileContent() {
 
         <ProtoInvestMobileTamChart />
 
-        <h2 className={PROTO_INVEST_SECTION_HEADLINE_TW}>
+        <h2
+          id={PROTO_INVEST_MOBILE_SECTION_IDS.beyondProto}
+          className={`${PROTO_INVEST_SECTION_HEADLINE_TW} ${PROTO_INVEST_SECTION_ANCHOR}`}
+        >
           <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[0]}</span>
           <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[1]}</span>
         </h2>

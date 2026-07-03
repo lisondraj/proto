@@ -105,6 +105,42 @@ export const PROTO_INVEST_HERO_AFTER_BYLINE = "mt-6 iphone-page:mt-7";
 
 export const PROTO_INVEST_HERO_BEFORE_ARTICLE = "mb-8 iphone-page:mb-9";
 
+export const PROTO_INVEST_SECTION_ANCHOR = "proto-invest-section-anchor";
+
+export const PROTO_INVEST_MOBILE_TOC_WRAP = "proto-invest-mobile-toc mb-8 iphone-page:mb-9";
+
+export const PROTO_INVEST_MOBILE_TOC_BOX_TW = `border border-[#2A3538]/75 px-4 py-4 iphone-page:px-3.5 iphone-page:py-3.5 ${DOEPHONE_SECTION_CAROUSEL_RADIUS}`;
+
+export const PROTO_INVEST_MOBILE_TOC_LABEL_TW = `mb-3 font-medium uppercase tracking-[0.16em] !text-white/45 text-[0.68rem] iphone-page:mb-2.5 ${PROTO_FONT_CLASS}`;
+
+export const PROTO_INVEST_MOBILE_TOC_LIST_TW = "m-0 flex list-none flex-col gap-0.5 p-0 iphone-page:gap-px";
+
+export const PROTO_INVEST_MOBILE_TOC_LINK_TW = `group flex w-full items-center gap-3 rounded-[0.45rem] px-2 py-2 text-left !text-white/72 transition-colors duration-200 ease-out active:!text-white active:bg-white/[0.04] iphone-page:gap-2.5 iphone-page:px-1.5 iphone-page:py-1.5 ${PROTO_FONT_CLASS}`;
+
+export const PROTO_INVEST_MOBILE_TOC_INDEX_TW = `w-[1.4rem] shrink-0 font-normal tabular-nums !text-white/45 text-[clamp(0.8rem,0.72rem+0.32vmin,0.9rem)]`;
+
+export const PROTO_INVEST_MOBILE_TOC_TEXT_TW = `min-w-0 flex-1 font-normal leading-snug tracking-[-0.01em] text-[clamp(1rem,0.88rem+0.55vmin,1.14rem)] iphone-page:text-[clamp(0.94rem,0.84rem+0.45vmin,1.06rem)]`;
+
+export const PROTO_INVEST_MOBILE_TOC_AUDIO_DIVIDER_TW = "mt-3 border-t border-[#2A3538]/55 pt-3 iphone-page:mt-2.5 iphone-page:pt-2.5";
+
+export const PROTO_INVEST_MOBILE_TOC_LISTEN_LABEL_TW = `mb-2.5 font-medium uppercase tracking-[0.16em] !text-white/45 text-[0.68rem] iphone-page:mb-2 ${PROTO_FONT_CLASS}`;
+
+export const PROTO_INVEST_MOBILE_TOC_LISTEN_ROW_TW = `flex w-full items-center gap-3 text-left iphone-page:gap-2.5 ${PROTO_FONT_CLASS}`;
+
+export const PROTO_INVEST_MOBILE_TOC_LISTEN_PLAY_TW =
+  "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#2A3538] bg-[#151c1f] !text-white/80 transition-colors duration-200 ease-out active:!text-white active:border-[#3a474b] iphone-page:h-8 iphone-page:w-8";
+
+export const PROTO_INVEST_MOBILE_TOC_LISTEN_COPY_TW = "min-w-0 flex-1";
+
+export const PROTO_INVEST_MOBILE_TOC_LISTEN_TITLE_TW =
+  "block font-normal leading-snug tracking-[-0.01em] !text-white/72 text-[clamp(0.98rem,0.88rem+0.48vmin,1.1rem)] iphone-page:text-[clamp(0.94rem,0.84rem+0.42vmin,1.04rem)]";
+
+export const PROTO_INVEST_MOBILE_TOC_LISTEN_META_TW =
+  "mt-0.5 block font-normal leading-snug tracking-[-0.01em] !text-white/45 text-[clamp(0.86rem,0.78rem+0.35vmin,0.96rem)] iphone-page:text-[clamp(0.82rem,0.74rem+0.32vmin,0.9rem)]";
+
+export const PROTO_INVEST_MOBILE_TOC_LISTEN_DURATION_TW =
+  "shrink-0 font-normal tabular-nums leading-none tracking-[-0.01em] !text-white/45 text-[clamp(0.86rem,0.78rem+0.35vmin,0.96rem)] iphone-page:text-[clamp(0.82rem,0.74rem+0.32vmin,0.9rem)]";
+
 export const PROTO_INVEST_BYLINE_GAP = "mt-5 iphone-page:mt-6";
 
 export const PROTO_INVEST_MAIN_PB =

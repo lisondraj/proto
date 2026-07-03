@@ -35,6 +35,34 @@ export const PROTO_INVEST_RECRUITER_SECTION = {
   ],
 } as const satisfies { lead: string; bullets: readonly ProtoInvestLabeledBullet[] };
 
+/** iPhone /about — in-page anchor targets for the mobile table of contents. */
+export const PROTO_INVEST_MOBILE_SECTION_IDS = {
+  introduction: "proto-invest-introduction",
+  product: "proto-invest-product",
+  founders: "proto-invest-founders",
+  productMarket: "proto-invest-product-market",
+  beyondProto: "proto-invest-beyond-proto",
+} as const;
+
+export const PROTO_INVEST_MOBILE_TOC_ITEMS = [
+  { id: PROTO_INVEST_MOBILE_SECTION_IDS.introduction, label: "Introduction" },
+  { id: PROTO_INVEST_MOBILE_SECTION_IDS.product, label: "Product" },
+  { id: PROTO_INVEST_MOBILE_SECTION_IDS.founders, label: "Founders" },
+  { id: PROTO_INVEST_MOBILE_SECTION_IDS.productMarket, label: "Product–Market" },
+  { id: PROTO_INVEST_MOBILE_SECTION_IDS.beyondProto, label: "Beyond Proto" },
+] as const;
+
+export const PROTO_INVEST_MOBILE_TOC_LABEL = "Contents" as const;
+
+/** iPhone /about — single full-article voice recording (not per-section). */
+export const PROTO_INVEST_MOBILE_ARTICLE_AUDIO = {
+  title: "Full article",
+  narrators: "James & others",
+  duration: "12:24",
+  /** Wire when the recording is hosted under /public. */
+  src: undefined as string | undefined,
+} as const;
+
 export const PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES = ["The larger", "Proto vision."] as const;
 
 export const PROTO_INVEST_THINKING_BEYOND_PARAGRAPH =

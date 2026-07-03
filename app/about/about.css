@@ -37,6 +37,28 @@ html[data-proto-page] .proto-invest-main .text-white\/45 {
   color: rgba(255, 255, 255, 0.45) !important;
 }
 
+/* iPhone /about — TOC links inherit body gray without explicit anchor colors. */
+html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc a {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc a:active {
+  color: #ffffff !important;
+}
+
+html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc p,
+html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc button {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc button:active {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-proto-page] .proto-invest-main .proto-invest-mobile-toc button:disabled {
+  opacity: 0.72;
+}
+
 /* Hero + graphic panels — unified proto border. */
 html[data-proto-page] .proto-invest-main .relative.w-full.overflow-hidden.rounded-\[0\.875rem\] {
   border-color: #2a3538 !important;
@@ -91,6 +113,10 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-article-top {
   box-sizing: border-box !important;
   padding-top: calc(var(--proto-about-nav-clearance) + 0.85rem) !important;
   scroll-margin-top: var(--proto-about-nav-clearance) !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-section-anchor {
+  scroll-margin-top: calc(var(--proto-about-nav-clearance) + 0.5rem) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-main > .proto-invest-article-top h1 {
