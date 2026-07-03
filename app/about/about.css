@@ -141,15 +141,48 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-o
   gap: 0;
   border-radius: clamp(0.95rem, 0.78rem + 0.72vmin, 1.18rem);
   padding: clamp(0.3rem, 0.2rem + 0.45vmin, 0.4rem);
+  height: auto;
+  min-height: 0;
   max-height: 28rem;
+  transition:
+    border-radius var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
+    height var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
+    min-height var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
+    max-height var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
+    padding var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
+    gap var(--proto-floating-toc-duration) var(--proto-floating-toc-ease);
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-closing .proto-invest-floating-toc__frost {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border-radius: 50%;
+  padding: var(--proto-floating-toc-frost-pad);
+  height: var(--proto-floating-toc-closed-size);
+  min-height: var(--proto-floating-toc-closed-size);
+  max-height: var(--proto-floating-toc-closed-size);
   transition:
     border-radius var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
+    height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
+    min-height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
     max-height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
     padding var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
     gap var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease);
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-closing .proto-invest-floating-toc__panel {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    max-height var(--proto-floating-toc-close-duration) var(--proto-floating-toc-close-ease),
+    visibility 0s linear 200ms;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__panel {
@@ -157,8 +190,18 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__pan
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
   transition:
     opacity 320ms ease,
+    visibility 0s linear 320ms;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc.is-open .proto-invest-floating-toc__panel {
+  max-height: 24rem;
+  transition:
+    opacity 320ms ease,
+    max-height var(--proto-floating-toc-duration) var(--proto-floating-toc-ease),
     visibility 0s linear 320ms;
 }
 
@@ -370,8 +413,8 @@ html[data-proto-page]:has(.doephone-mobile-root) {
   );
   --proto-floating-toc-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --proto-floating-toc-duration: 920ms;
-  --proto-floating-toc-close-duration: 780ms;
-  --proto-floating-toc-close-ease: cubic-bezier(0.33, 0.86, 0.2, 1);
+  --proto-floating-toc-close-duration: 820ms;
+  --proto-floating-toc-close-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --proto-floating-toc-trigger: clamp(4.55rem, 3.75rem + 3.85vmin, 5.45rem);
   --proto-floating-toc-frost-pad: clamp(0.26rem, 0.17rem + 0.42vmin, 0.36rem);
   --proto-floating-toc-closed-size: calc(var(--proto-floating-toc-trigger) + 2 * var(--proto-floating-toc-frost-pad));

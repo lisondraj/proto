@@ -8,7 +8,7 @@ import { PROTO_INVEST_MOBILE_TOC_LABEL } from "@/lib/proto-invest/proto-invest-c
 
 const PANEL_REVEAL_MS = 780;
 const PANEL_HIDE_MS = 320;
-const PANEL_COLLAPSE_MS = 780;
+const PANEL_COLLAPSE_MS = 820;
 
 function TocIcon() {
   return (
@@ -96,10 +96,10 @@ export function ProtoInvestMobileFloatingToc() {
     }
     setPanelRevealed(false);
     hideTimerRef.current = window.setTimeout(() => {
-      setOpen(false);
       setCollapsing(true);
       hideTimerRef.current = null;
       collapseTimerRef.current = window.setTimeout(() => {
+        setOpen(false);
         setCollapsing(false);
         collapseTimerRef.current = null;
       }, PANEL_COLLAPSE_MS);
@@ -179,7 +179,7 @@ export function ProtoInvestMobileFloatingToc() {
   return createPortal(
     <div
       ref={rootRef}
-      className={`proto-invest-floating-toc${navPunchedOut ? " is-visible" : ""}${open ? " is-open" : ""}${panelRevealed ? " is-revealed" : ""}${collapsing ? " is-closing" : ""}`}
+      className={`proto-invest-floating-toc${navPunchedOut ? " is-visible" : ""}${open && !collapsing ? " is-open" : ""}${panelRevealed ? " is-revealed" : ""}${collapsing ? " is-closing" : ""}`}
       aria-live="polite"
       aria-hidden={!navPunchedOut}
     >
