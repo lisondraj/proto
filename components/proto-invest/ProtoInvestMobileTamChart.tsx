@@ -9,13 +9,25 @@ import {
   PROTO_INVEST_TAM_CHART,
   PROTO_INVEST_TAM_CITATION,
 } from "@/lib/proto-invest/proto-invest-content";
+import { ProtoInvestAiRecruitingForecastChart } from "@/components/proto-invest/ProtoInvestAiRecruitingForecastChart";
 import { PROTO_PHONE_CHART_COLORS, PROTO_PHONE_CHART_GRADIENTS } from "@/lib/proto/proto-chart-colors";
 
-const TAM_Y_MAX = 28;
-const TAM_Y_TICKS = [0, 7, 14, 21, 28] as const;
+const TAM_Y_MAX = PROTO_INVEST_TAM_CHART.yMax;
+const TAM_Y_TICKS = [0, 30, 60, 90] as const;
+/** Keep top-axis labels inside the plot so they do not crowd the title. */
+const TAM_PLOT_INSET_TOP_PCT = 9;
+
+function tickPositionPct(tick: number) {
+  const span = 100 - TAM_PLOT_INSET_TOP_PCT;
+  return (tick / TAM_Y_MAX) * span;
+}
 
 function formatTamAxis(value: number) {
-  return value === 0 ? "0" : value >= 10 ? `$${value}B` : `$${value.toFixed(1)}B`;
+  return value === 0 ? "0" : `$${value}B`;
+}
+
+function formatTamBarAmount(bar: (typeof PROTO_INVEST_TAM_CHART.bars)[number]) {
+  return "plus" in bar && bar.plus ? `$${bar.value}B+` : `$${bar.value}B`;
 }
 
 /** /proto-invest — TAM vertical bar chart with dark-theme palette. */
@@ -25,7 +37,7 @@ export function ProtoInvestMobileTamChart() {
   return (
     <figure className="proto-invest-chart-zone">
       <figcaption
-        className={`mb-4 font-medium leading-snug tracking-[-0.01em] text-white ${PROTO_INVEST_CHART_TITLE_TW} iphone-page:mb-5 ${PROTO_FONT_CLASS}`}
+        className={`mb-3.5 block font-medium leading-snug tracking-[-0.01em] text-white ${PROTO_INVEST_CHART_TITLE_TW} iphone-page:mb-4 ${PROTO_FONT_CLASS}`}
       >
         {PROTO_INVEST_TAM_CHART.title}
       </figcaption>
@@ -39,7 +51,7 @@ export function ProtoInvestMobileTamChart() {
                 <span
                   key={tick}
                   className={`absolute right-0 -translate-y-1/2 text-right tabular-nums font-normal leading-none text-[clamp(0.72rem,0.62rem+0.45vmin,0.88rem)] iphone-page:text-[clamp(0.82rem,0.7rem+0.52vmin,0.98rem)] ${PROTO_FONT_CLASS}`}
-                  style={{ bottom: `${(tick / TAM_Y_MAX) * 100}%`, color: PROTO_PHONE_CHART_COLORS.labelMuted }}
+                  style={{ bottom: `${tickPositionPct(tick)}%`, color: PROTO_PHONE_CHART_COLORS.labelMuted }}
                 >
                   {formatTamAxis(tick)}
                 </span>
@@ -55,7 +67,7 @@ export function ProtoInvestMobileTamChart() {
                 key={`grid-${tick}`}
                 className="pointer-events-none absolute left-0 right-0 border-t"
                 style={{
-                  bottom: `${(tick / TAM_Y_MAX) * 100}%`,
+                  bottom: `${tickPositionPct(tick)}%`,
                   borderColor: tick === 0 ? PROTO_PHONE_CHART_COLORS.axis : PROTO_PHONE_CHART_COLORS.gridLine,
                 }}
                 aria-hidden
@@ -64,7 +76,7 @@ export function ProtoInvestMobileTamChart() {
 
             <div className="absolute inset-0 flex items-end justify-around gap-0.5 px-0.5 pb-px iphone-page:gap-1 iphone-page:px-1">
               {bars.map((bar) => {
-                const heightPct = `${Math.max(2, Math.round((bar.value / TAM_Y_MAX) * 100))}%`;
+                const heightPct = `${Math.max(2, Math.round((tickPositionPct(bar.value) / 100) * 100))}%`;
 
                 return (
                   <div
@@ -88,10 +100,11 @@ export function ProtoInvestMobileTamChart() {
             {bars.map((bar) => (
               <span
                 key={`${bar.label}-label`}
-                className={`min-w-0 flex-1 text-center font-normal leading-[1.15] tracking-[-0.01em] text-[clamp(0.72rem,0.62rem+0.45vmin,0.88rem)] iphone-page:text-[clamp(0.82rem,0.7rem+0.52vmin,0.98rem)] ${PROTO_FONT_CLASS}`}
+                className={`flex min-w-0 flex-1 flex-col items-center gap-0.5 text-center font-normal leading-[1.1] tracking-[-0.01em] text-[clamp(0.62rem,0.54rem+0.38vmin,0.78rem)] iphone-page:text-[clamp(0.68rem,0.58rem+0.42vmin,0.84rem)] ${PROTO_FONT_CLASS}`}
                 style={{ color: PROTO_PHONE_CHART_COLORS.label }}
               >
-                {bar.label}
+                <span>{bar.label}</span>
+                <span className="tabular-nums">{formatTamBarAmount(bar)}</span>
               </span>
             ))}
           </div>
@@ -102,7 +115,7 @@ export function ProtoInvestMobileTamChart() {
         <p
           className={`font-medium leading-none tracking-[-0.03em] text-white ${PROTO_FONT_CLASS} text-[clamp(2.55rem,2rem+2.35vmin,3.35rem)] iphone-page:text-[clamp(2.15rem,1.72rem+1.85vmin,2.85rem)]`}
         >
-          ${PROTO_INVEST_TAM_CHART.highlight.valueB}B
+          {PROTO_INVEST_TAM_CHART.highlight.valueDisplay}
         </p>
         <p
           className={`mt-1.5 font-medium leading-snug tracking-[-0.02em] text-white ${PROTO_FONT_CLASS} text-[clamp(1.08rem,0.92rem+0.75vmin,1.32rem)] iphone-page:mt-2 iphone-page:text-[clamp(1.08rem,0.92rem+0.72vmin,1.28rem)]`}
@@ -119,6 +132,8 @@ export function ProtoInvestMobileTamChart() {
 
       <p className={PROTO_INVEST_CHART_CAPTION_TW}>{PROTO_INVEST_TAM_CAPTION}</p>
       <p className={PROTO_INVEST_CHART_CITATION_TW}>{PROTO_INVEST_TAM_CITATION}</p>
+
+      <ProtoInvestAiRecruitingForecastChart />
     </figure>
   );
 }

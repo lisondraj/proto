@@ -132,28 +132,62 @@ export const PROTO_INVEST_FAQ_ITEMS: readonly ProtoInvestFaqItem[] = [
 
 export const PROTO_INVEST_TAM_CHART = {
   title: "Total Addressable Market",
+  yMax: 90,
   caption:
-    "Estimated annual software spend Proto can capture across work-sample hiring, skills assessment, and recruiting platforms—anchored in Canada and the United States, where in-house teams are adopting AI for evaluation faster than for legacy resume screening.",
-  citation:
-    "Sources: Grand View Research (recruitment software, 2025); MarketsandMarkets (skill assessment); Gartner HR Technology Key Initiatives; IBISWorld (staffing & recruiting); LinkedIn Future of Recruiting; SHRM Talent Acquisition Benchmarks; Proto market model, 2026.",
+    "Proto expands from technical hiring into assessment, talent acquisition, and HR software.",
+  citation: "Sources: Fortune Business Insights; Grand View Research; Proto model, 2026.",
   bars: [
-    { label: "Canada hiring tech", value: 1.2, suffix: "B USD" },
-    { label: "Work-sample tools", value: 2.2, suffix: "B USD" },
-    { label: "U.S. recruiting", value: 3.6, suffix: "B USD" },
-    { label: "U.S. assessment", value: 4.9, suffix: "B USD" },
-    { label: "North America", value: 15, suffix: "B USD" },
-    { label: "Global hiring tech", value: 27, suffix: "B USD" },
+    { label: "Technical hiring", value: 4 },
+    { label: "Skills assessment", value: 8 },
+    { label: "Talent acquisition", value: 15 },
+    { label: "Recruitment software", value: 24 },
+    { label: "HR technology", value: 45 },
+    { label: "Future of work", value: 90, plus: true },
   ],
   highlight: {
-    valueB: 27,
-    tamLabel: "Total Addressable Market",
-    headline: "Global hiring & assessment software",
+    valueDisplay: "$90B+",
+    tamLabel: "Long-Term Market Opportunity",
+    headline:
+      "Hiring, talent acquisition, skills assessment, and AI-native workforce software.",
   },
 } as const;
 
 export const PROTO_INVEST_TAM_CAPTION = PROTO_INVEST_TAM_CHART.caption;
 
 export const PROTO_INVEST_TAM_CITATION = PROTO_INVEST_TAM_CHART.citation;
+
+/** Quarterly forecast — share of recruiting teams using AI software (next 16 quarters). */
+export const PROTO_INVEST_AI_RECRUITING_FORECAST_CHART = {
+  title: "AI recruiting software adoption",
+  caption:
+    "Share of North American recruiting teams using AI hiring software, forecast by quarter through 2030.",
+  citation: "Sources: LinkedIn Future of Recruiting; Greenhouse; Proto model, 2026–2030.",
+  yMax: 100,
+  quarters: [
+    { label: "Q3 '26", value: 38 },
+    { label: "Q4 '26", value: 41 },
+    { label: "Q1 '27", value: 44 },
+    { label: "Q2 '27", value: 48 },
+    { label: "Q3 '27", value: 52 },
+    { label: "Q4 '27", value: 56 },
+    { label: "Q1 '28", value: 60 },
+    { label: "Q2 '28", value: 64 },
+    { label: "Q3 '28", value: 68 },
+    { label: "Q4 '28", value: 71 },
+    { label: "Q1 '29", value: 74 },
+    { label: "Q2 '29", value: 77 },
+    { label: "Q3 '29", value: 79 },
+    { label: "Q4 '29", value: 81 },
+    { label: "Q1 '30", value: 83 },
+    { label: "Q2 '30", value: 85 },
+  ],
+} as const;
+
+export const PROTO_INVEST_AI_RECRUITING_FORECAST_CAPTION =
+  PROTO_INVEST_AI_RECRUITING_FORECAST_CHART.caption;
+
+export const PROTO_INVEST_AI_RECRUITING_FORECAST_CITATION =
+  PROTO_INVEST_AI_RECRUITING_FORECAST_CHART.citation;
 
 export const PROTO_INVEST_AI_ADOPTION_CHART = {
   title: "AI adoption in recruiting workflows",

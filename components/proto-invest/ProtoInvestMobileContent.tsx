@@ -126,6 +126,8 @@ export function ProtoInvestMobileContent() {
 
         <ProtoInvestMobileFaqTabs />
 
+        <ProtoInvestMobileTamChart />
+
         <h2 className={PROTO_INVEST_SECTION_HEADLINE_TW}>
           <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[0]}</span>
           <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[1]}</span>
@@ -134,8 +136,6 @@ export function ProtoInvestMobileContent() {
         <p className={PROTO_INVEST_BODY_TW}>{PROTO_INVEST_THINKING_BEYOND_PARAGRAPH}</p>
 
         <ProtoInvestMobileStatCharts />
-
-        <ProtoInvestMobileTamChart />
 
         <ProtoInvestMobileAiAdoptionChart />
       </div>

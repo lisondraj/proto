@@ -13,6 +13,7 @@ import {
 import { ProtoInvestDesktopFaqTabs } from "@/components/proto-invest/ProtoInvestDesktopFaqTabs";
 import { ProtoInvestDesktopNav } from "@/components/proto-invest/ProtoInvestDesktopNav";
 import { ProtoInvestDesktopSplitSection } from "@/components/proto-invest/ProtoInvestDesktopSplitSection";
+import { ProtoInvestMobileTamChart } from "@/components/proto-invest/ProtoInvestMobileTamChart";
 import {
   ABOUT_DESKTOP_HERO_BYLINE_WRAP_TW,
   ABOUT_DESKTOP_HERO_WRAP,
@@ -132,6 +133,7 @@ export function ProtoInvestDesktopView() {
               <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[1]}</span>
             </h2>
             <ProtoInvestDesktopFaqTabs />
+            <ProtoInvestMobileTamChart />
           </div>
         </ProtoInvestDesktopSplitSection>
 
