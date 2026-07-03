@@ -5,10 +5,8 @@ export type ProtoSandboxRoleSummary = {
   type: string;
 };
 
-export type ProtoSandboxRoleCardId = "harmony" | "ledger" | "northwind";
-
 export type ProtoSandboxRoleCard = {
-  id: ProtoSandboxRoleCardId;
+  id: "harmony" | "ledger" | "northwind";
   startupName: string;
   role: string;
   taskBrief: string;
@@ -17,7 +15,7 @@ export type ProtoSandboxRoleCard = {
   model: string;
   canConnectMcp: boolean;
   videoRecordedPushToMain: boolean;
-  /** Role facts shown inside the card body (featured Ledger-style layout). */
+  /** Role facts shown inside the featured card body. */
   roleSummary?: ProtoSandboxRoleSummary;
 };
 
@@ -37,89 +35,31 @@ export const PROTO_SANDBOX_ROLE_CARDS: readonly ProtoSandboxRoleCard[] = [
     model: "Claude Sonnet",
     canConnectMcp: true,
     videoRecordedPushToMain: true,
-  },
-  {
-    id: "ledger",
-    startupName: "Ledger AI",
-    role: "Full-Stack Engineer",
-    taskBrief: "Build the Stripe webhook sync",
-    checklist: [
-      "Handle invoice + subscription events",
-      "Map payloads to ledger schema",
-      "Test a failed webhook replay",
-    ],
-    timeLimit: "60 min",
-    model: "GPT-4o",
-    canConnectMcp: true,
-    videoRecordedPushToMain: true,
-    roleSummary: {
-      pay: "$180–220k",
-      equity: "0.15–0.25% equity",
-      location: "Remote (US)",
-      type: "Full-time",
-    },
-  },
-  {
-    id: "northwind",
-    startupName: "Northwind Ops",
-    role: "Growth Lead",
-    taskBrief: "Launch outbound to fintech CTOs",
-    checklist: [
-      "Draft 3-touch email sequence",
-      "Set up A/B copy test",
-      "Write reply playbook",
-    ],
-    timeLimit: "45 min",
-    model: "Fable 5",
-    canConnectMcp: false,
-    videoRecordedPushToMain: true,
-  },
-] as const;
-
-/**
- * Featured role carousel in the first shader — Ledger layout with three companies.
- * Order: Ledger → Harmony → Northwind → Ledger…
- */
-export const PROTO_FEATURED_ROLE_SLIDES: readonly ProtoSandboxRoleCard[] = [
-  {
-    id: "ledger",
-    startupName: "Ledger AI",
-    role: "Full-Stack Engineer",
-    taskBrief: "Build the Stripe webhook sync",
-    checklist: [
-      "Handle invoice + subscription events",
-      "Map payloads to ledger schema",
-      "Test a failed webhook replay",
-    ],
-    timeLimit: "60 min",
-    model: "GPT-4o",
-    canConnectMcp: true,
-    videoRecordedPushToMain: true,
-    roleSummary: {
-      pay: "$180–220k",
-      equity: "0.15–0.25% equity",
-      location: "Remote (US)",
-      type: "Full-time",
-    },
-  },
-  {
-    id: "harmony",
-    startupName: "Harmony Health",
-    role: "Product Manager",
-    taskBrief: "Ship the patient intake flow",
-    checklist: [
-      "Define completion metrics",
-      "Write mobile acceptance criteria",
-      "Pick two launch experiments",
-    ],
-    timeLimit: "90 min",
-    model: "Claude Sonnet",
-    canConnectMcp: true,
-    videoRecordedPushToMain: true,
     roleSummary: {
       pay: "$160–190k",
       equity: "0.10–0.20% equity",
       location: "NYC / Hybrid",
+      type: "Full-time",
+    },
+  },
+  {
+    id: "ledger",
+    startupName: "Ledger AI",
+    role: "Full-Stack Engineer",
+    taskBrief: "Build the Stripe webhook sync",
+    checklist: [
+      "Handle invoice + subscription events",
+      "Map payloads to ledger schema",
+      "Test a failed webhook replay",
+    ],
+    timeLimit: "60 min",
+    model: "GPT-4o",
+    canConnectMcp: true,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$180–220k",
+      equity: "0.15–0.25% equity",
+      location: "Remote (US)",
       type: "Full-time",
     },
   },
@@ -145,3 +85,10 @@ export const PROTO_FEATURED_ROLE_SLIDES: readonly ProtoSandboxRoleCard[] = [
     },
   },
 ] as const;
+
+/** Featured first-shader cycle: Ledger, then two peers, then Ledger again. */
+export const PROTO_SANDBOX_FEATURED_CYCLE: readonly ProtoSandboxRoleCard[] = [
+  PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "ledger")!,
+  PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "harmony")!,
+  PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "northwind")!,
+];

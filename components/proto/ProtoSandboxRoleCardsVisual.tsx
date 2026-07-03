@@ -6,13 +6,13 @@ import { dmSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 import { ProtoSandboxStartupLogo } from "@/components/proto/ProtoSandboxStartupLogos";
 import {
-  PROTO_FEATURED_ROLE_SLIDES,
+  PROTO_SANDBOX_FEATURED_CYCLE,
   PROTO_SANDBOX_ROLE_CARDS,
   type ProtoSandboxRoleCard,
 } from "@/lib/proto/proto-sandbox-role-cards";
 
-const FEATURED_SLIDE_MS = 3400;
-const FEATURED_FADE_MS = 700;
+const FEATURED_HOLD_MS = 3400;
+const FEATURED_FADE_MS = 480;
 
 const INK = "#2C2419";
 const MUTED = "#7A6F63";
@@ -322,8 +322,16 @@ function CardCluster({ layout, tokens }: { layout: VisualLayout; tokens: VisualT
   );
 }
 
-function featuredBelowTokens(tokens: VisualTokens): VisualTokens {
-  return {
+/** Featured card — logo above; role facts inside; task + tags below. Same styling for every company. */
+function FeaturedRoleCard({
+  card,
+  tokens,
+}: {
+  card: ProtoSandboxRoleCard;
+  tokens: VisualTokens;
+}) {
+  const summary = card.roleSummary;
+  const belowTokens: VisualTokens = {
     ...tokens,
     task: "0.92rem",
     checklist: "0.82rem",
@@ -335,18 +343,6 @@ function featuredBelowTokens(tokens: VisualTokens): VisualTokens {
     tagRowMarginTop: "0.48rem",
     bodyGap: "0.4rem",
   };
-}
-
-/** Featured role card — logo above; role facts inside; task + tags below. */
-function FeaturedRoleCard({
-  card,
-  tokens,
-}: {
-  card: ProtoSandboxRoleCard;
-  tokens: VisualTokens;
-}) {
-  const summary = card.roleSummary;
-  const belowTokens = featuredBelowTokens(tokens);
 
   return (
     <div className="flex flex-col items-start" style={{ width: tokens.cardWidth }}>
@@ -434,46 +430,59 @@ function FeaturedRoleCard({
   );
 }
 
-function FeaturedRoleCarousel({ tokens }: { tokens: VisualTokens }) {
+function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
   const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setIndex((current) => (current + 1) % PROTO_FEATURED_ROLE_SLIDES.length);
-    }, FEATURED_SLIDE_MS);
-    return () => window.clearInterval(id);
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let holdTimer: number | undefined;
+    let fadeTimer: number | undefined;
+
+    const schedule = () => {
+      holdTimer = window.setTimeout(() => {
+        if (reduceMotion) {
+          setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
+          schedule();
+          return;
+        }
+
+        setVisible(false);
+        fadeTimer = window.setTimeout(() => {
+          setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
+          setVisible(true);
+          schedule();
+        }, FEATURED_FADE_MS);
+      }, FEATURED_HOLD_MS);
+    };
+
+    schedule();
+
+    return () => {
+      window.clearTimeout(holdTimer);
+      window.clearTimeout(fadeTimer);
+    };
   }, []);
 
-  return (
-    <div className="relative" style={{ width: tokens.cardWidth }}>
-      {PROTO_FEATURED_ROLE_SLIDES.map((card, slideIndex) => {
-        const active = slideIndex === index;
+  const card = PROTO_SANDBOX_FEATURED_CYCLE[index] ?? PROTO_SANDBOX_FEATURED_CYCLE[0];
 
-        return (
-          <div
-            key={card.id}
-            aria-hidden={!active}
-            style={{
-              position: active ? "relative" : "absolute",
-              left: 0,
-              top: 0,
-              width: "100%",
-              opacity: active ? 1 : 0,
-              transform: active ? "translateY(0)" : "translateY(0.45rem)",
-              transition: `opacity ${FEATURED_FADE_MS}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${FEATURED_FADE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`,
-              pointerEvents: active ? "auto" : "none",
-              zIndex: active ? 1 : 0,
-            }}
-          >
-            <FeaturedRoleCard card={card} tokens={tokens} />
-          </div>
-        );
-      })}
+  return (
+    <div
+      style={{
+        opacity: visible ? 1 : 0,
+        transition: `opacity ${FEATURED_FADE_MS}ms ease`,
+        willChange: "opacity",
+      }}
+    >
+      <FeaturedRoleCard card={card} tokens={tokens} />
     </div>
   );
 }
 
-/** Featured role carousel — Ledger, Harmony, Northwind, then Ledger again. */
+/** Featured role cycle — Ledger, Harmony, Northwind, then Ledger again. */
 export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: VisualLayout }) {
   const tokens = layout === "desktop" ? DESKTOP_TOKENS : PHONE_TOKENS;
 
@@ -489,7 +498,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
             className="flex justify-center"
             style={{ width: PHONE_ARTBOARD_WIDTH_PX }}
           >
-            <FeaturedRoleCarousel tokens={tokens} />
+            <FeaturedRoleCycle tokens={tokens} />
           </div>
         </ProtoPhoneScaledArtboard>
       </div>
@@ -502,7 +511,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
       style={{ maxWidth: "min(100%, 26rem)" }}
       aria-hidden
     >
-      <FeaturedRoleCarousel tokens={tokens} />
+      <FeaturedRoleCycle tokens={tokens} />
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import type { ReactNode, SVGProps } from "react";
 
 import { lora, outfit, suisseIntl } from "@/lib/home/fonts";
-import type { ProtoSandboxRoleCardId } from "@/lib/proto/proto-sandbox-role-cards";
 
 const INK = "#2C2419";
 const MUTED = "#8A7D6E";
@@ -83,19 +82,20 @@ function NorthwindIcon({
   ...props
 }: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
   const isLight = theme === "light";
-  const ink = isLight ? LIGHT_INK : INK;
-  const cutout = isLight ? "#121819" : "#FFFFFF";
+  const fill = isLight ? LIGHT_INK : INK;
+  const cutout = isLight ? "#1A2224" : "#FFFFFF";
+  const accent = isLight ? "rgba(255, 249, 242, 0.55)" : INK;
 
   return (
     <svg viewBox="0 0 32 32" fill="none" {...props}>
-      <path d="M16 4l10 22H19.2l-1.4-4.2H10.2L8.8 26H6L16 4z" fill={ink} />
+      <path d="M16 4l10 22H19.2l-1.4-4.2H10.2L8.8 26H6L16 4z" fill={fill} />
       <path d="M11.5 17.2h9L16 9.8 11.5 17.2z" fill={cutout} />
       <path
         d="M23.5 8.5l4.5 2.5M23.5 13l4.5 2M23.5 17.5l4.5 2.5"
-        stroke={ink}
+        stroke={accent}
         strokeWidth="1.6"
         strokeLinecap="round"
-        opacity={isLight ? 0.65 : 0.55}
+        opacity={isLight ? 1 : 0.55}
       />
     </svg>
   );
@@ -187,7 +187,7 @@ export function HarmonyHealthLogo({
           <span
             style={{
               color: ink,
-              fontSize: "0.78em",
+              fontSize: "0.92em",
               fontWeight: 700,
               letterSpacing: "-0.035em",
               lineHeight: 1,
@@ -198,7 +198,7 @@ export function HarmonyHealthLogo({
           <span
             style={{
               color: muted,
-              fontSize: "1.08em",
+              fontSize: "0.92em",
               fontWeight: 500,
               letterSpacing: "-0.02em",
               lineHeight: 1,
@@ -251,16 +251,21 @@ export function NorthwindOpsLogo({
   );
 }
 
+const LOGO_BY_ID = {
+  harmony: HarmonyHealthLogo,
+  ledger: LedgerAiLogo,
+  northwind: NorthwindOpsLogo,
+} as const;
+
 export function ProtoSandboxStartupLogo({
   id,
   height,
   theme = "default",
 }: {
-  id: ProtoSandboxRoleCardId;
+  id: keyof typeof LOGO_BY_ID;
   height?: string;
   theme?: LogoTheme;
 }) {
-  if (id === "ledger") return <LedgerAiLogo height={height} theme={theme} />;
-  if (id === "harmony") return <HarmonyHealthLogo height={height} theme={theme} />;
-  return <NorthwindOpsLogo height={height} theme={theme} />;
+  const Logo = LOGO_BY_ID[id];
+  return <Logo height={height} theme={theme} />;
 }
