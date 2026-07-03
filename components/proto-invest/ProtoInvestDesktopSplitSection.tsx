@@ -15,7 +15,7 @@ import {
   ABOUT_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT,
   ABOUT_DESKTOP_SPLIT_TEXT_COLUMN_RIGHT_BLEED,
 } from "@/lib/about/about-layout-styles";
-import { PROTO_INVEST_DESKTOP_GRAPHIC_PANEL_TW } from "@/lib/proto-invest/proto-invest-layout-styles";
+import { PROTO_INVEST_DESKTOP_GRAPHIC_PANEL_TW, PROTO_INVEST_SECTION_ANCHOR } from "@/lib/proto-invest/proto-invest-layout-styles";
 import type { ReactNode } from "react";
 
 /** Full-height /about band — text column plus square proto graphic panel. */
@@ -24,12 +24,14 @@ export function ProtoInvestDesktopSplitSection({
   graphic,
   textFill = false,
   boxBleedToMargin = false,
+  sectionId,
   children,
 }: {
   boxSide: "left" | "right";
   graphic: 0 | 1 | 2 | 3;
   textFill?: boolean;
   boxBleedToMargin?: boolean;
+  sectionId?: string;
   children: ReactNode;
 }) {
   const gridClass = boxBleedToMargin
@@ -62,7 +64,7 @@ export function ProtoInvestDesktopSplitSection({
   );
 
   return (
-    <section className={ABOUT_DESKTOP_SECTION_H}>
+    <section id={sectionId} className={`${sectionId ? PROTO_INVEST_SECTION_ANCHOR : ""} ${ABOUT_DESKTOP_SECTION_H}`}>
       <div className={gridClass}>
         {boxSide === "left" ? (
           <>

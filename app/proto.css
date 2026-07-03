@@ -496,6 +496,211 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
   border-left-color: var(--proto-nav-cta-border) !important;
 }
 
+/* Desktop — page gutters (matches px-10/md:20/lg:28/xl:36). */
+html[data-proto-page][data-layout="desktop"] {
+  --proto-desktop-gutter-left: 2.5rem;
+  --proto-desktop-gutter-right: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  html[data-proto-page][data-layout="desktop"] {
+    --proto-desktop-gutter-left: 5rem;
+    --proto-desktop-gutter-right: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[data-proto-page][data-layout="desktop"] {
+    --proto-desktop-gutter-left: 7rem;
+    --proto-desktop-gutter-right: 7rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  html[data-proto-page][data-layout="desktop"] {
+    --proto-desktop-gutter-left: 9rem;
+    --proto-desktop-gutter-right: 9rem;
+  }
+}
+
+/* Desktop — frosted pill nav between page gutters on scroll. */
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost {
+  --proto-nav-motion-duration: 620ms;
+  --proto-nav-motion-ease: cubic-bezier(0.28, 0.84, 0.24, 1);
+  --proto-nav-frost-pad-x-min: 1.05rem;
+  --proto-nav-frost-pad-x-max: 1.45rem;
+  --proto-nav-frost-pad-y: 0.4rem;
+  --proto-nav-frost-pad-x: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-frost-pad-x-min) +
+    var(--proto-nav-frost-progress, 0) * var(--proto-nav-frost-pad-x-max)
+  );
+  --proto-nav-frost-compact-scale: calc(1 - var(--proto-nav-frost-progress, 0) * 0.1);
+  --proto-nav-frost-nav-pad-top: 0.55rem;
+  --proto-nav-frost-nav-pad-bottom: 0.4rem;
+  --proto-nav-hero-strip-pad: 1.5rem;
+  --proto-nav-cta-radius-rest: 0.375rem;
+  --proto-nav-cta-border: #151c1f;
+  padding-top: calc(var(--proto-nav-frost-progress, 0) * var(--proto-nav-frost-nav-pad-top)) !important;
+  padding-left: calc(var(--proto-desktop-gutter-left) * var(--proto-nav-frost-progress, 0)) !important;
+  padding-right: calc(var(--proto-desktop-gutter-right) * var(--proto-nav-frost-progress, 0)) !important;
+  padding-bottom: calc(var(--proto-nav-frost-progress, 0) * var(--proto-nav-frost-nav-pad-bottom)) !important;
+  background: color-mix(
+    in srgb,
+    var(--proto-page-bg) calc((1 - var(--proto-nav-frost-progress, 0)) * 100%),
+    transparent
+  ) !important;
+  border-bottom-color: color-mix(
+    in srgb,
+    #2a3538 calc((1 - var(--proto-nav-frost-progress, 0)) * 100%),
+    transparent
+  ) !important;
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+  box-shadow: 0 calc(-120px * (1 - var(--proto-nav-frost-progress, 0))) 0
+    calc(120px * (1 - var(--proto-nav-frost-progress, 0))) var(--proto-page-bg) !important;
+  transition:
+    --proto-nav-frost-progress var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
+    background var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
+    border-color var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
+    box-shadow var(--proto-nav-motion-duration) var(--proto-nav-motion-ease);
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready),
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready) .proto-nav-frost-shell,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready) .proto-desktop-frost-nav__strip,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready) .proto-nav-chrome-logo,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready) .proto-nav-chrome-actions,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready) .proto-nav-cta-shell,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready) .proto-nav-cta-shell a,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready) .proto-nav-cta-shell button {
+  transition: none !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-frost-shell {
+  border: 1px solid transparent;
+  border-radius: calc(var(--proto-nav-frost-progress, 0) * 9999px);
+  border-color: rgba(255, 255, 255, calc(var(--proto-nav-frost-progress, 0) * 0.1));
+  background-color: rgba(18, 24, 25, calc(var(--proto-nav-frost-progress, 0) * 0.34));
+  backdrop-filter: blur(calc(var(--proto-nav-frost-progress, 0) * 56px))
+    saturate(calc(1 + var(--proto-nav-frost-progress, 0) * 0.12));
+  -webkit-backdrop-filter: blur(calc(var(--proto-nav-frost-progress, 0) * 56px))
+    saturate(calc(1 + var(--proto-nav-frost-progress, 0) * 0.12));
+  box-shadow:
+    0 calc(var(--proto-nav-frost-progress, 0) * 10px) calc(var(--proto-nav-frost-progress, 0) * 36px)
+      rgba(0, 0, 0, calc(var(--proto-nav-frost-progress, 0) * 0.28)),
+    inset 0 1px 0 rgba(255, 255, 255, calc(var(--proto-nav-frost-progress, 0) * 0.07));
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-desktop-frost-nav__strip {
+  padding-left: calc(
+    var(--proto-desktop-gutter-left) * (1 - var(--proto-nav-frost-progress, 0)) +
+    var(--proto-nav-frost-pad-x) * var(--proto-nav-frost-progress, 0)
+  ) !important;
+  padding-right: calc(
+    var(--proto-desktop-gutter-right) * (1 - var(--proto-nav-frost-progress, 0)) +
+    var(--proto-nav-frost-pad-x) * var(--proto-nav-frost-progress, 0)
+  ) !important;
+  padding-top: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-hero-strip-pad, 1.5rem) +
+    var(--proto-nav-frost-pad-y) * var(--proto-nav-frost-progress, 0)
+  ) !important;
+  padding-bottom: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-hero-strip-pad, 1.5rem) +
+    var(--proto-nav-frost-pad-y) * var(--proto-nav-frost-progress, 0)
+  ) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-chrome-logo {
+  transform: scale(var(--proto-nav-frost-compact-scale, 1));
+  transform-origin: left center;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-chrome-actions {
+  transform: scale(var(--proto-nav-frost-compact-scale, 1));
+  transform-origin: right center;
+  overflow: visible !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell {
+  border: 1px solid var(--proto-nav-cta-border) !important;
+  box-shadow: none !important;
+  border-radius: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-cta-radius-rest, 0.375rem) +
+    var(--proto-nav-frost-progress, 0) * 9999px
+  ) !important;
+  overflow: visible !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell > div:not([role="menu"]) {
+  border-radius: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-cta-radius-rest, 0.375rem) +
+    var(--proto-nav-frost-progress, 0) * 9999px
+  ) !important;
+  overflow: hidden !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell > div:not([role="menu"]) > a,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell > div:not([role="menu"]) > button {
+  border-radius: 0 !important;
+  transition: none !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell > button {
+  border-radius: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-cta-radius-rest, 0.375rem) +
+    var(--proto-nav-frost-progress, 0) * 9999px
+  ) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell a,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell button {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-dropdown,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-email-dropdown {
+  z-index: 80 !important;
+  overflow: hidden !important;
+  border-radius: 0.95rem !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell [role="menu"],
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-email-dropdown {
+  border: 1px solid var(--proto-nav-cta-border) !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open {
+  border-radius: 9999px !important;
+  overflow: visible !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell.proto-nav-cta-shell--open > div:not([role="menu"]) {
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell .proto-nav-cta-dropdown,
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav--scrolled .proto-nav-cta-shell [role="menu"] {
+  top: calc(100% + 0.22rem) !important;
+  border-radius: 0.75rem !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav.proto-nav--scrolled .proto-nav-email-dropdown {
+  top: calc(100% + 0.22rem) !important;
+  border-radius: 0.55rem !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+html[data-proto-page][data-layout="desktop"] nav.doephone-site-nav .proto-nav-cta-shell button[class*="border-l"] {
+  border-left-color: var(--proto-nav-cta-border) !important;
+}
+
 /* Hero copy — same horizontal gutters as sections. */
 html[data-proto-page]:has(.doephone-mobile-root) .doephone-hero-section > .absolute.left-0.right-0 {
   padding-left: var(--proto-phone-gutter-left) !important;

@@ -12,6 +12,7 @@ import {
 } from "@/components/proto-invest/ProtoInvestDesktopArticleBlocks";
 import { ProtoInvestDesktopFaqTabs } from "@/components/proto-invest/ProtoInvestDesktopFaqTabs";
 import { ProtoInvestDesktopNav } from "@/components/proto-invest/ProtoInvestDesktopNav";
+import { ProtoInvestMobileFloatingToc } from "@/components/proto-invest/ProtoInvestMobileFloatingToc";
 import { ProtoInvestDesktopSplitSection } from "@/components/proto-invest/ProtoInvestDesktopSplitSection";
 import { ProtoInvestMobileTamChart } from "@/components/proto-invest/ProtoInvestMobileTamChart";
 import {
@@ -32,6 +33,7 @@ import {
   PROTO_INVEST_FOUNDERS_PARAGRAPHS,
   PROTO_INVEST_FAQ_HEADLINE_LINES,
   PROTO_INVEST_INTRO_LEAD_LINES,
+  PROTO_INVEST_MOBILE_SECTION_IDS,
   PROTO_INVEST_PIE_CHART,
   PROTO_INVEST_RECRUITER_SECTION,
   PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES,
@@ -47,6 +49,7 @@ import {
   PROTO_INVEST_DESKTOP_SECTION_HEADLINE_TW,
   PROTO_INVEST_DESKTOP_SUBHEADING_TW,
   PROTO_INVEST_DESKTOP_TITLE_TW,
+  PROTO_INVEST_SECTION_ANCHOR,
 } from "@/lib/proto-invest/proto-invest-layout-styles";
 import { PROTO_INVEST_PAGE_BG } from "@/lib/proto-invest/proto-invest-theme";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
@@ -59,7 +62,10 @@ export function ProtoInvestDesktopView() {
       <ProtoInvestDesktopNav />
 
       <main className={`proto-invest-main w-full ${PROTO_FONT_CLASS}`}>
-        <section className={`${ABOUT_DESKTOP_SECTION_1_H} ${ABOUT_DESKTOP_SECTION_1_LAYOUT}`}>
+        <section
+          id={PROTO_INVEST_MOBILE_SECTION_IDS.introduction}
+          className={`${PROTO_INVEST_SECTION_ANCHOR} ${ABOUT_DESKTOP_SECTION_1_H} ${ABOUT_DESKTOP_SECTION_1_LAYOUT}`}
+        >
           <div className={`${ABOUT_HERO_HEADLINE_WRAP} min-w-0 ${ABOUT_DESKTOP_HERO_HEADLINE_TOP}`}>
             <h1 className={PROTO_INVEST_DESKTOP_TITLE_TW}>
               <span className="block">Proto is changing the</span>
@@ -87,7 +93,13 @@ export function ProtoInvestDesktopView() {
           </div>
         </section>
 
-        <ProtoInvestDesktopSplitSection boxSide="right" graphic={0} textFill boxBleedToMargin>
+        <ProtoInvestDesktopSplitSection
+          boxSide="right"
+          graphic={0}
+          textFill
+          boxBleedToMargin
+          sectionId={PROTO_INVEST_MOBILE_SECTION_IDS.product}
+        >
           <div className={`${ABOUT_DESKTOP_SQUARE_PANEL_TW} min-h-0`}>
             <div className={ABOUT_DESKTOP_SECTION_2_STACK}>
               <div className={`flex min-h-0 flex-1 flex-col justify-center ${ABOUT_DESKTOP_SECTION_2_CONTENT_GAP}`}>
@@ -118,7 +130,12 @@ export function ProtoInvestDesktopView() {
           </div>
         </ProtoInvestDesktopSplitSection>
 
-        <ProtoInvestDesktopSplitSection boxSide="left" graphic={1} boxBleedToMargin>
+        <ProtoInvestDesktopSplitSection
+          boxSide="left"
+          graphic={1}
+          boxBleedToMargin
+          sectionId={PROTO_INVEST_MOBILE_SECTION_IDS.founders}
+        >
           <div className={`flex flex-col ${PROTO_INVEST_DESKTOP_CONTENT_STACK_GAP}`}>
             {foundersParagraphs.map((paragraph) => (
               <ProtoInvestDesktopParagraph key={paragraph} text={paragraph} />
@@ -126,7 +143,13 @@ export function ProtoInvestDesktopView() {
           </div>
         </ProtoInvestDesktopSplitSection>
 
-        <ProtoInvestDesktopSplitSection boxSide="right" graphic={2} textFill boxBleedToMargin>
+        <ProtoInvestDesktopSplitSection
+          boxSide="right"
+          graphic={2}
+          textFill
+          boxBleedToMargin
+          sectionId={PROTO_INVEST_MOBILE_SECTION_IDS.productMarket}
+        >
           <div className={`flex min-h-0 w-full max-w-[36rem] flex-col ${PROTO_INVEST_DESKTOP_CONTENT_STACK_GAP}`}>
             <h2 className={PROTO_INVEST_DESKTOP_SECTION_HEADLINE_TW}>
               <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[0]}</span>
@@ -137,7 +160,11 @@ export function ProtoInvestDesktopView() {
           </div>
         </ProtoInvestDesktopSplitSection>
 
-        <ProtoInvestDesktopSplitSection boxSide="left" graphic={3}>
+        <ProtoInvestDesktopSplitSection
+          boxSide="left"
+          graphic={3}
+          sectionId={PROTO_INVEST_MOBILE_SECTION_IDS.beyondProto}
+        >
           <div className={`flex flex-col ${PROTO_INVEST_DESKTOP_CONTENT_STACK_GAP}`}>
             <ArticleBarChart
               title={PROTO_INVEST_BAR_CHART.title}
@@ -157,6 +184,8 @@ export function ProtoInvestDesktopView() {
       <ProtoMoreAboutSection layout="desktop" />
 
       <ProtoFooter layout="desktop" />
+
+      <ProtoInvestMobileFloatingToc />
     </div>
   );
 }

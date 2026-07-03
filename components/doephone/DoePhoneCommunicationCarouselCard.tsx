@@ -242,6 +242,7 @@ export function DoePhoneCommunicationCarouselCard({
   backdropGrainImage,
   backdropLineOverlayOpacity,
   protoShaderVariant,
+  protoSite = false,
   uiScaleClass,
   uiInteractive = true,
 }: {
@@ -267,6 +268,8 @@ export function DoePhoneCommunicationCarouselCard({
   backdropLineOverlayOpacity?: number;
   /** /proto — Paper GrainGradient variant instead of CSS gradient + line grid. */
   protoShaderVariant?: ProtoGrainGradientVariant;
+  /** /proto home — sandbox role cards and other proto-only slide mocks. */
+  protoSite?: boolean;
   uiScaleClass?: string;
 }) {
   const [panelPhase, setPanelPhase] = useState<PanelPhase>("idle");
@@ -336,7 +339,7 @@ export function DoePhoneCommunicationCarouselCard({
         uiScaleClass={uiScaleClass}
         uiInteractive={uiInteractive}
       >
-        <DoePhoneCommunicationSlideVisual slideId={slide.id} layout={layout} />
+        <DoePhoneCommunicationSlideVisual slideId={slide.id} layout={layout} protoSite={protoSite} />
       </CarouselMenuOverlay>
       {expandable ? (
         <CarouselSlideToggleBadge

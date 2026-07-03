@@ -47,7 +47,7 @@ export function ProtoDesktopPanelSection({
       ) : null}
 
       <div className="proto-feature-box-ui absolute inset-0 z-[15] flex items-center justify-center px-[clamp(1.25rem,2.5vw,2.5rem)]">
-        <DoePhoneCommunicationSlideVisual slideId={slide.id} layout="desktop" />
+        <DoePhoneCommunicationSlideVisual slideId={slide.id} layout="desktop" protoSite />
       </div>
     </div>
   );

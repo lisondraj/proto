@@ -31,6 +31,7 @@ export function ProtoCommunicationStack() {
                     showExpandControls={false}
                     uiInteractive={false}
                     protoShaderVariant={protoGrainGradientVariant(slide.id)}
+                    protoSite
                     uiScaleClass="proto-carousel-ui-scale"
                   />
                 </div>
