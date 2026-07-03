@@ -4,8 +4,8 @@ import type { ReactNode, SVGProps } from "react";
 
 import { lora, outfit, suisseIntl } from "@/lib/home/fonts";
 
-const INK = "#1E343A";
-const MUTED = "#6B7280";
+const INK = "#2C2419";
+const MUTED = "#8A7D6E";
 
 function LogoFrame({ children, height }: { children: ReactNode; height: string }) {
   return (
@@ -70,12 +70,14 @@ function LogoLockup({
   secondary,
   height,
   fontClassName,
+  textSize = "0.92em",
 }: {
   Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
   primary: string;
   secondary?: string;
   height: string;
   fontClassName: string;
+  textSize?: string;
 }) {
   return (
     <LogoFrame height={height}>
@@ -86,7 +88,7 @@ function LogoLockup({
             <span
               style={{
                 color: INK,
-                fontSize: "0.92em",
+                fontSize: textSize,
                 fontWeight: 700,
                 letterSpacing: "-0.035em",
                 lineHeight: 1,
@@ -97,7 +99,7 @@ function LogoLockup({
             <span
               style={{
                 color: MUTED,
-                fontSize: "0.92em",
+                fontSize: textSize,
                 fontWeight: 500,
                 letterSpacing: "-0.02em",
                 lineHeight: 1,
@@ -111,7 +113,7 @@ function LogoLockup({
             className={fontClassName}
             style={{
               color: INK,
-              fontSize: "0.92em",
+              fontSize: textSize,
               fontWeight: 700,
               letterSpacing: "-0.035em",
               lineHeight: 1,
@@ -161,7 +163,13 @@ export function HarmonyHealthLogo({ height = "2.35rem" }: { height?: string }) {
 
 export function LedgerAiLogo({ height = "2.35rem" }: { height?: string }) {
   return (
-    <LogoLockup Icon={LedgerIcon} primary="Ledger" height={height} fontClassName={suisseIntl.className} />
+    <LogoLockup
+      Icon={LedgerIcon}
+      primary="Ledger"
+      height={height}
+      fontClassName={suisseIntl.className}
+      textSize="1.08em"
+    />
   );
 }
 
@@ -173,6 +181,7 @@ export function NorthwindOpsLogo({ height = "2.35rem" }: { height?: string }) {
       secondary="OPS"
       height={height}
       fontClassName={outfit.className}
+      textSize="1.08em"
     />
   );
 }

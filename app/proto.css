@@ -121,9 +121,9 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card > 
   height: 100% !important;
 }
 
-/* iPhone — first feature shader box is 1/6 taller than the default card height. */
+/* iPhone — fit-shader boxes (first + second) are 1/6 taller than the default card height. */
 html[data-proto-page]:has(.doephone-mobile-root)
-  .proto-feature-section--first-shader
+  .proto-feature-section--fit-shader
   .proto-feature-section__card {
   min-height: clamp(
     calc(22rem + var(--app-vh, 100lvh) / 6),
@@ -253,11 +253,11 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card .p
   width: 100%;
 }
 
-/* Sandbox role cards — fill the shader overlay; cluster centers as one unit. */
+/* Fit-shader mocks — fill the overlay; UI centers as one scaled unit. */
 html[data-proto-page]:has(.doephone-mobile-root)
-  .proto-feature-section--first-shader
+  .proto-feature-section--fit-shader
   .proto-feature-section__card
-  .proto-sandbox-cards-scale {
+  .proto-feature-ui-fit-scale {
   position: absolute !important;
   inset: 0 !important;
   display: flex !important;
@@ -270,9 +270,9 @@ html[data-proto-page]:has(.doephone-mobile-root)
 }
 
 html[data-proto-page]:has(.doephone-mobile-root)
-  .proto-feature-section--first-shader
+  .proto-feature-section--fit-shader
   .proto-feature-section__card
-  .proto-sandbox-cards-scale
+  .proto-feature-ui-fit-scale
   > * {
   width: 100% !important;
   height: 100% !important;

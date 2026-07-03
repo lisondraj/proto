@@ -18,7 +18,7 @@ export function ProtoCommunicationStack() {
           <section
             key={slide.id}
             className={`proto-feature-section proto-section-band${
-              index === 0 ? " proto-feature-section--first-shader" : ""
+              index <= 1 ? " proto-feature-section--fit-shader" : ""
             }`}
             aria-label={slide.menuLabel}
           >
@@ -35,9 +35,7 @@ export function ProtoCommunicationStack() {
                     protoShaderVariant={protoGrainGradientVariant(slide.id)}
                     protoSite
                     uiScaleClass={
-                      slide.id === "agents"
-                        ? "proto-sandbox-cards-scale"
-                        : "proto-carousel-ui-scale"
+                      index <= 1 ? "proto-feature-ui-fit-scale" : "proto-carousel-ui-scale"
                     }
                   />
                 </div>

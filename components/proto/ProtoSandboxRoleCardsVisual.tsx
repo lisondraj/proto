@@ -1,20 +1,23 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
-
 import { dmSans, suisseIntl } from "@/lib/home/fonts";
+import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 import { ProtoSandboxStartupLogo } from "@/components/proto/ProtoSandboxStartupLogos";
 import {
   PROTO_SANDBOX_ROLE_CARDS,
   type ProtoSandboxRoleCard,
 } from "@/lib/proto/proto-sandbox-role-cards";
 
-const INK = "#1E343A";
-const MUTED = "#6B7280";
-const TAG_BG = "#F3F4F6";
-const TAG_INK = "#9CA3AF";
-const RAIL_LINE = "#D1D5DB";
-const TASK_DOT = "#C4C9D1";
+const INK = "#2C2419";
+const MUTED = "#7A6F63";
+const TAG_BG = "#F6F0E6";
+const TAG_INK = "#A39686";
+const RAIL_LINE = "#DDD2C2";
+const TASK_DOT = "#C9BBA8";
+const CARD_FACE = "#FFF9F2";
+/** Soft cream wash — warm paper, not flat white. */
+const CARD_SURFACE =
+  "linear-gradient(180deg, #FFFCF7 0%, #FFF9F2 52%, #F9F1E6 100%)";
 
 /** iPhone artboard — fixed layout that scales as one unit (like a vector). */
 const PHONE_ARTBOARD_WIDTH_PX = 360;
@@ -24,9 +27,6 @@ const PHONE_CARD_STEP_REM = PHONE_CARD_HEIGHT_REM + PHONE_CARD_GAP_REM;
 const PHONE_CLUSTER_HEIGHT_REM =
   PHONE_CARD_STEP_REM * (PROTO_SANDBOX_ROLE_CARDS.length - 1) + PHONE_CARD_HEIGHT_REM;
 const PHONE_ARTBOARD_HEIGHT_PX = PHONE_CLUSTER_HEIGHT_REM * 16;
-/** Inset from the shader card so all three boxes stay fully visible and centered. */
-const PHONE_ARTBOARD_FIT_PAD_PX = 20;
-const PHONE_ARTBOARD_FIT_SCALE = 0.9;
 
 type VisualLayout = "phone" | "desktop";
 
@@ -58,7 +58,7 @@ const PHONE_TOKENS: VisualTokens = {
   clusterHeight: `${PHONE_CLUSTER_HEIGHT_REM}rem`,
   cardWidth: "78%",
   cardPad: "0.82rem 0.88rem",
-  cardRadius: "0.72rem",
+  cardRadius: "0.55rem",
   logoHeight: "2.35rem",
   role: "0.84rem",
   task: "0.76rem",
@@ -76,7 +76,7 @@ const DESKTOP_TOKENS: VisualTokens = {
   clusterHeight: "clamp(28.5rem, 84%, 33rem)",
   cardWidth: "76%",
   cardPad: "clamp(0.78rem, 0.95vw, 0.92rem) clamp(0.82rem, 1vw, 0.96rem)",
-  cardRadius: "clamp(0.7rem, 0.84vw, 0.84rem)",
+  cardRadius: "clamp(0.52rem, 0.64vw, 0.64rem)",
   logoHeight: "clamp(2.1rem, 2.45vw, 2.55rem)",
   role: "clamp(0.78rem, 0.9vw, 0.9rem)",
   task: "clamp(0.7rem, 0.82vw, 0.82rem)",
@@ -101,106 +101,6 @@ const DESKTOP_CARD_LAYOUT: readonly CardPosition[] = [
   { top: "clamp(9.6rem, 28.5vmin, 11.4rem)", left: "0%", zIndex: 2 },
   { top: "clamp(19.2rem, 57vmin, 22.8rem)", left: "18%", zIndex: 3 },
 ];
-
-function getSandboxFitHost(node: HTMLElement): HTMLElement {
-  return (
-    (node.closest(".proto-feature-section__card") as HTMLElement | null) ??
-    (node.closest(".proto-carousel-card") as HTMLElement | null) ??
-    node
-  );
-}
-
-function measureClusterBounds(root: HTMLElement, fallbackWidth: number, fallbackHeight: number) {
-  const cards = root.querySelectorAll<HTMLElement>("article");
-  if (cards.length === 0) {
-    return { width: fallbackWidth, height: fallbackHeight };
-  }
-
-  let maxRight = 0;
-  let maxBottom = 0;
-  cards.forEach((card) => {
-    maxRight = Math.max(maxRight, card.offsetLeft + card.offsetWidth);
-    maxBottom = Math.max(maxBottom, card.offsetTop + card.offsetHeight);
-  });
-
-  return {
-    width: Math.max(maxRight, fallbackWidth),
-    height: Math.max(maxBottom, 1),
-  };
-}
-
-function PhoneScaledArtboard({
-  width,
-  height,
-  children,
-}: {
-  width: number;
-  height: number;
-  children: ReactNode;
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const artboardRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.5);
-  const [bounds, setBounds] = useState({ width, height });
-
-  useLayoutEffect(() => {
-    const container = containerRef.current;
-    const artboard = artboardRef.current;
-    if (!container || !artboard) return;
-
-    const host = getSandboxFitHost(container);
-
-    const updateScale = () => {
-      const nextBounds = measureClusterBounds(artboard, width, height);
-      setBounds(nextBounds);
-
-      const fitWidth = Math.max(host.clientWidth - PHONE_ARTBOARD_FIT_PAD_PX * 2, 1);
-      const fitHeight = Math.max(host.clientHeight - PHONE_ARTBOARD_FIT_PAD_PX * 2, 1);
-      const nextScale =
-        Math.min(fitWidth / nextBounds.width, fitHeight / nextBounds.height) *
-        PHONE_ARTBOARD_FIT_SCALE;
-      setScale(nextScale > 0 ? nextScale : 0.5);
-    };
-
-    updateScale();
-    const observer = new ResizeObserver(updateScale);
-    observer.observe(host);
-    observer.observe(artboard);
-    if (host !== container) observer.observe(container);
-    return () => observer.disconnect();
-  }, [width, height]);
-
-  const scaledWidth = bounds.width * scale;
-  const scaledHeight = bounds.height * scale;
-
-  return (
-    <div
-      ref={containerRef}
-      className="flex h-full min-h-0 w-full items-center justify-center overflow-hidden"
-    >
-      {/* Outer box is the true visual size of all three cards as one unit. */}
-      <div
-        className="relative shrink-0"
-        style={{
-          width: scaledWidth,
-          height: scaledHeight,
-        }}
-      >
-        <div
-          ref={artboardRef}
-          style={{
-            width: bounds.width,
-            height: bounds.height,
-            transform: `scale(${scale})`,
-            transformOrigin: "top left",
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function RoleCardTag({ label, tokens }: { label: string; tokens: VisualTokens }) {
   return (
@@ -237,7 +137,7 @@ function RoleCardTaskRail({
             width: "0.4em",
             height: "0.4em",
             border: `1px solid ${TASK_DOT}`,
-            background: "#FFFFFF",
+            background: CARD_FACE,
             boxSizing: "border-box",
           }}
           aria-hidden
@@ -315,29 +215,32 @@ function RoleCardTags({ card, tokens }: { card: ProtoSandboxRoleCard; tokens: Vi
 
 function SandboxRoleCard({
   card,
-  index,
   tokens,
-  layout,
+  position,
 }: {
   card: ProtoSandboxRoleCard;
-  index: number;
   tokens: VisualTokens;
-  layout: VisualLayout;
+  position?: CardPosition;
 }) {
-  const positions = layout === "phone" ? PHONE_CARD_LAYOUT : DESKTOP_CARD_LAYOUT;
-  const position = positions[index] ?? positions[0];
+  const positioned = Boolean(position);
 
   return (
     <article
-      className={`absolute flex flex-col bg-white ${suisseIntl.className}`}
+      className={`${positioned ? "absolute" : "relative"} flex flex-col ${suisseIntl.className}`}
       style={{
-        top: position.top,
-        left: position.left,
-        zIndex: position.zIndex,
+        ...(position
+          ? {
+              top: position.top,
+              left: position.left,
+              zIndex: position.zIndex,
+            }
+          : undefined),
         width: tokens.cardWidth,
         padding: tokens.cardPad,
         borderRadius: tokens.cardRadius,
         boxSizing: "border-box",
+        background: CARD_SURFACE,
+        boxShadow: "inset 0 1px 0 rgba(255,253,249,0.95), inset 0 -1px 0 rgba(44,36,25,0.035)",
       }}
     >
       <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} />
@@ -361,6 +264,8 @@ function SandboxRoleCard({
 }
 
 function CardCluster({ layout, tokens }: { layout: VisualLayout; tokens: VisualTokens }) {
+  const positions = layout === "phone" ? PHONE_CARD_LAYOUT : DESKTOP_CARD_LAYOUT;
+
   return (
     <div
       className="relative w-full"
@@ -369,8 +274,48 @@ function CardCluster({ layout, tokens }: { layout: VisualLayout; tokens: VisualT
       }}
     >
       {PROTO_SANDBOX_ROLE_CARDS.map((card, index) => (
-        <SandboxRoleCard key={card.id} card={card} index={index} tokens={tokens} layout={layout} />
+        <SandboxRoleCard
+          key={card.id}
+          card={card}
+          tokens={tokens}
+          position={positions[index] ?? positions[0]}
+        />
       ))}
+    </div>
+  );
+}
+
+const LEDGER_CARD = PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "ledger")!;
+
+/** Single Ledger card — same UI/size as in the first box, centered in the second shader box. */
+export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: VisualLayout }) {
+  const tokens = layout === "desktop" ? DESKTOP_TOKENS : PHONE_TOKENS;
+
+  if (layout === "phone") {
+    return (
+      <div className={`mx-auto h-full w-full ${suisseIntl.className}`} aria-hidden>
+        <ProtoPhoneScaledArtboard
+          width={PHONE_ARTBOARD_WIDTH_PX}
+          height={PHONE_ARTBOARD_HEIGHT_PX}
+        >
+          <div
+            className="flex w-full items-center justify-center"
+            style={{ height: tokens.clusterHeight }}
+          >
+            <SandboxRoleCard card={LEDGER_CARD} tokens={tokens} />
+          </div>
+        </ProtoPhoneScaledArtboard>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
+      style={{ maxWidth: "min(100%, 26rem)" }}
+      aria-hidden
+    >
+      <SandboxRoleCard card={LEDGER_CARD} tokens={tokens} />
     </div>
   );
 }
@@ -385,12 +330,12 @@ export function ProtoSandboxRoleCardsVisual({ layout = "phone" }: { layout?: Vis
         className={`mx-auto h-full w-full ${suisseIntl.className}`}
         aria-hidden
       >
-        <PhoneScaledArtboard
+        <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
           height={PHONE_ARTBOARD_HEIGHT_PX}
         >
           <CardCluster layout="phone" tokens={tokens} />
-        </PhoneScaledArtboard>
+        </ProtoPhoneScaledArtboard>
       </div>
     );
   }

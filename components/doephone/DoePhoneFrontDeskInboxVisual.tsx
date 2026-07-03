@@ -2,6 +2,12 @@
 
 import { dmSans, suisseIntl } from "@/lib/home/fonts";
 import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
+import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
+
+/** Same artboard width as the first shader box; height is measured from content. */
+const PHONE_ARTBOARD_WIDTH_PX = 360;
+const PHONE_ARTBOARD_HEIGHT_PX = 420;
+const PHONE_PANEL_WIDTH_PX = 270;
 
 const { ink: INK, accent: DOE_ORANGE } = CAROUSEL_MENU_UI;
 
@@ -262,27 +268,58 @@ function SchedulingPanel() {
   );
 }
 
+function FrontDeskPanels({
+  panelWidth,
+  stackGap,
+}: {
+  panelWidth: string | number;
+  stackGap: string;
+}) {
+  return (
+    <div className="flex w-full flex-col items-center" style={{ gap: stackGap, maxWidth: panelWidth, width: panelWidth }}>
+      <div className="w-full">
+        <VoiceCallPanel />
+      </div>
+
+      <div className="w-full">
+        <SchedulingPanel />
+      </div>
+    </div>
+  );
+}
+
 /** Stacked voice + scheduling panels — Front Desk carousel slide. */
 export function DoePhoneFrontDeskInboxVisual({ layout = "phone" }: { layout?: "phone" | "desktop" }) {
   const isDesktop = layout === "desktop";
-  const panelWidth = isDesktop ? "min(100%, 34rem)" : "75%";
-  const stackGap = isDesktop ? "clamp(0.72rem,0.92vw,0.98rem)" : "clamp(0.55rem,1.65vmin,0.68rem)";
+
+  if (!isDesktop) {
+    return (
+      <div className={`mx-auto h-full w-full ${suisseIntl.className}`} aria-hidden>
+        <ProtoPhoneScaledArtboard
+          width={PHONE_ARTBOARD_WIDTH_PX}
+          height={PHONE_ARTBOARD_HEIGHT_PX}
+        >
+          <div
+            className="flex justify-center"
+            style={{ width: PHONE_ARTBOARD_WIDTH_PX }}
+          >
+            <FrontDeskPanels panelWidth={PHONE_PANEL_WIDTH_PX} stackGap="0.6rem" />
+          </div>
+        </ProtoPhoneScaledArtboard>
+      </div>
+    );
+  }
 
   return (
     <div
       className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
-      style={{ maxWidth: isDesktop ? "min(100%, 36rem)" : CAROUSEL_MENU_UI.maxWidthPhone }}
+      style={{ maxWidth: "min(100%, 36rem)" }}
       aria-hidden
     >
-      <div className="flex w-full flex-col items-center" style={{ gap: stackGap, maxWidth: panelWidth }}>
-        <div className="w-full">
-          <VoiceCallPanel />
-        </div>
-
-        <div className="w-full">
-          <SchedulingPanel />
-        </div>
-      </div>
+      <FrontDeskPanels
+        panelWidth="min(100%, 34rem)"
+        stackGap="clamp(0.72rem,0.92vw,0.98rem)"
+      />
     </div>
   );
 }
