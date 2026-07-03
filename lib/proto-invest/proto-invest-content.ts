@@ -35,6 +35,11 @@ export const PROTO_INVEST_RECRUITER_SECTION = {
   ],
 } as const satisfies { lead: string; bullets: readonly ProtoInvestLabeledBullet[] };
 
+export const PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES = ["The larger", "Proto vision."] as const;
+
+export const PROTO_INVEST_THINKING_BEYOND_PARAGRAPH =
+  "Recruiters still spend most of their week on screening and admin — Proto shifts that time toward reviewing how candidates actually build.";
+
 export const PROTO_INVEST_PIE_CHART = {
   title: "Recruiter week split",
   caption:
@@ -60,30 +65,63 @@ export const PROTO_INVEST_CHARTS_CAPTION = `${PROTO_INVEST_PIE_CHART.caption} ${
 
 export const PROTO_INVEST_CHARTS_CITATION = PROTO_INVEST_PIE_CHART.citation;
 
-export const PROTO_INVEST_PRODUCT_HEADLINE = "Meet Proto";
+export const PROTO_INVEST_PRODUCT_HEADLINE_LINES = ["AI built for", "recruiting"] as const;
+
+export const PROTO_INVEST_FAQ_HEADLINE_LINES = [
+  "We're meeting",
+  "the moment",
+] as const;
+
+/** Meet Proto team grid — 2×3 startup disciplines above the tall shader panel. */
+export const PROTO_INVEST_STARTUP_TEAMS = [
+  "Product",
+  "Engineering",
+  "Design",
+  "Marketing",
+  "Operations",
+  "Sales",
+] as const;
+
+/** Proto customer segments — Who is Proto for? FAQ. */
+export const PROTO_INVEST_PROTO_CUSTOMERS = [
+  "Early-Stage Startups",
+  "Growth-Stage Startups",
+  "Scaleups",
+  "Recruiting Agencies",
+  "Venture Studios",
+  "Startup Accelerators",
+] as const;
 
 export const PROTO_INVEST_FOUNDERS_HEADLINE_LINES = ["Two brothers,", "one vision"] as const;
 
 export type ProtoInvestFaqItem = {
   question: string;
-  answer: string;
+  answer: string | readonly string[];
+  bullets?: readonly string[];
+  bulletColumns?: 1 | 2;
+  /** Paragraphs to render before the bullet list (default: 1). */
+  bulletsAfterParagraphs?: number;
 };
 
 export const PROTO_INVEST_FAQ_ITEMS: readonly ProtoInvestFaqItem[] = [
   {
+    question: "Who is Proto for?",
+    answer: [
+      "Proto is built for organizations hiring people who create. From startups hiring their first engineer to enterprises scaling technical teams, Proto helps companies identify exceptional builders through real work, such as:",
+      "Our work will focus on the US and Canada AI market with plans to expand globally.",
+    ],
+    bullets: PROTO_INVEST_PROTO_CUSTOMERS,
+    bulletsAfterParagraphs: 1,
+  },
+  {
+    question: "What sets us apart?",
+    answer:
+      "Proto learns from thousands of build sessions across companies and roles, allowing customers to benchmark candidates against a much larger talent pool than their own hiring history.",
+  },
+  {
     question: "What is Proto?",
     answer:
       "Proto is a hiring platform where candidates complete real tasks inside a sandbox that mirrors your product, stack, and standards. Every action is tracked, scored, and replayed so recruiters compare applicants on evidence, not interview performance.",
-  },
-  {
-    question: "What makes us different?",
-    answer:
-      "Most tools optimize the top of the funnel. Proto evaluates how people actually build: sandbox tasks, head-to-head scorecards, prototype validation with user feedback, and mobile-ready shortlists the moment work lands.",
-  },
-  {
-    question: "Who is Proto for?",
-    answer:
-      "We are building for fast-growing companies hiring across product, engineering, ops, and design, starting in the United States and Canada where teams are competing for scarce talent and need signal beyond the resume.",
   },
   {
     question: "How does evaluation work?",
@@ -93,20 +131,21 @@ export const PROTO_INVEST_FAQ_ITEMS: readonly ProtoInvestFaqItem[] = [
 ] as const;
 
 export const PROTO_INVEST_TAM_CHART = {
-  title: "Addressable TAM",
+  title: "Total Addressable Market",
   caption:
-    "Estimated annual software spend for Proto across recruiting, talent acquisition, and skills-assessment segments in Canada and the United States.",
-  citation: "Sources: Grand View Research; IBISWorld; Gartner HR tech spend; Proto market model, 2026.",
+    "Estimated annual software spend Proto can capture across work-sample hiring, skills assessment, and recruiting platforms—anchored in Canada and the United States, where in-house teams are adopting AI for evaluation faster than for legacy resume screening.",
+  citation:
+    "Sources: Grand View Research (recruitment software, 2025); MarketsandMarkets (skill assessment); Gartner HR Technology Key Initiatives; IBISWorld (staffing & recruiting); LinkedIn Future of Recruiting; SHRM Talent Acquisition Benchmarks; Proto market model, 2026.",
   bars: [
-    { label: "U.S. recruiting software", value: 3.2, suffix: "B USD" },
-    { label: "U.S. enterprise TA", value: 12, suffix: "B USD" },
-    { label: "Canada hiring software", value: 1.4, suffix: "B USD" },
-    { label: "Skills assessment", value: 6.8, suffix: "B USD" },
-    { label: "North America TA", value: 16, suffix: "B USD" },
-    { label: "Global hiring platform", value: 28, suffix: "B USD" },
+    { label: "Canada hiring tech", value: 1.2, suffix: "B USD" },
+    { label: "Work-sample tools", value: 2.2, suffix: "B USD" },
+    { label: "U.S. recruiting", value: 3.6, suffix: "B USD" },
+    { label: "U.S. assessment", value: 4.9, suffix: "B USD" },
+    { label: "North America", value: 15, suffix: "B USD" },
+    { label: "Global hiring tech", value: 27, suffix: "B USD" },
   ],
   highlight: {
-    valueB: 28,
+    valueB: 27,
     tamLabel: "Total Addressable Market",
     headline: "Global hiring & assessment software",
   },

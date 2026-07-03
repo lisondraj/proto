@@ -29,9 +29,12 @@ import { ABOUT_PAGE_MOBILE_BYLINE, ABOUT_PAGE_MOBILE_DATE } from "@/lib/about/ab
 import {
   PROTO_INVEST_BAR_CHART,
   PROTO_INVEST_FOUNDERS_PARAGRAPHS,
+  PROTO_INVEST_FAQ_HEADLINE_LINES,
   PROTO_INVEST_INTRO_LEAD_LINES,
   PROTO_INVEST_PIE_CHART,
   PROTO_INVEST_RECRUITER_SECTION,
+  PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES,
+  PROTO_INVEST_THINKING_BEYOND_PARAGRAPH,
 } from "@/lib/proto-invest/proto-invest-content";
 import {
   PROTO_INVEST_CHART_TITLE_TW,
@@ -40,6 +43,7 @@ import {
   PROTO_INVEST_DESKTOP_HERO_BOX_TW,
   PROTO_INVEST_DESKTOP_HERO_BYLINE_TW,
   PROTO_INVEST_DESKTOP_HERO_DATE_TW,
+  PROTO_INVEST_DESKTOP_SECTION_HEADLINE_TW,
   PROTO_INVEST_DESKTOP_SUBHEADING_TW,
   PROTO_INVEST_DESKTOP_TITLE_TW,
 } from "@/lib/proto-invest/proto-invest-layout-styles";
@@ -93,6 +97,11 @@ export function ProtoInvestDesktopView() {
                   bullets={PROTO_INVEST_RECRUITER_SECTION.bullets}
                 />
               </div>
+              <h2 className={PROTO_INVEST_DESKTOP_SECTION_HEADLINE_TW}>
+                <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[0]}</span>
+                <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[1]}</span>
+              </h2>
+              <ProtoInvestDesktopParagraph text={PROTO_INVEST_THINKING_BEYOND_PARAGRAPH} />
               <ArticlePieChart
                 title={PROTO_INVEST_PIE_CHART.title}
                 caption={PROTO_INVEST_PIE_CHART.caption}
@@ -117,7 +126,13 @@ export function ProtoInvestDesktopView() {
         </ProtoInvestDesktopSplitSection>
 
         <ProtoInvestDesktopSplitSection boxSide="right" graphic={2} textFill boxBleedToMargin>
-          <ProtoInvestDesktopFaqTabs />
+          <div className={`flex min-h-0 w-full max-w-[36rem] flex-col ${PROTO_INVEST_DESKTOP_CONTENT_STACK_GAP}`}>
+            <h2 className={PROTO_INVEST_DESKTOP_SECTION_HEADLINE_TW}>
+              <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[0]}</span>
+              <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[1]}</span>
+            </h2>
+            <ProtoInvestDesktopFaqTabs />
+          </div>
         </ProtoInvestDesktopSplitSection>
 
         <ProtoInvestDesktopSplitSection boxSide="left" graphic={3}>

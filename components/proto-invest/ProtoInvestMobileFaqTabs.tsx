@@ -2,12 +2,9 @@
 
 import { useState } from "react";
 
-import {
-  PROTO_INVEST_FAQ_ANSWER_BODY_TW,
-  PROTO_INVEST_FAQ_ANSWER_TW,
-  PROTO_INVEST_FAQ_ITEM_TW,
-} from "@/lib/proto-invest/proto-invest-layout-styles";
+import { PROTO_INVEST_FAQ_ITEM_TW } from "@/lib/proto-invest/proto-invest-layout-styles";
 import { PROTO_INVEST_FAQ_ITEMS } from "@/lib/proto-invest/proto-invest-content";
+import { ProtoInvestFaqAnswerBody } from "@/components/proto-invest/ProtoInvestDesktopArticleBlocks";
 
 /** /proto-invest — FAQ accordion with proto dark styling. */
 export function ProtoInvestMobileFaqTabs() {
@@ -42,9 +39,12 @@ export function ProtoInvestMobileFaqTabs() {
               }`}
             >
               <div className="overflow-hidden">
-                <p className={`${PROTO_INVEST_FAQ_ANSWER_TW} ${PROTO_INVEST_FAQ_ANSWER_BODY_TW}`}>
-                  {item.answer}
-                </p>
+                <ProtoInvestFaqAnswerBody
+                  answer={item.answer}
+                  bullets={item.bullets}
+                  bulletColumns={item.bulletColumns}
+                  bulletsAfterParagraphs={item.bulletsAfterParagraphs}
+                />
               </div>
             </div>
           </div>

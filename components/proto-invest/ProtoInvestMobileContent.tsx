@@ -5,6 +5,7 @@ import { ProtoInvestIntroLead, ProtoInvestLabeledBulletList } from "@/components
 import { ProtoInvestGraphicPanel } from "@/components/proto-invest/ProtoInvestGraphicPanel";
 import { ProtoInvestProductShaderPanel } from "@/components/proto-invest/ProtoInvestProductShaderPanel";
 import { ProtoInvestProductStackBoxes } from "@/components/proto-invest/ProtoInvestProductStackBoxes";
+import { ProtoInvestProductTeamGrid } from "@/components/proto-invest/ProtoInvestProductTeamGrid";
 import { ProtoInvestMobileAiAdoptionChart } from "@/components/proto-invest/ProtoInvestMobileAiAdoptionChart";
 import { ProtoInvestMobileFaqTabs } from "@/components/proto-invest/ProtoInvestMobileFaqTabs";
 import { ProtoInvestMobileQuote } from "@/components/proto-invest/ProtoInvestMobileQuote";
@@ -36,10 +37,12 @@ import {
   PROTO_INVEST_FOUNDERS_HEADLINE_LINES,
   PROTO_INVEST_FOUNDERS_PARAGRAPHS,
   PROTO_INVEST_FOUNDERS_QUOTE,
+  PROTO_INVEST_FAQ_HEADLINE_LINES,
   PROTO_INVEST_INTRO_LEAD_LINES,
   PROTO_INVEST_INTRO_PARAGRAPHS,
-  PROTO_INVEST_PRODUCT_HEADLINE,
   PROTO_INVEST_RECRUITER_SECTION,
+  PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES,
+  PROTO_INVEST_THINKING_BEYOND_PARAGRAPH,
 } from "@/lib/proto-invest/proto-invest-content";
 /** /proto-invest — Proto hiring platform investor article in proto dark styling. */
 export function ProtoInvestMobileContent() {
@@ -90,9 +93,8 @@ export function ProtoInvestMobileContent() {
           />
         </div>
 
-        <h2 className={PROTO_INVEST_SECTION_HEADLINE_TW}>{PROTO_INVEST_PRODUCT_HEADLINE}</h2>
-
         <div className={PROTO_INVEST_PRODUCT_PANEL_STACK_WRAP}>
+          <ProtoInvestProductTeamGrid />
           <ProtoInvestProductShaderPanel className={PROTO_INVEST_PRODUCT_SHADER_PANEL_TW} />
           <ProtoInvestProductStackBoxes />
         </div>
@@ -117,7 +119,19 @@ export function ProtoInvestMobileContent() {
 
         <ProtoInvestGraphicPanel graphic={1} />
 
+        <h2 className={PROTO_INVEST_SECTION_HEADLINE_TW}>
+          <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[0]}</span>
+          <span className="block">{PROTO_INVEST_FAQ_HEADLINE_LINES[1]}</span>
+        </h2>
+
         <ProtoInvestMobileFaqTabs />
+
+        <h2 className={PROTO_INVEST_SECTION_HEADLINE_TW}>
+          <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[0]}</span>
+          <span className="block">{PROTO_INVEST_THINKING_BEYOND_HEADLINE_LINES[1]}</span>
+        </h2>
+
+        <p className={PROTO_INVEST_BODY_TW}>{PROTO_INVEST_THINKING_BEYOND_PARAGRAPH}</p>
 
         <ProtoInvestMobileStatCharts />
 
