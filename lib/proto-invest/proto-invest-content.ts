@@ -1,13 +1,39 @@
 /** /proto-invest — investor article copy for Proto (hiring platform). */
 
-export const PROTO_INVEST_INTRO =
-  "Companies still hire from résumés, phone screens, and panel interviews that rarely predict who can actually do the work. Recruiters spend weeks chasing candidates through stages that measure polish, not execution, while strong builders get filtered out before anyone sees what they shipped.";
-
-export const PROTO_INVEST_STAT_BULLETS = [
-  "Recruiters spend roughly two-thirds of their week on screening, scheduling, and inbox triage instead of evaluating real work.",
-  "The average cost of a bad mid-level hire exceeds $50,000 once onboarding, ramp time, and team disruption are counted.",
-  "Most hiring managers say traditional interviews fail to predict on-the-job performance for technical and product roles.",
+export const PROTO_INVEST_INTRO_LEAD_LINES = [
+  "AI redefined who can build.",
+  "Proto redefines how companies hire.",
 ] as const;
+
+export const PROTO_INVEST_INTRO_PARAGRAPHS = [
+  "Proto transforms job postings into hands-on build challenges completed in a monitored AI-native sandbox, so you can hire exceptional talent in engineering, product, operations, marketing and so much more.",
+] as const;
+
+/** @deprecated Desktop — use PROTO_INVEST_INTRO_LEAD_LINES on mobile. */
+export const PROTO_INVEST_INTRO = PROTO_INVEST_INTRO_LEAD_LINES.join(" ");
+
+export type ProtoInvestLabeledBullet = {
+  label: string;
+  text: string;
+};
+
+export const PROTO_INVEST_RECRUITER_SECTION = {
+  lead: "For recruiters:",
+  bullets: [
+    {
+      label: "Build",
+      text: "Applicants complete projects tied to your existing job postings in an AI-native sandbox.",
+    },
+    {
+      label: "Replay",
+      text: "See exactly how candidates approached the problem, from first prompt to final solution.",
+    },
+    {
+      label: "Evaluate",
+      text: "Surface your strongest candidates by measuring how they actually build.",
+    },
+  ],
+} as const satisfies { lead: string; bullets: readonly ProtoInvestLabeledBullet[] };
 
 export const PROTO_INVEST_PIE_CHART = {
   title: "Recruiter week split",
@@ -34,12 +60,9 @@ export const PROTO_INVEST_CHARTS_CAPTION = `${PROTO_INVEST_PIE_CHART.caption} ${
 
 export const PROTO_INVEST_CHARTS_CITATION = PROTO_INVEST_PIE_CHART.citation;
 
-export const PROTO_INVEST_PRODUCT_HEADLINE_LINES = [
-  "Proof of work,",
-  "not proof of talk.",
-] as const;
+export const PROTO_INVEST_PRODUCT_HEADLINE = "Meet Proto";
 
-export const PROTO_INVEST_FOUNDERS_HEADLINE_LINES = ["Two brothers.", "two fields"] as const;
+export const PROTO_INVEST_FOUNDERS_HEADLINE_LINES = ["Two brothers,", "one vision"] as const;
 
 export type ProtoInvestFaqItem = {
   question: string;
@@ -60,7 +83,7 @@ export const PROTO_INVEST_FAQ_ITEMS: readonly ProtoInvestFaqItem[] = [
   {
     question: "Who is Proto for?",
     answer:
-      "We are building for fast-growing companies hiring across product, engineering, ops, and design, starting in the United States and Canada where teams are competing for scarce talent and need signal beyond the résumé.",
+      "We are building for fast-growing companies hiring across product, engineering, ops, and design, starting in the United States and Canada where teams are competing for scarce talent and need signal beyond the resume.",
   },
   {
     question: "How does evaluation work?",
@@ -114,8 +137,9 @@ export const PROTO_INVEST_AI_ADOPTION_CAPTION = PROTO_INVEST_AI_ADOPTION_CHART.c
 export const PROTO_INVEST_AI_ADOPTION_CITATION = PROTO_INVEST_AI_ADOPTION_CHART.citation;
 
 export const PROTO_INVEST_FOUNDERS_PARAGRAPHS = [
-  "Brothers James and Matthew Lisondra co-founded Proto to replace résumé theater with evidence from how people actually build.",
-  "James holds an MD from the University of Ottawa with experience bridging clinical operations and product judgment. Matthew holds a PhD from the University of Toronto with backgrounds in physics, robotics, AI, and computer science.",
+  "Brothers James and Matthew Lisondra co-founded Proto with the belief that AI can transform the way we recruit talent, building exceptional teams that will supercharge the era of intelligence.",
+  "Together, James and Matthew bring complementary expertise to Proto. James, a medical student at the University of Ottawa, leads product, operations, marketing, and design.",
+  "Matthew, a PhD candidate in Engineering at the University of Toronto, brings deep expertise in AI, machine learning, computer vision, and software engineering.",
 ] as const;
 
 export const PROTO_INVEST_FOUNDERS_QUOTE = {

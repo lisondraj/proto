@@ -10,8 +10,7 @@ import {
   PROTO_GRAIN_GRADIENT_SPEED,
   PROTO_GRAIN_GRADIENT_WORLD_HEIGHT,
   PROTO_GRAIN_GRADIENT_WORLD_WIDTH,
-  PROTO_SHADER_MAX_PIXEL_COUNT_FEATURE,
-  PROTO_SHADER_MAX_PIXEL_COUNT_HERO,
+  protoShaderMaxPixelCount,
   type ProtoGrainGradientVariant,
 } from "@/lib/proto/proto-grain-gradient";
 
@@ -30,11 +29,15 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
   variant,
   className = "",
   static: staticShader = false,
+  colors,
+  colorBack,
 }: {
   variant: ProtoGrainGradientVariant;
   className?: string;
   /** Desktop full-panel bands — freeze gradient motion. */
   static?: boolean;
+  colors?: readonly string[];
+  colorBack?: string;
 }) {
   const preset = PROTO_GRAIN_GRADIENT_PRESETS[variant];
   const containerRef = useRef<HTMLDivElement>(null);
@@ -100,7 +103,7 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
     <div
       ref={containerRef}
       className={`proto-shader-surface pointer-events-none absolute inset-0 overflow-hidden ${className}`.trim()}
-      style={{ backgroundColor: PROTO_GRAIN_GRADIENT_COLOR_BACK }}
+      style={{ backgroundColor: colorBack ?? PROTO_GRAIN_GRADIENT_COLOR_BACK }}
       aria-hidden
     >
       {hasMounted ? (
@@ -110,8 +113,8 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
           fit={preset.fit ?? "cover"}
           worldWidth={preset.worldWidth ?? PROTO_GRAIN_GRADIENT_WORLD_WIDTH}
           worldHeight={preset.worldHeight ?? PROTO_GRAIN_GRADIENT_WORLD_HEIGHT}
-          colors={[...PROTO_GRAIN_GRADIENT_COLORS]}
-          colorBack={PROTO_GRAIN_GRADIENT_COLOR_BACK}
+          colors={[...(colors ?? PROTO_GRAIN_GRADIENT_COLORS)]}
+          colorBack={colorBack ?? PROTO_GRAIN_GRADIENT_COLOR_BACK}
           softness={preset.softness}
           intensity={preset.intensity}
           noise={0}
@@ -121,7 +124,7 @@ export const ProtoGrainGradient = memo(function ProtoGrainGradient({
           offsetX={preset.offsetX}
           offsetY={preset.offsetY}
           scale={preset.scale}
-          maxPixelCount={hero ? PROTO_SHADER_MAX_PIXEL_COUNT_HERO : PROTO_SHADER_MAX_PIXEL_COUNT_FEATURE}
+          maxPixelCount={protoShaderMaxPixelCount(variant)}
         />
       ) : null}
     </div>

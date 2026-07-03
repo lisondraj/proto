@@ -6,7 +6,11 @@ import {
   ABOUT_DESKTOP_CHART_CITATION_TW,
 } from "@/lib/about/about-layout-styles";
 import { dmSans, inter } from "@/lib/home/fonts";
-import { PROTO_CHART_SLICE_COLORS, PROTO_PHONE_CHART_SLICE_COLORS } from "@/lib/proto/proto-chart-colors";
+import {
+  PROTO_CHART_GRADIENTS,
+  PROTO_CHART_SLICE_COLORS,
+  PROTO_PHONE_CHART_SLICE_COLORS,
+} from "@/lib/proto/proto-chart-colors";
 import type { ArticleBodyLayout } from "@/components/blog/ArticleBodyBlocks";
 
 const SLICE_COLORS_LIGHT = ["#D2774C", "rgba(30, 52, 58, 0.22)", "rgba(30, 52, 58, 0.38)"] as const;
@@ -26,6 +30,29 @@ function pieGradient(slices: readonly { value: number }[], sliceColors: readonly
       return `${sliceColors[index % sliceColors.length]} ${start}% ${end}%`;
     })
     .join(", ");
+}
+
+function pieSliceMasks(slices: readonly { value: number }[]) {
+  const total = slices.reduce((sum, slice) => sum + slice.value, 0) || 1;
+  let cursor = 0;
+
+  return slices.map((slice) => {
+    const start = cursor / total;
+    cursor += slice.value;
+    const end = cursor / total;
+    const startPct = `${(start * 100).toFixed(4)}%`;
+    const endPct = `${(end * 100).toFixed(4)}%`;
+
+    if (start === 0) {
+      return `conic-gradient(from -90deg, #000 0% ${endPct}, transparent ${endPct} 100%)`;
+    }
+
+    if (end === 1) {
+      return `conic-gradient(from -90deg, transparent 0% ${startPct}, #000 ${startPct} 100%)`;
+    }
+
+    return `conic-gradient(from -90deg, transparent 0% ${startPct}, #000 ${startPct} ${endPct}, transparent ${endPct} 100%)`;
+  });
 }
 
 export function ArticlePieChart({
@@ -67,12 +94,9 @@ export function ArticlePieChart({
   const labelColor = isDark ? "text-white/72" : "text-[#1E343A]/72";
   const valueColor = isDark ? "text-white" : "text-[#1E343A]";
   const metaColor = isDark ? "text-white/55" : "text-[#9A8F82]";
-  const donutCenter =
-    theme === "proto-phone"
-      ? "bg-[#080612]"
-      : isDark
-        ? "bg-[#121819]"
-        : "bg-[#F7F6F3]";
+  const useGradientFill = theme === "proto" || theme === "proto-phone";
+  const gradientSliceMasks = useGradientFill ? pieSliceMasks(slices) : [];
+  const donutCenterClass = isDark ? "bg-[#121819]" : "bg-[#F7F6F3]";
 
   return (
     <figure className={embedded ? "" : isDesktop ? ABOUT_DESKTOP_ARTICLE_SECTION_GAP : "mt-10 iphone-page:mt-12"}>
@@ -107,11 +131,29 @@ export function ArticlePieChart({
           }`}
           aria-hidden
         >
-          <div
-            className="absolute inset-0 rounded-full"
-            style={{ background: `conic-gradient(${pieGradient(slices, sliceColors)})` }}
-          />
-          <div className={`absolute inset-[28%] rounded-full ${donutCenter}`} />
+          <div className="absolute inset-0 overflow-hidden rounded-full">
+            {useGradientFill ? (
+              gradientSliceMasks.map((mask, index) => (
+                <div
+                  key={`${slices[index]?.label ?? index}-gradient`}
+                  className="absolute inset-0"
+                  style={{
+                    background: PROTO_CHART_GRADIENTS.pieSlices[index % PROTO_CHART_GRADIENTS.pieSlices.length],
+                    WebkitMaskImage: mask,
+                    maskImage: mask,
+                    WebkitMaskSize: "100% 100%",
+                    maskSize: "100% 100%",
+                  }}
+                />
+              ))
+            ) : (
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{ background: `conic-gradient(${pieGradient(slices, sliceColors)})` }}
+              />
+            )}
+          </div>
+          <div className={`absolute inset-[28%] rounded-full ${donutCenterClass}`} />
         </div>
 
         <div

@@ -1,20 +1,19 @@
-import {
-  PROTO_HUMIRA_COLORS,
-  PROTO_RECEPTION_PALETTE,
-} from "@/lib/proto/proto-communication-gradients";
+import { PROTO_GRAIN_GRADIENT_COLORS } from "@/lib/proto/proto-grain-gradient";
 
-/** Proto data viz — aligned with vibrant reception palette. */
+const [SHADER_GOLD, SHADER_OLIVE, SHADER_CREAM] = PROTO_GRAIN_GRADIENT_COLORS;
+
+/** Proto data viz — static fills aligned with /proto GrainGradient palette (no black). */
 export const PROTO_CHART_COLORS = {
-  accent: PROTO_RECEPTION_PALETTE.gold,
-  accentWarm: PROTO_RECEPTION_PALETTE.copper,
-  cool: PROTO_HUMIRA_COLORS.bridgeBlue,
-  coolDeep: PROTO_RECEPTION_PALETTE.blue,
-  track: "rgba(111, 168, 212, 0.24)",
-  gridLine: "rgba(111, 168, 212, 0.14)",
-  axis: "rgba(111, 168, 212, 0.42)",
-  sliceMuted: PROTO_HUMIRA_COLORS.bridgeBlue,
-  sliceMid: PROTO_RECEPTION_PALETTE.blue,
-  donutCenter: "#121819",
+  accent: SHADER_GOLD,
+  accentWarm: SHADER_OLIVE,
+  cool: SHADER_CREAM,
+  coolDeep: SHADER_OLIVE,
+  track: "rgba(198, 117, 12, 0.2)",
+  gridLine: "rgba(190, 174, 96, 0.22)",
+  axis: "rgba(215, 203, 198, 0.38)",
+  sliceMuted: SHADER_CREAM,
+  sliceMid: SHADER_OLIVE,
+  donutCenter: "#151c1f",
 } as const;
 
 export const PROTO_CHART_SLICE_COLORS = [
@@ -23,14 +22,21 @@ export const PROTO_CHART_SLICE_COLORS = [
   PROTO_CHART_COLORS.coolDeep,
 ] as const;
 
-/** Proto gradient fills for statistics in /proto-invest. */
+/** Static chart gradients — shader hues without grain or animation. */
 export const PROTO_CHART_GRADIENTS = {
-  bar: `linear-gradient(90deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 42%, ${PROTO_RECEPTION_PALETTE.copper} 74%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`,
-  track: `linear-gradient(90deg, rgba(53, 107, 133, 0.38) 0%, rgba(111, 168, 212, 0.3) 55%, rgba(159, 212, 240, 0.26) 100%)`,
-  tamBar: `linear-gradient(180deg, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.blue} 100%)`,
+  bar: `linear-gradient(90deg, ${SHADER_CREAM} 0%, ${SHADER_OLIVE} 42%, ${SHADER_GOLD} 100%)`,
+  track: `linear-gradient(90deg, rgba(215, 203, 198, 0.22) 0%, rgba(190, 174, 96, 0.18) 55%, rgba(198, 117, 12, 0.16) 100%)`,
+  tamBar: `linear-gradient(180deg, ${SHADER_GOLD} 0%, ${SHADER_OLIVE} 58%, ${SHADER_CREAM} 100%)`,
+  pieSlices: [
+    `linear-gradient(145deg, ${SHADER_GOLD} 0%, ${SHADER_OLIVE} 100%)`,
+    `linear-gradient(145deg, ${SHADER_OLIVE} 0%, ${SHADER_CREAM} 100%)`,
+    `linear-gradient(145deg, ${SHADER_CREAM} 0%, ${SHADER_GOLD} 100%)`,
+  ],
 } as const;
 
-/** iPhone /about charts — same reception palette as desktop. */
+export const PROTO_CHART_TRACK_FILL = PROTO_CHART_GRADIENTS.track;
+
+/** iPhone /about charts — same shader palette as desktop. */
 export const PROTO_PHONE_CHART_COLORS = {
   ...PROTO_CHART_COLORS,
   label: "rgba(255, 255, 255, 0.72)",

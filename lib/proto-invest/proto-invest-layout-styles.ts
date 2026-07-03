@@ -34,9 +34,29 @@ export const PROTO_INVEST_PANEL_BORDER_TW = "border border-[#2A3538]";
 export const PROTO_INVEST_PHONE_PANEL_HEIGHT =
   "min-h-[clamp(18rem,46vmin,28rem)] h-[clamp(18rem,46vmin,28rem)] iphone-page:min-h-[clamp(17rem,44vmin,26.5rem)] iphone-page:h-[clamp(17rem,44vmin,26.5rem)]";
 
-export const PROTO_INVEST_HERO_BOX_TW = `${PROTO_INVEST_PHONE_PANEL_HEIGHT} ${DOEPHONE_SECTION_CAROUSEL_RADIUS} border border-[#2A3538] shadow-none`;
+export const PROTO_INVEST_PHONE_PANEL_HEIGHT_DOUBLE =
+  "min-h-[clamp(36rem,92vmin,56rem)] h-[clamp(36rem,92vmin,56rem)] iphone-page:min-h-[clamp(34rem,88vmin,53rem)] iphone-page:h-[clamp(34rem,88vmin,53rem)]";
+
+export const PROTO_INVEST_HERO_BOX_TW = `proto-invest-shader-panel ${PROTO_INVEST_PHONE_PANEL_HEIGHT} ${DOEPHONE_SECTION_CAROUSEL_RADIUS} border border-[#2A3538] shadow-none`;
 
 export const PROTO_INVEST_GRAPHIC_PANEL_TW = `proto-invest-graphic-panel relative w-full overflow-hidden border border-[#2A3538] bg-[#151c1f] ${PROTO_INVEST_PHONE_PANEL_HEIGHT} ${DOEPHONE_SECTION_CAROUSEL_RADIUS} shadow-none`;
+
+export const PROTO_INVEST_PRODUCT_GRAPHIC_PANEL_TW = `proto-invest-graphic-panel relative w-full overflow-hidden border border-[#2A3538] bg-[#151c1f] ${PROTO_INVEST_PHONE_PANEL_HEIGHT_DOUBLE} ${DOEPHONE_SECTION_CAROUSEL_RADIUS} shadow-none`;
+
+export const PROTO_INVEST_PRODUCT_SHADER_PANEL_TW = `proto-invest-shader-panel relative w-full overflow-hidden border border-[#2A3538] ${PROTO_INVEST_PHONE_PANEL_HEIGHT_DOUBLE} ${DOEPHONE_SECTION_CAROUSEL_RADIUS} shadow-none`;
+
+export const PROTO_INVEST_PHONE_PANEL_HEIGHT_THIRD =
+  "min-h-[clamp(12rem,30.67vmin,18.67rem)] h-[clamp(12rem,30.67vmin,18.67rem)] iphone-page:min-h-[clamp(11.33rem,29.33vmin,17.67rem)] iphone-page:h-[clamp(11.33rem,29.33vmin,17.67rem)]";
+
+/** Meet Proto stack boxes — 2× prior stack height. */
+export const PROTO_INVEST_PHONE_PANEL_HEIGHT_STACK =
+  "min-h-[clamp(20rem,51.12vmin,31.12rem)] h-[clamp(20rem,51.12vmin,31.12rem)] iphone-page:min-h-[clamp(18.88rem,48.88vmin,29.46rem)] iphone-page:h-[clamp(18.88rem,48.88vmin,29.46rem)]";
+
+export const PROTO_INVEST_PRODUCT_STACK_BOX_TW = `relative w-full overflow-hidden border border-[#2A3538] bg-[#151c1f] ${PROTO_INVEST_PHONE_PANEL_HEIGHT_STACK} ${DOEPHONE_SECTION_CAROUSEL_RADIUS} shadow-none`;
+
+export const PROTO_INVEST_PRODUCT_STACK_SHADER_BOX_TW = `proto-invest-shader-panel relative w-full overflow-hidden border border-[#2A3538] ${PROTO_INVEST_PHONE_PANEL_HEIGHT_STACK} ${DOEPHONE_SECTION_CAROUSEL_RADIUS} shadow-none`;
+
+export const PROTO_INVEST_PRODUCT_PANEL_STACK_WRAP = "flex flex-col gap-3 iphone-page:gap-3.5";
 
 export const PROTO_INVEST_BULLET_TW = "mt-[0.38em] h-[0.5em] w-[0.5em] shrink-0 rounded-full bg-[#E7A944]";
 
@@ -99,4 +119,4 @@ export const PROTO_INVEST_DESKTOP_CHART_CITATION_TW = `mt-3 md:mt-4 font-normal 
 
 export const PROTO_INVEST_DESKTOP_GRAPHIC_PANEL_TW = `relative overflow-hidden border border-[#2A3538] bg-[#151c1f] ${ABOUT_DESKTOP_BEIGE_PANEL_TW}`;
 
-export const PROTO_INVEST_DESKTOP_HERO_BOX_TW = `${DOEPHONE_SECTION_CAROUSEL_RADIUS} h-full min-h-0 w-full flex-1 border border-[#2A3538] shadow-none`;
+export const PROTO_INVEST_DESKTOP_HERO_BOX_TW = `proto-invest-shader-panel ${DOEPHONE_SECTION_CAROUSEL_RADIUS} h-full min-h-0 w-full flex-1 border border-[#2A3538] shadow-none`;

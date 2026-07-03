@@ -6,17 +6,13 @@ import {
   ABOUT_DESKTOP_CHART_CITATION_TW,
 } from "@/lib/about/about-layout-styles";
 import { dmSans, inter } from "@/lib/home/fonts";
-import { PROTO_CHART_GRADIENTS, PROTO_PHONE_CHART_GRADIENTS } from "@/lib/proto/proto-chart-colors";
+import { PROTO_CHART_GRADIENTS, PROTO_CHART_TRACK_FILL } from "@/lib/proto/proto-chart-colors";
 import type { ArticleBodyLayout } from "@/components/blog/ArticleBodyBlocks";
 
 const TRACK_LIGHT = "rgba(30, 52, 58, 0.08)";
 const TRACK_DARK = "rgba(255, 255, 255, 0.12)";
-const TRACK_PROTO = PROTO_CHART_GRADIENTS.track;
-const TRACK_PROTO_PHONE = PROTO_PHONE_CHART_GRADIENTS.track;
-const BAR = "#D2774C";
-const BAR_DARK = "#C46848";
-const BAR_PROTO = PROTO_CHART_GRADIENTS.bar;
-const BAR_PROTO_PHONE = PROTO_PHONE_CHART_GRADIENTS.bar;
+const TRACK_PROTO = PROTO_CHART_TRACK_FILL;
+const TRACK_PROTO_PHONE = PROTO_CHART_TRACK_FILL;
 const GRID_LINE = "rgba(30, 52, 58, 0.07)";
 const BAR_CHART_GRID_LINES = 5;
 
@@ -53,14 +49,8 @@ export function ArticleBarChart({
         : isDark
           ? TRACK_DARK
           : TRACK_LIGHT;
-  const barColor =
-    theme === "proto-phone"
-      ? BAR_PROTO_PHONE
-      : theme === "proto"
-        ? BAR_PROTO
-        : isDark
-          ? BAR_DARK
-          : BAR;
+  const useGradientFill = theme === "proto" || theme === "proto-phone";
+  const barColor = isDark ? "#C46848" : "#D2774C";
   const titleColor = isDark ? "text-white" : "text-[#1E343A]";
   const labelColor = isDark ? "text-white/72" : "text-[#1E343A]/72";
   const valueColor = isDark ? "text-white" : "text-[#1E343A]";
@@ -127,9 +117,18 @@ export function ArticleBarChart({
                 aria-hidden
               >
                 <div
-                  className="h-full rounded-full transition-[width] duration-500 ease-out"
-                  style={{ width, background: barColor }}
-                />
+                  className="relative h-full overflow-hidden rounded-full transition-[width] duration-500 ease-out"
+                  style={{ width }}
+                >
+                  {useGradientFill ? (
+                    <div
+                      className="absolute inset-0 min-w-full rounded-full"
+                      style={{ background: PROTO_CHART_GRADIENTS.bar }}
+                    />
+                  ) : (
+                    <div className="h-full rounded-full" style={{ background: barColor }} />
+                  )}
+                </div>
               </div>
             </div>
           );

@@ -64,6 +64,22 @@ html[data-proto-page] .proto-invest-tam-highlight {
   background: #151c1f;
 }
 
+/* /about shader panels — isolate paint like main proto feature boxes. */
+html[data-proto-page] .proto-invest-shader-panel {
+  contain: layout paint;
+  isolation: isolate;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-chart-zone {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 24rem;
+}
+
+html[data-proto-page][data-layout="desktop"] .proto-invest-desktop .proto-invest-shader-panel {
+  contain: layout paint;
+  isolation: isolate;
+}
+
 /* iPhone /about — clear fixed nav + breathing room above mission headline. */
 html[data-proto-page]:has(.doephone-mobile-root) {
   --proto-about-nav-clearance: calc(

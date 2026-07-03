@@ -6,8 +6,9 @@ import { BlogHeroVisual } from "@/components/blog/BlogHeroVisual";
 import { ProtoFooter } from "@/components/proto/ProtoFooter";
 import { ProtoMoreAboutSection } from "@/components/proto/ProtoMoreAboutSection";
 import {
-  ProtoInvestDesktopBulletList,
   ProtoInvestDesktopParagraph,
+  ProtoInvestIntroLead,
+  ProtoInvestLabeledBulletList,
 } from "@/components/proto-invest/ProtoInvestDesktopArticleBlocks";
 import { ProtoInvestDesktopFaqTabs } from "@/components/proto-invest/ProtoInvestDesktopFaqTabs";
 import { ProtoInvestDesktopNav } from "@/components/proto-invest/ProtoInvestDesktopNav";
@@ -28,9 +29,9 @@ import { ABOUT_PAGE_MOBILE_BYLINE, ABOUT_PAGE_MOBILE_DATE } from "@/lib/about/ab
 import {
   PROTO_INVEST_BAR_CHART,
   PROTO_INVEST_FOUNDERS_PARAGRAPHS,
-  PROTO_INVEST_INTRO,
+  PROTO_INVEST_INTRO_LEAD_LINES,
   PROTO_INVEST_PIE_CHART,
-  PROTO_INVEST_STAT_BULLETS,
+  PROTO_INVEST_RECRUITER_SECTION,
 } from "@/lib/proto-invest/proto-invest-content";
 import {
   PROTO_INVEST_CHART_TITLE_TW,
@@ -46,7 +47,7 @@ import { PROTO_INVEST_PAGE_BG } from "@/lib/proto-invest/proto-invest-theme";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 /** Desktop /about — hero plus four alternating graphic-panel bands, then footer. */
 export function ProtoInvestDesktopView() {
-  const [foundersOne, foundersTwo] = PROTO_INVEST_FOUNDERS_PARAGRAPHS;
+  const foundersParagraphs = PROTO_INVEST_FOUNDERS_PARAGRAPHS;
 
   return (
     <div className="proto-invest-desktop relative min-h-[100dvh]" style={{ backgroundColor: PROTO_INVEST_PAGE_BG }} data-doeforvc-view="desktop">
@@ -85,8 +86,12 @@ export function ProtoInvestDesktopView() {
           <div className={`${ABOUT_DESKTOP_SQUARE_PANEL_TW} min-h-0`}>
             <div className={ABOUT_DESKTOP_SECTION_2_STACK}>
               <div className={`flex min-h-0 flex-1 flex-col justify-center ${ABOUT_DESKTOP_SECTION_2_CONTENT_GAP}`}>
-                <ProtoInvestDesktopParagraph text={PROTO_INVEST_INTRO} />
-                <ProtoInvestDesktopBulletList items={PROTO_INVEST_STAT_BULLETS} />
+                <ProtoInvestIntroLead layout="desktop" lines={PROTO_INVEST_INTRO_LEAD_LINES} />
+                <ProtoInvestLabeledBulletList
+                  layout="desktop"
+                  lead={PROTO_INVEST_RECRUITER_SECTION.lead}
+                  bullets={PROTO_INVEST_RECRUITER_SECTION.bullets}
+                />
               </div>
               <ArticlePieChart
                 title={PROTO_INVEST_PIE_CHART.title}
@@ -105,8 +110,9 @@ export function ProtoInvestDesktopView() {
 
         <ProtoInvestDesktopSplitSection boxSide="left" graphic={1} boxBleedToMargin>
           <div className={`flex flex-col ${PROTO_INVEST_DESKTOP_CONTENT_STACK_GAP}`}>
-            <ProtoInvestDesktopParagraph text={foundersOne} />
-            <ProtoInvestDesktopParagraph text={foundersTwo} />
+            {foundersParagraphs.map((paragraph) => (
+              <ProtoInvestDesktopParagraph key={paragraph} text={paragraph} />
+            ))}
           </div>
         </ProtoInvestDesktopSplitSection>
 

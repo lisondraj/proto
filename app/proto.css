@@ -281,7 +281,7 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
   --proto-nav-frost-compact-scale: calc(1 - var(--proto-nav-frost-progress, 0) * 0.1);
   --proto-nav-frost-nav-pad-top: clamp(0.35rem, 0.2rem + 0.85vmin, 0.65rem);
   --proto-nav-frost-nav-pad-bottom: clamp(0.25rem, 0.1rem + 0.55vmin, 0.45rem);
-  --proto-nav-hero-strip-pad-bottom: clamp(0.5rem, 0.32rem + 0.85vmin, 0.85rem);
+  --proto-nav-hero-strip-pad: clamp(0.5rem, 0.32rem + 0.85vmin, 0.85rem);
   --proto-nav-cta-radius-rest: 0.375rem;
   padding-top: calc(
     env(safe-area-inset-top, 0px) +
@@ -347,9 +347,12 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav .proto-na
         0.1 * clamp(3.9rem, 3.15rem + 3.45vmin, 4.75rem) * 0.5
       )
   ) !important;
-  padding-top: calc(var(--proto-nav-frost-pad-y) * var(--proto-nav-frost-progress, 0)) !important;
+  padding-top: calc(
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-hero-strip-pad, 0.85rem) +
+    var(--proto-nav-frost-pad-y) * var(--proto-nav-frost-progress, 0)
+  ) !important;
   padding-bottom: calc(
-    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-hero-strip-pad-bottom, 0.85rem) +
+    (1 - var(--proto-nav-frost-progress, 0)) * var(--proto-nav-hero-strip-pad, 0.85rem) +
     var(--proto-nav-frost-pad-y) * var(--proto-nav-frost-progress, 0)
   ) !important;
 }
