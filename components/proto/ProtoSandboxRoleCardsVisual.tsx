@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 
 import { dmSans, inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
@@ -12,12 +12,9 @@ import {
 } from "@/lib/proto/proto-sandbox-role-cards";
 
 const FEATURED_HOLD_MS = 20000;
-const FEATURED_STAGGER_MS = 40;
-const FEATURED_BOUNCE_MS = 420;
-const FEATURED_LINE_COUNT = 11;
-const FEATURED_EXIT_MS =
-  FEATURED_BOUNCE_MS + FEATURED_STAGGER_MS * (FEATURED_LINE_COUNT - 1);
-const FEATURED_BOUNCE_EASE = "cubic-bezier(0.34, 1.45, 0.64, 1)";
+/** Soft dissolve — same ease as proto hero reveals. */
+const FEATURED_CROSSFADE_MS = 380;
+const FEATURED_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 const INK = "#2C2419";
 const MUTED = "#7A6F63";
@@ -169,60 +166,18 @@ function RoleCardTag({
   );
 }
 
-function BounceLine({
-  active,
-  order,
-  reduceMotion,
-  children,
-  className,
-  style,
-}: {
-  active: boolean;
-  order: number;
-  reduceMotion: boolean;
-  children: ReactNode;
-  className?: string;
-  style?: CSSProperties;
-}) {
-  const delay = reduceMotion
-    ? 0
-    : active
-      ? order * FEATURED_STAGGER_MS
-      : (FEATURED_LINE_COUNT - 1 - order) * FEATURED_STAGGER_MS;
-
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        opacity: active ? 1 : 0,
-        transform: active ? "translateY(0)" : "translateY(0.55rem)",
-        transition: reduceMotion
-          ? undefined
-          : `opacity ${FEATURED_BOUNCE_MS}ms ease, transform ${FEATURED_BOUNCE_MS}ms ${FEATURED_BOUNCE_EASE}`,
-        transitionDelay: `${delay}ms`,
-        willChange: reduceMotion ? undefined : "opacity, transform",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
 function RoleCardTaskRail({
   taskBrief,
   items,
   tokens,
   onDark = false,
   flushTop = false,
-  bounce,
 }: {
   taskBrief: string;
   items: readonly [string, string, string];
   tokens: VisualTokens;
   onDark?: boolean;
   flushTop?: boolean;
-  bounce?: { active: boolean; reduceMotion: boolean; baseOrder: number };
 }) {
   const ink = onDark ? "#FFF9F2" : INK;
   const muted = onDark ? "rgba(255,249,242,0.72)" : MUTED;
@@ -230,50 +185,34 @@ function RoleCardTaskRail({
   const rail = onDark ? "rgba(255,249,242,0.28)" : RAIL_LINE;
   const face = onDark ? "transparent" : CARD_FACE;
 
-  const wrapLine = (order: number, node: ReactNode) => {
-    if (!bounce) return node;
-    return (
-      <BounceLine
-        active={bounce.active}
-        order={bounce.baseOrder + order}
-        reduceMotion={bounce.reduceMotion}
-      >
-        {node}
-      </BounceLine>
-    );
-  };
-
   return (
     <div
       className={`${dmSans.className} min-w-0`}
       style={{ marginTop: flushTop ? 0 : tokens.bodyGap }}
     >
-      {wrapLine(
-        0,
-        <div className="flex min-w-0 items-start" style={{ gap: "0.52em" }}>
-          <div
-            className="mt-[0.34em] shrink-0 rounded-full"
-            style={{
-              width: "0.4em",
-              height: "0.4em",
-              border: `1px solid ${dot}`,
-              background: face,
-              boxSizing: "border-box",
-            }}
-            aria-hidden
-          />
-          <p
-            className="min-w-0 whitespace-nowrap font-semibold leading-snug"
-            style={{
-              margin: 0,
-              color: ink,
-              fontSize: tokens.task,
-            }}
-          >
-            {taskBrief}
-          </p>
-        </div>,
-      )}
+      <div className="flex min-w-0 items-start" style={{ gap: "0.52em" }}>
+        <div
+          className="mt-[0.34em] shrink-0 rounded-full"
+          style={{
+            width: "0.4em",
+            height: "0.4em",
+            border: `1px solid ${dot}`,
+            background: face,
+            boxSizing: "border-box",
+          }}
+          aria-hidden
+        />
+        <p
+          className="min-w-0 whitespace-nowrap font-semibold leading-snug"
+          style={{
+            margin: 0,
+            color: ink,
+            fontSize: tokens.task,
+          }}
+        >
+          {taskBrief}
+        </p>
+      </div>
 
       <div
         className="relative min-w-0"
@@ -288,13 +227,6 @@ function RoleCardTaskRail({
           style={{
             left: "0.28em",
             background: rail,
-            opacity: bounce && !bounce.active ? 0 : 1,
-            transition: bounce?.reduceMotion
-              ? undefined
-              : `opacity ${FEATURED_BOUNCE_MS}ms ease`,
-            transitionDelay: bounce
-              ? `${(bounce.active ? bounce.baseOrder : FEATURED_LINE_COUNT - 1 - bounce.baseOrder) * FEATURED_STAGGER_MS}ms`
-              : undefined,
           }}
           aria-hidden
         />
@@ -303,20 +235,16 @@ function RoleCardTaskRail({
           className="m-0 flex list-none flex-col p-0"
           style={{ gap: tokens.checklistGap }}
         >
-          {items.map((item, itemIndex) => (
-            <li key={item} className="list-none">
-              {wrapLine(
-                1 + itemIndex,
-                <span
-                  className="whitespace-nowrap leading-snug"
-                  style={{
-                    color: muted,
-                    fontSize: tokens.checklist,
-                  }}
-                >
-                  {item}
-                </span>,
-              )}
+          {items.map((item) => (
+            <li
+              key={item}
+              className="whitespace-nowrap leading-snug"
+              style={{
+                color: muted,
+                fontSize: tokens.checklist,
+              }}
+            >
+              {item}
             </li>
           ))}
         </ul>
@@ -432,20 +360,13 @@ function FeaturedRoleCard({
   card,
   tokens,
   active,
-  reduceMotion,
 }: {
   card: ProtoSandboxRoleCard;
   tokens: VisualTokens;
   active: boolean;
-  reduceMotion: boolean;
 }) {
   const summary = card.roleSummary;
   const glass = FEATURED_GLASS_BY_ID[card.id];
-  const glassDelay = reduceMotion
-    ? 0
-    : active
-      ? FEATURED_STAGGER_MS
-      : (FEATURED_LINE_COUNT - 2) * FEATURED_STAGGER_MS;
   const belowTokens: VisualTokens = {
     ...tokens,
     task: "0.92rem",
@@ -461,36 +382,25 @@ function FeaturedRoleCard({
 
   return (
     <div className="flex w-full flex-col items-start">
-      <BounceLine
-        active={active}
-        order={0}
-        reduceMotion={reduceMotion}
-        style={{ marginBottom: "0.2rem" }}
-      >
+      <div style={{ marginBottom: "0.2rem" }}>
         <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} theme="light" />
-      </BounceLine>
+      </div>
 
       <article
         className={`w-full flex flex-col ${plusJakartaSans.className}`}
         style={{
-          padding: "0.42rem 0.72rem",
+          padding: "0.58rem 0.82rem",
           borderRadius: tokens.cardRadius,
           boxSizing: "border-box",
           background: glass.background,
           boxShadow: glass.shadow,
-          backdropFilter: active
-            ? "blur(18px) saturate(1.35) brightness(1.04)"
-            : "blur(5px) saturate(1.05)",
-          WebkitBackdropFilter: active
-            ? "blur(18px) saturate(1.35) brightness(1.04)"
-            : "blur(5px) saturate(1.05)",
-          opacity: active ? 1 : 0,
-          transform: active ? "translateY(0)" : "translateY(0.55rem)",
-          transition: reduceMotion
-            ? undefined
-            : `opacity ${FEATURED_BOUNCE_MS}ms ease, transform ${FEATURED_BOUNCE_MS}ms ${FEATURED_BOUNCE_EASE}, backdrop-filter ${FEATURED_BOUNCE_MS}ms ease, -webkit-backdrop-filter ${FEATURED_BOUNCE_MS}ms ease`,
-          transitionDelay: `${glassDelay}ms`,
-          willChange: reduceMotion ? undefined : "opacity, transform, backdrop-filter",
+          // Blur only on the visible card — avoids 3× backdrop-filter cost during switches.
+          ...(active
+            ? {
+                backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+                WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+              }
+            : null),
         }}
       >
         <div
@@ -498,96 +408,79 @@ function FeaturedRoleCard({
           style={{
             gridTemplateColumns: "minmax(0, 1fr) auto",
             columnGap: "0.75rem",
-            rowGap: "0.14rem",
+            rowGap: "0.2rem",
             alignItems: "baseline",
           }}
         >
-          {/* Row 1 — role (primary) · location (meta) */}
-          <BounceLine active={active} order={1} reduceMotion={reduceMotion}>
-            <h3
-              className={`${suisseIntl.className} m-0 font-semibold tracking-[-0.025em]`}
-              style={{
-                color: GLASS_INK,
-                fontSize: "0.9rem",
-                lineHeight: 1.15,
-                fontWeight: 600,
-              }}
-            >
-              {card.role}
-            </h3>
-          </BounceLine>
+          <h3
+            className={`${suisseIntl.className} m-0 font-semibold tracking-[-0.025em]`}
+            style={{
+              color: GLASS_INK,
+              fontSize: "0.9rem",
+              lineHeight: 1.2,
+              fontWeight: 600,
+            }}
+          >
+            {card.role}
+          </h3>
 
           {summary ? (
-            <BounceLine active={active} order={4} reduceMotion={reduceMotion}>
-              <span
-                className={`${inter.className} whitespace-nowrap text-right`}
-                style={{
-                  color: GLASS_MUTED,
-                  fontSize: "0.66rem",
-                  lineHeight: 1.15,
-                  fontWeight: 400,
-                }}
-              >
-                {summary.location}
-              </span>
-            </BounceLine>
+            <span
+              className={`${inter.className} whitespace-nowrap text-right`}
+              style={{
+                color: GLASS_MUTED,
+                fontSize: "0.66rem",
+                lineHeight: 1.2,
+                fontWeight: 400,
+              }}
+            >
+              {summary.location}
+            </span>
           ) : (
             <span />
           )}
 
-          {/* Row 2 — pay (secondary) · type (meta) */}
           {summary ? (
-            <BounceLine active={active} order={2} reduceMotion={reduceMotion}>
-              <p
-                className="m-0 tracking-[-0.015em]"
-                style={{
-                  color: GLASS_INK,
-                  fontSize: "0.74rem",
-                  lineHeight: 1.15,
-                  fontWeight: 500,
-                }}
-              >
-                {summary.pay}
-              </p>
-            </BounceLine>
-          ) : null}
-
-          {summary ? (
-            <BounceLine active={active} order={5} reduceMotion={reduceMotion}>
-              <span
-                className={`${inter.className} whitespace-nowrap text-right`}
-                style={{
-                  color: GLASS_MUTED,
-                  fontSize: "0.66rem",
-                  lineHeight: 1.15,
-                  fontWeight: 400,
-                }}
-              >
-                {summary.type}
-              </span>
-            </BounceLine>
-          ) : null}
-
-          {/* Row 3 — equity (tertiary) */}
-          {summary ? (
-            <BounceLine
-              active={active}
-              order={3}
-              reduceMotion={reduceMotion}
-              style={{ gridColumn: "1 / 2" }}
+            <p
+              className="m-0 tracking-[-0.015em]"
+              style={{
+                color: GLASS_INK,
+                fontSize: "0.74rem",
+                lineHeight: 1.2,
+                fontWeight: 500,
+              }}
             >
-              <p
-                className={`${inter.className} m-0`}
-                style={{
-                  color: GLASS_MUTED,
-                  fontSize: "0.66rem",
-                  lineHeight: 1.15,
-                  fontWeight: 400,
-                }}
-              >
-                {summary.equity}
-              </p>
-            </BounceLine>
+              {summary.pay}
+            </p>
+          ) : null}
+
+          {summary ? (
+            <span
+              className={`${inter.className} whitespace-nowrap text-right`}
+              style={{
+                color: GLASS_MUTED,
+                fontSize: "0.66rem",
+                lineHeight: 1.2,
+                fontWeight: 400,
+              }}
+            >
+              {summary.type}
+            </span>
+          ) : null}
+
+          {summary ? (
+            <p
+              className={`${inter.className} m-0`}
+              style={{
+                gridColumn: "1 / 2",
+                color: GLASS_MUTED,
+                fontSize: "0.66rem",
+                lineHeight: 1.2,
+                fontWeight: 400,
+              }}
+            >
+              {summary.equity}
+            </p>
           ) : null}
         </div>
       </article>
@@ -599,20 +492,8 @@ function FeaturedRoleCard({
           tokens={belowTokens}
           onDark
           flushTop
-          bounce={{ active, reduceMotion, baseOrder: 6 }}
         />
-        <BounceLine
-          active={active}
-          order={10}
-          reduceMotion={reduceMotion}
-          style={{ marginTop: belowTokens.tagRowMarginTop }}
-        >
-          <RoleCardTags
-            card={card}
-            tokens={{ ...belowTokens, tagRowMarginTop: "0" }}
-            onDark
-          />
-        </BounceLine>
+        <RoleCardTags card={card} tokens={belowTokens} onDark />
       </div>
     </div>
   );
@@ -620,38 +501,17 @@ function FeaturedRoleCard({
 
 function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
   const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
   const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setReduceMotion(prefersReduced);
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-    let holdTimer: number | undefined;
-    let exitTimer: number | undefined;
-
-    const schedule = () => {
-      holdTimer = window.setTimeout(() => {
-        if (prefersReduced) {
-          setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
-          schedule();
-          return;
-        }
-
-        setVisible(false);
-        exitTimer = window.setTimeout(() => {
-          setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
-          setVisible(true);
-          schedule();
-        }, FEATURED_EXIT_MS);
-      }, FEATURED_HOLD_MS);
-    };
-
-    schedule();
+    const holdTimer = window.setInterval(() => {
+      setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
+    }, FEATURED_HOLD_MS);
 
     return () => {
-      window.clearTimeout(holdTimer);
-      window.clearTimeout(exitTimer);
+      window.clearInterval(holdTimer);
     };
   }, []);
 
@@ -659,7 +519,7 @@ function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
     // Stack every slide in one grid cell so height stays max(all) — no scale jump.
     <div className="grid" style={{ width: tokens.cardWidth }}>
       {PROTO_SANDBOX_FEATURED_CYCLE.map((card, slideIndex) => {
-        const active = slideIndex === index && visible;
+        const active = slideIndex === index;
 
         return (
           <div
@@ -668,15 +528,14 @@ function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
             style={{
               alignSelf: "start",
               justifySelf: "stretch",
+              opacity: active ? 1 : 0,
+              transition: reduceMotion
+                ? undefined
+                : `opacity ${FEATURED_CROSSFADE_MS}ms ${FEATURED_EASE}`,
               pointerEvents: active ? "auto" : "none",
             }}
           >
-            <FeaturedRoleCard
-              card={card}
-              tokens={tokens}
-              active={active}
-              reduceMotion={reduceMotion}
-            />
+            <FeaturedRoleCard card={card} tokens={tokens} active={active} />
           </div>
         );
       })}
