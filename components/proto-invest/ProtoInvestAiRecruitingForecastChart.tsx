@@ -29,6 +29,10 @@ function formatYAxis(value: number) {
   return value === 0 ? "0" : `${value}%`;
 }
 
+function plotX(index: number, pointCount: number) {
+  return (index / Math.max(pointCount - 1, 1)) * 100;
+}
+
 const X_LABEL_INDICES = new Set([0, 4, 8, 12, 15]);
 
 /** /proto-invest — quarterly AI recruiting software adoption forecast (line chart). */
@@ -38,7 +42,7 @@ export function ProtoInvestAiRecruitingForecastChart() {
 
   const linePoints = quarters
     .map((point, index) => {
-      const x = count === 1 ? 50 : (index / (count - 1)) * 100;
+      const x = plotX(index, count);
       const y = plotY(point.value);
       return `${x},${y}`;
     })
@@ -112,7 +116,7 @@ export function ProtoInvestAiRecruitingForecastChart() {
               />
 
               {quarters.map((point, index) => {
-                const x = count === 1 ? 50 : (index / (count - 1)) * 100;
+                const x = plotX(index, count);
                 return (
                   <circle
                     key={point.label}

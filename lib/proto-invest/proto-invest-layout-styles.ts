@@ -24,7 +24,7 @@ export const PROTO_INVEST_FAQ_BULLET_LIST_GAP = "space-y-1 iphone-page:space-y-1
 
 export const PROTO_INVEST_TITLE_TW = `text-left font-light leading-[1.02] tracking-[-0.03em] text-white text-[clamp(3rem,11.25vw,5.15rem)] iphone-page:text-[clamp(2.08rem,1.12rem+5.15vmin,2.92rem)] ${PROTO_FONT_CLASS}`;
 
-export const PROTO_INVEST_SUBHEADING_TW = `mt-[clamp(0.85rem,0.65rem+0.85vmin,1.25rem)] text-[clamp(1.42rem,1.22rem+0.95vmin,1.78rem)] iphone-page:mt-[clamp(0.6rem,0.48rem+0.48vmin,0.88rem)] iphone-page:text-[clamp(1.08rem,0.94rem+0.75vmin,1.32rem)] font-normal leading-[1.34] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
+export const PROTO_INVEST_SUBHEADING_TW = `mt-[clamp(0.85rem,0.65rem+0.85vmin,1.25rem)] text-[clamp(1.52rem,1.3rem+1.05vmin,1.92rem)] iphone-page:mt-[clamp(0.6rem,0.48rem+0.48vmin,0.88rem)] iphone-page:text-[clamp(1.18rem,1.02rem+0.82vmin,1.42rem)] font-normal leading-[1.34] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_BYLINE_TW = `text-[clamp(1.28rem,1.08rem+0.75vmin,1.48rem)] iphone-page:text-[clamp(1.08rem,0.9rem+0.65vmin,1.28rem)] font-medium text-white/55 ${PROTO_FONT_CLASS}`;
 
@@ -117,7 +117,7 @@ export const PROTO_INVEST_DESKTOP_TITLE_TW = `text-left font-light leading-[1.02
 
 export const PROTO_INVEST_DESKTOP_SECTION_HEADLINE_TW = `text-left font-light leading-[1.02] tracking-[-0.028em] text-white text-[clamp(2.2rem,3.1vw,3.35rem)] md:text-[clamp(2.4rem,3.25vw,3.55rem)] lg:text-[clamp(2.55rem,3.35vw,3.75rem)] ${PROTO_FONT_CLASS}`;
 
-export const PROTO_INVEST_DESKTOP_SUBHEADING_TW = `mt-5 md:mt-6 text-[clamp(1.32rem,1.2vw,1.55rem)] md:text-[clamp(1.4rem,1.28vw,1.65rem)] font-normal leading-[1.44] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
+export const PROTO_INVEST_DESKTOP_SUBHEADING_TW = `mt-5 md:mt-6 text-[clamp(1.42rem,1.28vw,1.68rem)] md:text-[clamp(1.52rem,1.38vw,1.78rem)] font-normal leading-[1.44] tracking-[-0.01em] text-white/72 ${PROTO_FONT_CLASS}`;
 
 export const PROTO_INVEST_DESKTOP_BODY_TW = `text-[clamp(1.12rem,1.05vw,1.32rem)] md:text-[clamp(1.22rem,1.1vw,1.42rem)] font-normal leading-[1.5] tracking-[-0.01em] text-white/85 ${PROTO_FONT_CLASS}`;
 
