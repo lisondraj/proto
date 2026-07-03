@@ -10,14 +10,16 @@ import { protoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
 export function ProtoCommunicationStack() {
   return (
     <>
-      {PROTO_COMMUNICATION_SLIDES.map((slide) => {
+      {PROTO_COMMUNICATION_SLIDES.map((slide, index) => {
         const copy = protoFeatureCopy(slide.id);
         if (!copy) return null;
 
         return (
           <section
             key={slide.id}
-            className="proto-feature-section proto-section-band"
+            className={`proto-feature-section proto-section-band${
+              index === 0 ? " proto-feature-section--first-shader" : ""
+            }`}
             aria-label={slide.menuLabel}
           >
             <div className="proto-feature-section__inner">
@@ -32,7 +34,11 @@ export function ProtoCommunicationStack() {
                     uiInteractive={false}
                     protoShaderVariant={protoGrainGradientVariant(slide.id)}
                     protoSite
-                    uiScaleClass="proto-carousel-ui-scale"
+                    uiScaleClass={
+                      slide.id === "agents"
+                        ? "proto-sandbox-cards-scale"
+                        : "proto-carousel-ui-scale"
+                    }
                   />
                 </div>
                 <ProtoFeatureSectionCopy copy={copy} />

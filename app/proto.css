@@ -121,6 +121,18 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card > 
   height: 100% !important;
 }
 
+/* iPhone — first feature shader box is 1/6 taller than the default card height. */
+html[data-proto-page]:has(.doephone-mobile-root)
+  .proto-feature-section--first-shader
+  .proto-feature-section__card {
+  min-height: clamp(
+    calc(22rem + var(--app-vh, 100lvh) / 6),
+    calc(var(--app-vh, 100lvh) * 0.46 + var(--app-vh, 100lvh) / 6),
+    calc(36rem + var(--app-vh, 100lvh) / 6)
+  ) !important;
+  max-height: calc(var(--app-vh, 100lvh) * 0.5 + var(--app-vh, 100lvh) / 6) !important;
+}
+
 /* iPhone — full-panel bands: gradient card fills the section (no copy stack). */
 html[data-proto-page] .proto-feature-section--full-panel .proto-feature-section__inner--full-panel {
   justify-content: stretch !important;
@@ -239,6 +251,31 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card .p
   transform: scale(0.84);
   transform-origin: center center;
   width: 100%;
+}
+
+/* Sandbox role cards — fill the shader overlay; cluster centers as one unit. */
+html[data-proto-page]:has(.doephone-mobile-root)
+  .proto-feature-section--first-shader
+  .proto-feature-section__card
+  .proto-sandbox-cards-scale {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  transform: none !important;
+}
+
+html[data-proto-page]:has(.doephone-mobile-root)
+  .proto-feature-section--first-shader
+  .proto-feature-section__card
+  .proto-sandbox-cards-scale
+  > * {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card .absolute.z-30.rounded-full {
