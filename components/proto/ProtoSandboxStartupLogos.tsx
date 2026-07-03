@@ -3,6 +3,7 @@
 import type { ReactNode, SVGProps } from "react";
 
 import { lora, outfit, suisseIntl } from "@/lib/home/fonts";
+import type { ProtoSandboxRoleCardId } from "@/lib/proto/proto-sandbox-role-cards";
 
 const INK = "#2C2419";
 const MUTED = "#8A7D6E";
@@ -20,17 +21,22 @@ function LogoFrame({ children, height }: { children: ReactNode; height: string }
   );
 }
 
-function HarmonyIcon(props: SVGProps<SVGSVGElement>) {
+function HarmonyIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = theme === "light" ? LIGHT_INK : INK;
+
   return (
     <svg viewBox="0 0 32 32" fill="none" {...props}>
       <path
         d="M3 17.5h4.5l2.5-7 3 14 2.8-8.2H20"
-        stroke={INK}
+        stroke={ink}
         strokeWidth="2.4"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="26.5" cy="17.5" r="2" fill={INK} />
+      <circle cx="26.5" cy="17.5" r="2" fill={ink} />
     </svg>
   );
 }
@@ -72,23 +78,24 @@ function LedgerIcon({
   );
 }
 
-function NorthwindIcon(props: SVGProps<SVGSVGElement>) {
+function NorthwindIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const isLight = theme === "light";
+  const ink = isLight ? LIGHT_INK : INK;
+  const cutout = isLight ? "#121819" : "#FFFFFF";
+
   return (
     <svg viewBox="0 0 32 32" fill="none" {...props}>
-      <path
-        d="M16 4l10 22H19.2l-1.4-4.2H10.2L8.8 26H6L16 4z"
-        fill={INK}
-      />
-      <path
-        d="M11.5 17.2h9L16 9.8 11.5 17.2z"
-        fill="#FFFFFF"
-      />
+      <path d="M16 4l10 22H19.2l-1.4-4.2H10.2L8.8 26H6L16 4z" fill={ink} />
+      <path d="M11.5 17.2h9L16 9.8 11.5 17.2z" fill={cutout} />
       <path
         d="M23.5 8.5l4.5 2.5M23.5 13l4.5 2M23.5 17.5l4.5 2.5"
-        stroke={INK}
+        stroke={ink}
         strokeWidth="1.6"
         strokeLinecap="round"
-        opacity="0.55"
+        opacity={isLight ? 0.65 : 0.55}
       />
     </svg>
   );
@@ -162,16 +169,25 @@ function LogoLockup({
   );
 }
 
-export function HarmonyHealthLogo({ height = "2.35rem" }: { height?: string }) {
+export function HarmonyHealthLogo({
+  height = "2.35rem",
+  theme = "default",
+}: {
+  height?: string;
+  theme?: LogoTheme;
+}) {
+  const ink = theme === "light" ? LIGHT_INK : INK;
+  const muted = theme === "light" ? LIGHT_MUTED : MUTED;
+
   return (
     <LogoFrame height={height}>
       <div className="flex min-w-0 items-center" style={{ gap: "0.55em" }}>
-        <HarmonyIcon style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
+        <HarmonyIcon theme={theme} style={{ height: "1.55em", width: "1.55em", flexShrink: 0 }} />
         <div className={`flex flex-col items-start ${lora.className}`} style={{ gap: "0.1em" }}>
           <span
             style={{
-              color: INK,
-              fontSize: "0.92em",
+              color: ink,
+              fontSize: "0.78em",
               fontWeight: 700,
               letterSpacing: "-0.035em",
               lineHeight: 1,
@@ -181,8 +197,8 @@ export function HarmonyHealthLogo({ height = "2.35rem" }: { height?: string }) {
           </span>
           <span
             style={{
-              color: MUTED,
-              fontSize: "0.92em",
+              color: muted,
+              fontSize: "1.08em",
               fontWeight: 500,
               letterSpacing: "-0.02em",
               lineHeight: 1,
@@ -215,7 +231,13 @@ export function LedgerAiLogo({
   );
 }
 
-export function NorthwindOpsLogo({ height = "2.35rem" }: { height?: string }) {
+export function NorthwindOpsLogo({
+  height = "2.35rem",
+  theme = "default",
+}: {
+  height?: string;
+  theme?: LogoTheme;
+}) {
   return (
     <LogoLockup
       Icon={NorthwindIcon}
@@ -224,28 +246,21 @@ export function NorthwindOpsLogo({ height = "2.35rem" }: { height?: string }) {
       height={height}
       fontClassName={outfit.className}
       textSize="1.08em"
+      theme={theme}
     />
   );
 }
-
-const LOGO_BY_ID = {
-  harmony: HarmonyHealthLogo,
-  ledger: LedgerAiLogo,
-  northwind: NorthwindOpsLogo,
-} as const;
 
 export function ProtoSandboxStartupLogo({
   id,
   height,
   theme = "default",
 }: {
-  id: keyof typeof LOGO_BY_ID;
+  id: ProtoSandboxRoleCardId;
   height?: string;
   theme?: LogoTheme;
 }) {
-  const Logo = LOGO_BY_ID[id];
-  if (id === "ledger") {
-    return <LedgerAiLogo height={height} theme={theme} />;
-  }
-  return <Logo height={height} />;
+  if (id === "ledger") return <LedgerAiLogo height={height} theme={theme} />;
+  if (id === "harmony") return <HarmonyHealthLogo height={height} theme={theme} />;
+  return <NorthwindOpsLogo height={height} theme={theme} />;
 }

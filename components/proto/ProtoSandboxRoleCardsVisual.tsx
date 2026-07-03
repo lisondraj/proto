@@ -1,12 +1,18 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { dmSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 import { ProtoSandboxStartupLogo } from "@/components/proto/ProtoSandboxStartupLogos";
 import {
+  PROTO_FEATURED_ROLE_SLIDES,
   PROTO_SANDBOX_ROLE_CARDS,
   type ProtoSandboxRoleCard,
 } from "@/lib/proto/proto-sandbox-role-cards";
+
+const FEATURED_SLIDE_MS = 3400;
+const FEATURED_FADE_MS = 700;
 
 const INK = "#2C2419";
 const MUTED = "#7A6F63";
@@ -316,12 +322,8 @@ function CardCluster({ layout, tokens }: { layout: VisualLayout; tokens: VisualT
   );
 }
 
-const LEDGER_CARD = PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "ledger")!;
-
-/** First shader — logo above card; role facts inside; task + tags below. */
-function LedgerCardWithExternalLogo({ tokens }: { tokens: VisualTokens }) {
-  const summary = LEDGER_CARD.roleSummary;
-  const belowTokens: VisualTokens = {
+function featuredBelowTokens(tokens: VisualTokens): VisualTokens {
+  return {
     ...tokens,
     task: "0.92rem",
     checklist: "0.82rem",
@@ -333,11 +335,23 @@ function LedgerCardWithExternalLogo({ tokens }: { tokens: VisualTokens }) {
     tagRowMarginTop: "0.48rem",
     bodyGap: "0.4rem",
   };
+}
+
+/** Featured role card — logo above; role facts inside; task + tags below. */
+function FeaturedRoleCard({
+  card,
+  tokens,
+}: {
+  card: ProtoSandboxRoleCard;
+  tokens: VisualTokens;
+}) {
+  const summary = card.roleSummary;
+  const belowTokens = featuredBelowTokens(tokens);
 
   return (
     <div className="flex flex-col items-start" style={{ width: tokens.cardWidth }}>
       <div style={{ marginBottom: "0.42rem" }}>
-        <ProtoSandboxStartupLogo id="ledger" height={tokens.logoHeight} theme="light" />
+        <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} theme="light" />
       </div>
 
       <article
@@ -359,7 +373,7 @@ function LedgerCardWithExternalLogo({ tokens }: { tokens: VisualTokens }) {
                 fontSize: tokens.role,
               }}
             >
-              {LEDGER_CARD.role}
+              {card.role}
             </h3>
 
             {summary ? (
@@ -408,19 +422,58 @@ function LedgerCardWithExternalLogo({ tokens }: { tokens: VisualTokens }) {
 
       <div className="w-full" style={{ marginTop: "0.65rem" }}>
         <RoleCardTaskRail
-          taskBrief={LEDGER_CARD.taskBrief}
-          items={LEDGER_CARD.checklist}
+          taskBrief={card.taskBrief}
+          items={card.checklist}
           tokens={belowTokens}
           onDark
           flushTop
         />
-        <RoleCardTags card={LEDGER_CARD} tokens={belowTokens} onDark />
+        <RoleCardTags card={card} tokens={belowTokens} onDark />
       </div>
     </div>
   );
 }
 
-/** Single Ledger card — full stack centered on the y-axis in the first shader. */
+function FeaturedRoleCarousel({ tokens }: { tokens: VisualTokens }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setIndex((current) => (current + 1) % PROTO_FEATURED_ROLE_SLIDES.length);
+    }, FEATURED_SLIDE_MS);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <div className="relative" style={{ width: tokens.cardWidth }}>
+      {PROTO_FEATURED_ROLE_SLIDES.map((card, slideIndex) => {
+        const active = slideIndex === index;
+
+        return (
+          <div
+            key={card.id}
+            aria-hidden={!active}
+            style={{
+              position: active ? "relative" : "absolute",
+              left: 0,
+              top: 0,
+              width: "100%",
+              opacity: active ? 1 : 0,
+              transform: active ? "translateY(0)" : "translateY(0.45rem)",
+              transition: `opacity ${FEATURED_FADE_MS}ms cubic-bezier(0.22, 1, 0.36, 1), transform ${FEATURED_FADE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`,
+              pointerEvents: active ? "auto" : "none",
+              zIndex: active ? 1 : 0,
+            }}
+          >
+            <FeaturedRoleCard card={card} tokens={tokens} />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Featured role carousel — Ledger, Harmony, Northwind, then Ledger again. */
 export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: VisualLayout }) {
   const tokens = layout === "desktop" ? DESKTOP_TOKENS : PHONE_TOKENS;
 
@@ -436,7 +489,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
             className="flex justify-center"
             style={{ width: PHONE_ARTBOARD_WIDTH_PX }}
           >
-            <LedgerCardWithExternalLogo tokens={tokens} />
+            <FeaturedRoleCarousel tokens={tokens} />
           </div>
         </ProtoPhoneScaledArtboard>
       </div>
@@ -449,7 +502,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
       style={{ maxWidth: "min(100%, 26rem)" }}
       aria-hidden
     >
-      <LedgerCardWithExternalLogo tokens={tokens} />
+      <FeaturedRoleCarousel tokens={tokens} />
     </div>
   );
 }
