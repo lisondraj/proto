@@ -584,13 +584,13 @@ function DesignProcessPanel() {
                   {item.index}
                 </span>
                 <span
-                  className={suisseIntl.className}
+                  className={plusJakartaSans.className}
                   style={{
                     color: PROCESS_INK,
                     fontSize: 11,
                     fontWeight: 600,
                     lineHeight: 1.15,
-                    letterSpacing: "-0.02em",
+                    letterSpacing: "-0.025em",
                   }}
                 >
                   {item.title}
