@@ -129,6 +129,7 @@ export const PROTO_COMMUNICATION_GRADIENTS = {
   integrate: PROTO_INTEGRATE_GRADIENT,
   validate: PROTO_VALIDATE_GRADIENT,
   shortlist: PROTO_SHORTLIST_GRADIENT,
+  "looking-ahead": PROTO_SHORTLIST_GRADIENT,
 } as const satisfies Record<string, string>;
 
 /** iPhone feature boxes — same reception colouring as desktop. */
@@ -149,6 +150,7 @@ export const PROTO_COMMUNICATION_GRIDS: Partial<
   integrate: "hex",
   validate: "crosshatch",
   shortlist: "wave",
+  "looking-ahead": "wave",
 };
 
 /** Line overlay opacity tuned for reception surfaces. */
@@ -162,6 +164,7 @@ export const PROTO_COMMUNICATION_LINE_OPACITY: Partial<Record<ProtoCommunication
   integrate: 0.14,
   validate: 0.16,
   shortlist: 0.14,
+  "looking-ahead": 0.14,
 };
 
 export function protoCommunicationLineOpacity(slideId: string): number | undefined {

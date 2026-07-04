@@ -40,26 +40,32 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
       "Recruiters review candidate evals on mobile the moment work lands. Scores, replays, and shortlists sync to your phone so you can move on strong talent and fill roles whether you're at your desk or on the road.",
   },
   prototype: {
-    titleLine1: "See if submissions",
-    titleLine2: "fit your product.",
+    titleLine1: "Inside a tracked",
+    titleLine2: "sandbox.",
     description:
       "Take an applicant's prototype, gather real user feedback, and simulate it back inside your product before you ship. Proto shows how the idea lands with your users and where it might fit in your roadmap.",
   },
   integrate: {
-    titleLine1: "Built on top",
-    titleLine2: "of your stack.",
+    titleLine1: "Turn submissions",
+    titleLine2: "into products.",
     description:
       "EMRs, billing platforms, and clinical tools you already rely on, connected without ripping out what is in place. Proto meets your team where they work instead of forcing a rip-and-replace.",
   },
   validate: {
-    titleLine1: "Validate every",
-    titleLine2: "submission.",
+    titleLine1: "See how real",
+    titleLine2: "users respond.",
     description:
       "Proto stress-tests each candidate's work against your rubric, replays how they executed, and flags what clears the bar before anyone lands on the shortlist.",
   },
   shortlist: {
-    titleLine1: "Your shortlist,",
-    titleLine2: "always current.",
+    titleLine1: "Public challenges",
+    titleLine2: "for future hires.",
+    description:
+      "Proto keeps a live ranked list of every candidate who cleared your sandbox bar. Scores refresh as new work lands, so hiring managers always know who to call next without rebuilding a spreadsheet.",
+  },
+  "looking-ahead": {
+    titleLine1: "We're looking",
+    titleLine2: "ahead.",
     description:
       "Proto keeps a live ranked list of every candidate who cleared your sandbox bar. Scores refresh as new work lands, so hiring managers always know who to call next without rebuilding a spreadsheet.",
   },

@@ -228,7 +228,9 @@ export function protoGrainGradientVariant(
         ? "agents"
         : slideId === "ambient"
           ? "billing"
-          : slideId;
+          : slideId === "looking-ahead"
+            ? "shortlist"
+            : slideId;
 
   if (resolvedId in PROTO_GRAIN_GRADIENT_PRESETS) {
     return resolvedId as ProtoGrainGradientVariant;

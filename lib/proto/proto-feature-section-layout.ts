@@ -14,6 +14,7 @@ export const PROTO_FEATURE_SECTION_LAYOUTS: readonly ProtoFeatureSectionLayout[]
   { kind: "split", boxOnLeft: false }, // integrate
   { kind: "full-panel" }, // validate
   { kind: "split", boxOnLeft: true, boxOnTop: false }, // shortlist
+  { kind: "split", boxOnLeft: true, boxOnTop: false }, // looking-ahead
 ];
 
 export function protoFeatureSectionLayout(index: number): ProtoFeatureSectionLayout | undefined {

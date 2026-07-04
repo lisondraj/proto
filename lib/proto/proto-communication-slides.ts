@@ -32,6 +32,18 @@ export const PROTO_SHORTLIST_SLIDE: DoePhoneCommunicationSlide = {
   backdrop: PROTO_SHORTLIST_BACKDROP,
 };
 
+/** /proto-only slide — duplicates shortlist band with looking-ahead copy. */
+export const PROTO_LOOKING_AHEAD_SLIDE: DoePhoneCommunicationSlide = {
+  id: "looking-ahead",
+  menuLabel: "Looking ahead",
+  description: PROTO_SHORTLIST_SLIDE.description,
+  backdrop: {
+    ...PROTO_SHORTLIST_BACKDROP,
+    slideIndex: 9,
+    label: "Looking ahead",
+  },
+};
+
 const DOEPHONE_SLIDE_BY_ID = Object.fromEntries(
   DOEPHONE_COMMUNICATION_SLIDES.map((slide) => [slide.id, slide]),
 ) as Record<(typeof DOEPHONE_COMMUNICATION_SLIDES)[number]["id"], DoePhoneCommunicationSlide>;
@@ -47,4 +59,5 @@ export const PROTO_COMMUNICATION_SLIDES: readonly DoePhoneCommunicationSlide[] =
   DOEPHONE_SLIDE_BY_ID.integrate,
   PROTO_VALIDATE_SLIDE,
   PROTO_SHORTLIST_SLIDE,
+  PROTO_LOOKING_AHEAD_SLIDE,
 ];

@@ -6,7 +6,6 @@ import { DoePhoneClinicAgentsVisual } from "@/components/doephone/DoePhoneClinic
 import { DoePhoneFrontDeskInboxVisual } from "@/components/doephone/DoePhoneFrontDeskInboxVisual";
 import { DoePhoneIntegrateVisual } from "@/components/doephone/DoePhoneIntegrateVisual";
 import { DoePhoneProtoShortlistVisual } from "@/components/doephone/DoePhoneProtoShortlistVisual";
-import { DoePhoneProtoValidateVisual } from "@/components/doephone/DoePhoneProtoValidateVisual";
 import { DoePhoneWorkflowVisual } from "@/components/doephone/DoePhoneWorkflowVisual";
 import { ProtoSandboxBlankPanelVisual } from "@/components/proto/ProtoSandboxBlankPanelVisual";
 import { ProtoSandboxCodeSnippetVisual } from "@/components/proto/ProtoSandboxCodeSnippetVisual";
@@ -59,10 +58,11 @@ export function DoePhoneCommunicationSlideVisual({
         />
       );
     case "prototype":
-      return <DoePhoneProtoValidateVisual layout={layout} />;
+      return null;
     case "validate":
       return <DoePhoneIntegrateVisual />;
     case "shortlist":
+    case "looking-ahead":
       return <DoePhoneProtoShortlistVisual layout={layout} />;
     default:
       return null;
