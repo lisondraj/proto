@@ -28,8 +28,8 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
       "Replay how each candidate worked, not just what they submitted. Head-to-head scorecards on the same rubric, then a ranked shortlist when you're ready. The hire gets obvious before anyone schedules a panel.",
   },
   ambient: {
-    titleLine1: "Discover talent",
-    titleLine2: "fit for any role.",
+    titleLine1: "Exceptional talent",
+    titleLine2: "in every role.",
     description:
       "Companies publish open challenges in product, ops, engineering, etc., and any applicant can jump in. Proto captures every submission, scores the work, and surfaces the strongest talent before you ever open a req.",
   },

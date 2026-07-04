@@ -34,14 +34,14 @@ const ROLE_PILLS = [
   "Analytics",
 ] as const;
 
-const ITEM_H = 52;
-const ITEM_GAP = 8;
+const ITEM_H = 48;
+const ITEM_GAP = 4;
 const STRIDE = ITEM_H + ITEM_GAP;
 /** Exactly three pills visible. */
 const VISIBLE = 3;
 const VIEWPORT_H = STRIDE * VISIBLE;
 /** px per second */
-const SPIN_SPEED = 4.5;
+const SPIN_SPEED = 17.5;
 
 function mod(n: number, m: number) {
   return ((n % m) + m) % m;
