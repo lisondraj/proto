@@ -20,15 +20,16 @@ function TocIcon() {
       aria-hidden
       className="proto-invest-floating-toc__icon"
     >
+      {/* Paths centered in the viewBox so the glyph sits in the middle of the circle. */}
       <path
-        d="M5.25 6.25h9.5M5.25 10h9.5M5.25 13.75H11.5"
+        d="M6.75 6.25h9.5M6.75 10h9.5M6.75 13.75H13"
         stroke="currentColor"
         strokeWidth="1.45"
         strokeLinecap="round"
       />
-      <circle cx="3.15" cy="6.25" r="0.85" fill="currentColor" />
-      <circle cx="3.15" cy="10" r="0.85" fill="currentColor" />
-      <circle cx="3.15" cy="13.75" r="0.85" fill="currentColor" />
+      <circle cx="4.65" cy="6.25" r="0.85" fill="currentColor" />
+      <circle cx="4.65" cy="10" r="0.85" fill="currentColor" />
+      <circle cx="4.65" cy="13.75" r="0.85" fill="currentColor" />
     </svg>
   );
 }

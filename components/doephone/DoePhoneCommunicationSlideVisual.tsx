@@ -11,6 +11,7 @@ import { DoePhoneWorkflowVisual } from "@/components/doephone/DoePhoneWorkflowVi
 import { ProtoSandboxBlankPanelVisual } from "@/components/proto/ProtoSandboxBlankPanelVisual";
 import { ProtoSandboxCodeSnippetVisual } from "@/components/proto/ProtoSandboxCodeSnippetVisual";
 import { ProtoSandboxLedgerCardVisual } from "@/components/proto/ProtoSandboxRoleCardsVisual";
+import { ProtoSandboxRolePillsVisual } from "@/components/proto/ProtoSandboxRolePillsVisual";
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
 
 export function DoePhoneCommunicationSlideVisual({
@@ -43,11 +44,20 @@ export function DoePhoneCommunicationSlideVisual({
         <DoePhoneFrontDeskInboxVisual layout={layout} />
       );
     case "ambient":
-      return <DoePhoneAmbientVisual />;
+      return protoSite ? (
+        <ProtoSandboxRolePillsVisual layout={layout} />
+      ) : (
+        <DoePhoneAmbientVisual />
+      );
     case "integrate":
       return <DoePhoneIntegrateVisual />;
     case "billing":
-      return <DoePhoneBillingVisual />;
+      return (
+        <DoePhoneBillingVisual
+          layout={layout}
+          chrome={protoSite ? "proto" : "doe"}
+        />
+      );
     case "prototype":
       return <DoePhoneProtoValidateVisual layout={layout} />;
     case "validate":

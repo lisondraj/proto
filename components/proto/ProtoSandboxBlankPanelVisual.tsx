@@ -5,7 +5,7 @@ import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArt
 
 /** Match shader 2 explanation panel frost. */
 const GLASS_BG =
-  "linear-gradient(160deg, rgba(255,255,255,0.9) 0%, rgba(255,250,244,0.72) 45%, rgba(255,244,232,0.54) 100%)";
+  "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,251,246,0.84) 45%, rgba(255,248,242,0.74) 100%)";
 const INK = "#1C1610";
 const MUTED = "#5E564C";
 const MUTED_LIGHT = "#8A8074";
@@ -473,7 +473,6 @@ const PROCESS_STEPS: readonly {
   index: string;
   title: string;
   body: readonly ProcessBodyPart[];
-  skills: readonly string[];
 }[] = [
   {
     index: "01",
@@ -481,11 +480,10 @@ const PROCESS_STEPS: readonly {
     body: [
       { text: "Reviewed the brief in " },
       { text: "Linear", bold: true },
-      { text: ", referenced research in " },
+      { text: ", pulled research from " },
       { text: "Notion", bold: true },
       { text: ", and defined the core user problem." },
     ],
-    skills: ["Research"],
   },
   {
     index: "02",
@@ -493,9 +491,8 @@ const PROCESS_STEPS: readonly {
     body: [
       { text: "Mapped user flows in " },
       { text: "FigJam", bold: true },
-      { text: " and organized the information architecture before designing." },
+      { text: " and organized the information architecture." },
     ],
-    skills: ["Information Architecture"],
   },
   {
     index: "03",
@@ -503,56 +500,90 @@ const PROCESS_STEPS: readonly {
     body: [
       { text: "Built the interface in " },
       { text: "Figma", bold: true },
-      { text: ", refined interactions, and iterated using the design system." },
+      { text: ", refined interactions, and iterated on the system." },
     ],
-    skills: ["Design Systems"],
   },
 ];
 
 const PROCESS_INK = "#FFF9F2";
 const PROCESS_MUTED = "rgba(255, 249, 242, 0.68)";
 const PROCESS_FAINT = "rgba(255, 249, 242, 0.2)";
-const PROCESS_TAG_BG = "rgba(255, 249, 242, 0.14)";
-const PROCESS_TAG_INK = "rgba(255, 249, 242, 0.82)";
 
-/** Left-half process notes — timeline rail, compact steps + skill tags. */
+/** Left-half process notes — header, numbers on the rail, titles indented. */
 function DesignProcessPanel() {
   const stepGap = 11;
   const titleLineHeight = 11 * 1.15;
-  const dotSize = 5;
+  const indexSize = 7.5;
 
   return (
     <div
       className="flex flex-col justify-center"
       style={{
-        width: 138,
-        paddingRight: 6,
+        width: 168,
+        paddingRight: 4,
       }}
     >
+      {/* Column header */}
+      <div style={{ marginBottom: 14 }}>
+        <div
+          className={plusJakartaSans.className}
+          style={{
+            color: PROCESS_INK,
+            fontSize: 16,
+            fontWeight: 600,
+            lineHeight: 1.12,
+            letterSpacing: "-0.03em",
+          }}
+        >
+          <span className="block">{"Jordan's Revenue"}</span>
+          <span className="block">Projection Tool</span>
+        </div>
+        <span
+          className={inter.className}
+          style={{
+            display: "inline-block",
+            marginTop: 7,
+            background: "rgba(255, 249, 242, 0.14)",
+            color: "rgba(255, 249, 242, 0.82)",
+            fontSize: 9,
+            fontWeight: 500,
+            lineHeight: 1,
+            letterSpacing: "-0.01em",
+            borderRadius: 999,
+            padding: "5px 9px",
+          }}
+        >
+          Submitted PRD
+        </span>
+      </div>
+
       {PROCESS_STEPS.map((item, index) => {
         const isLast = index === PROCESS_STEPS.length - 1;
 
         return (
           <div key={item.index} className="flex" style={{ gap: 8 }}>
-            {/* Rail: dot on title row, line fills rest of step */}
+            {/* Rail: step number replaces dots, line connects steps */}
             <div
               className="flex flex-col items-center self-stretch"
-              style={{ width: 8 }}
-              aria-hidden
+              style={{ width: 14 }}
             >
-              <div
+              <span
+                className={inter.className}
                 style={{
-                  width: dotSize,
-                  height: dotSize,
-                  marginTop: (titleLineHeight - dotSize) / 2,
-                  borderRadius: 999,
-                  background: PROCESS_INK,
-                  opacity: 0.55,
+                  color: PROCESS_MUTED,
+                  fontSize: indexSize,
+                  fontWeight: 500,
+                  lineHeight: `${titleLineHeight}px`,
+                  letterSpacing: "0.08em",
+                  fontVariantNumeric: "tabular-nums",
                   flexShrink: 0,
                 }}
-              />
+              >
+                {item.index}
+              </span>
               {isLast ? null : (
                 <div
+                  aria-hidden
                   style={{
                     width: 1,
                     flex: 1,
@@ -564,37 +595,25 @@ function DesignProcessPanel() {
               )}
             </div>
 
-            {/* Content indented from rail */}
+            {/* Content indented from rail — narrower measure so copy wraps with right padding */}
             <div
               className="min-w-0 flex-1"
-              style={{ paddingBottom: isLast ? 0 : stepGap }}
+              style={{
+                paddingBottom: isLast ? 0 : stepGap,
+                maxWidth: 118,
+              }}
             >
-              <div className="flex items-baseline" style={{ gap: 6 }}>
-                <span
-                  className={inter.className}
-                  style={{
-                    color: PROCESS_MUTED,
-                    fontSize: 7.5,
-                    fontWeight: 500,
-                    lineHeight: 1.15,
-                    letterSpacing: "0.08em",
-                    fontVariantNumeric: "tabular-nums",
-                  }}
-                >
-                  {item.index}
-                </span>
-                <span
-                  className={plusJakartaSans.className}
-                  style={{
-                    color: PROCESS_INK,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    lineHeight: 1.15,
-                    letterSpacing: "-0.025em",
-                  }}
-                >
-                  {item.title}
-                </span>
+              <div
+                className={plusJakartaSans.className}
+                style={{
+                  color: PROCESS_INK,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.025em",
+                }}
+              >
+                {item.title}
               </div>
 
               <p
@@ -603,7 +622,7 @@ function DesignProcessPanel() {
                   color: PROCESS_MUTED,
                   fontSize: 8.5,
                   fontWeight: 400,
-                  lineHeight: 1.32,
+                  lineHeight: 1.38,
                   letterSpacing: "-0.01em",
                   marginTop: 4,
                 }}
@@ -621,28 +640,6 @@ function DesignProcessPanel() {
                   </span>
                 ))}
               </p>
-
-              <div className="flex flex-wrap" style={{ gap: 3, marginTop: 5 }}>
-                {item.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className={inter.className}
-                    style={{
-                      background: PROCESS_TAG_BG,
-                      color: PROCESS_TAG_INK,
-                      fontSize: 7,
-                      fontWeight: 500,
-                      lineHeight: 1,
-                      letterSpacing: "-0.01em",
-                      borderRadius: 999,
-                      padding: "3px 6px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
             </div>
           </div>
         );
@@ -651,7 +648,7 @@ function DesignProcessPanel() {
   );
 }
 
-/** Process notes on the left; revenue UI cropped on the right. */
+/** Process notes on the left; revenue UI hard-cropped on the artboard’s right edge. */
 function HalfCroppedRevenue({ className = "" }: { className?: string }) {
   return (
     <div
@@ -664,7 +661,8 @@ function HalfCroppedRevenue({ className = "" }: { className?: string }) {
       <div
         className="absolute top-1/2"
         style={{
-          left: 12,
+          // Nudge right so left/right gaps around the text column read even.
+          left: 14,
           transform: "translateY(-50%)",
         }}
       >
@@ -674,14 +672,9 @@ function HalfCroppedRevenue({ className = "" }: { className?: string }) {
       <div
         className="absolute top-1/2"
         style={{
-          // Shifted right so most of the right side is clipped; nudge left to show a bit more.
-          left: PHONE_ARTBOARD_WIDTH_PX - BOX_SIZE_PX / 2 - 52,
+          // Hang past the right edge — hard clip stays flush as the host resizes.
+          right: -(BOX_SIZE_PX / 2 - 52),
           transform: "translateY(-50%)",
-          // Soften the crop so the frost doesn't end on a hard vertical cut.
-          WebkitMaskImage:
-            "linear-gradient(to right, #000 0%, #000 50%, rgba(0,0,0,0.45) 60%, transparent 68%)",
-          maskImage:
-            "linear-gradient(to right, #000 0%, #000 50%, rgba(0,0,0,0.45) 60%, transparent 68%)",
         }}
       >
         <RevenueProduct />
@@ -704,6 +697,7 @@ export function ProtoSandboxBlankPanelVisual({
           height={PHONE_ARTBOARD_HEIGHT_PX}
           fitScale={1.06}
           fixedBounds
+          align="end"
         >
           <HalfCroppedRevenue />
         </ProtoPhoneScaledArtboard>
@@ -713,10 +707,10 @@ export function ProtoSandboxBlankPanelVisual({
 
   return (
     <div
-      className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
+      className={`mx-auto flex h-full w-full items-center justify-end overflow-hidden ${suisseIntl.className}`}
       aria-hidden
     >
-      <HalfCroppedRevenue className="max-w-full" />
+      <HalfCroppedRevenue />
     </div>
   );
 }

@@ -58,6 +58,7 @@ export function ProtoPhoneScaledArtboard({
   children,
   fitScale = FIT_SCALE,
   fixedBounds = false,
+  align = "center",
 }: {
   width: number;
   height: number;
@@ -66,6 +67,8 @@ export function ProtoPhoneScaledArtboard({
   fitScale?: number;
   /** When true, always use width/height — ignores content reflow between slides. */
   fixedBounds?: boolean;
+  /** Pin artboard to the host’s right edge (hard crop stays flush on resize). */
+  align?: "center" | "end";
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const artboardRef = useRef<HTMLDivElement>(null);
@@ -85,7 +88,8 @@ export function ProtoPhoneScaledArtboard({
         : measureContentBounds(artboard, width, height);
       setBounds(nextBounds);
 
-      const fitWidth = Math.max(host.clientWidth - FIT_PAD_PX * 2, 1);
+      const horizontalPad = align === "end" ? FIT_PAD_PX : FIT_PAD_PX * 2;
+      const fitWidth = Math.max(host.clientWidth - horizontalPad, 1);
       const fitHeight = Math.max(host.clientHeight - FIT_PAD_PX * 2, 1);
       const nextScale =
         Math.min(fitWidth / nextBounds.width, fitHeight / nextBounds.height) * fitScale;
@@ -98,7 +102,7 @@ export function ProtoPhoneScaledArtboard({
     if (!fixedBounds) observer.observe(artboard);
     if (host !== container) observer.observe(container);
     return () => observer.disconnect();
-  }, [width, height, fitScale, fixedBounds]);
+  }, [width, height, fitScale, fixedBounds, align]);
 
   const scaledWidth = bounds.width * scale;
   const scaledHeight = bounds.height * scale;
@@ -106,7 +110,9 @@ export function ProtoPhoneScaledArtboard({
   return (
     <div
       ref={containerRef}
-      className="flex h-full min-h-0 w-full items-center justify-center overflow-hidden"
+      className={`flex h-full min-h-0 w-full items-center overflow-hidden ${
+        align === "end" ? "justify-end" : "justify-center"
+      }`}
     >
       <div
         className="relative shrink-0"

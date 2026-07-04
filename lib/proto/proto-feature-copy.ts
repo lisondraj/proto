@@ -10,26 +10,26 @@ export type ProtoFeatureCopy = {
 /** /proto feature sections — two-line titles + short white copy under each box. */
 export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureCopy> = {
   agents: {
-    titleLine1: "Recruit only the",
-    titleLine2: "most talented.",
+    titleLine1: "Turn hiring into",
+    titleLine2: "a build challenge.",
     description:
       "Post one role, then watch candidates enter a live sandbox where every action is tracked. Proto scores task outcomes, surfaces hidden signal, and lets you compare applicants side by side before you decide.",
   },
   "front-desk": {
-    titleLine1: "Everything built",
-    titleLine2: "within a sandbox.",
+    titleLine1: "See the thinking",
+    titleLine2: "behind the work.",
     description:
       "Applicants complete real tasks inside a sandbox that mirrors your product, engineering, data, and overall vision. You see how they think, where they trade off, and who can actually execute before the interview loop decides.",
   },
   inbox: {
-    titleLine1: "Tracks. Compares.",
-    titleLine2: "Chooses.",
+    titleLine1: "The builder",
+    titleLine2: "behind the build.",
     description:
       "Replay how each candidate worked, not just what they submitted. Head-to-head scorecards on the same rubric, then a ranked shortlist when you're ready. The hire gets obvious before anyone schedules a panel.",
   },
   ambient: {
-    titleLine1: "Post challenges,",
-    titleLine2: "hire the best.",
+    titleLine1: "Discover talent",
+    titleLine2: "fit for any role.",
     description:
       "Companies publish open challenges in product, ops, engineering, etc., and any applicant can jump in. Proto captures every submission, scores the work, and surfaces the strongest talent before you ever open a req.",
   },

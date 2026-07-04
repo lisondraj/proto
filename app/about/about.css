@@ -350,7 +350,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc:not(
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__icon {
   display: block;
   flex-shrink: 0;
-  margin: 0;
+  margin: auto;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-invest-floating-toc__trigger:active {

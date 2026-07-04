@@ -98,7 +98,10 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__stack {
   width: 100% !important;
   max-height: calc(var(--app-vh, 100lvh) * 0.78) !important;
   min-height: 0 !important;
-  gap: max(1.5rem, calc(var(--app-vh, 100lvh) * 0.044)) !important;
+  /* Shader box + title sit as one centered unit in the section. */
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  gap: max(1.25rem, calc(var(--app-vh, 100lvh) * 0.032)) !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card,
@@ -121,7 +124,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card > 
   height: 100% !important;
 }
 
-/* iPhone — fit-shader boxes (first three) are 1/6 taller than the default card height. */
+/* iPhone — fit-shader boxes (first five) are 1/6 taller than the default card height. */
 html[data-proto-page]:has(.doephone-mobile-root)
   .proto-feature-section--fit-shader
   .proto-feature-section__card {

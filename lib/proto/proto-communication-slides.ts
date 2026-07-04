@@ -36,13 +36,13 @@ const DOEPHONE_SLIDE_BY_ID = Object.fromEntries(
   DOEPHONE_COMMUNICATION_SLIDES.map((slide) => [slide.id, slide]),
 ) as Record<(typeof DOEPHONE_COMMUNICATION_SLIDES)[number]["id"], DoePhoneCommunicationSlide>;
 
-/** /proto feature stack order — includes prototype between billing and integrate. */
+/** /proto feature stack order — billing (Humira) sits under the first hiring section. */
 export const PROTO_COMMUNICATION_SLIDES: readonly DoePhoneCommunicationSlide[] = [
   DOEPHONE_SLIDE_BY_ID.agents,
+  DOEPHONE_SLIDE_BY_ID.billing,
   DOEPHONE_SLIDE_BY_ID["front-desk"],
   DOEPHONE_SLIDE_BY_ID.inbox,
   DOEPHONE_SLIDE_BY_ID.ambient,
-  DOEPHONE_SLIDE_BY_ID.billing,
   PROTO_PROTOTYPE_SLIDE,
   DOEPHONE_SLIDE_BY_ID.integrate,
   PROTO_VALIDATE_SLIDE,

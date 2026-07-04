@@ -2,17 +2,14 @@
 
 import { DoePhoneHeroHeadline } from "@/components/doephone/DoePhoneHeroHeadline";
 import type { ProtoFeatureCopy } from "@/lib/proto/proto-feature-copy";
-import {
-  PROTO_DESKTOP_FEATURE_DESC_TW,
-  PROTO_DESKTOP_FEATURE_TITLE_TW,
-} from "@/lib/proto/proto-desktop-layout-styles";
+import { PROTO_DESKTOP_FEATURE_TITLE_TW } from "@/lib/proto/proto-desktop-layout-styles";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 import {
   protoFeatureRevealClass,
   useProtoFeatureScrollReveal,
 } from "@/lib/proto/use-proto-feature-scroll-reveal";
 
-/** Two-line hero-style title + short description below a feature box. */
+/** Two-line hero-style title below a feature box (no body description). */
 export function ProtoFeatureSectionCopy({
   copy,
   layout = "phone",
@@ -45,13 +42,6 @@ export function ProtoFeatureSectionCopy({
           )}
         </div>
       </div>
-      <p
-        className={`proto-feature-section__description ${
-          isDesktop ? PROTO_DESKTOP_FEATURE_DESC_TW : ""
-        } ${protoFeatureRevealClass(revealed, "description")}`}
-      >
-        {copy.description}
-      </p>
     </div>
   );
 }
