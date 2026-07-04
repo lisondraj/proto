@@ -220,12 +220,15 @@ export function protoGrainGradientVariant(
 ): ProtoGrainGradientVariant | undefined {
   // First two feature boxes under the hero swap shaders only (UI unchanged).
   // Tracks. Compares. (inbox) shares the agents / Harmony Health box shader.
+  // Exceptional talent (ambient) shares the set-rules / billing wave shader.
   const resolvedId =
     slideId === "agents" || slideId === "inbox"
       ? "front-desk"
       : slideId === "front-desk"
         ? "agents"
-        : slideId;
+        : slideId === "ambient"
+          ? "billing"
+          : slideId;
 
   if (resolvedId in PROTO_GRAIN_GRADIENT_PRESETS) {
     return resolvedId as ProtoGrainGradientVariant;

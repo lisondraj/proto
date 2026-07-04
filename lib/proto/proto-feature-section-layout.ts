@@ -6,11 +6,11 @@ export type ProtoFeatureSectionLayout =
 /** One entry per slide in PROTO_COMMUNICATION_SLIDES order. */
 export const PROTO_FEATURE_SECTION_LAYOUTS: readonly ProtoFeatureSectionLayout[] = [
   { kind: "split", boxOnLeft: true }, // agents
-  { kind: "split", boxOnLeft: true }, // billing (Humira)
+  { kind: "split", boxOnLeft: true }, // prototype (submissions fit)
+  { kind: "split", boxOnLeft: true }, // billing (challenge rules)
   { kind: "full-panel" }, // front-desk
   { kind: "split", boxOnLeft: false }, // inbox
   { kind: "full-panel" }, // ambient
-  { kind: "full-panel" }, // prototype
   { kind: "split", boxOnLeft: false }, // integrate
   { kind: "full-panel" }, // validate
   { kind: "split", boxOnLeft: true, boxOnTop: false }, // shortlist

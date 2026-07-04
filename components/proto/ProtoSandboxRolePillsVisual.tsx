@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 
+/** Match challenge-rules / submissions dropdown pill fill. */
 const GLASS_BG =
-  "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,250,244,0.84) 45%, rgba(255,248,242,0.74) 100%)";
+  "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,251,246,0.84) 45%, rgba(255,248,242,0.74) 100%)";
 const INK = "#1C1610";
 
 const PHONE_ARTBOARD_WIDTH_PX = 360;

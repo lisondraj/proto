@@ -1,6 +1,6 @@
 "use client";
 
-import { inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
+import { inter, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 
 /** Proto glass — match challenge-rules menus. */
@@ -29,6 +29,9 @@ const PROTO_SURFACE_HIGHLIGHT = "Onboarding";
 
 const PROTO_BOX_RADIUS = "0.55rem";
 const PROTO_DROPDOWN_GRID_W = Math.round(PROTO_BOX_PX * 0.92);
+
+/** Match challenge-rules menus — sit smaller inside the shader than the default artboard fit. */
+const PROTO_RULES_UI_SCALE = 0.86;
 
 const PROTO_PILL_GLASS = {
   background: PROTO_GLASS_BG,
@@ -71,13 +74,13 @@ function ProtoDropdownPill({ value, open = false }: { value: string; open?: bool
       }}
     >
       <span
-        className={`${plusJakartaSans.className} min-w-0 flex-1`}
+        className={`${inter.className} min-w-0 flex-1`}
         style={{
           color: PROTO_INK,
           fontSize: 11,
-          fontWeight: 600,
+          fontWeight: 500,
           lineHeight: 1.15,
-          letterSpacing: "-0.02em",
+          letterSpacing: "-0.01em",
           whiteSpace: "nowrap",
         }}
       >
@@ -169,7 +172,7 @@ export function DoePhoneProtoValidateVisual({ layout = "phone" }: { layout?: "ph
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
           height={PHONE_ARTBOARD_HEIGHT_PX}
-          fitScale={1.06}
+          fitScale={1.06 * PROTO_RULES_UI_SCALE}
           fixedBounds
         >
           <div
@@ -192,7 +195,14 @@ export function DoePhoneProtoValidateVisual({ layout = "phone" }: { layout?: "ph
       style={{ maxWidth: "min(100%, 28rem)" }}
       aria-hidden
     >
-      <ProtoDropdownGrid />
+      <div
+        style={{
+          transform: `scale(${PROTO_RULES_UI_SCALE})`,
+          transformOrigin: "center center",
+        }}
+      >
+        <ProtoDropdownGrid />
+      </div>
     </div>
   );
 }
