@@ -237,6 +237,9 @@ function RolePillsGrid() {
   );
 }
 
+/** Slightly smaller than the default artboard fit. */
+const PROTO_TALENT_UI_SCALE = 0.9;
+
 /** /proto ambient slide — infinite dual-column role spinner. */
 export function ProtoSandboxRolePillsVisual({
   layout = "phone",
@@ -249,7 +252,7 @@ export function ProtoSandboxRolePillsVisual({
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
           height={PHONE_ARTBOARD_HEIGHT_PX}
-          fitScale={1}
+          fitScale={PROTO_TALENT_UI_SCALE}
           fixedBounds
         >
           <RolePillsGrid />
@@ -263,7 +266,13 @@ export function ProtoSandboxRolePillsVisual({
       className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
       aria-hidden
     >
-      <div style={{ width: "min(100%, 22rem)" }}>
+      <div
+        style={{
+          width: "min(100%, 22rem)",
+          transform: `scale(${PROTO_TALENT_UI_SCALE})`,
+          transformOrigin: "center center",
+        }}
+      >
         <RolePillsGrid />
       </div>
     </div>
