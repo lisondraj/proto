@@ -334,20 +334,25 @@ html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav
     var(--proto-page-bg) calc((1 - var(--proto-nav-frost-progress, 0)) * 100%),
     transparent
   ) !important;
-  border-bottom-color: color-mix(
-    in srgb,
-    #2a3538 calc((1 - var(--proto-nav-frost-progress, 0)) * 100%),
-    transparent
-  ) !important;
-  border-bottom-width: 1px !important;
+  /* Collapse the bar rule early — a color fade over the full punch-out leaves a lingering hairline. */
+  border-bottom-color: #2a3538 !important;
   border-bottom-style: solid !important;
+  border-bottom-width: max(
+    0px,
+    calc((1 - min(1, var(--proto-nav-frost-progress, 0) * 3)) * 1px)
+  ) !important;
   box-shadow: 0 calc(-120px * (1 - var(--proto-nav-frost-progress, 0))) 0
     calc(120px * (1 - var(--proto-nav-frost-progress, 0))) var(--proto-page-bg) !important;
   transition:
     --proto-nav-frost-progress var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
     background var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
-    border-color var(--proto-nav-motion-duration) var(--proto-nav-motion-ease),
     box-shadow var(--proto-nav-motion-duration) var(--proto-nav-motion-ease);
+}
+
+html[data-proto-page]:has(.doephone-mobile-root)
+  nav.doephone-site-nav.proto-nav-scroll-frost.proto-nav--scrolled {
+  border-bottom-width: 0 !important;
+  border-bottom-color: transparent !important;
 }
 
 html[data-proto-page]:has(.doephone-mobile-root) nav.doephone-site-nav.proto-nav-scroll-frost:not(.proto-nav--motion-ready),

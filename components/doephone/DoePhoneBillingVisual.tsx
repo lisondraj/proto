@@ -36,6 +36,31 @@ const TIMELINE = [
   { label: "Awaiting payer decision", time: "Pending", state: "active" as const },
 ] as const;
 
+/** Companies set challenge-sandbox restrictions via these menus. */
+const PROTO_DROPDOWN_PILLS = [
+  "1 hour",
+  "Clipboard off",
+  "Allow MCPs",
+  "Video & Audio",
+  "Read-only FS",
+  "Opus 4.8",
+] as const;
+
+/** Other models in the open menu (Opus stays on the trigger only). */
+const PROTO_MODEL_OPTIONS = ["GPT-4o", "Gemini 2.5 Pro"] as const;
+const PROTO_MODEL_HIGHLIGHT = "GPT-4o";
+
+/** Match former Humira box corner radius. */
+const PROTO_BOX_RADIUS = "0.55rem";
+/** Narrower than the old square card so the menus sit tighter. */
+const PROTO_DROPDOWN_GRID_W = Math.round(PROTO_BOX_PX * 0.72);
+
+const PROTO_PILL_GLASS = {
+  background: PROTO_GLASS_BG,
+  backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+  WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+} as const;
+
 type BillingChrome = "doe" | "proto";
 
 function TimelineDot({
@@ -159,35 +184,148 @@ function AuthTimeline({ chrome }: { chrome: BillingChrome }) {
   );
 }
 
+function DropdownChevron({ open = false }: { open?: boolean }) {
+  return (
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
+      fill="none"
+      aria-hidden
+      className="shrink-0"
+      style={{ transform: open ? "rotate(180deg)" : undefined }}
+    >
+      <path
+        d="M2.2 3.6L5 6.4l2.8-2.8"
+        stroke={PROTO_ACCENT}
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Select-style menu — glass fill on the control only, same radius as the old box. */
+function ProtoDropdownPill({ value, open = false }: { value: string; open?: boolean }) {
+  return (
+    <div
+      className="flex min-w-0 items-center justify-between"
+      style={{
+        borderRadius: PROTO_BOX_RADIUS,
+        ...PROTO_PILL_GLASS,
+        padding: "11px 12px",
+        gap: 8,
+        boxSizing: "border-box",
+      }}
+    >
+      <span
+        className={`${plusJakartaSans.className} min-w-0 flex-1 truncate`}
+        style={{
+          color: PROTO_INK,
+          fontSize: 11,
+          fontWeight: 600,
+          lineHeight: 1.15,
+          letterSpacing: "-0.02em",
+        }}
+      >
+        {value}
+      </span>
+      <DropdownChevron open={open} />
+    </div>
+  );
+}
+
+/** Open model menu under the 6th pill — alternatives only, no company names. */
+function ProtoModelDropdown() {
+  return (
+    <div className="relative min-w-0" style={{ zIndex: 2 }}>
+      <ProtoDropdownPill value="Opus 4.8" open />
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "100%",
+          marginTop: 4,
+          borderRadius: PROTO_BOX_RADIUS,
+          ...PROTO_PILL_GLASS,
+          padding: "4px",
+          boxSizing: "border-box",
+        }}
+      >
+        {PROTO_MODEL_OPTIONS.map((model) => {
+          const highlighted = model === PROTO_MODEL_HIGHLIGHT;
+
+          return (
+            <div
+              key={model}
+              className={`${plusJakartaSans.className} truncate`}
+              style={{
+                color: PROTO_INK,
+                fontSize: 11,
+                fontWeight: 600,
+                lineHeight: 1.15,
+                letterSpacing: "-0.02em",
+                padding: "8px 8px",
+                borderRadius: `calc(${PROTO_BOX_RADIUS} - 2px)`,
+                background: highlighted ? "rgba(28, 22, 16, 0.1)" : undefined,
+              }}
+            >
+              {model}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ProtoDropdownGrid() {
+  return (
+    <div
+      className="grid"
+      style={{
+        width: PROTO_DROPDOWN_GRID_W,
+        height: PROTO_BOX_PX,
+        gridTemplateColumns: "1fr 1fr",
+        gap: 7,
+        alignContent: "center",
+        boxSizing: "border-box",
+        overflow: "visible",
+      }}
+    >
+      {PROTO_DROPDOWN_PILLS.map((value, index) =>
+        index === PROTO_DROPDOWN_PILLS.length - 1 ? (
+          <ProtoModelDropdown key={value} />
+        ) : (
+          <ProtoDropdownPill key={value} value={value} />
+        ),
+      )}
+    </div>
+  );
+}
+
 function BillingCard({ chrome }: { chrome: BillingChrome }) {
   const isProto = chrome === "proto";
   const ink = isProto ? PROTO_INK : DOE_INK;
   const mutedText = isProto ? PROTO_MUTED : DOE_MUTED_TEXT;
   const muted = isProto ? PROTO_MUTED_LIGHT : DOE_MUTED;
 
+  if (isProto) {
+    return <ProtoDropdownGrid />;
+  }
+
   return (
     <div
-      className={isProto ? undefined : `w-full border bg-white ${OUTER_RADIUS}`}
-      style={
-        isProto
-          ? {
-              width: PROTO_BOX_PX,
-              boxSizing: "border-box",
-              borderRadius: "0.55rem",
-              background: PROTO_GLASS_BG,
-              backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
-              WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
-              padding: "18px 18px 16px",
-            }
-          : { borderColor: "#E5E7EB", padding: CARD_PAD }
-      }
+      className={`w-full border bg-white ${OUTER_RADIUS}`}
+      style={{ borderColor: "#E5E7EB", padding: CARD_PAD }}
     >
       <h3
-        className={`${isProto ? plusJakartaSans.className : ""} font-semibold leading-tight tracking-[-0.02em]`}
+        className="font-semibold leading-tight tracking-[-0.02em]"
         style={{
           color: ink,
-          fontSize: isProto ? 18 : TITLE_SIZE,
-          fontWeight: isProto ? 600 : undefined,
+          fontSize: TITLE_SIZE,
         }}
       >
         Humira 40mg
@@ -197,8 +335,8 @@ function BillingCard({ chrome }: { chrome: BillingChrome }) {
         className={`${inter.className} font-normal leading-snug`}
         style={{
           color: mutedText,
-          fontSize: isProto ? 12 : BODY_SIZE,
-          marginTop: isProto ? 4 : "clamp(0.28rem,0.85vmin,0.36rem)",
+          fontSize: BODY_SIZE,
+          marginTop: "clamp(0.28rem,0.85vmin,0.36rem)",
         }}
       >
         BCBS Ontario · M. Alvarez
@@ -210,8 +348,8 @@ function BillingCard({ chrome }: { chrome: BillingChrome }) {
         className={`${inter.className} font-normal leading-snug`}
         style={{
           color: muted,
-          fontSize: isProto ? 11 : FOOTER_SIZE,
-          marginTop: isProto ? 14 : "clamp(1.05rem,3.25vmin,1.32rem)",
+          fontSize: FOOTER_SIZE,
+          marginTop: "clamp(1.05rem,3.25vmin,1.32rem)",
         }}
       >
         Refreshing in 30 minutes

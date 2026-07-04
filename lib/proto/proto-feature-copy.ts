@@ -34,8 +34,8 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
       "Companies publish open challenges in product, ops, engineering, etc., and any applicant can jump in. Proto captures every submission, scores the work, and surfaces the strongest talent before you ever open a req.",
   },
   billing: {
-    titleLine1: "Analyzes in seconds,",
-    titleLine2: "delivers to phone.",
+    titleLine1: "Set rules to challenge",
+    titleLine2: "your applicants.",
     description:
       "Recruiters review candidate evals on mobile the moment work lands. Scores, replays, and shortlists sync to your phone so you can move on strong talent and fill roles whether you're at your desk or on the road.",
   },

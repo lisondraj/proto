@@ -14,6 +14,7 @@ import {
   PROTO_DESKTOP_PAGE_INSET_X,
 } from "@/lib/proto/proto-desktop-layout-styles";
 import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-font";
+import { PROTO_HERO_TO_FEATURES_PAD_TW } from "@/lib/proto/proto-hero-layout";
 
 /** Desktop /proto — dark home layout aligned with the iPhone proto review. */
 export function ProtoDesktopHome() {
@@ -96,7 +97,9 @@ export function ProtoDesktopHome() {
 
       <div className="w-full border-t border-[#2A3538]" aria-hidden />
 
-      <ProtoDesktopFeatureStack />
+      <div className={PROTO_HERO_TO_FEATURES_PAD_TW}>
+        <ProtoDesktopFeatureStack />
+      </div>
 
       <ProtoMoreAboutSection layout="desktop" />
 

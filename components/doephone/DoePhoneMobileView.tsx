@@ -10,6 +10,7 @@ import { ProtoMoreAboutSection } from "@/components/proto/ProtoMoreAboutSection"
 import { useDoePhoneLayoutViewport } from "@/lib/doephone/use-doe-phone-layout-viewport";
 import { useDoePhoneStableViewport } from "@/lib/doephone/use-doe-phone-stable-viewport";
 import { PROTO_FONT_CLASS, PROTO_NAV_LOGO_FONT_CLASS } from "@/lib/proto/proto-font";
+import { PROTO_HERO_TO_FEATURES_PAD_TW } from "@/lib/proto/proto-hero-layout";
 import { PROTO_INVEST_PATH } from "@/lib/site-domains";
 
 /** Proto mobile home — iPhone layout for the standalone Proto site. */
@@ -64,7 +65,9 @@ export function DoePhoneMobileView() {
 
       <DoePhoneHeroSection variant="mobile" proto />
 
-      <ProtoCommunicationStack />
+      <div className={PROTO_HERO_TO_FEATURES_PAD_TW}>
+        <ProtoCommunicationStack />
+      </div>
 
       <ProtoMoreAboutSection layout="phone" />
 
