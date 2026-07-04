@@ -471,12 +471,10 @@ type ProcessBodyPart = { text: string; bold?: boolean };
 
 const PROCESS_STEPS: readonly {
   index: string;
-  title: string;
   body: readonly ProcessBodyPart[];
 }[] = [
   {
     index: "01",
-    title: "Discovery",
     body: [
       { text: "Reviewed the brief in " },
       { text: "Linear", bold: true },
@@ -487,7 +485,6 @@ const PROCESS_STEPS: readonly {
   },
   {
     index: "02",
-    title: "Planning",
     body: [
       { text: "Mapped user flows in " },
       { text: "FigJam", bold: true },
@@ -496,7 +493,6 @@ const PROCESS_STEPS: readonly {
   },
   {
     index: "03",
-    title: "Design",
     body: [
       { text: "Built the interface in " },
       { text: "Figma", bold: true },
@@ -508,28 +504,32 @@ const PROCESS_STEPS: readonly {
 const PROCESS_INK = "#FFF9F2";
 const PROCESS_MUTED = "rgba(255, 249, 242, 0.68)";
 const PROCESS_FAINT = "rgba(255, 249, 242, 0.2)";
+/** Match description first-line metrics so indices sit on the same baseline. */
+const PROCESS_BODY_SIZE = 9.5;
+const PROCESS_BODY_LH = 1.4;
 
-/** Left-half process notes — header, numbers on the rail, titles indented. */
+/** Left-half process notes — header + numbered descriptions, height-matched to revenue UI. */
 function DesignProcessPanel() {
-  const stepGap = 11;
-  const titleLineHeight = 11 * 1.15;
-  const indexSize = 7.5;
+  const indexSize = 8;
 
   return (
     <div
-      className="flex flex-col justify-center"
+      className="flex flex-col"
       style={{
-        width: 168,
+        // Narrower measure wraps copy so the column fills BOX_SIZE_PX with the UI.
+        width: 132,
+        height: BOX_SIZE_PX,
         paddingRight: 4,
+        boxSizing: "border-box",
       }}
     >
-      {/* Column header */}
-      <div style={{ marginBottom: 14 }}>
+      {/* Column header — top-aligned with revenue UI */}
+      <div className="shrink-0">
         <div
           className={plusJakartaSans.className}
           style={{
             color: PROCESS_INK,
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: 600,
             lineHeight: 1.12,
             letterSpacing: "-0.03em",
@@ -557,74 +557,65 @@ function DesignProcessPanel() {
         </span>
       </div>
 
-      {PROCESS_STEPS.map((item, index) => {
-        const isLast = index === PROCESS_STEPS.length - 1;
+      {/* Steps fill remaining height — last description bottoms with revenue UI */}
+      <div className="flex min-h-0 flex-1 flex-col" style={{ marginTop: 16 }}>
+        {PROCESS_STEPS.map((item, index) => {
+          const isLast = index === PROCESS_STEPS.length - 1;
 
-        return (
-          <div key={item.index} className="flex" style={{ gap: 8 }}>
-            {/* Rail: step number replaces dots, line connects steps */}
+          return (
             <div
-              className="flex flex-col items-center self-stretch"
-              style={{ width: 14 }}
-            >
-              <span
-                className={inter.className}
-                style={{
-                  color: PROCESS_MUTED,
-                  fontSize: indexSize,
-                  fontWeight: 500,
-                  lineHeight: `${titleLineHeight}px`,
-                  letterSpacing: "0.08em",
-                  fontVariantNumeric: "tabular-nums",
-                  flexShrink: 0,
-                }}
-              >
-                {item.index}
-              </span>
-              {isLast ? null : (
-                <div
-                  aria-hidden
-                  style={{
-                    width: 1,
-                    flex: 1,
-                    minHeight: 0,
-                    marginTop: 4,
-                    background: PROCESS_FAINT,
-                  }}
-                />
-              )}
-            </div>
-
-            {/* Content indented from rail — narrower measure so copy wraps with right padding */}
-            <div
-              className="min-w-0 flex-1"
+              key={item.index}
+              className="flex"
               style={{
-                paddingBottom: isLast ? 0 : stepGap,
-                maxWidth: 118,
+                flex: isLast ? "0 0 auto" : 1,
+                gap: 7,
+                minHeight: 0,
               }}
             >
+              {/* Rail: index shares first-line height with description */}
               <div
-                className={plusJakartaSans.className}
-                style={{
-                  color: PROCESS_INK,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  lineHeight: 1.15,
-                  letterSpacing: "-0.025em",
-                }}
+                className="flex flex-col items-center self-stretch"
+                style={{ width: 14 }}
               >
-                {item.title}
+                <span
+                  className={inter.className}
+                  style={{
+                    color: PROCESS_MUTED,
+                    fontSize: indexSize,
+                    fontWeight: 500,
+                    lineHeight: PROCESS_BODY_LH,
+                    height: PROCESS_BODY_SIZE * PROCESS_BODY_LH,
+                    display: "flex",
+                    alignItems: "center",
+                    letterSpacing: "0.08em",
+                    fontVariantNumeric: "tabular-nums",
+                    flexShrink: 0,
+                  }}
+                >
+                  {item.index}
+                </span>
+                {isLast ? null : (
+                  <div
+                    aria-hidden
+                    style={{
+                      width: 1,
+                      flex: 1,
+                      minHeight: 0,
+                      marginTop: 4,
+                      background: PROCESS_FAINT,
+                    }}
+                  />
+                )}
               </div>
 
               <p
-                className={`${inter.className} m-0`}
+                className={`${inter.className} m-0 min-w-0 flex-1`}
                 style={{
                   color: PROCESS_MUTED,
-                  fontSize: 8.5,
+                  fontSize: PROCESS_BODY_SIZE,
                   fontWeight: 400,
-                  lineHeight: 1.38,
+                  lineHeight: PROCESS_BODY_LH,
                   letterSpacing: "-0.01em",
-                  marginTop: 4,
                 }}
               >
                 {item.body.map((part) => (
@@ -641,9 +632,9 @@ function DesignProcessPanel() {
                 ))}
               </p>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
