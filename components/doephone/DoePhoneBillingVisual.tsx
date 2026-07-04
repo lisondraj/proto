@@ -52,8 +52,8 @@ const PROTO_MODEL_HIGHLIGHT = "GPT-4o";
 
 /** Match former Humira box corner radius. */
 const PROTO_BOX_RADIUS = "0.55rem";
-/** Narrower than the old square card so the menus sit tighter. */
-const PROTO_DROPDOWN_GRID_W = Math.round(PROTO_BOX_PX * 0.72);
+/** Slightly under the old card width — still wide enough for full labels. */
+const PROTO_DROPDOWN_GRID_W = Math.round(PROTO_BOX_PX * 0.92);
 
 const PROTO_PILL_GLASS = {
   background: PROTO_GLASS_BG,
@@ -210,23 +210,24 @@ function DropdownChevron({ open = false }: { open?: boolean }) {
 function ProtoDropdownPill({ value, open = false }: { value: string; open?: boolean }) {
   return (
     <div
-      className="flex min-w-0 items-center justify-between"
+      className="flex items-center justify-between"
       style={{
         borderRadius: PROTO_BOX_RADIUS,
         ...PROTO_PILL_GLASS,
-        padding: "11px 12px",
-        gap: 8,
+        padding: "11px 10px",
+        gap: 6,
         boxSizing: "border-box",
       }}
     >
       <span
-        className={`${plusJakartaSans.className} min-w-0 flex-1 truncate`}
+        className={`${plusJakartaSans.className} min-w-0 flex-1`}
         style={{
           color: PROTO_INK,
           fontSize: 11,
           fontWeight: 600,
           lineHeight: 1.15,
           letterSpacing: "-0.02em",
+          whiteSpace: "nowrap",
         }}
       >
         {value}
@@ -260,16 +261,17 @@ function ProtoModelDropdown() {
           return (
             <div
               key={model}
-              className={`${plusJakartaSans.className} truncate`}
+              className={inter.className}
               style={{
                 color: PROTO_INK,
                 fontSize: 11,
-                fontWeight: 600,
+                fontWeight: 500,
                 lineHeight: 1.15,
-                letterSpacing: "-0.02em",
+                letterSpacing: "-0.01em",
                 padding: "8px 8px",
                 borderRadius: `calc(${PROTO_BOX_RADIUS} - 2px)`,
                 background: highlighted ? "rgba(28, 22, 16, 0.1)" : undefined,
+                whiteSpace: "nowrap",
               }}
             >
               {model}
