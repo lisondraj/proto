@@ -1,108 +1,198 @@
 "use client";
 
-import { inter, suisseIntl } from "@/lib/home/fonts";
-import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
+import { inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
+import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 
-const { ink: INK, accent: DOE_ORANGE, divider: DIVIDER } = CAROUSEL_MENU_UI;
+/** Proto glass — match challenge-rules menus. */
+const PROTO_GLASS_BG =
+  "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,251,246,0.84) 45%, rgba(255,248,242,0.74) 100%)";
+const PROTO_INK = "#1C1610";
+const PROTO_ACCENT = "rgba(28, 22, 16, 0.42)";
 
-const BORDER = "#E5E7EB";
-const MUTED_TEXT = "#6B7280";
-const LIVE_BG = "rgba(210, 119, 76, 0.12)";
-const BTN_BG = "#F3F4F6";
+const PHONE_ARTBOARD_WIDTH_PX = 360;
+const PHONE_ARTBOARD_HEIGHT_PX = 360;
+const PROTO_BOX_PX = Math.round(PHONE_ARTBOARD_WIDTH_PX * 0.78);
 
-const OUTER_RADIUS = "rounded-[clamp(0.8rem,2.4vmin,0.95rem)]";
-const INNER_RADIUS = "rounded-[clamp(0.45rem,1.35vmin,0.55rem)]";
-const PILL_RADIUS = "rounded-[clamp(0.38rem,1.15vmin,0.48rem)]";
-const CARD_PAD = "clamp(1.2rem,3.85vmin,1.45rem) clamp(1.25rem,4vmin,1.55rem)";
-const ROW_PAD = "clamp(0.82rem,2.55vmin,1.02rem) clamp(0.88rem,2.75vmin,1.05rem)";
-const TITLE_SIZE = "clamp(1.02rem,3.15vmin,1.22rem)";
-const BODY_SIZE = "clamp(0.88rem,2.65vmin,1.05rem)";
-const CAPTION_SIZE = "clamp(0.72rem,2.15vmin,0.86rem)";
+/** Submission fit checks — simulate an applicant prototype in-product. */
+const PROTO_DROPDOWN_PILLS = [
+  "87% match",
+  "50 users",
+  "Live sessions",
+  "Fit score on",
+  "Weekly use",
+  "Checkout",
+] as const;
+
+/** Other surfaces in the open menu (Checkout stays on the trigger only). */
+const PROTO_SURFACE_OPTIONS = ["Onboarding", "Dashboard"] as const;
+const PROTO_SURFACE_HIGHLIGHT = "Onboarding";
+
+const PROTO_BOX_RADIUS = "0.55rem";
+const PROTO_DROPDOWN_GRID_W = Math.round(PROTO_BOX_PX * 0.92);
+
+const PROTO_PILL_GLASS = {
+  background: PROTO_GLASS_BG,
+  backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+  WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+} as const;
+
+function DropdownChevron({ open = false }: { open?: boolean }) {
+  return (
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
+      fill="none"
+      aria-hidden
+      className="shrink-0"
+      style={{ transform: open ? "rotate(180deg)" : undefined }}
+    >
+      <path
+        d="M2.2 3.6L5 6.4l2.8-2.8"
+        stroke={PROTO_ACCENT}
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ProtoDropdownPill({ value, open = false }: { value: string; open?: boolean }) {
+  return (
+    <div
+      className="flex items-center justify-between"
+      style={{
+        borderRadius: PROTO_BOX_RADIUS,
+        ...PROTO_PILL_GLASS,
+        padding: "11px 10px",
+        gap: 6,
+        boxSizing: "border-box",
+      }}
+    >
+      <span
+        className={`${plusJakartaSans.className} min-w-0 flex-1`}
+        style={{
+          color: PROTO_INK,
+          fontSize: 11,
+          fontWeight: 600,
+          lineHeight: 1.15,
+          letterSpacing: "-0.02em",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {value}
+      </span>
+      <DropdownChevron open={open} />
+    </div>
+  );
+}
+
+/** Open surface menu under the 6th pill — alternatives only. */
+function ProtoSurfaceDropdown() {
+  return (
+    <div className="relative min-w-0" style={{ zIndex: 2 }}>
+      <ProtoDropdownPill value="Checkout" open />
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "100%",
+          marginTop: 4,
+          borderRadius: PROTO_BOX_RADIUS,
+          ...PROTO_PILL_GLASS,
+          padding: "4px",
+          boxSizing: "border-box",
+        }}
+      >
+        {PROTO_SURFACE_OPTIONS.map((surface) => {
+          const highlighted = surface === PROTO_SURFACE_HIGHLIGHT;
+
+          return (
+            <div
+              key={surface}
+              className={inter.className}
+              style={{
+                color: PROTO_INK,
+                fontSize: 11,
+                fontWeight: 500,
+                lineHeight: 1.15,
+                letterSpacing: "-0.01em",
+                padding: "8px 8px",
+                borderRadius: `calc(${PROTO_BOX_RADIUS} - 2px)`,
+                background: highlighted ? "rgba(28, 22, 16, 0.1)" : undefined,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {surface}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ProtoDropdownGrid() {
+  return (
+    <div
+      className="grid"
+      style={{
+        width: PROTO_DROPDOWN_GRID_W,
+        height: PROTO_BOX_PX,
+        gridTemplateColumns: "1fr 1fr",
+        gap: 7,
+        alignContent: "center",
+        boxSizing: "border-box",
+        overflow: "visible",
+      }}
+    >
+      {PROTO_DROPDOWN_PILLS.map((value, index) =>
+        index === PROTO_DROPDOWN_PILLS.length - 1 ? (
+          <ProtoSurfaceDropdown key={value} />
+        ) : (
+          <ProtoDropdownPill key={value} value={value} />
+        ),
+      )}
+    </div>
+  );
+}
 
 /** Applicant prototype fit check — /proto prototype slide. */
 export function DoePhoneProtoValidateVisual({ layout = "phone" }: { layout?: "phone" | "desktop" }) {
   const isDesktop = layout === "desktop";
 
+  if (!isDesktop) {
+    return (
+      <div className={`mx-auto h-full w-full ${suisseIntl.className}`} aria-hidden>
+        <ProtoPhoneScaledArtboard
+          width={PHONE_ARTBOARD_WIDTH_PX}
+          height={PHONE_ARTBOARD_HEIGHT_PX}
+          fitScale={1.06}
+          fixedBounds
+        >
+          <div
+            className="flex h-full w-full items-center justify-center"
+            style={{
+              width: PHONE_ARTBOARD_WIDTH_PX,
+              height: PHONE_ARTBOARD_HEIGHT_PX,
+            }}
+          >
+            <ProtoDropdownGrid />
+          </div>
+        </ProtoPhoneScaledArtboard>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
-      style={{ maxWidth: isDesktop ? "min(100%, 28rem)" : CAROUSEL_MENU_UI.maxWidthPhone }}
+      style={{ maxWidth: "min(100%, 28rem)" }}
       aria-hidden
     >
-      <div
-        className={`w-full border bg-white ${OUTER_RADIUS}`}
-        style={{ borderColor: BORDER, padding: CARD_PAD }}
-      >
-        <p
-          className="font-semibold leading-none tracking-[-0.015em]"
-          style={{ color: INK, fontSize: TITLE_SIZE }}
-        >
-          Onboarding redesign
-        </p>
-        <p
-          className={`${inter.className} font-normal leading-snug`}
-          style={{
-            color: MUTED_TEXT,
-            fontSize: CAPTION_SIZE,
-            marginTop: "clamp(0.28rem,0.85vmin,0.36rem)",
-          }}
-        >
-          Applicant prototype · Maya Chen
-        </p>
-
-        <div
-          className={`${INNER_RADIUS} border bg-white`}
-          style={{
-            borderColor: BORDER,
-            marginTop: "clamp(0.85rem,2.65vmin,1.05rem)",
-            padding: ROW_PAD,
-          }}
-        >
-          <div className="flex items-center justify-between" style={{ gap: "clamp(0.55rem,1.65vmin,0.72rem)" }}>
-            <span className={`${inter.className} font-medium`} style={{ color: INK, fontSize: BODY_SIZE }}>
-              Product fit
-            </span>
-            <span
-              className={`inline-flex items-center font-medium leading-none ${PILL_RADIUS} ${inter.className}`}
-              style={{
-                background: LIVE_BG,
-                color: DOE_ORANGE,
-                fontSize: CAPTION_SIZE,
-                padding: "clamp(0.22rem,0.68vmin,0.28rem) clamp(0.42rem,1.28vmin,0.52rem)",
-              }}
-            >
-              87% match
-            </span>
-          </div>
-          <div className="h-px w-full" style={{ background: DIVIDER, margin: "clamp(0.68rem,2.1vmin,0.82rem) 0" }} />
-          <p className={`${inter.className} font-normal leading-snug`} style={{ color: MUTED_TEXT, fontSize: BODY_SIZE }}>
-            Simulated in checkout flow — users found the path clear
-          </p>
-        </div>
-
-        <div
-          className={`flex items-start gap-3 ${INNER_RADIUS} border`}
-          style={{
-            borderColor: BORDER,
-            backgroundColor: BTN_BG,
-            marginTop: "clamp(0.72rem,2.2vmin,0.92rem)",
-            padding: ROW_PAD,
-          }}
-        >
-          <span
-            className="mt-[0.12rem] shrink-0 rounded-full"
-            style={{ width: "0.5rem", height: "0.5rem", background: DOE_ORANGE }}
-            aria-hidden
-          />
-          <p className={`${inter.className} min-w-0 font-normal leading-snug`} style={{ color: MUTED_TEXT, fontSize: CAPTION_SIZE }}>
-            <span className="font-medium" style={{ color: INK }}>
-              User feedback
-            </span>
-            {" · "}
-            Clear flow, would use weekly
-          </p>
-        </div>
-      </div>
+      <ProtoDropdownGrid />
     </div>
   );
 }

@@ -220,13 +220,13 @@ function ProtoDropdownPill({ value, open = false }: { value: string; open?: bool
       }}
     >
       <span
-        className={`${plusJakartaSans.className} min-w-0 flex-1`}
+        className={`${inter.className} min-w-0 flex-1`}
         style={{
           color: PROTO_INK,
           fontSize: 11,
-          fontWeight: 600,
+          fontWeight: 500,
           lineHeight: 1.15,
-          letterSpacing: "-0.02em",
+          letterSpacing: "-0.01em",
           whiteSpace: "nowrap",
         }}
       >
@@ -360,6 +360,9 @@ function BillingCard({ chrome }: { chrome: BillingChrome }) {
   );
 }
 
+/** Challenge-rules menus sit smaller inside the shader than the default artboard fit. */
+const PROTO_RULES_UI_SCALE = 0.86;
+
 /** AI prior auth timeline — Billing carousel slide. */
 export function DoePhoneBillingVisual({
   layout = "phone",
@@ -378,7 +381,7 @@ export function DoePhoneBillingVisual({
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
           height={PHONE_ARTBOARD_HEIGHT_PX}
-          fitScale={1.06}
+          fitScale={1.06 * PROTO_RULES_UI_SCALE}
           fixedBounds
         >
           <div
@@ -401,7 +404,18 @@ export function DoePhoneBillingVisual({
       style={{ maxWidth: isDesktop ? "min(100%, 28rem)" : CAROUSEL_MENU_UI.maxWidthPhone }}
       aria-hidden
     >
-      <BillingCard chrome={chrome} />
+      {isProto ? (
+        <div
+          style={{
+            transform: `scale(${PROTO_RULES_UI_SCALE})`,
+            transformOrigin: "center center",
+          }}
+        >
+          <BillingCard chrome="proto" />
+        </div>
+      ) : (
+        <BillingCard chrome={chrome} />
+      )}
     </div>
   );
 }
