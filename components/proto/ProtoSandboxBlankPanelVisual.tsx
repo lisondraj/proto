@@ -677,6 +677,11 @@ function HalfCroppedRevenue({ className = "" }: { className?: string }) {
           // Shifted right so most of the right side is clipped; nudge left to show a bit more.
           left: PHONE_ARTBOARD_WIDTH_PX - BOX_SIZE_PX / 2 - 52,
           transform: "translateY(-50%)",
+          // Soften the crop so the frost doesn't end on a hard vertical cut.
+          WebkitMaskImage:
+            "linear-gradient(to right, #000 0%, #000 50%, rgba(0,0,0,0.45) 60%, transparent 68%)",
+          maskImage:
+            "linear-gradient(to right, #000 0%, #000 50%, rgba(0,0,0,0.45) 60%, transparent 68%)",
         }}
       >
         <RevenueProduct />
