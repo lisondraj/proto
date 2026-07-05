@@ -12,8 +12,8 @@ const LIGHT_MUTED = "rgba(255, 249, 242, 0.88)";
 /** Compact lockup on frosted glass — matches featured role card ink. */
 const GLASS_INK = "#1C1610";
 const GLASS_MUTED = "#5E564C";
-const GLASS_TEXT_SIZE = "0.82rem";
-const GLASS_ICON_SIZE = "1.08em";
+const GLASS_TEXT_SIZE = "0.86rem";
+const GLASS_ICON_SIZE = "1.14em";
 
 type LogoTheme = "default" | "light" | "glass";
 
