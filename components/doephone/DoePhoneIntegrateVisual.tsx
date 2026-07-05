@@ -452,7 +452,6 @@ const DESKTOP_INTEGRATION_SIZES = {
 } as const;
 
 const PHONE_ARTBOARD_WIDTH_PX = 360;
-const PHONE_ARTBOARD_HEIGHT_PX = 360;
 const PROTO_PRODUCT_BOX_PX = Math.round(PHONE_ARTBOARD_WIDTH_PX * 0.78);
 /** Match top shader boxes (set-rules / talent) UI scale. */
 const PROTO_TOP_SHADER_UI_SCALE = 0.86;
@@ -598,9 +597,9 @@ const SUBMISSION_PIPELINE_STEPS = [
   },
 ] as const;
 
-const SUBMISSION_STEP_ICON = 16;
-const SUBMISSION_STEP_ROW_H = 28;
-const SUBMISSION_STEP_GAP = 12;
+const SUBMISSION_STEP_ICON = 20;
+const SUBMISSION_STEP_ROW_H = 34;
+const SUBMISSION_STEP_GAP = 16;
 const SUBMISSION_PIPELINE_BEAT_MS = 1900;
 const SUBMISSION_PIPELINE_HOLD_MS = 2600;
 
@@ -664,17 +663,12 @@ function SubmissionPipelineSteps() {
 
   const visibleCount = tick <= 1 ? 1 : tick <= 3 ? 2 : 3;
   const completedCount = tick === 0 ? 0 : tick <= 2 ? 1 : tick <= 4 ? 2 : 3;
-  const slotStride = SUBMISSION_STEP_ROW_H + SUBMISSION_STEP_GAP;
   const stackHeight = visibleCount * SUBMISSION_STEP_ROW_H + Math.max(0, visibleCount - 1) * SUBMISSION_STEP_GAP;
   const viewportHeight = 3 * SUBMISSION_STEP_ROW_H + 2 * SUBMISSION_STEP_GAP;
   const floatOffset = viewportHeight - stackHeight;
 
   return (
-    <div
-      className="mt-auto flex min-h-0 flex-1 flex-col justify-end"
-      style={{ marginTop: 12, minHeight: 0 }}
-      aria-hidden
-    >
+    <div style={{ width: "100%" }} aria-hidden>
       <div style={{ height: viewportHeight, overflow: "hidden" }}>
         <div
           style={{
@@ -695,7 +689,7 @@ function SubmissionPipelineSteps() {
                 className="relative flex items-center"
                 style={{
                   height: SUBMISSION_STEP_ROW_H,
-                  gap: 9,
+                  gap: 12,
                 }}
               >
                 {!isLast ? (
@@ -708,7 +702,7 @@ function SubmissionPipelineSteps() {
                       bottom: -(SUBMISSION_STEP_GAP + 2),
                       width: 1,
                       backgroundImage: `repeating-linear-gradient(to bottom, ${PROTO_STRONG} 0, ${PROTO_STRONG} 2px, transparent 2px, transparent 5px)`,
-                      opacity: 0.28,
+                      opacity: 0.32,
                     }}
                   />
                 ) : null}
@@ -719,12 +713,12 @@ function SubmissionPipelineSteps() {
                   className={plusJakartaSans.className}
                   style={{
                     color: PROTO_STRONG,
-                    fontSize: 9.5,
+                    fontSize: 12.5,
                     fontWeight: 600,
                     lineHeight: 1.15,
-                    letterSpacing: "-0.02em",
+                    letterSpacing: "-0.025em",
                     transition: "opacity 320ms ease",
-                    opacity: done ? 1 : 0.92,
+                    opacity: done ? 1 : 0.94,
                   }}
                 >
                   {done ? step.done : step.loading}
@@ -733,6 +727,25 @@ function SubmissionPipelineSteps() {
             );
           })}
         </div>
+      </div>
+    </div>
+  );
+}
+
+const TURN_SUBMISSIONS_ARTBOARD_HEIGHT_PX = 430;
+
+function TurnSubmissionsVisual() {
+  return (
+    <div
+      className="flex flex-col items-center"
+      style={{
+        width: PHONE_ARTBOARD_WIDTH_PX,
+        height: TURN_SUBMISSIONS_ARTBOARD_HEIGHT_PX,
+      }}
+    >
+      <ProductBuildPanel />
+      <div style={{ width: PROTO_PRODUCT_BOX_PX, marginTop: 14 }}>
+        <SubmissionPipelineSteps />
       </div>
     </div>
   );
@@ -820,7 +833,101 @@ function ProductBuildPanel() {
             Policy verified
           </div>
 
-          <SubmissionPipelineSteps />
+          <div
+            className="mt-auto flex flex-col justify-end"
+            style={{
+              marginTop: 12,
+              borderRadius: 8,
+              background: "rgba(255, 252, 247, 0.55)",
+              padding: "12px",
+              boxSizing: "border-box",
+              flex: 1,
+              minHeight: 0,
+            }}
+          >
+            <div className="min-w-0">
+              <div
+                className={inter.className}
+                style={{ color: PROTO_MUTED_LIGHT, fontSize: 8, fontWeight: 500, lineHeight: 1 }}
+              >
+                Repair estimate
+              </div>
+              <div
+                className={plusJakartaSans.className}
+                style={{
+                  color: PROTO_STRONG,
+                  fontSize: 22,
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  letterSpacing: "-0.04em",
+                  marginTop: 6,
+                }}
+              >
+                $428
+              </div>
+              <div
+                className={inter.className}
+                style={{
+                  color: PROTO_MUTED,
+                  fontSize: 8,
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  marginTop: 5,
+                }}
+              >
+                Windshield
+              </div>
+            </div>
+
+            <div className="flex" style={{ gap: 4, marginTop: 14 }}>
+              {[
+                { label: "Glass", share: 0.58 },
+                { label: "Labor", share: 0.28 },
+                { label: "Tax", share: 0.14 },
+              ].map((part) => (
+                <div
+                  key={part.label}
+                  style={{
+                    flex: part.share,
+                    height: 6,
+                    borderRadius: 999,
+                    background: PROTO_STRONG,
+                    opacity: part.label === "Glass" ? 0.72 : part.label === "Labor" ? 0.42 : 0.22,
+                  }}
+                  aria-hidden
+                />
+              ))}
+            </div>
+
+            <div className="flex justify-between" style={{ marginTop: 10, gap: 6 }}>
+              {[
+                { label: "Glass", value: "$248" },
+                { label: "Labor", value: "$120" },
+                { label: "Tax", value: "$60" },
+              ].map((part) => (
+                <div key={part.label} className="min-w-0 flex-1">
+                  <div
+                    className={inter.className}
+                    style={{ color: PROTO_MUTED_LIGHT, fontSize: 7.5, fontWeight: 500, lineHeight: 1 }}
+                  >
+                    {part.label}
+                  </div>
+                  <div
+                    className={inter.className}
+                    style={{
+                      color: PROTO_STRONG,
+                      fontSize: 8.5,
+                      fontWeight: 700,
+                      lineHeight: 1,
+                      marginTop: 3,
+                    }}
+                  >
+                    {part.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -843,18 +950,18 @@ export function DoePhoneIntegrateVisual({
       <div className={`mx-auto h-full w-full ${suisseIntl.className}`} aria-hidden>
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
-          height={PHONE_ARTBOARD_HEIGHT_PX}
+          height={TURN_SUBMISSIONS_ARTBOARD_HEIGHT_PX}
           fitScale={1.06 * PROTO_TOP_SHADER_UI_SCALE}
           fixedBounds
         >
           <div
-            className="flex h-full w-full items-center justify-center"
+            className="flex h-full w-full items-start justify-center"
             style={{
               width: PHONE_ARTBOARD_WIDTH_PX,
-              height: PHONE_ARTBOARD_HEIGHT_PX,
+              height: TURN_SUBMISSIONS_ARTBOARD_HEIGHT_PX,
             }}
           >
-            <ProductBuildPanel />
+            <TurnSubmissionsVisual />
           </div>
         </ProtoPhoneScaledArtboard>
       </div>
@@ -878,7 +985,7 @@ export function DoePhoneIntegrateVisual({
             transformOrigin: "center center",
           }}
         >
-          <ProductBuildPanel />
+          <TurnSubmissionsVisual />
         </div>
       ) : (
         <IntegrationMosaic layout={layout} />
