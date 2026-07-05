@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { dmSans, inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
@@ -12,6 +12,7 @@ import {
   type ProtoSandboxRoleCard,
   type ProtoSandboxRoleCardId,
 } from "@/lib/proto/proto-sandbox-role-cards";
+import { useProtoShaderBoxInView } from "@/lib/proto/use-proto-shader-box-in-view";
 
 const FEATURED_SCROLL_MS = 1050;
 const FEATURED_START_PAUSE_MS = 500;
@@ -25,8 +26,11 @@ const FEATURED_BETWEEN_MS = 420;
 const FEATURED_LOOP_PAUSE_MS = 3600;
 const FEATURED_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
+/** Meridian — intro frame; scroll down before any card opens. */
+const FEATURED_START_INDEX = PROTO_SANDBOX_FEATURED_STACK.findIndex((card) => card.id === "meridian");
+
 /** Signal, Ledger, Harmony — each gets tap → open → close → scroll down. */
-const FEATURED_CLICKABLE_INDICES = [
+const FEATURED_OPEN_INDICES = [
   PROTO_SANDBOX_FEATURED_LEDGER_INDEX - 1,
   PROTO_SANDBOX_FEATURED_LEDGER_INDEX,
   PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 1,
@@ -568,13 +572,14 @@ function FeaturedRoleSummaryGrid({ card }: { card: ProtoSandboxRoleCard }) {
 }
 
 /** Compact grey stack row — glass logo + role summary. */
-function FeaturedStackRow({
+const FeaturedStackRow = memo(function FeaturedStackRow({
   card,
   tokens,
   boxMetrics,
   opacity,
   tapped = false,
   highlighted = false,
+  focusRow = false,
 }: {
   card: ProtoSandboxRoleCard;
   tokens: VisualTokens;
@@ -582,9 +587,11 @@ function FeaturedStackRow({
   opacity: number;
   tapped?: boolean;
   highlighted?: boolean;
+  focusRow?: boolean;
 }) {
   const glass = FEATURED_GLASS[card.id];
   const glassLogoHeight = `${boxMetrics.glassLogoH}rem`;
+  const useGlassBlur = highlighted || tapped || focusRow;
 
   return (
     <article
@@ -598,21 +605,23 @@ function FeaturedStackRow({
         background: glass.background,
         overflow: "visible",
         opacity,
-        transition: `opacity 480ms ${FEATURED_EASE}`,
+        transition: focusRow ? `opacity 480ms ${FEATURED_EASE}` : undefined,
         boxShadow: tapped
           ? "0 0 0 1px rgba(255,255,255,0.28), 0 6px 20px rgba(0,0,0,0.14)"
           : highlighted
             ? "0 0 0 1px rgba(255,255,255,0.22), 0 8px 28px rgba(0,0,0,0.12)"
             : "none",
-        ...(highlighted
-          ? {
-              backdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
-              WebkitBackdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
-            }
-          : {
-              backdropFilter: "blur(16px) saturate(1.25) brightness(1.02)",
-              WebkitBackdropFilter: "blur(16px) saturate(1.25) brightness(1.02)",
-            }),
+        ...(useGlassBlur
+          ? highlighted
+            ? {
+                backdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
+                WebkitBackdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
+              }
+            : {
+                backdropFilter: "blur(16px) saturate(1.25) brightness(1.02)",
+                WebkitBackdropFilter: "blur(16px) saturate(1.25) brightness(1.02)",
+              }
+          : {}),
       }}
     >
       <div
@@ -631,7 +640,7 @@ function FeaturedStackRow({
       </div>
     </article>
   );
-}
+});
 
 /** Expanded role card — logo pushes up, tasks push down; supports open/close cycle. */
 function FeaturedRoleCard({
@@ -812,9 +821,9 @@ function stackRowOpacity(
 
 function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: VisualLayout }) {
   const boxMetrics = featuredGlassBoxMetrics(layout);
-  const startIndex = FEATURED_CLICKABLE_INDICES[0];
+  const { ref: inViewRef, inView } = useProtoShaderBoxInView();
 
-  const [focusIndex, setFocusIndex] = useState(startIndex);
+  const [focusIndex, setFocusIndex] = useState(FEATURED_START_INDEX);
   const [phase, setPhase] = useState<ItemPhase>("stack");
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [overlayExpanded, setOverlayExpanded] = useState(false);
@@ -835,23 +844,31 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
   }, []);
 
   useEffect(() => {
-    if (phase !== "done" || reduceMotion) return;
+    if (phase !== "done" || reduceMotion || !inView) return;
 
     const loopTimer = window.setTimeout(() => {
       setCycleKey((current) => current + 1);
     }, FEATURED_LOOP_PAUSE_MS);
 
     return () => window.clearTimeout(loopTimer);
-  }, [phase, reduceMotion]);
+  }, [phase, reduceMotion, inView]);
 
   useEffect(() => {
     if (reduceMotion) {
-      setFocusIndex(FEATURED_CLICKABLE_INDICES[1]!);
+      setFocusIndex(FEATURED_START_INDEX);
       setPhase("done");
       return;
     }
 
-    setFocusIndex(FEATURED_CLICKABLE_INDICES[0]!);
+    if (!inView) {
+      setFocusIndex(FEATURED_START_INDEX);
+      setPhase("stack");
+      setOverlayOpen(false);
+      setOverlayExpanded(false);
+      return;
+    }
+
+    setFocusIndex(FEATURED_START_INDEX);
     setPhase("stack");
     setOverlayOpen(false);
     setOverlayExpanded(false);
@@ -864,16 +881,15 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
       timers.push(window.setTimeout(fn, elapsed));
     }
 
-    FEATURED_CLICKABLE_INDICES.forEach((targetIndex, itemStep) => {
-      if (itemStep > 0) {
-        schedule(FEATURED_BETWEEN_MS, () => {
-          setPhase("scroll");
-          setFocusIndex(targetIndex);
-        });
-        schedule(FEATURED_SCROLL_MS, () => setPhase("hold"));
-      } else {
-        schedule(0, () => setPhase("hold"));
-      }
+    schedule(0, () => setPhase("hold"));
+    schedule(FEATURED_HOLD_MS, () => setPhase("between"));
+
+    FEATURED_OPEN_INDICES.forEach((targetIndex) => {
+      schedule(FEATURED_BETWEEN_MS, () => {
+        setPhase("scroll");
+        setFocusIndex(targetIndex);
+      });
+      schedule(FEATURED_SCROLL_MS, () => setPhase("hold"));
 
       schedule(FEATURED_HOLD_MS, () => setPhase("tap"));
       schedule(FEATURED_TAP_MS, () => {
@@ -898,18 +914,20 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
     return () => {
       timers.forEach((timer) => window.clearTimeout(timer));
     };
-  }, [reduceMotion, cycleKey]);
+  }, [reduceMotion, cycleKey, inView]);
 
   const scrollMotion =
     phase === "scroll" ? `transform ${FEATURED_SCROLL_MS}ms ${FEATURED_EASE}` : undefined;
 
   return (
     <div
+      ref={inViewRef}
       className="relative mx-auto"
       style={{
         width: tokens.cardWidth,
         height: layout === "phone" ? `${PHONE_FEATURED_VIEWPORT_REM}rem` : `${viewportH}rem`,
         overflow: "visible",
+        contain: "layout style",
       }}
     >
       <div
@@ -933,12 +951,13 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
                 tokens={tokens}
                 boxMetrics={boxMetrics}
                 opacity={stackRowOpacity(
-                index,
-                focusIndex,
-                phase,
-                overlayActive,
-                overlayExpanded,
-              )}
+                  index,
+                  focusIndex,
+                  phase,
+                  overlayActive,
+                  overlayExpanded,
+                )}
+                focusRow={index === focusIndex}
                 tapped={phase === "tap" && index === focusIndex}
                 highlighted={
                   index === focusIndex &&
