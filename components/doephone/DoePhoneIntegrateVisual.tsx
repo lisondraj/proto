@@ -453,6 +453,7 @@ const DESKTOP_INTEGRATION_SIZES = {
 
 const PHONE_ARTBOARD_WIDTH_PX = 360;
 const PROTO_PRODUCT_BOX_PX = Math.round(PHONE_ARTBOARD_WIDTH_PX * 0.78);
+const PROTO_PRODUCT_PANEL_HEIGHT_PX = Math.round(PROTO_PRODUCT_BOX_PX * 0.9);
 /** Match top shader boxes (set-rules / talent) UI scale. */
 const PROTO_TOP_SHADER_UI_SCALE = 0.86;
 const PROTO_GLASS_BG =
@@ -500,7 +501,6 @@ function IntegrationMosaic({
 }
 
 const CLAIM_QUEUE = [
-  { id: "CLM-1062", type: "Theft", score: 58, active: false },
   { id: "CLM-1051", type: "Water leak", score: 74, active: false },
   { id: "CLM-1057", type: "Roof hail", score: 61, active: false },
   { id: "CLM-1048", type: "Auto glass", score: 92, active: true },
@@ -586,15 +586,15 @@ const PROTO_MOTION_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 const SUBMISSION_PIPELINE_STEPS = [
   {
-    loading: "Retrieving build submission...",
+    loading: "Retrieving submission...",
     done: "Sandbox build secured",
   },
   {
-    loading: "Refactoring into your codebase...",
-    done: "Adapted to your codebase",
+    loading: "Refactoring into codebase...",
+    done: "Refactored into codebase",
   },
   {
-    loading: "Deploying to your environment...",
+    loading: "Deploying to environment...",
     done: "Live in your environment",
   },
 ] as const;
@@ -603,12 +603,12 @@ const SUBMISSION_TEXT = "#FFF9F2";
 const SUBMISSION_TEXT_DONE = "rgba(255, 249, 242, 0.78)";
 const SUBMISSION_LINE = "rgba(255, 249, 242, 0.26)";
 
-const SUBMISSION_STEP_ICON_COMPACT = 10;
-const SUBMISSION_STEP_ICON_ACTIVE = 18;
-const SUBMISSION_STEP_ICON_COL = 18;
-const SUBMISSION_STEP_ROW_COMPACT = 20;
-const SUBMISSION_STEP_ROW_ACTIVE = 34;
-const SUBMISSION_STEP_GAP = 10;
+const SUBMISSION_STEP_ICON_COMPACT = 12;
+const SUBMISSION_STEP_ICON_ACTIVE = 22;
+const SUBMISSION_STEP_ICON_COL = 22;
+const SUBMISSION_STEP_ROW_COMPACT = 24;
+const SUBMISSION_STEP_ROW_ACTIVE = 40;
+const SUBMISSION_STEP_GAP = 11;
 const SUBMISSION_PIPELINE_BEAT_MS = 2000;
 const SUBMISSION_PIPELINE_HOLD_MS = 3200;
 
@@ -670,18 +670,6 @@ function submissionPipelinePhase(tick: number) {
   return { visibleCount, completedCount };
 }
 
-function submissionPipelineStackHeight(visibleCount: number, completedCount: number) {
-  let height = 0;
-  for (let index = 0; index < visibleCount; index += 1) {
-    const done = index < completedCount;
-    const active = !done && index === completedCount;
-    const rowHeight = active ? SUBMISSION_STEP_ROW_ACTIVE : SUBMISSION_STEP_ROW_COMPACT;
-    if (index > 0) height += SUBMISSION_STEP_GAP;
-    height += rowHeight;
-  }
-  return height;
-}
-
 function useSubmissionPipelineTick() {
   const [tick, setTick] = useState(0);
 
@@ -708,12 +696,24 @@ function useSubmissionPipelineTick() {
   return tick;
 }
 
+const SUBMISSION_PIPELINE_MAX_HEIGHT_PX =
+  SUBMISSION_STEP_ROW_ACTIVE + 2 * (SUBMISSION_STEP_GAP + SUBMISSION_STEP_ROW_COMPACT);
+
 function SubmissionPipelineSteps({ tick }: { tick: number }) {
   const { visibleCount, completedCount } = submissionPipelinePhase(tick);
   const steps = SUBMISSION_PIPELINE_STEPS.slice(0, visibleCount);
 
   return (
-    <div style={{ width: "100%" }} aria-hidden>
+    <div
+      className="flex flex-col justify-center"
+      style={{
+        width: "64%",
+        maxWidth: 210,
+        height: SUBMISSION_PIPELINE_MAX_HEIGHT_PX,
+        flexShrink: 0,
+      }}
+      aria-hidden
+    >
       <div
         style={{
           display: "flex",
@@ -731,15 +731,16 @@ function SubmissionPipelineSteps({ tick }: { tick: number }) {
           return (
             <div
               key={step.loading}
-              className={`${plusJakartaSans.className} relative flex items-center`}
+              className={`${plusJakartaSans.className} proto-submission-step-in relative flex items-center`}
               style={{
                 height: rowHeight,
-                gap: 7,
+                gap: 8,
                 transition: `height 560ms ${PROTO_MOTION_EASE}`,
               }}
             >
               {hasConnector ? (
                 <div
+                  className="proto-submission-connector-in"
                   aria-hidden
                   style={{
                     position: "absolute",
@@ -764,10 +765,11 @@ function SubmissionPipelineSteps({ tick }: { tick: number }) {
                 className="min-w-0 flex-1"
                 style={{
                   color: done ? SUBMISSION_TEXT_DONE : SUBMISSION_TEXT,
-                  fontSize: active ? 11 : 9.5,
+                  fontSize: active ? 13 : 11,
                   fontWeight: 600,
                   lineHeight: 1.2,
                   letterSpacing: "-0.02em",
+                  whiteSpace: "nowrap",
                   transition: `color 420ms ${PROTO_MOTION_EASE}, font-size 560ms ${PROTO_MOTION_EASE}`,
                 }}
               >
@@ -782,15 +784,29 @@ function SubmissionPipelineSteps({ tick }: { tick: number }) {
 }
 
 const TURN_SUBMISSIONS_ARTBOARD_HEIGHT_PX = 390;
-const SUBMISSION_PIPELINE_GAP_PX = 16;
+const SUBMISSION_BOTTOM_ROW_GAP_PX = 14;
+
+function SubmissionBuildHeader() {
+  return (
+    <div className="flex min-w-0 flex-1 flex-col items-start">
+      <div
+        className={plusJakartaSans.className}
+        style={{
+          color: SUBMISSION_TEXT,
+          fontSize: 23,
+          fontWeight: 600,
+          lineHeight: 1.12,
+          letterSpacing: "-0.035em",
+        }}
+      >
+        Jordan&apos;s Product
+      </div>
+    </div>
+  );
+}
 
 function TurnSubmissionsVisual() {
   const tick = useSubmissionPipelineTick();
-  const { visibleCount, completedCount } = submissionPipelinePhase(tick);
-  const stackHeight = submissionPipelineStackHeight(visibleCount, completedCount);
-  const initialStackHeight = SUBMISSION_STEP_ROW_ACTIVE;
-  const lift = Math.max(0, (stackHeight - initialStackHeight) / 2);
-  const panelHalf = PROTO_PRODUCT_BOX_PX / 2;
 
   return (
     <div
@@ -801,18 +817,25 @@ function TurnSubmissionsVisual() {
       }}
     >
       <div
-        className="flex flex-col items-center"
+        className="flex flex-col"
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
           width: PROTO_PRODUCT_BOX_PX,
-          transform: `translate(-50%, calc(-${panelHalf}px - ${lift}px))`,
-          transition: `transform 560ms ${PROTO_MOTION_EASE}`,
+          transform: "translate(-50%, -50%)",
         }}
       >
         <ProductBuildPanel />
-        <div style={{ width: "100%", marginTop: SUBMISSION_PIPELINE_GAP_PX }}>
+        <div
+          className="flex items-center justify-between"
+          style={{
+            marginTop: SUBMISSION_BOTTOM_ROW_GAP_PX,
+            minHeight: SUBMISSION_PIPELINE_MAX_HEIGHT_PX,
+            gap: 10,
+          }}
+        >
+          <SubmissionBuildHeader />
           <SubmissionPipelineSteps tick={tick} />
         </div>
       </div>
@@ -826,7 +849,7 @@ function ProductBuildPanel() {
       className={`flex flex-col ${suisseIntl.className}`}
       style={{
         width: PROTO_PRODUCT_BOX_PX,
-        height: PROTO_PRODUCT_BOX_PX,
+        height: PROTO_PRODUCT_PANEL_HEIGHT_PX,
         borderRadius: "0.55rem",
         background: PROTO_GLASS_BG,
         backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
@@ -837,20 +860,7 @@ function ProductBuildPanel() {
         WebkitFontSmoothing: "antialiased",
       }}
     >
-      <div
-        className={`${plusJakartaSans.className} shrink-0`}
-        style={{
-          color: PROTO_STRONG,
-          fontSize: 16,
-          fontWeight: 600,
-          lineHeight: 1,
-          letterSpacing: "-0.035em",
-        }}
-      >
-        ClaimPilot
-      </div>
-
-      <div className="flex min-h-0 flex-1" style={{ gap: 8, marginTop: 12 }}>
+      <div className="flex min-h-0 flex-1" style={{ gap: 8 }}>
         <div className="flex min-w-0 flex-[0.86] flex-col" style={{ gap: 6 }}>
           {CLAIM_QUEUE.map((claim) => (
             <QueueClaim key={claim.id} {...claim} />
@@ -894,16 +904,8 @@ function ProductBuildPanel() {
           </div>
 
           <div
-            className="mt-auto flex flex-col justify-end"
-            style={{
-              marginTop: 12,
-              borderRadius: 8,
-              background: "rgba(255, 252, 247, 0.55)",
-              padding: "12px",
-              boxSizing: "border-box",
-              flex: 1,
-              minHeight: 0,
-            }}
+            className="mt-auto flex min-h-0 flex-1 flex-col justify-end"
+            style={{ marginTop: 12 }}
           >
             <div className="min-w-0">
               <div

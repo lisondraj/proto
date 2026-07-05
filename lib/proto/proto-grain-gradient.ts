@@ -61,6 +61,7 @@ export type ProtoGrainGradientVariant =
   | "integrate"
   | "validate"
   | "shortlist"
+  | "looking-ahead"
   | "meet-proto"
   | "meet-proto-stack-0"
   | "meet-proto-stack-1"
@@ -174,23 +175,36 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
   },
   validate: {
     shape: "blob",
-    softness: 0.65,
-    intensity: 0.14,
+    softness: 0.68,
+    intensity: 0.15,
     fit: "cover",
-    rotation: 315,
-    offsetX: 0.1,
-    offsetY: 0.12,
-    scale: 1.22,
+    rotation: 264,
+    offsetX: 0.06,
+    offsetY: 0.18,
+    scale: 1.2,
+    speed: 0.48,
   },
   shortlist: {
-    shape: "blob",
-    softness: 0.7,
+    shape: "wave",
+    softness: 0.69,
+    intensity: 0.16,
+    fit: "cover",
+    rotation: 112,
+    offsetX: 0.1,
+    offsetY: -0.18,
+    scale: 1.16,
+    speed: 0.68,
+  },
+  "looking-ahead": {
+    shape: "ripple",
+    softness: 0.72,
     intensity: 0.14,
     fit: "cover",
-    rotation: 120,
-    offsetX: 0.16,
-    offsetY: -0.2,
-    scale: 1.08,
+    rotation: 288,
+    offsetX: -0.1,
+    offsetY: -0.12,
+    scale: 1.16,
+    speed: 0.35,
   },
   "meet-proto": {
     shape: "wave",
@@ -253,9 +267,7 @@ export function protoGrainGradientVariant(
         ? "agents"
         : slideId === "ambient"
           ? "billing"
-          : slideId === "looking-ahead"
-            ? "shortlist"
-            : slideId;
+          : slideId;
 
   if (resolvedId in PROTO_GRAIN_GRADIENT_PRESETS) {
     return resolvedId as ProtoGrainGradientVariant;

@@ -73,24 +73,24 @@ export const PROTO_FEATURE_PALETTES: Record<ProtoFeaturePaletteSlideId, ProtoFea
   },
   /** See how real users respond. */
   validate: {
-    back: "#102028",
-    bloom: "#f06858",
-    mid: "#487898",
-    lift: "#f8d088",
+    back: "#181020",
+    bloom: "#e87898",
+    mid: "#8868a8",
+    lift: "#f8c8d8",
   },
   /** Public challenges for future hires. */
   shortlist: {
-    back: "#101428",
-    bloom: "#e8b838",
-    mid: "#485878",
-    lift: "#f0d878",
+    back: "#0a1418",
+    bloom: "#38d0c0",
+    mid: "#206878",
+    lift: "#f0e878",
   },
   /** We're looking ahead. */
   "looking-ahead": {
-    back: "#140818",
-    bloom: "#7858c8",
-    mid: "#483898",
-    lift: "#d8a8f0",
+    back: "#081018",
+    bloom: "#5090e8",
+    mid: "#284868",
+    lift: "#c8a8f0",
   },
 };
 
