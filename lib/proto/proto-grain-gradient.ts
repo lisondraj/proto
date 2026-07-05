@@ -1,5 +1,14 @@
 import type { GrainGradientShape } from "@paper-design/shaders";
 
+import {
+  PROTO_HOME_HERO_SHADER_COLOR_BACK,
+  PROTO_HOME_HERO_SHADER_COLORS,
+} from "@/lib/proto/proto-hero-palette";
+import {
+  protoFeaturePalette,
+  protoFeatureShaderSurfaceColors,
+} from "@/lib/proto/proto-feature-palettes";
+
 /** Shared Paper shader palette for all /proto gradient surfaces. */
 export const PROTO_GRAIN_GRADIENT_COLORS = ["#c6750c", "#beae60", "#d7cbc6"] as const;
 
@@ -29,6 +38,16 @@ export const PROTO_SHADER_MAX_PIXEL_COUNT_STACK = Math.floor(1920 * 1080 * 1.25)
 export const PROTO_GRAIN_GRADIENT_WORLD_WIDTH = 1280;
 
 export const PROTO_GRAIN_GRADIENT_WORLD_HEIGHT = 720;
+
+export {
+  PROTO_HERO_PALETTE,
+  PROTO_HOME_HERO_SHADER_COLOR_BACK,
+  PROTO_HOME_HERO_SHADER_COLORS,
+} from "@/lib/proto/proto-hero-palette";
+
+/** Turn submissions — desktop / non-phone-main integrate palette. */
+export const PROTO_INTEGRATE_SHADER_COLOR_BACK = "#2a4048";
+export const PROTO_INTEGRATE_SHADER_COLORS = ["#5f8ea8", "#8a9a72", "#c8b888"] as const;
 
 export type ProtoGrainGradientVariant =
   | "home-hero"
@@ -65,10 +84,14 @@ export type ProtoGrainGradientPreset = {
 export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, ProtoGrainGradientPreset> = {
   "home-hero": {
     shape: "wave",
-    softness: 0.7,
-    intensity: 0.15,
+    softness: 0.82,
+    intensity: 0.09,
     fit: "cover",
-    speed: 1,
+    rotation: 168,
+    offsetX: 0.06,
+    offsetY: -0.08,
+    scale: 1.12,
+    speed: 0.85,
   },
   "about-hero": {
     shape: "corners",
@@ -139,13 +162,15 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     scale: 1.02,
   },
   integrate: {
-    shape: "ripple",
-    softness: 0.72,
-    intensity: 0.17,
+    shape: "wave",
+    softness: 0.82,
+    intensity: 0.09,
     fit: "cover",
-    rotation: 48,
-    offsetY: -0.22,
-    scale: 1.1,
+    rotation: 168,
+    offsetX: 0.06,
+    offsetY: -0.08,
+    scale: 1.12,
+    speed: 0.65,
   },
   validate: {
     shape: "blob",
@@ -236,6 +261,49 @@ export function protoGrainGradientVariant(
     return resolvedId as ProtoGrainGradientVariant;
   }
   return undefined;
+}
+
+export type ProtoGrainGradientSurface = {
+  variant: ProtoGrainGradientVariant;
+  colors?: readonly string[];
+  colorBack?: string;
+};
+
+export function protoGrainGradientSurface(
+  slideId: string,
+  options?: { protoPhoneMain?: boolean },
+): ProtoGrainGradientSurface | undefined {
+  const variant = protoGrainGradientVariant(slideId);
+  if (!variant) return undefined;
+
+  if (options?.protoPhoneMain) {
+    const palette = protoFeaturePalette(slideId);
+    if (palette) {
+      return {
+        variant,
+        colors: protoFeatureShaderSurfaceColors(palette),
+        colorBack: palette.back,
+      };
+    }
+  }
+
+  if (variant === "integrate") {
+    return {
+      variant,
+      colors: PROTO_INTEGRATE_SHADER_COLORS,
+      colorBack: PROTO_INTEGRATE_SHADER_COLOR_BACK,
+    };
+  }
+
+  return { variant };
+}
+
+export function protoHomeHeroGrainGradientSurface(): ProtoGrainGradientSurface {
+  return {
+    variant: "home-hero",
+    colors: PROTO_HOME_HERO_SHADER_COLORS,
+    colorBack: PROTO_HOME_HERO_SHADER_COLOR_BACK,
+  };
 }
 
 export function isProtoShaderHeroVariant(variant: ProtoGrainGradientVariant) {

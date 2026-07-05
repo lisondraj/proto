@@ -15,7 +15,7 @@ import {
 } from "@/lib/doephone/section-styles";
 import { CARE_COORDINATION_BACKDROP } from "@/lib/workflow-carousel-design-backdrops";
 import { PROTO_HERO_HEIGHT } from "@/lib/proto/proto-hero-layout";
-import { PROTO_GRAIN_GRADIENT_COLOR_BACK } from "@/lib/proto/proto-grain-gradient";
+import { PROTO_HOME_HERO_SHADER_COLOR_BACK } from "@/lib/proto/proto-hero-palette";
 import { PROTO_FONT_CLASS } from "@/lib/proto/proto-font";
 import { useEffect, useState, type CSSProperties } from "react";
 
@@ -93,7 +93,7 @@ export function DoePhoneHeroSection({
         {
           minHeight: heroHeight,
           height: heroHeight,
-          ...(isProto ? { backgroundColor: PROTO_GRAIN_GRADIENT_COLOR_BACK } : {}),
+          ...(isProto ? { backgroundColor: PROTO_HOME_HERO_SHADER_COLOR_BACK } : {}),
           ...doephoneHeroIntroStyleVars(),
         } as CSSProperties
       }

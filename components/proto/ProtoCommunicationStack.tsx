@@ -34,6 +34,7 @@ export function ProtoCommunicationStack() {
                     uiInteractive={false}
                     protoShaderVariant={protoGrainGradientVariant(slide.id)}
                     protoSite
+                    protoPhoneMainPalette
                     uiScaleClass={
                       index <= 6 ? "proto-feature-ui-fit-scale" : "proto-carousel-ui-scale"
                     }

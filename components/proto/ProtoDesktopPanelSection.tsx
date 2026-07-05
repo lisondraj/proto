@@ -7,7 +7,7 @@ import {
   DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE,
   DOEPHONE_SECTION_CAROUSEL_RADIUS,
 } from "@/lib/doephone/section-styles";
-import { protoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
+import { protoGrainGradientSurface } from "@/lib/proto/proto-grain-gradient";
 
 /** Desktop /proto — square gradient panel with centered slide UI. */
 export function ProtoDesktopPanelSection({
@@ -21,7 +21,7 @@ export function ProtoDesktopPanelSection({
   /** Desktop full-panel bands — static shader (no motion). */
   shaderStatic?: boolean;
 }) {
-  const shaderVariant = protoGrainGradientVariant(slide.id);
+  const shaderSurface = protoGrainGradientSurface(slide.id);
 
   const radiusClass =
     bleedEdge === "left"
@@ -42,8 +42,14 @@ export function ProtoDesktopPanelSection({
       className={`relative isolate h-full w-full min-h-0 overflow-hidden shadow-[0_10px_32px_rgba(0,0,0,0.28)] ${radiusClass} ${borderClass}`}
       style={DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE}
     >
-      {shaderVariant ? (
-        <ProtoGrainGradient variant={shaderVariant} className={radiusClass} static={shaderStatic} />
+      {shaderSurface ? (
+        <ProtoGrainGradient
+          variant={shaderSurface.variant}
+          colors={shaderSurface.colors}
+          colorBack={shaderSurface.colorBack}
+          className={radiusClass}
+          static={shaderStatic}
+        />
       ) : null}
 
       <div className="proto-feature-box-ui absolute inset-0 z-[15] flex items-center justify-center px-[clamp(1.25rem,2.5vw,2.5rem)]">

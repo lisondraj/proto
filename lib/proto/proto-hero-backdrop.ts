@@ -12,22 +12,22 @@ import { PROTO_GRAIN_BG, PROTO_GRAIN_OPACITY, PROTO_GRAIN_SIZE } from "@/lib/pro
 
 export { PROTO_HERO_GRADIENT };
 
-/** Home hero — prior-auth sweep from the billing (Analyzes in seconds) band. */
+/** Home hero — sage deploy lane palette (matches turn-submissions). */
 export const PROTO_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero",
   gradient: PROTO_HOME_HERO_GRADIENT,
-  grid: PROTO_COMMUNICATION_GRIDS.billing ?? "hex",
-  lineOverlayOpacity: PROTO_COMMUNICATION_LINE_OPACITY.billing,
+  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "dot",
+  lineOverlayOpacity: PROTO_COMMUNICATION_LINE_OPACITY.integrate,
 };
 
-/** iPhone home hero — same prior-auth colouring with a taller radial fit. */
+/** iPhone home hero — same sage colouring with a taller radial fit. */
 export const PROTO_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto hero phone",
   gradient: PROTO_HOME_HERO_PHONE_GRADIENT,
-  grid: PROTO_COMMUNICATION_GRIDS.billing ?? "hex",
-  lineOverlayOpacity: PROTO_COMMUNICATION_LINE_OPACITY.billing,
+  grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "dot",
+  lineOverlayOpacity: PROTO_COMMUNICATION_LINE_OPACITY.integrate,
 };
 
 /** /about hero visual — documents reception palette. */

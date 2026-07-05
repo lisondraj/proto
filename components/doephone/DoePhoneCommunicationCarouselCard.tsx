@@ -6,7 +6,7 @@ import { WorkflowCarouselDesignBackdrop } from "@/components/workflow-carousel-d
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
 import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
-import type { ProtoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
+import { protoGrainGradientSurface, type ProtoGrainGradientVariant } from "@/lib/proto/proto-grain-gradient";
 import {
   DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE,
   DOEPHONE_SECTION_CAROUSEL_RADIUS,
@@ -243,6 +243,8 @@ export function DoePhoneCommunicationCarouselCard({
   backdropLineOverlayOpacity,
   protoShaderVariant,
   protoSite = false,
+  /** /proto iPhone main — unify feature-box shaders with the hero experiment palette. */
+  protoPhoneMainPalette = false,
   uiScaleClass,
   uiInteractive = true,
 }: {
@@ -270,6 +272,7 @@ export function DoePhoneCommunicationCarouselCard({
   protoShaderVariant?: ProtoGrainGradientVariant;
   /** /proto home — sandbox role cards and other proto-only slide mocks. */
   protoSite?: boolean;
+  protoPhoneMainPalette?: boolean;
   uiScaleClass?: string;
 }) {
   const [panelPhase, setPanelPhase] = useState<PanelPhase>("idle");
@@ -305,15 +308,21 @@ export function DoePhoneCommunicationCarouselCard({
     setPanelPhase("open");
   }, [expandable, panelPhase]);
 
+  const shaderSurface = protoShaderVariant
+    ? protoGrainGradientSurface(slide.id, { protoPhoneMain: protoPhoneMainPalette })
+    : undefined;
+
   return (
     <div
       className={`relative isolate h-full w-full overflow-hidden ${DOEPHONE_SECTION_CAROUSEL_RADIUS} shadow-[0_10px_32px_rgba(0,0,0,0.1)] ${className}`.trim()}
       style={DOEPHONE_SECTION_CAROUSEL_CLIP_STYLE}
       aria-hidden={!isActive}
     >
-      {protoShaderVariant ? (
+      {shaderSurface ? (
         <ProtoGrainGradient
-          variant={protoShaderVariant}
+          variant={shaderSurface.variant}
+          colors={shaderSurface.colors}
+          colorBack={shaderSurface.colorBack}
           className={`${DOEPHONE_SECTION_CAROUSEL_RADIUS} ${backdropClassName}`.trim()}
         />
       ) : (

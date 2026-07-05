@@ -1,5 +1,13 @@
 /** Reception reference palette — reused across section 2 slide shapes. */
 import type { WorkflowCarouselGridKind } from "@/lib/workflow-carousel-design-backdrops";
+import {
+  PROTO_HOME_HERO_SHADER_COLOR_BACK,
+  PROTO_HOME_HERO_SHADER_COLORS,
+} from "@/lib/proto/proto-hero-palette";
+import {
+  PROTO_INTEGRATE_SHADER_COLOR_BACK,
+  PROTO_INTEGRATE_SHADER_COLORS,
+} from "@/lib/proto/proto-grain-gradient";
 
 /** Vibrant reception hues — light blue through gold/copper (same gradient flows). */
 export const PROTO_RECEPTION_PALETTE = {
@@ -40,7 +48,7 @@ const PROTO_RECEPTION_FULL_STOPS = [
   `${PROTO_RECEPTION_PALETTE.deep} 100%`,
 ].join(", ");
 
-const PROTO_AGENTS_GRADIENT = `linear-gradient(225deg, ${PROTO_RECEPTION_FULL_STOPS})`;
+const PROTO_RECEPTION_AGENTS_LINEAR = `linear-gradient(225deg, ${PROTO_RECEPTION_FULL_STOPS})`;
 
 /** Prior auth colour stops — shared by billing band and home hero. */
 const PROTO_PRIOR_AUTH_STOPS = [
@@ -56,16 +64,16 @@ const PROTO_PRIOR_AUTH_STOPS = [
 /** Prior auth — warm lower-right bloom; full reception sweep (all phone won't stop colours). */
 const PROTO_PRIOR_AUTH_GRADIENT = `radial-gradient(ellipse 118% 112% at 72% 88%, ${PROTO_PRIOR_AUTH_STOPS})`;
 
-/** Integrate — warm layer rising from a deep cool foundation (stacked on your existing tools). */
-const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 128% 108% at 48% 108%, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_HUMIRA_COLORS.bridgeDeep} 26%, ${PROTO_AGENTS_MID_BLUE} 46%, ${PROTO_RECEPTION_PALETTE.blue} 66%, ${PROTO_RECEPTION_PALETTE.copper} 84%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
+/** Integrate — calm sage lane; warm center for ClaimPilot, mid-tones below for pipeline copy. */
+const PROTO_INTEGRATE_GRADIENT = `radial-gradient(ellipse 118% 104% at 50% 36%, ${PROTO_INTEGRATE_SHADER_COLORS[0]} 0%, ${PROTO_INTEGRATE_SHADER_COLORS[1]} 38%, ${PROTO_INTEGRATE_SHADER_COLOR_BACK} 62%, ${PROTO_INTEGRATE_SHADER_COLORS[2]} 100%)`;
 
-/** Home hero desktop — same prior-auth sweep as billing, expanded for full viewport. */
-export const PROTO_HOME_HERO_GRADIENT = `radial-gradient(ellipse 136% 132% at 66% 92%, ${PROTO_PRIOR_AUTH_STOPS})`;
+/** Home hero — sibling teal-sage palette, expanded for full viewport. */
+export const PROTO_HOME_HERO_GRADIENT = `radial-gradient(ellipse 136% 128% at 52% 42%, ${PROTO_HOME_HERO_SHADER_COLORS[0]} 0%, ${PROTO_HOME_HERO_SHADER_COLORS[1]} 38%, ${PROTO_HOME_HERO_SHADER_COLOR_BACK} 62%, ${PROTO_HOME_HERO_SHADER_COLORS[2]} 100%)`;
 
-/** iPhone home hero — same prior-auth sweep, taller ellipse for narrow viewport. */
-export const PROTO_HOME_HERO_PHONE_GRADIENT = `radial-gradient(ellipse 128% 142% at 60% 94%, ${PROTO_PRIOR_AUTH_STOPS})`;
+/** iPhone home hero — same hero palette, taller ellipse for narrow viewport. */
+export const PROTO_HOME_HERO_PHONE_GRADIENT = `radial-gradient(ellipse 128% 138% at 50% 40%, ${PROTO_HOME_HERO_SHADER_COLORS[0]} 0%, ${PROTO_HOME_HERO_SHADER_COLORS[1]} 38%, ${PROTO_HOME_HERO_SHADER_COLOR_BACK} 62%, ${PROTO_HOME_HERO_SHADER_COLORS[2]} 100%)`;
 
-export const PROTO_PHONE_HERO_VOID = PROTO_RECEPTION_PALETTE.deep;
+export const PROTO_PHONE_HERO_VOID = PROTO_HOME_HERO_SHADER_COLOR_BACK;
 
 /** Prototype validation — cool upper arc into warm copper/gold. */
 const PROTO_PROTOTYPE_GRADIENT = `linear-gradient(160deg, ${PROTO_HUMIRA_COLORS.bridgeBlue} 0%, ${PROTO_RECEPTION_PALETTE.blue} 26%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
@@ -100,8 +108,8 @@ export const PROTO_VALIDATE_BACKDROP = {
   lineOverlayOpacity: 0.16,
 };
 
-/** Patient chart — Documents palette flipped; warm upper-left → cool edge. */
-const PROTO_AMBIENT_RADIAL = `radial-gradient(ellipse 125% 110% at 14% 12%, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 36%, ${PROTO_RECEPTION_PALETTE.blue} 70%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;
+/** Harmony Health — hero experiment palette (CSS fallback). */
+const PROTO_HARMONY_HEALTH_GRADIENT = `radial-gradient(ellipse 125% 110% at 14% 12%, ${PROTO_HOME_HERO_SHADER_COLORS[2]} 0%, ${PROTO_HOME_HERO_SHADER_COLORS[1]} 36%, ${PROTO_HOME_HERO_SHADER_COLORS[0]} 70%, ${PROTO_HOME_HERO_SHADER_COLOR_BACK} 100%)`;
 
 /** Documents — 135° cool → warm (Documents pile up). */
 export const PROTO_DOCUMENTS_GRADIENT = `linear-gradient(135deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 24%, ${PROTO_RECEPTION_PALETTE.copper} 58%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
@@ -120,8 +128,8 @@ const PROTO_FRONT_DESK_GRADIENT = `radial-gradient(ellipse 100% 88% at 22% 18%, 
 
 /** /proto section 2 — home gradient shapes; reception colours only. */
 export const PROTO_COMMUNICATION_GRADIENTS = {
-  agents: PROTO_AMBIENT_RADIAL,
-  "front-desk": PROTO_AGENTS_GRADIENT,
+  agents: PROTO_HARMONY_HEALTH_GRADIENT,
+  "front-desk": PROTO_RECEPTION_AGENTS_LINEAR,
   inbox: PROTO_DOCUMENTS_GRADIENT,
   ambient: PROTO_FRONT_DESK_GRADIENT,
   billing: PROTO_PRIOR_AUTH_GRADIENT,
@@ -147,7 +155,7 @@ export const PROTO_COMMUNICATION_GRIDS: Partial<
   ambient: "polar",
   billing: "hex",
   prototype: "dot",
-  integrate: "hex",
+  integrate: "dot",
   validate: "crosshatch",
   shortlist: "wave",
   "looking-ahead": "wave",
@@ -161,7 +169,7 @@ export const PROTO_COMMUNICATION_LINE_OPACITY: Partial<Record<ProtoCommunication
   ambient: 0.18,
   billing: 0.13,
   prototype: 0.2,
-  integrate: 0.14,
+  integrate: 0.1,
   validate: 0.16,
   shortlist: 0.14,
   "looking-ahead": 0.14,

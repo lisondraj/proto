@@ -582,7 +582,6 @@ function QueueClaim({
   );
 }
 
-const PROTO_LINE = "rgba(28, 22, 16, 0.1)";
 const PROTO_MOTION_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 const SUBMISSION_PIPELINE_STEPS = [
@@ -600,15 +599,20 @@ const SUBMISSION_PIPELINE_STEPS = [
   },
 ] as const;
 
-const SUBMISSION_STEP_ICON_COMPACT = 9;
-const SUBMISSION_STEP_ICON_ACTIVE = 14;
-const SUBMISSION_STEP_ROW_COMPACT = 22;
-const SUBMISSION_STEP_ROW_ACTIVE = 36;
-const SUBMISSION_STEP_GAP = 8;
-const SUBMISSION_PIPELINE_BEAT_MS = 1500;
-const SUBMISSION_PIPELINE_HOLD_MS = 2400;
+const SUBMISSION_TEXT = "#FFF9F2";
+const SUBMISSION_TEXT_DONE = "rgba(255, 249, 242, 0.78)";
+const SUBMISSION_LINE = "rgba(255, 249, 242, 0.26)";
 
-function ProtoStatusCheck({ size = SUBMISSION_STEP_ICON_COMPACT }: { size?: number }) {
+const SUBMISSION_STEP_ICON_COMPACT = 10;
+const SUBMISSION_STEP_ICON_ACTIVE = 18;
+const SUBMISSION_STEP_ICON_COL = 18;
+const SUBMISSION_STEP_ROW_COMPACT = 20;
+const SUBMISSION_STEP_ROW_ACTIVE = 34;
+const SUBMISSION_STEP_GAP = 10;
+const SUBMISSION_PIPELINE_BEAT_MS = 2000;
+const SUBMISSION_PIPELINE_HOLD_MS = 3200;
+
+function ProtoStatusCheck({ size = 10 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 10 10" fill="none" aria-hidden className="shrink-0">
       <circle cx="5" cy="5" r="5" fill={PROTO_STRONG} />
@@ -625,12 +629,12 @@ function ProtoStatusCheck({ size = SUBMISSION_STEP_ICON_COMPACT }: { size?: numb
 
 function SubmissionStepCheck({ size = SUBMISSION_STEP_ICON_COMPACT }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 10 10" fill="none" aria-hidden className="shrink-0">
-      <circle cx="5" cy="5" r="5" fill="#FFF9F2" />
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden className="shrink-0">
+      <circle cx="8" cy="8" r="7" fill="#FFF9F2" />
       <path
-        d="M2.8 5.1l1.2 1.2 3.1-3.2"
+        d="M5.2 8.1l1.85 1.85 3.9-3.95"
         stroke={PROTO_STRONG}
-        strokeWidth="1.1"
+        strokeWidth="1.45"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -638,20 +642,25 @@ function SubmissionStepCheck({ size = SUBMISSION_STEP_ICON_COMPACT }: { size?: n
   );
 }
 
-function ProtoStatusLoader({ size = SUBMISSION_STEP_ICON_COMPACT }: { size?: number }) {
-  const border = Math.max(1.2, size * 0.12);
+function SubmissionStepLoader({ size = SUBMISSION_STEP_ICON_COMPACT }: { size?: number }) {
   return (
-    <span
-      className="shrink-0 animate-spin rounded-full border-[rgba(28,22,16,0.1)] border-r-[rgba(28,22,16,0.18)] border-b-[rgba(28,22,16,0.18)] border-t-[rgba(28,22,16,0.52)]"
-      style={{
-        width: size,
-        height: size,
-        borderWidth: border,
-        animationDuration: "1.05s",
-        display: "block",
-      }}
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
       aria-hidden
-    />
+      className="shrink-0 animate-spin"
+      style={{ animationDuration: "0.85s" }}
+    >
+      <circle cx="8" cy="8" r="6.25" stroke="rgba(255,249,242,0.22)" strokeWidth="1.35" />
+      <path
+        d="M8 1.75a6.25 6.25 0 0 1 6.25 6.25"
+        stroke="#FFF9F2"
+        strokeWidth="1.35"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
 
@@ -661,7 +670,19 @@ function submissionPipelinePhase(tick: number) {
   return { visibleCount, completedCount };
 }
 
-function SubmissionPipelineSteps() {
+function submissionPipelineStackHeight(visibleCount: number, completedCount: number) {
+  let height = 0;
+  for (let index = 0; index < visibleCount; index += 1) {
+    const done = index < completedCount;
+    const active = !done && index === completedCount;
+    const rowHeight = active ? SUBMISSION_STEP_ROW_ACTIVE : SUBMISSION_STEP_ROW_COMPACT;
+    if (index > 0) height += SUBMISSION_STEP_GAP;
+    height += rowHeight;
+  }
+  return height;
+}
+
+function useSubmissionPipelineTick() {
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
@@ -684,114 +705,116 @@ function SubmissionPipelineSteps() {
     return () => window.clearTimeout(timer);
   }, []);
 
+  return tick;
+}
+
+function SubmissionPipelineSteps({ tick }: { tick: number }) {
   const { visibleCount, completedCount } = submissionPipelinePhase(tick);
   const steps = SUBMISSION_PIPELINE_STEPS.slice(0, visibleCount);
-
-  const maxStackHeight =
-    SUBMISSION_STEP_ROW_ACTIVE +
-    SUBMISSION_STEP_GAP +
-    SUBMISSION_STEP_ROW_COMPACT +
-    SUBMISSION_STEP_GAP +
-    SUBMISSION_STEP_ROW_COMPACT;
 
   return (
     <div style={{ width: "100%" }} aria-hidden>
       <div
         style={{
-          height: maxStackHeight,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
-          overflow: "hidden",
+          gap: SUBMISSION_STEP_GAP,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: SUBMISSION_STEP_GAP,
-          }}
-        >
-          {steps.map((step, index) => {
-            const done = index < completedCount;
-            const active = !done && index === completedCount;
-            const iconSize = active ? SUBMISSION_STEP_ICON_ACTIVE : SUBMISSION_STEP_ICON_COMPACT;
-            const rowHeight = active ? SUBMISSION_STEP_ROW_ACTIVE : SUBMISSION_STEP_ROW_COMPACT;
-            const hasConnector = index < steps.length - 1;
+        {steps.map((step, index) => {
+          const done = index < completedCount;
+          const active = !done && index === completedCount;
+          const iconSize = active ? SUBMISSION_STEP_ICON_ACTIVE : SUBMISSION_STEP_ICON_COMPACT;
+          const rowHeight = active ? SUBMISSION_STEP_ROW_ACTIVE : SUBMISSION_STEP_ROW_COMPACT;
+          const hasConnector = index < steps.length - 1;
 
-            return (
+          return (
+            <div
+              key={step.loading}
+              className={`${plusJakartaSans.className} relative flex items-center`}
+              style={{
+                height: rowHeight,
+                gap: 7,
+                transition: `height 560ms ${PROTO_MOTION_EASE}`,
+              }}
+            >
+              {hasConnector ? (
+                <div
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    left: SUBMISSION_STEP_ICON_COL / 2 - 0.5,
+                    top: SUBMISSION_STEP_ICON_COL + 1,
+                    bottom: -(SUBMISSION_STEP_GAP + 1),
+                    width: 0,
+                    borderLeft: `1px dotted ${SUBMISSION_LINE}`,
+                  }}
+                />
+              ) : null}
               <div
-                key={step.loading}
-                className={`${plusJakartaSans.className} relative flex items-center`}
+                className="relative z-[1] flex shrink-0 items-center justify-center"
                 style={{
-                  height: rowHeight,
-                  gap: active ? 8 : 5,
-                  borderRadius: 8,
-                  padding: active ? "0 8px" : "0 1px",
-                  marginLeft: active ? -8 : -1,
-                  background: active ? "rgba(255, 252, 247, 0.38)" : "transparent",
-                  boxShadow: active ? "inset 0 0 0 1px rgba(255, 252, 247, 0.24)" : "none",
-                  transition: `height 560ms ${PROTO_MOTION_EASE}, gap 560ms ${PROTO_MOTION_EASE}, background 420ms ${PROTO_MOTION_EASE}, box-shadow 420ms ${PROTO_MOTION_EASE}, padding 420ms ${PROTO_MOTION_EASE}, margin 420ms ${PROTO_MOTION_EASE}`,
+                  width: SUBMISSION_STEP_ICON_COL,
+                  height: SUBMISSION_STEP_ICON_COL,
                 }}
               >
-                {hasConnector ? (
-                  <div
-                    aria-hidden
-                    style={{
-                      position: "absolute",
-                      left: iconSize / 2 - 0.5,
-                      top: iconSize + 2,
-                      bottom: -(SUBMISSION_STEP_GAP + 2),
-                      width: 0,
-                      borderLeft: `1px dotted ${PROTO_LINE}`,
-                    }}
-                  />
-                ) : null}
-                <div
-                  className="relative z-[1] shrink-0 flex items-center justify-center"
-                  style={{
-                    width: iconSize,
-                    height: iconSize,
-                    transition: `width 560ms ${PROTO_MOTION_EASE}, height 560ms ${PROTO_MOTION_EASE}`,
-                  }}
-                >
-                  {done ? <SubmissionStepCheck size={iconSize} /> : <ProtoStatusLoader size={iconSize} />}
-                </div>
-                <span
-                  style={{
-                    color: PROTO_STRONG,
-                    fontSize: active ? 10.5 : 9,
-                    fontWeight: 600,
-                    lineHeight: 1.15,
-                    letterSpacing: "-0.02em",
-                    transition: `font-size 560ms ${PROTO_MOTION_EASE}`,
-                  }}
-                >
-                  {done ? step.done : step.loading}
-                </span>
+                {done ? <SubmissionStepCheck size={iconSize} /> : <SubmissionStepLoader size={iconSize} />}
               </div>
-            );
-          })}
-        </div>
+              <span
+                className="min-w-0 flex-1"
+                style={{
+                  color: done ? SUBMISSION_TEXT_DONE : SUBMISSION_TEXT,
+                  fontSize: active ? 11 : 9.5,
+                  fontWeight: 600,
+                  lineHeight: 1.2,
+                  letterSpacing: "-0.02em",
+                  transition: `color 420ms ${PROTO_MOTION_EASE}, font-size 560ms ${PROTO_MOTION_EASE}`,
+                }}
+              >
+                {done ? step.done : step.loading}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
 const TURN_SUBMISSIONS_ARTBOARD_HEIGHT_PX = 390;
+const SUBMISSION_PIPELINE_GAP_PX = 16;
 
 function TurnSubmissionsVisual() {
+  const tick = useSubmissionPipelineTick();
+  const { visibleCount, completedCount } = submissionPipelinePhase(tick);
+  const stackHeight = submissionPipelineStackHeight(visibleCount, completedCount);
+  const initialStackHeight = SUBMISSION_STEP_ROW_ACTIVE;
+  const lift = Math.max(0, (stackHeight - initialStackHeight) / 2);
+  const panelHalf = PROTO_PRODUCT_BOX_PX / 2;
+
   return (
     <div
-      className="flex flex-col items-center"
       style={{
+        position: "relative",
         width: PHONE_ARTBOARD_WIDTH_PX,
         height: TURN_SUBMISSIONS_ARTBOARD_HEIGHT_PX,
       }}
     >
-      <ProductBuildPanel />
-      <div style={{ width: PROTO_PRODUCT_BOX_PX, marginTop: 14 }}>
-        <SubmissionPipelineSteps />
+      <div
+        className="flex flex-col items-center"
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          width: PROTO_PRODUCT_BOX_PX,
+          transform: `translate(-50%, calc(-${panelHalf}px - ${lift}px))`,
+          transition: `transform 560ms ${PROTO_MOTION_EASE}`,
+        }}
+      >
+        <ProductBuildPanel />
+        <div style={{ width: "100%", marginTop: SUBMISSION_PIPELINE_GAP_PX }}>
+          <SubmissionPipelineSteps tick={tick} />
+        </div>
       </div>
     </div>
   );
