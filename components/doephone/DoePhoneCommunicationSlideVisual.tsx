@@ -65,10 +65,14 @@ export function DoePhoneCommunicationSlideVisual({
     case "prototype":
       return null;
     case "validate":
-      return <DoePhoneIntegrateVisual />;
+      return protoSite ? (
+        <ProtoSandboxBlankPanelVisual layout={layout} />
+      ) : (
+        <DoePhoneIntegrateVisual layout={layout} />
+      );
     case "shortlist":
     case "looking-ahead":
-      return <DoePhoneProtoShortlistVisual layout={layout} />;
+      return <DoePhoneProtoShortlistVisual layout={layout} protoSite={protoSite} />;
     default:
       return null;
   }

@@ -124,7 +124,7 @@ html[data-proto-page]:has(.doephone-mobile-root) .proto-feature-section__card > 
   height: 100% !important;
 }
 
-/* iPhone — fit-shader boxes (through turn-submissions) are 1/6 taller than the default card height. */
+/* iPhone — fit-shader feature boxes are 1/6 taller than the default card height. */
 html[data-proto-page]:has(.doephone-mobile-root)
   .proto-feature-section--fit-shader
   .proto-feature-section__card {
