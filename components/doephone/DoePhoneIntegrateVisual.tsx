@@ -1,8 +1,10 @@
 "use client";
 
-import { suisseIntl } from "@/lib/home/fonts";
+import { useEffect, useState, type ReactNode } from "react";
+
+import { inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
-import type { ReactNode } from "react";
+import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 
 const { ink: INK, accent: DOE_ORANGE, divider: DIVIDER } = CAROUSEL_MENU_UI;
 
@@ -449,8 +451,23 @@ const DESKTOP_INTEGRATION_SIZES = {
   outerMaxWidth: "min(100%, 58rem)",
 } as const;
 
-/** Integration mosaic — Integrate carousel slide. */
-export function DoePhoneIntegrateVisual({ layout = "phone" }: { layout?: "phone" | "desktop" }) {
+const PHONE_ARTBOARD_WIDTH_PX = 360;
+const PHONE_ARTBOARD_HEIGHT_PX = 360;
+const PROTO_PRODUCT_BOX_PX = Math.round(PHONE_ARTBOARD_WIDTH_PX * 0.78);
+/** Match top shader boxes (set-rules / talent) UI scale. */
+const PROTO_TOP_SHADER_UI_SCALE = 0.86;
+const PROTO_GLASS_BG =
+  "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,251,246,0.84) 45%, rgba(255,248,242,0.74) 100%)";
+const PROTO_MUTED = "#5E564C";
+const PROTO_MUTED_LIGHT = "#8A8074";
+const PROTO_SOFT = "rgba(28, 22, 16, 0.045)";
+const PROTO_STRONG = "#1C1610";
+
+function IntegrationMosaic({
+  layout,
+}: {
+  layout: "phone" | "desktop";
+}) {
   const isDesktop = layout === "desktop";
   const sizes = isDesktop ? DESKTOP_INTEGRATION_SIZES : PHONE_INTEGRATION_SIZES;
   const tileSizes = {
@@ -463,28 +480,409 @@ export function DoePhoneIntegrateVisual({ layout = "phone" }: { layout?: "phone"
   const outerMaxWidth = isDesktop ? DESKTOP_INTEGRATION_SIZES.outerMaxWidth : sizes.maxWidth;
 
   return (
+    <div className="flex w-full flex-col" style={{ gap: sizes.tileGap, maxWidth: outerMaxWidth }}>
+      {INTEGRATION_ROWS.map((row, index) =>
+        isDesktop ? (
+          <IntegrationRowWithFlanks
+            key={`row-${index}`}
+            rowIndex={index}
+            centerTiles={row}
+            left={DESKTOP_INTEGRATION_FLANKS[index]!.left}
+            right={DESKTOP_INTEGRATION_FLANKS[index]!.right}
+            sizes={tileSizes}
+            gap={sizes.tileGap}
+          />
+        ) : (
+          <IntegrationRow key={`row-${index}`} tiles={row} sizes={tileSizes} gap={sizes.tileGap} />
+        ),
+      )}
+    </div>
+  );
+}
+
+const CLAIM_QUEUE = [
+  { id: "CLM-1062", type: "Theft", score: 58, active: false },
+  { id: "CLM-1051", type: "Water leak", score: 74, active: false },
+  { id: "CLM-1057", type: "Roof hail", score: 61, active: false },
+  { id: "CLM-1048", type: "Auto glass", score: 92, active: true },
+] as const;
+
+function QueueClaim({
+  id,
+  type,
+  score,
+  active,
+}: {
+  id: string;
+  type: string;
+  score: number;
+  active: boolean;
+}) {
+  return (
     <div
-      className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
-      style={{ maxWidth: isDesktop ? outerMaxWidth : CAROUSEL_MENU_UI.maxWidthPhone }}
+      className="flex min-h-0 flex-1 items-center"
+      style={{
+        borderRadius: 7,
+        background: active ? "rgba(28, 22, 16, 0.08)" : "rgba(28, 22, 16, 0.035)",
+        padding: "7px 8px",
+        gap: 6,
+        boxSizing: "border-box",
+      }}
+    >
+      <div
+        className="shrink-0"
+        style={{
+          width: 4,
+          alignSelf: "stretch",
+          borderRadius: 999,
+          background: active ? PROTO_STRONG : "rgba(28, 22, 16, 0.12)",
+        }}
+        aria-hidden
+      />
+      <div className="min-w-0 flex-1">
+        <div
+          className={plusJakartaSans.className}
+          style={{
+            color: PROTO_STRONG,
+            fontSize: 10,
+            fontWeight: 650,
+            lineHeight: 1,
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {id}
+        </div>
+        <div
+          className={inter.className}
+          style={{
+            color: PROTO_MUTED,
+            fontSize: 8,
+            fontWeight: 500,
+            lineHeight: 1,
+            marginTop: 3,
+          }}
+        >
+          {type}
+        </div>
+      </div>
+      <div
+        className={inter.className}
+        style={{
+          color: active ? "#FFF9F2" : PROTO_MUTED,
+          background: active ? PROTO_STRONG : "rgba(28, 22, 16, 0.06)",
+          borderRadius: 999,
+          padding: "4px 6px",
+          fontSize: 8,
+          fontWeight: 700,
+          lineHeight: 1,
+        }}
+      >
+        {score}
+      </div>
+    </div>
+  );
+}
+
+const SUBMISSION_PIPELINE_STEPS = [
+  {
+    loading: "Retrieving build submission...",
+    done: "Sandbox submission secured",
+  },
+  {
+    loading: "Refactoring into your codebase...",
+    done: "Integrated with your codebase",
+  },
+  {
+    loading: "Shipping to your environment...",
+    done: "Live in your environment",
+  },
+] as const;
+
+const SUBMISSION_STEP_ICON = 16;
+const SUBMISSION_STEP_ROW_H = 28;
+const SUBMISSION_STEP_GAP = 12;
+const SUBMISSION_PIPELINE_BEAT_MS = 1900;
+const SUBMISSION_PIPELINE_HOLD_MS = 2600;
+
+function SubmissionStepLoader() {
+  return (
+    <svg width={SUBMISSION_STEP_ICON} height={SUBMISSION_STEP_ICON} viewBox="0 0 16 16" aria-hidden>
+      <circle cx={8} cy={8} r={8} fill={PROTO_STRONG} />
+      <circle
+        cx={8}
+        cy={8}
+        r={5.5}
+        fill="none"
+        stroke="#FFF9F2"
+        strokeWidth={1.65}
+        strokeLinecap="round"
+        strokeDasharray="12 22"
+        className="animate-spin origin-center"
+        style={{ animationDuration: "0.95s", transformOrigin: "center" }}
+      />
+    </svg>
+  );
+}
+
+function SubmissionStepCheck() {
+  return (
+    <svg width={SUBMISSION_STEP_ICON} height={SUBMISSION_STEP_ICON} viewBox="0 0 16 16" aria-hidden>
+      <circle cx={8} cy={8} r={8} fill="#FFF9F2" />
+      <path
+        d="M4.5 8.2l2 2 5.3-5.4"
+        stroke={PROTO_STRONG}
+        strokeWidth={1.55}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function SubmissionPipelineSteps() {
+  const [tick, setTick] = useState(0);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      setTick(5);
+      return;
+    }
+
+    let phase = 0;
+    let timer = 0;
+
+    const run = () => {
+      phase = phase >= 6 ? 0 : phase + 1;
+      setTick(phase);
+      timer = window.setTimeout(run, phase === 6 ? SUBMISSION_PIPELINE_HOLD_MS : SUBMISSION_PIPELINE_BEAT_MS);
+    };
+
+    timer = window.setTimeout(run, SUBMISSION_PIPELINE_BEAT_MS);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const visibleCount = tick <= 1 ? 1 : tick <= 3 ? 2 : 3;
+  const completedCount = tick === 0 ? 0 : tick <= 2 ? 1 : tick <= 4 ? 2 : 3;
+  const slotStride = SUBMISSION_STEP_ROW_H + SUBMISSION_STEP_GAP;
+  const stackHeight = visibleCount * SUBMISSION_STEP_ROW_H + Math.max(0, visibleCount - 1) * SUBMISSION_STEP_GAP;
+  const viewportHeight = 3 * SUBMISSION_STEP_ROW_H + 2 * SUBMISSION_STEP_GAP;
+  const floatOffset = viewportHeight - stackHeight;
+
+  return (
+    <div
+      className="mt-auto flex min-h-0 flex-1 flex-col justify-end"
+      style={{ marginTop: 12, minHeight: 0 }}
       aria-hidden
     >
-      <div className="flex w-full flex-col" style={{ gap: sizes.tileGap, maxWidth: outerMaxWidth }}>
-        {INTEGRATION_ROWS.map((row, index) =>
-          isDesktop ? (
-            <IntegrationRowWithFlanks
-              key={`row-${index}`}
-              rowIndex={index}
-              centerTiles={row}
-              left={DESKTOP_INTEGRATION_FLANKS[index]!.left}
-              right={DESKTOP_INTEGRATION_FLANKS[index]!.right}
-              sizes={tileSizes}
-              gap={sizes.tileGap}
-            />
-          ) : (
-            <IntegrationRow key={`row-${index}`} tiles={row} sizes={tileSizes} gap={sizes.tileGap} />
-          ),
-        )}
+      <div style={{ height: viewportHeight, overflow: "hidden" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: SUBMISSION_STEP_GAP,
+            transform: `translateY(${floatOffset}px)`,
+            transition: "transform 620ms cubic-bezier(0.28, 0.84, 0.24, 1)",
+          }}
+        >
+          {SUBMISSION_PIPELINE_STEPS.slice(0, visibleCount).map((step, index) => {
+            const done = index < completedCount;
+            const isLast = index === visibleCount - 1;
+
+            return (
+              <div
+                key={step.loading}
+                className="relative flex items-center"
+                style={{
+                  height: SUBMISSION_STEP_ROW_H,
+                  gap: 9,
+                }}
+              >
+                {!isLast ? (
+                  <div
+                    aria-hidden
+                    style={{
+                      position: "absolute",
+                      left: SUBMISSION_STEP_ICON / 2 - 0.5,
+                      top: SUBMISSION_STEP_ICON + 2,
+                      bottom: -(SUBMISSION_STEP_GAP + 2),
+                      width: 1,
+                      backgroundImage: `repeating-linear-gradient(to bottom, ${PROTO_STRONG} 0, ${PROTO_STRONG} 2px, transparent 2px, transparent 5px)`,
+                      opacity: 0.28,
+                    }}
+                  />
+                ) : null}
+                <div className="relative z-[1] shrink-0">
+                  {done ? <SubmissionStepCheck /> : <SubmissionStepLoader />}
+                </div>
+                <div
+                  className={plusJakartaSans.className}
+                  style={{
+                    color: PROTO_STRONG,
+                    fontSize: 9.5,
+                    fontWeight: 600,
+                    lineHeight: 1.15,
+                    letterSpacing: "-0.02em",
+                    transition: "opacity 320ms ease",
+                    opacity: done ? 1 : 0.92,
+                  }}
+                >
+                  {done ? step.done : step.loading}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
+    </div>
+  );
+}
+
+function ProductBuildPanel() {
+  return (
+    <div
+      className={`flex flex-col ${suisseIntl.className}`}
+      style={{
+        width: PROTO_PRODUCT_BOX_PX,
+        height: PROTO_PRODUCT_BOX_PX,
+        borderRadius: "0.55rem",
+        background: PROTO_GLASS_BG,
+        backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+        WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+        boxSizing: "border-box",
+        padding: "13px",
+        overflow: "hidden",
+        WebkitFontSmoothing: "antialiased",
+      }}
+    >
+      <div
+        className={`${plusJakartaSans.className} shrink-0`}
+        style={{
+          color: PROTO_STRONG,
+          fontSize: 16,
+          fontWeight: 600,
+          lineHeight: 1,
+          letterSpacing: "-0.035em",
+        }}
+      >
+        ClaimPilot
+      </div>
+
+      <div className="flex min-h-0 flex-1" style={{ gap: 8, marginTop: 12 }}>
+        <div className="flex min-w-0 flex-[0.86] flex-col" style={{ gap: 6 }}>
+          {CLAIM_QUEUE.map((claim) => (
+            <QueueClaim key={claim.id} {...claim} />
+          ))}
+        </div>
+
+        <div
+          className="flex min-w-0 flex-1 flex-col"
+          style={{
+            borderRadius: 9,
+            background: PROTO_SOFT,
+            padding: "11px",
+            boxSizing: "border-box",
+          }}
+        >
+          <div
+            className={plusJakartaSans.className}
+            style={{
+              color: PROTO_STRONG,
+              fontSize: 16,
+              fontWeight: 600,
+              lineHeight: 1,
+              letterSpacing: "-0.035em",
+            }}
+          >
+            Auto glass
+          </div>
+          <div
+            className={`${inter.className} flex items-center`}
+            style={{
+              color: PROTO_MUTED,
+              fontSize: 9,
+              fontWeight: 500,
+              lineHeight: 1,
+              gap: 4,
+              marginTop: 6,
+            }}
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
+              <circle cx="5" cy="5" r="5" fill={PROTO_STRONG} />
+              <path
+                d="M2.8 5.1l1.2 1.2 3.1-3.2"
+                stroke="#FFF9F2"
+                strokeWidth="1.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Policy verified
+          </div>
+
+          <SubmissionPipelineSteps />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Integration mosaic — Integrate carousel slide. */
+export function DoePhoneIntegrateVisual({
+  layout = "phone",
+  fitTopShader = false,
+}: {
+  layout?: "phone" | "desktop";
+  /** /proto — match top feature-box scale and artboard fit. */
+  fitTopShader?: boolean;
+}) {
+  const isDesktop = layout === "desktop";
+
+  if (fitTopShader && !isDesktop) {
+    return (
+      <div className={`mx-auto h-full w-full ${suisseIntl.className}`} aria-hidden>
+        <ProtoPhoneScaledArtboard
+          width={PHONE_ARTBOARD_WIDTH_PX}
+          height={PHONE_ARTBOARD_HEIGHT_PX}
+          fitScale={1.06 * PROTO_TOP_SHADER_UI_SCALE}
+          fixedBounds
+        >
+          <div
+            className="flex h-full w-full items-center justify-center"
+            style={{
+              width: PHONE_ARTBOARD_WIDTH_PX,
+              height: PHONE_ARTBOARD_HEIGHT_PX,
+            }}
+          >
+            <ProductBuildPanel />
+          </div>
+        </ProtoPhoneScaledArtboard>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
+      style={{
+        maxWidth: isDesktop
+          ? DESKTOP_INTEGRATION_SIZES.outerMaxWidth
+          : CAROUSEL_MENU_UI.maxWidthPhone,
+      }}
+      aria-hidden
+    >
+      {fitTopShader ? (
+        <div
+          style={{
+            transform: `scale(${PROTO_TOP_SHADER_UI_SCALE})`,
+            transformOrigin: "center center",
+          }}
+        >
+          <ProductBuildPanel />
+        </div>
+      ) : (
+        <IntegrationMosaic layout={layout} />
+      )}
     </div>
   );
 }

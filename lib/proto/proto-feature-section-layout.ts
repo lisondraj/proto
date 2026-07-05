@@ -11,7 +11,7 @@ export const PROTO_FEATURE_SECTION_LAYOUTS: readonly ProtoFeatureSectionLayout[]
   { kind: "full-panel" }, // front-desk
   { kind: "split", boxOnLeft: false }, // inbox
   { kind: "full-panel" }, // ambient
-  { kind: "split", boxOnLeft: false }, // integrate
+  { kind: "split", boxOnLeft: true }, // integrate (turn submissions — match top shader bands)
   { kind: "full-panel" }, // validate
   { kind: "split", boxOnLeft: true, boxOnTop: false }, // shortlist
   { kind: "split", boxOnLeft: true, boxOnTop: false }, // looking-ahead

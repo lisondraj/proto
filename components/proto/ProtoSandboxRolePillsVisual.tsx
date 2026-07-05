@@ -1,17 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
+import { inter, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 
-/** Match challenge-rules / submissions dropdown pill fill. */
-const GLASS_BG =
+/** Match set-rules dropdown pill fill. */
+const PROTO_GLASS_BG =
   "linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,251,246,0.84) 45%, rgba(255,248,242,0.74) 100%)";
-const INK = "#1C1610";
+const PROTO_INK = "#1C1610";
 
 const PHONE_ARTBOARD_WIDTH_PX = 360;
 const PHONE_ARTBOARD_HEIGHT_PX = 360;
+const PROTO_BOX_PX = Math.round(PHONE_ARTBOARD_WIDTH_PX * 0.78);
+/** Same footprint as set-rules menus. */
+const PROTO_DROPDOWN_GRID_W = Math.round(PROTO_BOX_PX * 0.92);
+const PROTO_BOX_RADIUS = "0.55rem";
+/** Match set-rules UI scale. */
+const PROTO_RULES_UI_SCALE = 0.86;
+
+const PROTO_PILL_GLASS = {
+  background: PROTO_GLASS_BG,
+  backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+  WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+} as const;
 
 /** Long list for seamless infinite spin. */
 const ROLE_PILLS = [
@@ -35,14 +47,16 @@ const ROLE_PILLS = [
   "Analytics",
 ] as const;
 
-const ITEM_H = 48;
-const ITEM_GAP = 4;
+/** Match set-rules pill row height (11px pad × 2 + 11px type). */
+const ITEM_H = 38;
+const ITEM_GAP = 7;
 const STRIDE = ITEM_H + ITEM_GAP;
-/** Exactly three pills visible. */
+/** Three full pills, plus fade room for partial pills at the edges. */
 const VISIBLE = 3;
-const VIEWPORT_H = STRIDE * VISIBLE;
-/** px per second */
-const SPIN_SPEED = 17.5;
+const FADE_PAD = Math.round(STRIDE * 0.72);
+const VIEWPORT_H = STRIDE * VISIBLE + FADE_PAD * 2;
+/** Steady, readable scroll — px per second. */
+const SPIN_SPEED = 13.5;
 
 function mod(n: number, m: number) {
   return ((n % m) + m) % m;
@@ -58,19 +72,22 @@ function smootherstep(t: number) {
   return x * x * x * (x * (x * 6 - 15) + 10);
 }
 
-const MAX_SCALE = 1.12;
-const MIN_SCALE = 0.8;
+/** Milder than before so center pills read like set-rules controls. */
+const MAX_SCALE = 1.04;
+const MIN_SCALE = 0.92;
 /** Base width so max scale fills the column without clipping. */
 const PILL_WIDTH_PCT = 100 / MAX_SCALE;
+/** Distance falloff — wider than one stride so focus eases between rows. */
+const FOCUS_RADIUS = STRIDE * 1.55;
 
 /**
  * Distance from center (0 = middle) → scale / opacity.
- * One transform scales pill + text together; width is pre-sized for MAX_SCALE.
+ * Opacity falls to 0 at the fade edge so mask + tier dissolve together.
  */
 function tierFromDistance(distPx: number) {
-  const t = smootherstep(distPx / (STRIDE * 1.15));
+  const t = smootherstep(distPx / FOCUS_RADIUS);
   const scale = MAX_SCALE - t * (MAX_SCALE - MIN_SCALE);
-  const opacity = 1 - t * 0.7;
+  const opacity = 1 - t * 0.92;
   return { scale, opacity };
 }
 
@@ -83,43 +100,50 @@ function RolePill({
   scale: number;
   opacity: number;
 }) {
+  // Stronger lift on the focused center pill; softer on the edges.
+  const focus = clamp((scale - MIN_SCALE) / (MAX_SCALE - MIN_SCALE), 0, 1);
+  const shadowY = 3 + focus * 5;
+  const shadowBlur = 10 + focus * 12;
+  const shadowAlpha = 0.1 + focus * 0.1;
+
   return (
     <div
       className="flex w-full items-center justify-center"
       style={{ height: ITEM_H }}
     >
       <div
-        className="flex items-center justify-center text-center"
+        className="flex items-center justify-center"
         style={{
-          // Fixed fraction of column; scale() grows/shrinks pill and text as one.
-          // At MAX_SCALE visual width = 100% — never clips either column.
           width: `${PILL_WIDTH_PCT}%`,
-          background: GLASS_BG,
-          backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
-          WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
-          borderRadius: 999,
-          minHeight: 44,
-          padding: "12px 10px",
+          ...PROTO_PILL_GLASS,
+          borderRadius: PROTO_BOX_RADIUS,
+          padding: "11px 10px",
+          boxSizing: "border-box",
           opacity,
           transform: `scale(${scale})`,
           transformOrigin: "center center",
           willChange: "transform, opacity",
-          boxSizing: "border-box",
+          boxShadow: `
+            0 ${shadowY}px ${shadowBlur}px rgba(28, 22, 16, ${shadowAlpha}),
+            0 1px 2px rgba(28, 22, 16, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.72),
+            inset 0 -1px 0 rgba(28, 22, 16, 0.06)
+          `,
         }}
       >
-        <div
-          className={plusJakartaSans.className}
+        <span
+          className={`${inter.className} min-w-0 truncate`}
           style={{
-            color: INK,
-            fontSize: 12,
-            fontWeight: 600,
-            lineHeight: 1.1,
-            letterSpacing: "-0.025em",
+            color: PROTO_INK,
+            fontSize: 11,
+            fontWeight: 500,
+            lineHeight: 1.15,
+            letterSpacing: "-0.01em",
             whiteSpace: "nowrap",
           }}
         >
           {role}
-        </div>
+        </span>
       </div>
     </div>
   );
@@ -145,11 +169,11 @@ function SpinnerColumn({
       <div
         className="absolute inset-0 overflow-hidden"
         style={{
-          // Long soft ramps — top/bottom fade in and out gradually.
+          // Long soft ramps — pills dissolve in/out over ~¾ of a row.
           WebkitMaskImage:
-            "linear-gradient(180deg, transparent 0%, #000 28%, #000 72%, transparent 100%)",
+            "linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%)",
           maskImage:
-            "linear-gradient(180deg, transparent 0%, #000 28%, #000 72%, transparent 100%)",
+            "linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%)",
         }}
       >
         <div
@@ -160,6 +184,7 @@ function SpinnerColumn({
             top: 0,
             transform: `translate3d(0, ${-shift}px, 0)`,
             willChange: "transform",
+            backfaceVisibility: "hidden",
           }}
         >
           {track.map((role, index) => {
@@ -188,11 +213,10 @@ function SpinnerColumn({
 }
 
 function RolePillsGrid() {
-  const [offset, setOffset] = useState(0);
+  const [shift, setShift] = useState(0);
+  const offsetRef = useRef(0);
   const loopH = ROLE_PILLS.length * STRIDE;
-  // Shared shift = pills always side-by-side; labels ride on each pill.
   // Right column runs the list in reverse so the two reels feel opposite.
-  const shift = mod(offset, loopH);
   const rightRoles = [...ROLE_PILLS].reverse();
 
   useEffect(() => {
@@ -203,42 +227,36 @@ function RolePillsGrid() {
     let last = performance.now();
 
     const tick = (now: number) => {
-      const dt = Math.min((now - last) / 1000, 0.05);
+      // Cap dt so tab-switches don't jump a full stride.
+      const dt = Math.min((now - last) / 1000, 0.032);
       last = now;
-      setOffset((o) => o + SPIN_SPEED * dt);
+      offsetRef.current = mod(offsetRef.current + SPIN_SPEED * dt, loopH);
+      setShift(offsetRef.current);
       raf = requestAnimationFrame(tick);
     };
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [loopH]);
 
   return (
     <div
-      className="flex h-full w-full items-center justify-center"
+      className="flex"
       style={{
-        width: PHONE_ARTBOARD_WIDTH_PX,
-        height: PHONE_ARTBOARD_HEIGHT_PX,
-        padding: "28px 20px",
+        width: PROTO_DROPDOWN_GRID_W,
+        height: PROTO_BOX_PX,
+        gap: 7,
+        alignContent: "center",
+        alignItems: "center",
         boxSizing: "border-box",
+        overflow: "visible",
       }}
     >
-      <div
-        className="flex w-full"
-        style={{
-          gap: 12,
-          height: VIEWPORT_H,
-        }}
-      >
-        <SpinnerColumn roles={ROLE_PILLS} shift={shift} />
-        <SpinnerColumn roles={rightRoles} shift={shift} />
-      </div>
+      <SpinnerColumn roles={ROLE_PILLS} shift={shift} />
+      <SpinnerColumn roles={rightRoles} shift={shift} />
     </div>
   );
 }
-
-/** Slightly smaller than the default artboard fit. */
-const PROTO_TALENT_UI_SCALE = 0.9;
 
 /** /proto ambient slide — infinite dual-column role spinner. */
 export function ProtoSandboxRolePillsVisual({
@@ -252,10 +270,18 @@ export function ProtoSandboxRolePillsVisual({
         <ProtoPhoneScaledArtboard
           width={PHONE_ARTBOARD_WIDTH_PX}
           height={PHONE_ARTBOARD_HEIGHT_PX}
-          fitScale={PROTO_TALENT_UI_SCALE}
+          fitScale={1.06 * PROTO_RULES_UI_SCALE}
           fixedBounds
         >
-          <RolePillsGrid />
+          <div
+            className="flex h-full w-full items-center justify-center"
+            style={{
+              width: PHONE_ARTBOARD_WIDTH_PX,
+              height: PHONE_ARTBOARD_HEIGHT_PX,
+            }}
+          >
+            <RolePillsGrid />
+          </div>
         </ProtoPhoneScaledArtboard>
       </div>
     );
@@ -264,12 +290,12 @@ export function ProtoSandboxRolePillsVisual({
   return (
     <div
       className={`mx-auto flex h-full w-full items-center justify-center ${suisseIntl.className}`}
+      style={{ maxWidth: "min(100%, 28rem)" }}
       aria-hidden
     >
       <div
         style={{
-          width: "min(100%, 22rem)",
-          transform: `scale(${PROTO_TALENT_UI_SCALE})`,
+          transform: `scale(${PROTO_RULES_UI_SCALE})`,
           transformOrigin: "center center",
         }}
       >

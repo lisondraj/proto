@@ -49,7 +49,12 @@ export function DoePhoneCommunicationSlideVisual({
         <DoePhoneAmbientVisual />
       );
     case "integrate":
-      return <DoePhoneIntegrateVisual />;
+      return (
+        <DoePhoneIntegrateVisual
+          layout={layout}
+          fitTopShader={protoSite}
+        />
+      );
     case "billing":
       return (
         <DoePhoneBillingVisual

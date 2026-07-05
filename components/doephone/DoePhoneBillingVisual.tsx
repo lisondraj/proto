@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import { inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { CAROUSEL_MENU_UI } from "@/lib/doephone/carousel-menu-visual-styles";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
@@ -36,20 +38,6 @@ const TIMELINE = [
   { label: "Awaiting payer decision", time: "Pending", state: "active" as const },
 ] as const;
 
-/** Companies set challenge-sandbox restrictions via these menus. */
-const PROTO_DROPDOWN_PILLS = [
-  "1 hour",
-  "Clipboard off",
-  "Allow MCPs",
-  "Video & Audio",
-  "Read-only FS",
-  "Opus 4.8",
-] as const;
-
-/** Other models in the open menu (Opus stays on the trigger only). */
-const PROTO_MODEL_OPTIONS = ["GPT-4o", "Gemini 2.5 Pro"] as const;
-const PROTO_MODEL_HIGHLIGHT = "GPT-4o";
-
 /** Match former Humira box corner radius. */
 const PROTO_BOX_RADIUS = "0.55rem";
 /** Slightly under the old card width — still wide enough for full labels. */
@@ -60,6 +48,41 @@ const PROTO_PILL_GLASS = {
   backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
   WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
 } as const;
+
+const PROTO_OPTION_H = 31;
+const PROTO_MENU_PAD = 4;
+const PROTO_HIGHLIGHT_BG = "rgba(28, 22, 16, 0.1)";
+const PROTO_HIGHLIGHT_SHADOW = "0 2px 10px rgba(28, 22, 16, 0.14)";
+
+/** Slow choreography — model → duration → media, then loop. */
+const PROTO_RULES_BEAT_MS = 1400;
+
+/** Alternatives only — selected value stays on the trigger, not in the list. */
+const PROTO_MODEL_OPTIONS = ["GPT-4o", "Gemini 2.5 Pro"] as const;
+const PROTO_DURATION_OPTIONS = ["30 min", "4 hours"] as const;
+const PROTO_MEDIA_OPTIONS = ["Audio only", "No recording"] as const;
+
+type ProtoOpenMenu = "model" | "duration" | "media" | null;
+
+type ProtoRulesState = {
+  openMenu: ProtoOpenMenu;
+  modelValue: string;
+  durationValue: string;
+  mediaValue: string;
+  modelHighlight: number;
+  durationHighlight: number;
+  mediaHighlight: number;
+};
+
+const PROTO_RULES_INITIAL: ProtoRulesState = {
+  openMenu: "model",
+  modelValue: "Opus 4.8",
+  durationValue: "1 hour",
+  mediaValue: "Video & Audio",
+  modelHighlight: 0,
+  durationHighlight: 0,
+  mediaHighlight: 0,
+};
 
 type BillingChrome = "doe" | "proto";
 
@@ -193,7 +216,10 @@ function DropdownChevron({ open = false }: { open?: boolean }) {
       fill="none"
       aria-hidden
       className="shrink-0"
-      style={{ transform: open ? "rotate(180deg)" : undefined }}
+      style={{
+        transform: open ? "rotate(180deg)" : undefined,
+        transition: "transform 480ms cubic-bezier(0.28, 0.84, 0.24, 1)",
+      }}
     >
       <path
         d="M2.2 3.6L5 6.4l2.8-2.8"
@@ -217,6 +243,8 @@ function ProtoDropdownPill({ value, open = false }: { value: string; open?: bool
         padding: "11px 10px",
         gap: 6,
         boxSizing: "border-box",
+        transition: "box-shadow 480ms cubic-bezier(0.28, 0.84, 0.24, 1)",
+        boxShadow: open ? "0 4px 16px rgba(28, 22, 16, 0.12)" : "none",
       }}
     >
       <span
@@ -237,53 +265,234 @@ function ProtoDropdownPill({ value, open = false }: { value: string; open?: bool
   );
 }
 
-/** Open model menu under the 6th pill — alternatives only, no company names. */
-function ProtoModelDropdown() {
+function ProtoMenuPanel({
+  options,
+  highlightIndex,
+  open,
+}: {
+  options: readonly string[];
+  highlightIndex: number;
+  open: boolean;
+}) {
   return (
-    <div className="relative min-w-0" style={{ zIndex: 2 }}>
-      <ProtoDropdownPill value="Opus 4.8" open />
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: "100%",
-          marginTop: 4,
-          borderRadius: PROTO_BOX_RADIUS,
-          ...PROTO_PILL_GLASS,
-          padding: "4px",
-          boxSizing: "border-box",
-        }}
-      >
-        {PROTO_MODEL_OPTIONS.map((model) => {
-          const highlighted = model === PROTO_MODEL_HIGHLIGHT;
-
-          return (
-            <div
-              key={model}
-              className={inter.className}
-              style={{
-                color: PROTO_INK,
-                fontSize: 11,
-                fontWeight: 500,
-                lineHeight: 1.15,
-                letterSpacing: "-0.01em",
-                padding: "8px 8px",
-                borderRadius: `calc(${PROTO_BOX_RADIUS} - 2px)`,
-                background: highlighted ? "rgba(28, 22, 16, 0.1)" : undefined,
-                whiteSpace: "nowrap",
-              }}
-            >
-              {model}
-            </div>
-          );
-        })}
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: "100%",
+        marginTop: 4,
+        borderRadius: PROTO_BOX_RADIUS,
+        ...PROTO_PILL_GLASS,
+        padding: PROTO_MENU_PAD,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        opacity: open ? 1 : 0,
+        transform: open ? "translateY(0) scale(1)" : "translateY(-4px) scale(0.98)",
+        transformOrigin: "top center",
+        pointerEvents: open ? "auto" : "none",
+        transition:
+          "opacity 520ms cubic-bezier(0.28, 0.84, 0.24, 1), transform 520ms cubic-bezier(0.28, 0.84, 0.24, 1)",
+        boxShadow: open ? "0 8px 22px rgba(28, 22, 16, 0.14)" : "none",
+        zIndex: 3,
+      }}
+    >
+      <div className="relative">
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: highlightIndex * PROTO_OPTION_H,
+            height: PROTO_OPTION_H,
+            borderRadius: `calc(${PROTO_BOX_RADIUS} - 2px)`,
+            background: PROTO_HIGHLIGHT_BG,
+            boxShadow: PROTO_HIGHLIGHT_SHADOW,
+            transition:
+              "top 700ms cubic-bezier(0.28, 0.84, 0.24, 1), box-shadow 700ms cubic-bezier(0.28, 0.84, 0.24, 1)",
+          }}
+        />
+        {options.map((option) => (
+          <div
+            key={option}
+            className={inter.className}
+            style={{
+              position: "relative",
+              zIndex: 1,
+              color: PROTO_INK,
+              fontSize: 11,
+              fontWeight: 500,
+              lineHeight: 1.15,
+              letterSpacing: "-0.01em",
+              height: PROTO_OPTION_H,
+              display: "flex",
+              alignItems: "center",
+              padding: "0 8px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {option}
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
+function ProtoMenuField({
+  value,
+  open,
+  options,
+  highlightIndex,
+  zIndex,
+}: {
+  value: string;
+  open: boolean;
+  options: readonly string[];
+  highlightIndex: number;
+  zIndex: number;
+}) {
+  return (
+    <div className="relative min-w-0" style={{ zIndex }}>
+      <ProtoDropdownPill value={value} open={open} />
+      <ProtoMenuPanel options={options} highlightIndex={highlightIndex} open={open} />
+    </div>
+  );
+}
+
 function ProtoDropdownGrid() {
+  const [state, setState] = useState<ProtoRulesState>(PROTO_RULES_INITIAL);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+
+    let step = 0;
+    let timer = 0;
+
+    const run = () => {
+      step = (step + 1) % 10;
+
+      setState((prev) => {
+        switch (step) {
+          case 1:
+            // Highlight slides from GPT-4o → Gemini.
+            return { ...prev, openMenu: "model", modelHighlight: 1 };
+          case 2:
+            // Commit Gemini, close model menu.
+            return {
+              ...prev,
+              openMenu: null,
+              modelValue: PROTO_MODEL_OPTIONS[1],
+              modelHighlight: 1,
+            };
+          case 3:
+            // Open duration menu — trigger stays "1 hour"; list is alternatives only.
+            return {
+              ...prev,
+              openMenu: "duration",
+              durationHighlight: 0,
+              durationValue: PROTO_RULES_INITIAL.durationValue,
+            };
+          case 4:
+            // Highlight second duration.
+            return { ...prev, openMenu: "duration", durationHighlight: 1 };
+          case 5:
+            // Commit 4 hours, close duration.
+            return {
+              ...prev,
+              openMenu: null,
+              durationValue: PROTO_DURATION_OPTIONS[1],
+              durationHighlight: 1,
+            };
+          case 6:
+            // Open media menu — trigger stays "Video & Audio"; list is alternatives only.
+            return {
+              ...prev,
+              openMenu: "media",
+              mediaHighlight: 0,
+              mediaValue: PROTO_RULES_INITIAL.mediaValue,
+            };
+          case 7:
+            // Highlight No recording.
+            return { ...prev, openMenu: "media", mediaHighlight: 1 };
+          case 8:
+            // Commit No recording, close media.
+            return {
+              ...prev,
+              openMenu: null,
+              mediaValue: PROTO_MEDIA_OPTIONS[1],
+              mediaHighlight: 1,
+            };
+          case 9:
+            // Brief pause with all closed.
+            return { ...prev, openMenu: null };
+          case 0:
+          default:
+            // Reset and reopen model menu for the next loop.
+            return { ...PROTO_RULES_INITIAL };
+        }
+      });
+
+      timer = window.setTimeout(run, PROTO_RULES_BEAT_MS);
+    };
+
+    timer = window.setTimeout(run, PROTO_RULES_BEAT_MS);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const pills = [
+    {
+      key: "duration",
+      value: state.durationValue,
+      open: state.openMenu === "duration",
+      options: PROTO_DURATION_OPTIONS,
+      highlightIndex: state.durationHighlight,
+      zIndex: state.openMenu === "duration" ? 4 : 1,
+    },
+    {
+      key: "clipboard",
+      value: "Clipboard off",
+      open: false,
+      options: ["Clipboard off"] as const,
+      highlightIndex: 0,
+      zIndex: 1,
+    },
+    {
+      key: "mcps",
+      value: "Allow MCPs",
+      open: false,
+      options: ["Allow MCPs"] as const,
+      highlightIndex: 0,
+      zIndex: 1,
+    },
+    {
+      key: "media",
+      value: state.mediaValue,
+      open: state.openMenu === "media",
+      options: PROTO_MEDIA_OPTIONS,
+      highlightIndex: state.mediaHighlight,
+      zIndex: state.openMenu === "media" ? 4 : 1,
+    },
+    {
+      key: "fs",
+      value: "Read-only FS",
+      open: false,
+      options: ["Read-only FS"] as const,
+      highlightIndex: 0,
+      zIndex: 1,
+    },
+    {
+      key: "model",
+      value: state.modelValue,
+      open: state.openMenu === "model",
+      options: PROTO_MODEL_OPTIONS,
+      highlightIndex: state.modelHighlight,
+      zIndex: state.openMenu === "model" ? 4 : 1,
+    },
+  ] as const;
+
   return (
     <div
       className="grid"
@@ -297,13 +506,16 @@ function ProtoDropdownGrid() {
         overflow: "visible",
       }}
     >
-      {PROTO_DROPDOWN_PILLS.map((value, index) =>
-        index === PROTO_DROPDOWN_PILLS.length - 1 ? (
-          <ProtoModelDropdown key={value} />
-        ) : (
-          <ProtoDropdownPill key={value} value={value} />
-        ),
-      )}
+      {pills.map((pill) => (
+        <ProtoMenuField
+          key={pill.key}
+          value={pill.value}
+          open={pill.open}
+          options={pill.options}
+          highlightIndex={pill.highlightIndex}
+          zIndex={pill.zIndex}
+        />
+      ))}
     </div>
   );
 }
