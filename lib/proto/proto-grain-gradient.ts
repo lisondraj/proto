@@ -29,8 +29,8 @@ export const PROTO_GRAIN_GRADIENT_SPEED = 1;
 /** Match library default — full hero sharpness on large bands. */
 export const PROTO_SHADER_MAX_PIXEL_COUNT_HERO = 1920 * 1080 * 4;
 
-/** Cap feature boxes only; stays above typical panel pixel counts at 2× DPR. */
-export const PROTO_SHADER_MAX_PIXEL_COUNT_FEATURE = 1920 * 1080 * 2;
+/** Cap feature boxes — headroom for taller fit-shader cards at 2–3× DPR. */
+export const PROTO_SHADER_MAX_PIXEL_COUNT_FEATURE = Math.floor(1920 * 1080 * 3);
 
 /** /about Meet Proto stack — smaller cap for static panels in a vertical stack. */
 export const PROTO_SHADER_MAX_PIXEL_COUNT_STACK = Math.floor(1920 * 1080 * 1.25);
@@ -84,8 +84,8 @@ export type ProtoGrainGradientPreset = {
 export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, ProtoGrainGradientPreset> = {
   "home-hero": {
     shape: "wave",
-    softness: 0.82,
-    intensity: 0.09,
+    softness: 0.7,
+    intensity: 0.15,
     fit: "cover",
     rotation: 168,
     offsetX: 0.06,
@@ -163,8 +163,8 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
   },
   integrate: {
     shape: "wave",
-    softness: 0.82,
-    intensity: 0.09,
+    softness: 0.72,
+    intensity: 0.17,
     fit: "cover",
     rotation: 168,
     offsetX: 0.06,
