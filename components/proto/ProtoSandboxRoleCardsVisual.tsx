@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { dmSans, inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
@@ -580,7 +580,6 @@ const FeaturedStackRow = memo(function FeaturedStackRow({
   opacity,
   tapped = false,
   highlighted = false,
-  focusRow = false,
 }: {
   card: ProtoSandboxRoleCard;
   tokens: VisualTokens;
@@ -588,11 +587,10 @@ const FeaturedStackRow = memo(function FeaturedStackRow({
   opacity: number;
   tapped?: boolean;
   highlighted?: boolean;
-  focusRow?: boolean;
 }) {
   const glass = FEATURED_GLASS[card.id];
   const glassLogoHeight = `${boxMetrics.glassLogoH}rem`;
-  const useGlassBlur = highlighted || tapped || focusRow;
+  const isVisible = opacity > 0.12 || highlighted;
 
   return (
     <article
@@ -606,22 +604,18 @@ const FeaturedStackRow = memo(function FeaturedStackRow({
         background: glass.background,
         overflow: "visible",
         opacity,
-        transition: focusRow ? `opacity 480ms ${FEATURED_EASE}` : undefined,
+        visibility: isVisible ? "visible" : "hidden",
+        transition: highlighted ? `opacity 480ms ${FEATURED_EASE}` : undefined,
         boxShadow: tapped
           ? "0 0 0 1px rgba(255,255,255,0.28), 0 6px 20px rgba(0,0,0,0.14)"
           : highlighted
             ? "0 0 0 1px rgba(255,255,255,0.22), 0 8px 28px rgba(0,0,0,0.12)"
             : "none",
-        ...(useGlassBlur
-          ? highlighted
-            ? {
-                backdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
-                WebkitBackdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
-              }
-            : {
-                backdropFilter: "blur(16px) saturate(1.25) brightness(1.02)",
-                WebkitBackdropFilter: "blur(16px) saturate(1.25) brightness(1.02)",
-              }
+        ...(highlighted
+          ? {
+              backdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
+              WebkitBackdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
+            }
           : {}),
       }}
     >
@@ -644,42 +638,31 @@ const FeaturedStackRow = memo(function FeaturedStackRow({
 });
 
 /** Expanded role card — logo pushes up, tasks push down; supports open/close cycle. */
-function FeaturedRoleCard({
+const FeaturedRoleCard = memo(function FeaturedRoleCard({
   card,
   tokens,
   layout,
   shouldExpand,
   overlay = false,
+  animating = false,
 }: {
   card: ProtoSandboxRoleCard;
   tokens: VisualTokens;
   layout: VisualLayout;
   shouldExpand: boolean;
   overlay?: boolean;
+  animating?: boolean;
 }) {
   const metrics = featuredExpandMetrics(layout);
-  const [expanded, setExpanded] = useState(shouldExpand);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
-    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion) {
-      setExpanded(shouldExpand);
-      return;
-    }
-
-    setExpanded(shouldExpand);
-  }, [shouldExpand, reduceMotion]);
-
-  const showFull = expanded || (reduceMotion && shouldExpand);
+  const showFull = shouldExpand;
   const motion = ` ${FEATURED_EXPAND_MS}ms ${FEATURED_EASE}`;
   const glassLogoHeight = `${metrics.glassLogoH}rem`;
   const logoEscaped = showFull;
   const articleHeight = logoEscaped ? metrics.compactBoxH : metrics.boxH;
   const glass = FEATURED_GLASS[card.id];
+  const overlaySurface = overlay
+    ? "linear-gradient(160deg, rgba(255,255,255,0.96) 0%, rgba(255,251,246,0.94) 48%, rgba(255,246,236,0.9) 100%)"
+    : glass.background;
 
   const belowTokens: VisualTokens = {
     ...tokens,
@@ -715,13 +698,21 @@ function FeaturedRoleCard({
           padding: `${metrics.articlePadTop}rem ${metrics.articlePadX}rem ${metrics.articlePadBottom}rem`,
           borderRadius: tokens.cardRadius,
           boxSizing: "border-box",
-          background: glass.background,
+          background: overlaySurface,
           overflow: logoEscaped ? "visible" : "hidden",
+          contain: overlay ? "layout paint" : undefined,
           transition: overlay
-            ? `height${motion}, padding${motion}`
+            ? animating
+              ? `height${motion}`
+              : undefined
             : `margin-top${motion}, height${motion}`,
-          backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
-          WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+          willChange: overlay && animating ? "height" : undefined,
+          ...(overlay
+            ? {}
+            : {
+                backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+                WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+              }),
         }}
       >
         <div
@@ -731,7 +722,8 @@ function FeaturedRoleCard({
             marginBottom: logoEscaped ? 0 : `${metrics.logoRoleGap}rem`,
             overflow: logoEscaped ? "visible" : "hidden",
             flexShrink: 0,
-            transition: `height${motion}, margin${motion}`,
+            transition: animating ? `height${motion}, margin${motion}` : undefined,
+            willChange: animating ? "height, margin" : undefined,
           }}
         >
           <div
@@ -743,9 +735,10 @@ function FeaturedRoleCard({
               height: logoEscaped ? tokens.logoHeight : glassLogoHeight,
               zIndex: logoEscaped ? 2 : 1,
               transform: logoEscaped
-                ? `translateY(calc(-1 * ${metrics.logoEscapeY}rem))`
-                : "translateY(0)",
-              transition: `transform${motion}, height${motion}`,
+                ? `translate3d(0, calc(-1 * ${metrics.logoEscapeY}rem), 0)`
+                : "translate3d(0, 0, 0)",
+              transition: animating ? `transform${motion}, height${motion}` : undefined,
+              willChange: animating ? "transform, height" : undefined,
             }}
           >
             <ProtoSandboxStartupLogo
@@ -764,10 +757,17 @@ function FeaturedRoleCard({
       <div
         className="w-full overflow-hidden"
         style={{
+          height: `${metrics.tasksBlockH}rem`,
           marginTop: showFull ? `${metrics.tasksMt}rem` : 0,
-          maxHeight: showFull ? `${metrics.tasksH}rem` : 0,
+          clipPath: showFull ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
           opacity: showFull ? 1 : 0,
-          transition: `margin-top${motion}, max-height${motion}, opacity${motion}`,
+          transition: animating
+            ? overlay
+              ? `clip-path${motion}, opacity${motion}, margin-top${motion}`
+              : `margin-top${motion}, clip-path${motion}, opacity${motion}`
+            : undefined,
+          willChange: animating ? "clip-path, opacity" : undefined,
+          pointerEvents: showFull ? "auto" : "none",
         }}
       >
         <RoleCardTaskRail
@@ -781,22 +781,19 @@ function FeaturedRoleCard({
       </div>
     </div>
   );
-}
+});
 
 function stackRowOpacity(
   index: number,
   focusIndex: number,
   phase: ItemPhase,
-  overlayActive: boolean,
-  overlayExpanded: boolean,
+  overlayOpen: boolean,
 ) {
   const belowCutoff = PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 2;
 
-  if (overlayActive) {
-    /** Keep focus row visible under overlay while collapsed; hide only when expanded layout differs. */
-    if (index === focusIndex) {
-      return overlayExpanded ? 0 : 1;
-    }
+  if (overlayOpen) {
+    /** Overlay owns the focus card — skip painting the duplicate stack row underneath. */
+    if (index === focusIndex) return 0;
     if (index > belowCutoff) return 0.12;
     return 0.22;
   }
@@ -832,11 +829,20 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
 
   const viewportH = layout === "phone" ? PHONE_FEATURED_VIEWPORT_REM : 26.5;
   const rowStep = boxMetrics.rowH + boxMetrics.gap;
-  const scrollOffset = viewportH / 2 - (focusIndex * rowStep + boxMetrics.rowH / 2);
+  const scrollOffset = useMemo(
+    () => viewportH / 2 - (focusIndex * rowStep + boxMetrics.rowH / 2),
+    [viewportH, focusIndex, rowStep, boxMetrics.rowH],
+  );
   const focusCard = PROTO_SANDBOX_FEATURED_STACK[focusIndex]!;
-  const overlayActive =
-    overlayOpen &&
-    (phase === "opening" || phase === "expanded" || phase === "closing" || phase === "done");
+  const overlayAnimating =
+    phase === "opening" || phase === "expanded" || phase === "closing";
+  const stackOpacities = useMemo(
+    () =>
+      PROTO_SANDBOX_FEATURED_STACK.map((_, index) =>
+        stackRowOpacity(index, focusIndex, phase, overlayOpen),
+      ),
+    [focusIndex, phase, overlayOpen],
+  );
   /** Pin overlay to stack row center — no vertical shift on expand. */
   const overlayTop = viewportH / 2 - boxMetrics.boxH / 2;
 
@@ -937,7 +943,7 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
       >
         <div
           style={{
-            transform: `translateY(${scrollOffset}rem)`,
+            transform: `translate3d(0, ${scrollOffset}rem, 0)`,
             transition: scrollMotion,
             willChange: phase === "scroll" ? "transform" : undefined,
           }}
@@ -949,14 +955,7 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
                 card={card}
                 tokens={tokens}
                 boxMetrics={boxMetrics}
-                opacity={stackRowOpacity(
-                  index,
-                  focusIndex,
-                  phase,
-                  overlayActive,
-                  overlayExpanded,
-                )}
-                focusRow={index === focusIndex}
+                opacity={stackOpacities[index] ?? 1}
                 tapped={phase === "tap" && index === focusIndex}
                 highlighted={
                   index === focusIndex &&
@@ -978,15 +977,17 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
             width: "100%",
             overflow: "visible",
             pointerEvents: "none",
-            willChange: "contents",
+            contain: "layout style paint",
           }}
         >
           <FeaturedRoleCard
+            key={focusCard.id}
             card={focusCard}
             tokens={tokens}
             layout={layout}
             shouldExpand={overlayExpanded}
             overlay
+            animating={overlayAnimating}
           />
         </div>
       ) : null}
