@@ -6,7 +6,8 @@ export type ProtoFeatureSectionLayout =
 /** One entry per slide in PROTO_COMMUNICATION_SLIDES order. */
 export const PROTO_FEATURE_SECTION_LAYOUTS: readonly ProtoFeatureSectionLayout[] = [
   { kind: "split", boxOnLeft: true }, // agents
-  { kind: "split", boxOnLeft: true }, // prototype (submissions fit)
+  { kind: "split", boxOnLeft: true }, // sandbox-build
+  { kind: "split", boxOnLeft: true }, // prototype (tracked sandbox)
   { kind: "split", boxOnLeft: true }, // billing (challenge rules)
   { kind: "full-panel" }, // front-desk
   { kind: "split", boxOnLeft: false }, // inbox

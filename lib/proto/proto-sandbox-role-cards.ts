@@ -5,8 +5,16 @@ export type ProtoSandboxRoleSummary = {
   type: string;
 };
 
+export type ProtoSandboxRoleCardId =
+  | "harmony"
+  | "ledger"
+  | "northwind"
+  | "atlas"
+  | "meridian"
+  | "signal";
+
 export type ProtoSandboxRoleCard = {
-  id: "harmony" | "ledger" | "northwind";
+  id: ProtoSandboxRoleCardId;
   startupName: string;
   role: string;
   taskBrief: string;
@@ -86,9 +94,95 @@ export const PROTO_SANDBOX_ROLE_CARDS: readonly ProtoSandboxRoleCard[] = [
   },
 ] as const;
 
-/** Featured first-shader cycle: Ledger, then two peers, then Ledger again. */
+const FEATURED_STACK_ABOVE: readonly ProtoSandboxRoleCard[] = [
+  {
+    id: "atlas",
+    startupName: "Atlas Systems",
+    role: "Data Engineer",
+    taskBrief: "Stand up the event pipeline",
+    checklist: [
+      "Define schema for product events",
+      "Wire Kafka to warehouse",
+      "Add replay for failed batches",
+    ],
+    timeLimit: "75 min",
+    model: "Claude Sonnet",
+    canConnectMcp: true,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$170–200k",
+      equity: "0.12–0.18% equity",
+      location: "SF / Hybrid",
+      type: "Full-time",
+    },
+  },
+  {
+    id: "meridian",
+    startupName: "Meridian",
+    role: "Design Lead",
+    taskBrief: "Refresh the onboarding system",
+    checklist: [
+      "Audit current signup flow",
+      "Prototype mobile-first screens",
+      "Ship updated component kit",
+    ],
+    timeLimit: "80 min",
+    model: "GPT-4o",
+    canConnectMcp: false,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$155–185k",
+      equity: "0.08–0.15% equity",
+      location: "Remote (US)",
+      type: "Full-time",
+    },
+  },
+  {
+    id: "signal",
+    startupName: "Signal Labs",
+    role: "ML Engineer",
+    taskBrief: "Deploy the ranking model",
+    checklist: [
+      "Benchmark offline metrics",
+      "Add feature store hooks",
+      "Set up shadow traffic test",
+    ],
+    timeLimit: "70 min",
+    model: "Fable 5",
+    canConnectMcp: true,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$190–230k",
+      equity: "0.18–0.28% equity",
+      location: "NYC / Hybrid",
+      type: "Full-time",
+    },
+  },
+] as const;
+
+function featuredCard(id: ProtoSandboxRoleCardId) {
+  const card = PROTO_SANDBOX_ROLE_CARDS.find((entry) => entry.id === id);
+  if (!card) {
+    throw new Error(`Missing featured card: ${id}`);
+  }
+  return card;
+}
+
+/** Featured first-shader column — extras above, Ledger center, peers below. */
+export const PROTO_SANDBOX_FEATURED_STACK: readonly ProtoSandboxRoleCard[] = [
+  ...FEATURED_STACK_ABOVE,
+  featuredCard("ledger"),
+  featuredCard("harmony"),
+  featuredCard("northwind"),
+];
+
+export const PROTO_SANDBOX_FEATURED_LEDGER_INDEX = PROTO_SANDBOX_FEATURED_STACK.findIndex(
+  (card) => card.id === "ledger",
+);
+
+/** @deprecated Use PROTO_SANDBOX_FEATURED_STACK — kept for any stale imports. */
 export const PROTO_SANDBOX_FEATURED_CYCLE: readonly ProtoSandboxRoleCard[] = [
-  PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "ledger")!,
-  PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "harmony")!,
-  PROTO_SANDBOX_ROLE_CARDS.find((card) => card.id === "northwind")!,
+  featuredCard("ledger"),
+  featuredCard("harmony"),
+  featuredCard("northwind"),
 ];

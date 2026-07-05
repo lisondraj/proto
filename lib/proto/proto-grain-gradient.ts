@@ -48,6 +48,7 @@ export type ProtoGrainGradientVariant =
   | "inbox"
   | "ambient"
   | "billing"
+  | "sandbox-build"
   | "prototype"
   | "integrate"
   | "validate"
@@ -142,6 +143,17 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     fit: "cover",
     offsetX: 0.24,
     offsetY: 0.14,
+  },
+  "sandbox-build": {
+    shape: "corners",
+    softness: 0.71,
+    intensity: 0.14,
+    fit: "cover",
+    rotation: 54,
+    offsetX: -0.12,
+    offsetY: 0.14,
+    scale: 1.1,
+    speed: 0.52,
   },
   prototype: {
     shape: "wave",

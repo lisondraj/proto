@@ -3,7 +3,16 @@ import {
   type DoePhoneCommunicationSlide,
 } from "@/lib/doephone/communication-carousel";
 
-import { PROTO_PROTOTYPE_BACKDROP, PROTO_SHORTLIST_BACKDROP, PROTO_VALIDATE_BACKDROP } from "@/lib/proto/proto-communication-gradients";
+import { PROTO_PROTOTYPE_BACKDROP, PROTO_SANDBOX_BUILD_BACKDROP, PROTO_SHORTLIST_BACKDROP, PROTO_VALIDATE_BACKDROP } from "@/lib/proto/proto-communication-gradients";
+
+/** /proto-only slide — applicant builds inside the sandbox. */
+export const PROTO_SANDBOX_BUILD_SLIDE: DoePhoneCommunicationSlide = {
+  id: "sandbox-build",
+  menuLabel: "Sandbox build",
+  description:
+    "Candidates code inside a live Proto sandbox with your starter repo, real dependencies, and an instant preview while they work.",
+  backdrop: PROTO_SANDBOX_BUILD_BACKDROP,
+};
 
 /** /proto-only slide — not shown in the 3×2 Doe home carousel menu. */
 export const PROTO_PROTOTYPE_SLIDE: DoePhoneCommunicationSlide = {
@@ -51,6 +60,7 @@ const DOEPHONE_SLIDE_BY_ID = Object.fromEntries(
 /** /proto feature stack order — submissions fit sits under the first hiring section. */
 export const PROTO_COMMUNICATION_SLIDES: readonly DoePhoneCommunicationSlide[] = [
   DOEPHONE_SLIDE_BY_ID.agents,
+  PROTO_SANDBOX_BUILD_SLIDE,
   PROTO_PROTOTYPE_SLIDE,
   DOEPHONE_SLIDE_BY_ID.billing,
   DOEPHONE_SLIDE_BY_ID["front-desk"],

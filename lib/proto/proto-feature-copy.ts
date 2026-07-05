@@ -39,6 +39,12 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
     description:
       "Recruiters review candidate evals on mobile the moment work lands. Scores, replays, and shortlists sync to your phone so you can move on strong talent and fill roles whether you're at your desk or on the road.",
   },
+  "sandbox-build": {
+    titleLine1: "Watch them build",
+    titleLine2: "in your sandbox.",
+    description:
+      "Candidates open your starter repo, edit real files, and see a live preview update as they work — the same environment they'll ship in if they join.",
+  },
   prototype: {
     titleLine1: "Inside a tracked",
     titleLine2: "sandbox.",

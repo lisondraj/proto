@@ -8,9 +8,11 @@ import { DoePhoneIntegrateVisual } from "@/components/doephone/DoePhoneIntegrate
 import { DoePhoneProtoShortlistVisual } from "@/components/doephone/DoePhoneProtoShortlistVisual";
 import { DoePhoneWorkflowVisual } from "@/components/doephone/DoePhoneWorkflowVisual";
 import { ProtoSandboxBlankPanelVisual } from "@/components/proto/ProtoSandboxBlankPanelVisual";
+import { ProtoSandboxBuildVisual } from "@/components/proto/ProtoSandboxBuildVisual";
 import { ProtoSandboxCodeSnippetVisual } from "@/components/proto/ProtoSandboxCodeSnippetVisual";
 import { ProtoSandboxLedgerCardVisual } from "@/components/proto/ProtoSandboxRoleCardsVisual";
 import { ProtoSandboxRolePillsVisual } from "@/components/proto/ProtoSandboxRolePillsVisual";
+import { ProtoSandboxTrackedVisual } from "@/components/proto/ProtoSandboxTrackedVisual";
 import type { DoePhoneCommunicationSlide } from "@/lib/doephone/communication-carousel";
 
 export function DoePhoneCommunicationSlideVisual({
@@ -62,8 +64,14 @@ export function DoePhoneCommunicationSlideVisual({
           chrome={protoSite ? "proto" : "doe"}
         />
       );
+    case "sandbox-build":
+      return protoSite ? (
+        <ProtoSandboxBuildVisual layout={layout} />
+      ) : null;
     case "prototype":
-      return null;
+      return protoSite ? (
+        <ProtoSandboxTrackedVisual layout={layout} />
+      ) : null;
     case "validate":
       return protoSite ? (
         <ProtoSandboxBlankPanelVisual layout={layout} />

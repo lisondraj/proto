@@ -7,6 +7,7 @@ export type ProtoFeaturePalette = {
 
 export type ProtoFeaturePaletteSlideId =
   | "agents"
+  | "sandbox-build"
   | "prototype"
   | "billing"
   | "front-desk"
@@ -28,6 +29,13 @@ export const PROTO_FEATURE_PALETTES: Record<ProtoFeaturePaletteSlideId, ProtoFea
     bloom: "#3ec8d8",
     mid: "#2888a0",
     lift: "#90e0e8",
+  },
+  /** Watch them build in your sandbox. */
+  "sandbox-build": {
+    back: "#0c1420",
+    bloom: "#5898e8",
+    mid: "#385878",
+    lift: "#90c8f0",
   },
   /** Inside a tracked sandbox. */
   prototype: {

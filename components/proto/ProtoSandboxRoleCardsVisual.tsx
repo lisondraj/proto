@@ -6,15 +6,120 @@ import { dmSans, inter, plusJakartaSans, suisseIntl } from "@/lib/home/fonts";
 import { ProtoPhoneScaledArtboard } from "@/components/proto/ProtoPhoneScaledArtboard";
 import { ProtoSandboxStartupLogo } from "@/components/proto/ProtoSandboxStartupLogos";
 import {
-  PROTO_SANDBOX_FEATURED_CYCLE,
+  PROTO_SANDBOX_FEATURED_LEDGER_INDEX,
+  PROTO_SANDBOX_FEATURED_STACK,
   PROTO_SANDBOX_ROLE_CARDS,
   type ProtoSandboxRoleCard,
+  type ProtoSandboxRoleCardId,
 } from "@/lib/proto/proto-sandbox-role-cards";
 
-const FEATURED_HOLD_MS = 20000;
-/** Soft dissolve — same ease as proto hero reveals. */
-const FEATURED_CROSSFADE_MS = 380;
+const FEATURED_SCROLL_MS = 900;
+const FEATURED_START_PAUSE_MS = 450;
+const FEATURED_HOLD_MS = 520;
+const FEATURED_TAP_MS = 280;
+const FEATURED_OPEN_HOLD_MS = 700;
+const FEATURED_EXPAND_HOLD_MS = 700;
+const FEATURED_EXPAND_MS = 580;
+const FEATURED_EXPANDED_HOLD_MS = 2200;
+const FEATURED_CLOSE_MS = 580;
+const FEATURED_BETWEEN_MS = 380;
 const FEATURED_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+/** Signal, Ledger, Harmony — each gets tap → open → close → scroll down. */
+const FEATURED_CLICKABLE_INDICES = [
+  PROTO_SANDBOX_FEATURED_LEDGER_INDEX - 1,
+  PROTO_SANDBOX_FEATURED_LEDGER_INDEX,
+  PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 1,
+] as const;
+
+type ItemPhase =
+  | "stack"
+  | "scroll"
+  | "hold"
+  | "tap"
+  | "opening"
+  | "expanded"
+  | "closing"
+  | "between"
+  | "done";
+
+/** Compact stack row — logo + role inside grey box. */
+function featuredStackRowLayout(layout: VisualLayout) {
+  if (layout === "phone") {
+    return {
+      rowH: 4.48,
+      gap: 0.46,
+      glassLogoH: 1.06,
+      logoRoleGap: 0.34,
+      articlePadTop: 0.68,
+      articlePadX: 0.88,
+      roleBodyH: 2.08,
+    };
+  }
+
+  return {
+    rowH: 4.4,
+    gap: 0.44,
+    glassLogoH: 1.04,
+    logoRoleGap: 0.32,
+    articlePadTop: 0.66,
+    articlePadX: 0.88,
+    roleBodyH: 2.06,
+  };
+}
+
+/** Expanded Ledger card — logo above, tasks below. */
+function featuredStackLayout(layout: VisualLayout) {
+  if (layout === "phone") {
+    return {
+      logoH: 2.75,
+      logoGap: 0.28,
+      glassLogoH: 1.18,
+      logoRoleGap: 0.42,
+      articlePadTop: 0.72,
+      articlePadX: 0.88,
+      roleBodyH: 2.38,
+      tasksMt: 0.65,
+      tasksH: 4.85,
+    };
+  }
+
+  return {
+    logoH: 2.7,
+    logoGap: 0.28,
+    glassLogoH: 1.14,
+    logoRoleGap: 0.4,
+    articlePadTop: 0.72,
+    articlePadX: 0.88,
+    roleBodyH: 2.34,
+    tasksMt: 0.65,
+    tasksH: 4.7,
+  };
+}
+
+function featuredStackMetrics(layout: VisualLayout) {
+  const stack = featuredStackLayout(layout);
+  const boxH =
+    stack.articlePadTop +
+    stack.glassLogoH +
+    stack.logoRoleGap +
+    stack.roleBodyH +
+    stack.articlePadTop;
+  const totalH = stack.logoH + stack.logoGap + boxH + stack.tasksMt + stack.tasksH;
+  const expandedArticleTop = stack.logoH + stack.logoGap;
+  const collapsedArticleTop = (totalH - boxH) / 2;
+  const logoEscapeY = expandedArticleTop + stack.articlePadTop;
+
+  return {
+    ...stack,
+    boxH,
+    totalH,
+    expandedArticleTop,
+    collapsedArticleTop,
+    logoEscapeY,
+    tasksBlockH: stack.tasksMt + stack.tasksH,
+  };
+}
 
 const INK = "#2C2419";
 const MUTED = "#7A6F63";
@@ -28,7 +133,7 @@ const CARD_SURFACE =
   "linear-gradient(180deg, #FFFCF7 0%, #FFF9F2 52%, #F9F1E6 100%)";
 
 /** Frosted glass panels for featured position cards — no border, no shadow. */
-const FEATURED_GLASS_BY_ID: Record<ProtoSandboxRoleCard["id"], { background: string }> = {
+const FEATURED_GLASS: Record<ProtoSandboxRoleCardId, { background: string }> = {
   ledger: {
     background:
       "linear-gradient(160deg, rgba(255,255,255,0.88) 0%, rgba(255,250,244,0.72) 42%, rgba(255,244,232,0.52) 100%)",
@@ -40,6 +145,18 @@ const FEATURED_GLASS_BY_ID: Record<ProtoSandboxRoleCard["id"], { background: str
   northwind: {
     background:
       "linear-gradient(160deg, rgba(255,252,246,0.9) 0%, rgba(255,246,236,0.7) 42%, rgba(255,240,226,0.5) 100%)",
+  },
+  atlas: {
+    background:
+      "linear-gradient(160deg, rgba(255,255,255,0.9) 0%, rgba(251,252,255,0.74) 42%, rgba(244,247,255,0.52) 100%)",
+  },
+  meridian: {
+    background:
+      "linear-gradient(160deg, rgba(255,255,255,0.91) 0%, rgba(255,252,250,0.73) 42%, rgba(255,248,244,0.53) 100%)",
+  },
+  signal: {
+    background:
+      "linear-gradient(160deg, rgba(255,254,252,0.9) 0%, rgba(255,251,246,0.72) 42%, rgba(255,246,236,0.51) 100%)",
   },
 };
 
@@ -55,8 +172,11 @@ const PHONE_CARD_STEP_REM = PHONE_CARD_HEIGHT_REM + PHONE_CARD_GAP_REM;
 const PHONE_CLUSTER_HEIGHT_REM =
   PHONE_CARD_STEP_REM * (PROTO_SANDBOX_ROLE_CARDS.length - 1) + PHONE_CARD_HEIGHT_REM;
 const PHONE_ARTBOARD_HEIGHT_PX = PHONE_CLUSTER_HEIGHT_REM * 16;
-/** Featured single-card stack — sized to the role UI, not the old 3-card cluster. */
-const PHONE_FEATURED_ARTBOARD_HEIGHT_PX = 340;
+/** Featured column viewport — taller window, softer edge fade. */
+const PHONE_FEATURED_VIEWPORT_REM = 18.4;
+const PHONE_FEATURED_ARTBOARD_HEIGHT_PX = PHONE_FEATURED_VIEWPORT_REM * 16;
+const FEATURED_MASK =
+  "linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%)";
 
 type VisualLayout = "phone" | "desktop";
 
@@ -345,18 +465,192 @@ function CardCluster({ layout, tokens }: { layout: VisualLayout; tokens: VisualT
   );
 }
 
-/** Featured card — logo above; role facts inside; task + tags below. Same styling for every company. */
-function FeaturedRoleCard({
+function FeaturedRoleSummaryGrid({ card }: { card: ProtoSandboxRoleCard }) {
+  const summary = card.roleSummary;
+
+  return (
+    <div
+      className="grid w-full"
+      style={{
+        gridTemplateColumns: "minmax(0, 1fr) auto",
+        columnGap: "0.75rem",
+        rowGap: "0.22rem",
+        alignItems: "baseline",
+      }}
+    >
+      <h3
+        className={`${plusJakartaSans.className} m-0 font-semibold tracking-[-0.025em]`}
+        style={{
+          color: GLASS_INK,
+          fontSize: "0.9rem",
+          lineHeight: 1.2,
+          fontWeight: 600,
+        }}
+      >
+        {card.role}
+      </h3>
+
+      {summary ? (
+        <span
+          className={`${inter.className} whitespace-nowrap text-right`}
+          style={{
+            color: GLASS_MUTED,
+            fontSize: "0.66rem",
+            lineHeight: 1.2,
+            fontWeight: 400,
+          }}
+        >
+          {summary.location}
+        </span>
+      ) : (
+        <span />
+      )}
+
+      {summary ? (
+        <p
+          className="m-0 tracking-[-0.015em]"
+          style={{
+            color: GLASS_INK,
+            fontSize: "0.74rem",
+            lineHeight: 1.2,
+            fontWeight: 500,
+          }}
+        >
+          {summary.pay}
+        </p>
+      ) : null}
+
+      {summary ? (
+        <span
+          className={`${inter.className} whitespace-nowrap text-right`}
+          style={{
+            color: GLASS_MUTED,
+            fontSize: "0.66rem",
+            lineHeight: 1.2,
+            fontWeight: 400,
+          }}
+        >
+          {summary.type}
+        </span>
+      ) : null}
+
+      {summary ? (
+        <p
+          className={`${inter.className} m-0`}
+          style={{
+            gridColumn: "1 / 2",
+            color: GLASS_MUTED,
+            fontSize: "0.66rem",
+            lineHeight: 1.2,
+            fontWeight: 400,
+          }}
+        >
+          {summary.equity}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/** Compact grey stack row — glass logo + role summary. */
+function FeaturedStackRow({
   card,
   tokens,
-  active,
+  rowMetrics,
+  opacity,
+  tapped = false,
+  highlighted = false,
 }: {
   card: ProtoSandboxRoleCard;
   tokens: VisualTokens;
-  active: boolean;
+  rowMetrics: ReturnType<typeof featuredStackRowLayout>;
+  opacity: number;
+  tapped?: boolean;
+  highlighted?: boolean;
 }) {
-  const summary = card.roleSummary;
-  const glass = FEATURED_GLASS_BY_ID[card.id];
+  const glass = FEATURED_GLASS[card.id];
+  const glassLogoHeight = `${rowMetrics.glassLogoH}rem`;
+
+  return (
+    <article
+      className={`flex w-full flex-col ${plusJakartaSans.className}`}
+      style={{
+        height: `${rowMetrics.rowH}rem`,
+        padding: `${rowMetrics.articlePadTop}rem ${rowMetrics.articlePadX}rem`,
+        borderRadius: tokens.cardRadius,
+        boxSizing: "border-box",
+        background: glass.background,
+        overflow: "hidden",
+        opacity,
+        transform: tapped ? "scale(0.968)" : "scale(1)",
+        transition: `opacity 420ms ${FEATURED_EASE}, transform ${FEATURED_TAP_MS}ms ${FEATURED_EASE}`,
+        ...(highlighted
+          ? {
+              backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+              WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+            }
+          : null),
+      }}
+    >
+      <div
+        style={{
+          height: `calc(${glassLogoHeight} + ${rowMetrics.logoRoleGap}rem)`,
+          flexShrink: 0,
+        }}
+      >
+        <ProtoSandboxStartupLogo id={card.id} height={glassLogoHeight} theme="glass" />
+      </div>
+      <div style={{ minHeight: `${rowMetrics.roleBodyH}rem` }}>
+        <FeaturedRoleSummaryGrid card={card} />
+      </div>
+    </article>
+  );
+}
+
+/** Expanded role card — logo pushes up, tasks push down; supports open/close cycle. */
+function FeaturedRoleCard({
+  card,
+  tokens,
+  layout,
+  shouldExpand,
+  overlay = false,
+}: {
+  card: ProtoSandboxRoleCard;
+  tokens: VisualTokens;
+  layout: VisualLayout;
+  shouldExpand: boolean;
+  overlay?: boolean;
+}) {
+  const metrics = featuredStackMetrics(layout);
+  const [expanded, setExpanded] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setExpanded(shouldExpand);
+      return;
+    }
+
+    if (!shouldExpand) {
+      setExpanded(false);
+      return;
+    }
+
+    setExpanded(false);
+    const expandTimer = window.setTimeout(() => setExpanded(true), FEATURED_EXPAND_HOLD_MS);
+    return () => window.clearTimeout(expandTimer);
+  }, [shouldExpand, reduceMotion]);
+
+  const showFull = expanded || (reduceMotion && shouldExpand);
+  const motion = ` ${FEATURED_EXPAND_MS}ms ${FEATURED_EASE}`;
+  const glassLogoHeight = `${metrics.glassLogoH}rem`;
+  const logoEscaped = showFull;
+  const glass = FEATURED_GLASS[card.id];
+
   const belowTokens: VisualTokens = {
     ...tokens,
     task: "0.92rem",
@@ -371,110 +665,76 @@ function FeaturedRoleCard({
   };
 
   return (
-    <div className="flex w-full flex-col items-start">
-      <div style={{ marginBottom: "0.2rem" }}>
-        <ProtoSandboxStartupLogo id={card.id} height={tokens.logoHeight} theme="light" />
-      </div>
-
+    <div
+      className="relative flex w-full flex-col"
+      style={{
+        minHeight: overlay ? undefined : `${metrics.totalH}rem`,
+      }}
+    >
       <article
-        className={`w-full flex flex-col ${plusJakartaSans.className}`}
+        className={`relative flex w-full flex-col ${plusJakartaSans.className}`}
         style={{
-          padding: "0.58rem 0.82rem",
+          height: `${metrics.boxH}rem`,
+          marginTop: overlay
+            ? 0
+            : showFull
+              ? `${metrics.expandedArticleTop}rem`
+              : `${metrics.collapsedArticleTop}rem`,
+          padding: `${metrics.articlePadTop}rem ${metrics.articlePadX}rem`,
           borderRadius: tokens.cardRadius,
           boxSizing: "border-box",
           background: glass.background,
-          // Blur only on the visible card — avoids 3× backdrop-filter cost during switches.
-          ...(active
-            ? {
-                backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
-                WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
-              }
-            : null),
+          overflow: logoEscaped ? "visible" : "hidden",
+          transition: overlay ? undefined : `margin-top${motion}`,
+          backdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
+          WebkitBackdropFilter: "blur(18px) saturate(1.35) brightness(1.04)",
         }}
       >
         <div
-          className="grid w-full"
           style={{
-            gridTemplateColumns: "minmax(0, 1fr) auto",
-            columnGap: "0.75rem",
-            rowGap: "0.2rem",
-            alignItems: "baseline",
+            position: "relative",
+            height: logoEscaped ? 0 : `calc(${glassLogoHeight} + ${metrics.logoRoleGap}rem)`,
+            overflow: logoEscaped ? "visible" : "hidden",
+            flexShrink: 0,
+            transition: `height${motion}`,
           }}
         >
-          <h3
-            className={`${plusJakartaSans.className} m-0 font-semibold tracking-[-0.025em]`}
+          <div
             style={{
-              color: GLASS_INK,
-              fontSize: "0.9rem",
-              lineHeight: 1.2,
-              fontWeight: 600,
+              position: logoEscaped ? "absolute" : "relative",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: logoEscaped ? tokens.logoHeight : glassLogoHeight,
+              zIndex: logoEscaped ? 2 : 1,
+              transform: logoEscaped
+                ? `translateY(calc(-1 * ${metrics.logoEscapeY}rem))`
+                : "translateY(0)",
+              transition: `transform${motion}`,
             }}
           >
-            {card.role}
-          </h3>
+            <ProtoSandboxStartupLogo
+              id={card.id}
+              height={logoEscaped ? tokens.logoHeight : glassLogoHeight}
+              theme={logoEscaped ? "light" : "glass"}
+            />
+          </div>
+        </div>
 
-          {summary ? (
-            <span
-              className={`${inter.className} whitespace-nowrap text-right`}
-              style={{
-                color: GLASS_MUTED,
-                fontSize: "0.66rem",
-                lineHeight: 1.2,
-                fontWeight: 400,
-              }}
-            >
-              {summary.location}
-            </span>
-          ) : (
-            <span />
-          )}
-
-          {summary ? (
-            <p
-              className="m-0 tracking-[-0.015em]"
-              style={{
-                color: GLASS_INK,
-                fontSize: "0.74rem",
-                lineHeight: 1.2,
-                fontWeight: 500,
-              }}
-            >
-              {summary.pay}
-            </p>
-          ) : null}
-
-          {summary ? (
-            <span
-              className={`${inter.className} whitespace-nowrap text-right`}
-              style={{
-                color: GLASS_MUTED,
-                fontSize: "0.66rem",
-                lineHeight: 1.2,
-                fontWeight: 400,
-              }}
-            >
-              {summary.type}
-            </span>
-          ) : null}
-
-          {summary ? (
-            <p
-              className={`${inter.className} m-0`}
-              style={{
-                gridColumn: "1 / 2",
-                color: GLASS_MUTED,
-                fontSize: "0.66rem",
-                lineHeight: 1.2,
-                fontWeight: 400,
-              }}
-            >
-              {summary.equity}
-            </p>
-          ) : null}
+        <div style={{ minHeight: `${metrics.roleBodyH}rem` }}>
+          <FeaturedRoleSummaryGrid card={card} />
         </div>
       </article>
 
-      <div className="w-full" style={{ marginTop: "0.65rem" }}>
+      <div
+        className="w-full overflow-hidden"
+        style={{
+          marginTop: showFull ? `${metrics.tasksMt}rem` : 0,
+          maxHeight: showFull ? `${metrics.tasksH}rem` : 0,
+          opacity: showFull ? 1 : 0,
+          transition: `margin-top${motion}, max-height${motion}, opacity${motion}`,
+        }}
+      >
         <RoleCardTaskRail
           taskBrief={card.taskBrief}
           items={card.checklist}
@@ -488,51 +748,173 @@ function FeaturedRoleCard({
   );
 }
 
-function FeaturedRoleCycle({ tokens }: { tokens: VisualTokens }) {
-  const [index, setIndex] = useState(0);
+function stackRowOpacity(
+  index: number,
+  focusIndex: number,
+  phase: ItemPhase,
+  overlayActive: boolean,
+) {
+  const northwindIndex = PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 2;
+
+  if (overlayActive) {
+    if (index === focusIndex) return 0;
+    if (index === northwindIndex) return 0.26;
+    return 0.4;
+  }
+
+  if (phase === "closing" || phase === "between") {
+    const distance = Math.abs(index - focusIndex);
+    if (distance === 0) return 1;
+    if (distance === 1) return 0.58;
+    if (distance === 2) return 0.42;
+    return index === northwindIndex ? 0.28 : 0.36;
+  }
+
+  const distance = Math.abs(index - focusIndex);
+  if (distance === 0) return 1;
+  if (distance === 1) return 0.62;
+  if (distance === 2) return 0.46;
+  if (index === northwindIndex) return 0.3;
+  return 0.38;
+}
+
+function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: VisualLayout }) {
+  const rowMetrics = featuredStackRowLayout(layout);
+  const startIndex = FEATURED_CLICKABLE_INDICES[0];
+
+  const [focusIndex, setFocusIndex] = useState(startIndex);
+  const [phase, setPhase] = useState<ItemPhase>("stack");
+  const [overlayOpen, setOverlayOpen] = useState(false);
+  const [overlayExpanded, setOverlayExpanded] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+
+  const viewportH =
+    layout === "phone" ? PHONE_FEATURED_VIEWPORT_REM : 18.4;
+  const rowStep = rowMetrics.rowH + rowMetrics.gap;
+  const scrollOffset = viewportH / 2 - (focusIndex * rowStep + rowMetrics.rowH / 2);
+  const focusCard = PROTO_SANDBOX_FEATURED_STACK[focusIndex]!;
+  const overlayActive =
+    phase === "opening" || phase === "expanded" || phase === "closing";
 
   useEffect(() => {
     setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-
-    const holdTimer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % PROTO_SANDBOX_FEATURED_CYCLE.length);
-    }, FEATURED_HOLD_MS);
-
-    return () => {
-      window.clearInterval(holdTimer);
-    };
   }, []);
 
-  return (
-    // Stack every slide in one grid cell so height stays max(all) — no scale jump.
-    <div className="grid" style={{ width: tokens.cardWidth }}>
-      {PROTO_SANDBOX_FEATURED_CYCLE.map((card, slideIndex) => {
-        const active = slideIndex === index;
+  useEffect(() => {
+    if (reduceMotion) {
+      setFocusIndex(FEATURED_CLICKABLE_INDICES[1]!);
+      setPhase("done");
+      return;
+    }
 
-        return (
-          <div
-            key={card.id}
-            className="col-start-1 row-start-1"
-            style={{
-              alignSelf: "start",
-              justifySelf: "stretch",
-              opacity: active ? 1 : 0,
-              transition: reduceMotion
-                ? undefined
-                : `opacity ${FEATURED_CROSSFADE_MS}ms ${FEATURED_EASE}`,
-              pointerEvents: active ? "auto" : "none",
-            }}
-          >
-            <FeaturedRoleCard card={card} tokens={tokens} active={active} />
-          </div>
-        );
-      })}
+    setFocusIndex(FEATURED_CLICKABLE_INDICES[0]!);
+    setPhase("stack");
+    setOverlayOpen(false);
+    setOverlayExpanded(false);
+
+    const timers: number[] = [];
+    let elapsed = FEATURED_START_PAUSE_MS;
+
+    function schedule(delay: number, fn: () => void) {
+      elapsed += delay;
+      timers.push(window.setTimeout(fn, elapsed));
+    }
+
+    FEATURED_CLICKABLE_INDICES.forEach((targetIndex, itemStep) => {
+      if (itemStep > 0) {
+        schedule(FEATURED_BETWEEN_MS, () => {
+          setPhase("scroll");
+          setFocusIndex(targetIndex);
+        });
+        schedule(FEATURED_SCROLL_MS, () => setPhase("hold"));
+      } else {
+        schedule(0, () => setPhase("hold"));
+      }
+
+      schedule(FEATURED_HOLD_MS, () => setPhase("tap"));
+      schedule(FEATURED_TAP_MS, () => {
+        setPhase("opening");
+        setOverlayOpen(true);
+        setOverlayExpanded(false);
+      });
+      schedule(FEATURED_OPEN_HOLD_MS, () => setOverlayExpanded(true));
+      schedule(FEATURED_EXPAND_HOLD_MS + FEATURED_EXPAND_MS, () => setPhase("expanded"));
+      schedule(FEATURED_EXPANDED_HOLD_MS, () => {
+        setPhase("closing");
+        setOverlayExpanded(false);
+      });
+      schedule(FEATURED_CLOSE_MS + FEATURED_EXPAND_MS, () => {
+        setOverlayOpen(false);
+        setPhase("between");
+      });
+    });
+
+    schedule(FEATURED_BETWEEN_MS, () => setPhase("done"));
+
+    return () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
+  }, [reduceMotion]);
+
+  const scrollMotion =
+    phase === "scroll" ? `transform ${FEATURED_SCROLL_MS}ms ${FEATURED_EASE}` : undefined;
+
+  return (
+    <div
+      className="relative mx-auto overflow-hidden"
+      style={{
+        width: tokens.cardWidth,
+        height: layout === "phone" ? `${PHONE_FEATURED_VIEWPORT_REM}rem` : `${viewportH}rem`,
+        WebkitMaskImage: FEATURED_MASK,
+        maskImage: FEATURED_MASK,
+      }}
+    >
+      <div
+        style={{
+          transform: `translateY(${scrollOffset}rem)`,
+          transition: scrollMotion,
+          willChange: phase === "scroll" ? "transform" : undefined,
+        }}
+      >
+        <div className="flex flex-col" style={{ gap: `${rowMetrics.gap}rem` }}>
+          {PROTO_SANDBOX_FEATURED_STACK.map((card, index) => (
+            <FeaturedStackRow
+              key={card.id}
+              card={card}
+              tokens={tokens}
+              rowMetrics={rowMetrics}
+              opacity={stackRowOpacity(index, focusIndex, phase, overlayActive)}
+              tapped={phase === "tap" && index === focusIndex}
+              highlighted={
+                index === focusIndex &&
+                (phase === "hold" || phase === "tap" || phase === "between" || phase === "done")
+              }
+            />
+          ))}
+        </div>
+      </div>
+
+      {overlayOpen ? (
+        <div
+          className="absolute inset-0 z-10 flex items-center justify-center"
+          style={{
+            pointerEvents: "none",
+          }}
+        >
+          <FeaturedRoleCard
+            card={focusCard}
+            tokens={tokens}
+            layout={layout}
+            shouldExpand={overlayExpanded}
+            overlay
+          />
+        </div>
+      ) : null}
     </div>
   );
 }
 
-/** Featured role cycle — Ledger, Harmony, Northwind, then Ledger again. */
+/** Featured role column — scrolls to Ledger, tap, fade peers, expand tasks. */
 export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: VisualLayout }) {
   const tokens = layout === "desktop" ? DESKTOP_TOKENS : PHONE_TOKENS;
 
@@ -552,7 +934,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
               height: PHONE_FEATURED_ARTBOARD_HEIGHT_PX,
             }}
           >
-            <FeaturedRoleCycle tokens={tokens} />
+            <FeaturedRoleColumn tokens={tokens} layout={layout} />
           </div>
         </ProtoPhoneScaledArtboard>
       </div>
@@ -565,7 +947,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
       style={{ maxWidth: "min(100%, 26rem)" }}
       aria-hidden
     >
-      <FeaturedRoleCycle tokens={tokens} />
+      <FeaturedRoleColumn tokens={tokens} layout={layout} />
     </div>
   );
 }

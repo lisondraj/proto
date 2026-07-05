@@ -86,6 +86,17 @@ export const PROTO_PROTOTYPE_BACKDROP = {
   lineOverlayOpacity: 0.2,
 };
 
+/** Sandbox build — cool builder lane for applicant coding UI. */
+const PROTO_SANDBOX_BUILD_GRADIENT = `linear-gradient(148deg, #0c1420 0%, #385878 32%, #5898e8 58%, #90c8f0 100%)`;
+
+export const PROTO_SANDBOX_BUILD_BACKDROP = {
+  slideIndex: 5,
+  label: "Sandbox build",
+  gradient: PROTO_SANDBOX_BUILD_GRADIENT,
+  grid: "crosshatch" as const,
+  lineOverlayOpacity: 0.14,
+};
+
 /** Shortlist — cool base into warm highlight. */
 const PROTO_SHORTLIST_GRADIENT = `linear-gradient(205deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_AGENTS_MID_BLUE} 34%, ${PROTO_RECEPTION_PALETTE.blue} 58%, ${PROTO_RECEPTION_PALETTE.copper} 82%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`;
 
@@ -136,6 +147,7 @@ export const PROTO_COMMUNICATION_GRADIENTS = {
   inbox: PROTO_DOCUMENTS_GRADIENT,
   ambient: PROTO_FRONT_DESK_GRADIENT,
   billing: PROTO_PRIOR_AUTH_GRADIENT,
+  "sandbox-build": PROTO_SANDBOX_BUILD_GRADIENT,
   prototype: PROTO_PROTOTYPE_GRADIENT,
   integrate: PROTO_INTEGRATE_GRADIENT,
   validate: PROTO_VALIDATE_GRADIENT,
@@ -157,6 +169,7 @@ export const PROTO_COMMUNICATION_GRIDS: Partial<
   inbox: "crosshatch",
   ambient: "polar",
   billing: "hex",
+  "sandbox-build": "crosshatch",
   prototype: "dot",
   integrate: "dot",
   validate: "crosshatch",
@@ -171,6 +184,7 @@ export const PROTO_COMMUNICATION_LINE_OPACITY: Partial<Record<ProtoCommunication
   inbox: 0.16,
   ambient: 0.18,
   billing: 0.13,
+  "sandbox-build": 0.14,
   prototype: 0.2,
   integrate: 0.1,
   validate: 0.16,
