@@ -469,74 +469,76 @@ function RevenueProduct() {
 
 type ProcessBodyPart = { text: string; bold?: boolean };
 
-const PROCESS_STEPS: readonly {
-  index: string;
+const PROCESS_NOTES: readonly {
   body: readonly ProcessBodyPart[];
 }[] = [
   {
-    index: "01",
     body: [
       { text: "Reviewed the brief in " },
       { text: "Linear", bold: true },
-      { text: ", pulled research from " },
-      { text: "Notion", bold: true },
-      { text: ", and defined the core user problem." },
+      { text: " and scoped the core problem." },
     ],
   },
   {
-    index: "02",
     body: [
-      { text: "Mapped user flows in " },
+      { text: "Mapped flows in " },
       { text: "FigJam", bold: true },
-      { text: " and organized the information architecture." },
+      { text: " before building the model." },
     ],
   },
   {
-    index: "03",
     body: [
-      { text: "Built the interface in " },
+      { text: "Shipped the UI in " },
       { text: "Figma", bold: true },
-      { text: ", refined interactions, and iterated on the system." },
+      { text: " and handed off the PRD." },
     ],
   },
 ];
 
 const PROCESS_INK = "#FFF9F2";
-const PROCESS_MUTED = "rgba(255, 249, 242, 0.68)";
-const PROCESS_FAINT = "rgba(255, 249, 242, 0.2)";
-/** Match description first-line metrics so indices sit on the same baseline. */
-const PROCESS_BODY_SIZE = 9.5;
-const PROCESS_BODY_LH = 1.4;
+const PROCESS_MUTED = "rgba(255, 249, 242, 0.72)";
+const PROCESS_NOTE_SIZE = 9;
+const PROCESS_NOTE_LH = 1.38;
 
-/** Left-half process notes — header + numbered descriptions, height-matched to revenue UI. */
+function ProcessNoteCheck() {
+  return (
+    <svg width={10} height={10} viewBox="0 0 10 10" fill="none" aria-hidden className="shrink-0">
+      <circle cx="5" cy="5" r="5" fill="rgba(255, 249, 242, 0.18)" />
+      <path
+        d="M2.8 5.1l1.2 1.2 3.1-3.2"
+        stroke={PROCESS_INK}
+        strokeWidth="1.05"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Left-half builder notes — title + compact check list, height-matched to revenue UI. */
 function DesignProcessPanel() {
-  const indexSize = 8;
-
   return (
     <div
-      className="flex flex-col"
+      className="flex flex-col justify-end"
       style={{
-        // Narrower measure wraps copy so the column fills BOX_SIZE_PX with the UI.
         width: 132,
         height: BOX_SIZE_PX,
         paddingRight: 4,
         boxSizing: "border-box",
       }}
     >
-      {/* Column header — top-aligned with revenue UI */}
       <div className="shrink-0">
         <div
           className={plusJakartaSans.className}
           style={{
             color: PROCESS_INK,
-            fontSize: 15,
+            fontSize: 19,
             fontWeight: 600,
             lineHeight: 1.12,
-            letterSpacing: "-0.03em",
+            letterSpacing: "-0.035em",
           }}
         >
-          <span className="block">{"Jordan's Revenue"}</span>
-          <span className="block">Projection Tool</span>
+          Jordan&apos;s Revenue Tool
         </div>
         <span
           className={inter.className}
@@ -557,83 +559,33 @@ function DesignProcessPanel() {
         </span>
       </div>
 
-      {/* Steps fill remaining height — last description bottoms with revenue UI */}
-      <div className="flex min-h-0 flex-1 flex-col" style={{ marginTop: 16 }}>
-        {PROCESS_STEPS.map((item, index) => {
-          const isLast = index === PROCESS_STEPS.length - 1;
-
-          return (
-            <div
-              key={item.index}
-              className="flex"
+      <div className="flex shrink-0 flex-col" style={{ gap: 11, marginTop: 12, paddingBottom: 2 }}>
+        {PROCESS_NOTES.map((item, index) => (
+          <div key={index} className="flex items-start" style={{ gap: 7 }}>
+            <div style={{ marginTop: 2 }}>
+              <ProcessNoteCheck />
+            </div>
+            <p
+              className={`${inter.className} m-0 min-w-0 flex-1`}
               style={{
-                flex: isLast ? "0 0 auto" : 1,
-                gap: 7,
-                minHeight: 0,
+                color: PROCESS_MUTED,
+                fontSize: PROCESS_NOTE_SIZE,
+                fontWeight: 400,
+                lineHeight: PROCESS_NOTE_LH,
+                letterSpacing: "-0.01em",
               }}
             >
-              {/* Rail: index shares first-line height with description */}
-              <div
-                className="flex flex-col items-center self-stretch"
-                style={{ width: 14 }}
-              >
+              {item.body.map((part) => (
                 <span
-                  className={inter.className}
-                  style={{
-                    color: PROCESS_MUTED,
-                    fontSize: indexSize,
-                    fontWeight: 500,
-                    lineHeight: PROCESS_BODY_LH,
-                    height: PROCESS_BODY_SIZE * PROCESS_BODY_LH,
-                    display: "flex",
-                    alignItems: "center",
-                    letterSpacing: "0.08em",
-                    fontVariantNumeric: "tabular-nums",
-                    flexShrink: 0,
-                  }}
+                  key={part.text}
+                  style={part.bold ? { color: PROCESS_INK, fontWeight: 600 } : undefined}
                 >
-                  {item.index}
+                  {part.text}
                 </span>
-                {isLast ? null : (
-                  <div
-                    aria-hidden
-                    style={{
-                      width: 1,
-                      flex: 1,
-                      minHeight: 0,
-                      marginTop: 4,
-                      background: PROCESS_FAINT,
-                    }}
-                  />
-                )}
-              </div>
-
-              <p
-                className={`${inter.className} m-0 min-w-0 flex-1`}
-                style={{
-                  color: PROCESS_MUTED,
-                  fontSize: PROCESS_BODY_SIZE,
-                  fontWeight: 400,
-                  lineHeight: PROCESS_BODY_LH,
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {item.body.map((part) => (
-                  <span
-                    key={part.text}
-                    style={
-                      part.bold
-                        ? { color: PROCESS_INK, fontWeight: 600 }
-                        : undefined
-                    }
-                  >
-                    {part.text}
-                  </span>
-                ))}
-              </p>
-            </div>
-          );
-        })}
+              ))}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

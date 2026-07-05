@@ -25,7 +25,7 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
     titleLine1: "The builder",
     titleLine2: "behind the build.",
     description:
-      "Replay how each candidate worked, not just what they submitted. Head-to-head scorecards on the same rubric, then a ranked shortlist when you're ready. The hire gets obvious before anyone schedules a panel.",
+      "Replay how candidates worked and compare outcomes on the same rubric before anyone lands on the shortlist.",
   },
   ambient: {
     titleLine1: "Exceptional talent",

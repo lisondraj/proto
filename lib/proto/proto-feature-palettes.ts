@@ -104,3 +104,22 @@ export function protoFeaturePalette(slideId: string): ProtoFeaturePalette | unde
 export function protoFeatureShaderSurfaceColors(palette: ProtoFeaturePalette) {
   return [palette.bloom, palette.mid, palette.lift] as const;
 }
+
+/** Shader colours + back for a /proto main feature palette. */
+export function protoFeatureShaderSurface(slideId: ProtoFeaturePaletteSlideId) {
+  const palette = PROTO_FEATURE_PALETTES[slideId];
+  return {
+    colors: protoFeatureShaderSurfaceColors(palette),
+    colorBack: palette.back,
+  };
+}
+
+/** /about — AI built for recruiting main panel (meet-proto flow). */
+export const PROTO_INVEST_PRODUCT_SHADER_PALETTE_SLIDE = "integrate" as const;
+
+/** /about — three stack panels beneath (meet-proto-stack flow). */
+export const PROTO_INVEST_PRODUCT_STACK_PALETTE_SLIDES = [
+  "agents",
+  "prototype",
+  "billing",
+] as const satisfies readonly ProtoFeaturePaletteSlideId[];

@@ -2,9 +2,9 @@
 
 import { ProtoGrainGradient } from "@/components/proto/ProtoGrainGradient";
 import {
-  PROTO_INVEST_STACK_SHADER_COLOR_BACK,
-  PROTO_INVEST_STACK_SHADER_PALETTES,
-} from "@/lib/proto/proto-grain-gradient";
+  PROTO_INVEST_PRODUCT_STACK_PALETTE_SLIDES,
+  protoFeatureShaderSurface,
+} from "@/lib/proto/proto-feature-palettes";
 import { PROTO_INVEST_PRODUCT_STACK_SHADER_BOX_TW } from "@/lib/proto-invest/proto-invest-layout-styles";
 
 const PRODUCT_STACK_SHADER_VARIANTS = [
@@ -17,16 +17,19 @@ const PRODUCT_STACK_SHADER_VARIANTS = [
 export function ProtoInvestProductStackBoxes() {
   return (
     <>
-      {PRODUCT_STACK_SHADER_VARIANTS.map((variant, index) => (
-        <div key={variant} className={PROTO_INVEST_PRODUCT_STACK_SHADER_BOX_TW} aria-hidden>
-          <ProtoGrainGradient
-            variant={variant}
-            static
-            colors={PROTO_INVEST_STACK_SHADER_PALETTES[index]}
-            colorBack={PROTO_INVEST_STACK_SHADER_COLOR_BACK}
-          />
-        </div>
-      ))}
+      {PRODUCT_STACK_SHADER_VARIANTS.map((variant, index) => {
+        const surface = protoFeatureShaderSurface(PROTO_INVEST_PRODUCT_STACK_PALETTE_SLIDES[index]!);
+        return (
+          <div key={variant} className={PROTO_INVEST_PRODUCT_STACK_SHADER_BOX_TW} aria-hidden>
+            <ProtoGrainGradient
+              variant={variant}
+              static
+              colors={surface.colors}
+              colorBack={surface.colorBack}
+            />
+          </div>
+        );
+      })}
     </>
   );
 }

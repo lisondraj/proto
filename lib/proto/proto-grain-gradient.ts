@@ -14,15 +14,6 @@ export const PROTO_GRAIN_GRADIENT_COLORS = ["#c6750c", "#beae60", "#d7cbc6"] as 
 
 export const PROTO_GRAIN_GRADIENT_COLOR_BACK = "#000a0f";
 
-/** Meet Proto stack panels — warmer mid-tones, less black void and less dominant cream. */
-export const PROTO_INVEST_STACK_SHADER_COLOR_BACK = "#141a1e";
-
-export const PROTO_INVEST_STACK_SHADER_PALETTES = [
-  ["#c6750c", "#beae60", "#9a8f6e"],
-  ["#c6750c", "#beae60", "#9a8f6e"],
-  ["#9a8f6e", "#beae60", "#c6750c"],
-] as const;
-
 /** Default animation speed when a preset omits speed. */
 export const PROTO_GRAIN_GRADIENT_SPEED = 1;
 
@@ -95,15 +86,15 @@ export const PROTO_GRAIN_GRADIENT_PRESETS: Record<ProtoGrainGradientVariant, Pro
     speed: 0.85,
   },
   "about-hero": {
-    shape: "corners",
-    softness: 0.8,
-    intensity: 0.11,
+    shape: "wave",
+    softness: 0.72,
+    intensity: 0.17,
     fit: "cover",
-    rotation: 38,
-    offsetX: 0.18,
-    offsetY: -0.16,
-    scale: 1.2,
-    speed: 0.55,
+    rotation: 168,
+    offsetX: 0.06,
+    offsetY: -0.08,
+    scale: 1.12,
+    speed: 0.65,
   },
   agents: {
     shape: "blob",
@@ -313,6 +304,15 @@ export function protoGrainGradientSurface(
 export function protoHomeHeroGrainGradientSurface(): ProtoGrainGradientSurface {
   return {
     variant: "home-hero",
+    colors: PROTO_HOME_HERO_SHADER_COLORS,
+    colorBack: PROTO_HOME_HERO_SHADER_COLOR_BACK,
+  };
+}
+
+/** /about hero — home hero palette + current about-hero wave flow. */
+export function protoAboutHeroGrainGradientSurface(): ProtoGrainGradientSurface {
+  return {
+    variant: "about-hero",
     colors: PROTO_HOME_HERO_SHADER_COLORS,
     colorBack: PROTO_HOME_HERO_SHADER_COLOR_BACK,
   };

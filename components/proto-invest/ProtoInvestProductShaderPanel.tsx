@@ -1,6 +1,10 @@
 "use client";
 
 import { ProtoGrainGradient } from "@/components/proto/ProtoGrainGradient";
+import {
+  PROTO_INVEST_PRODUCT_SHADER_PALETTE_SLIDE,
+  protoFeatureShaderSurface,
+} from "@/lib/proto/proto-feature-palettes";
 import { PROTO_INVEST_PRODUCT_HEADLINE_LINES } from "@/lib/proto-invest/proto-invest-content";
 import {
   PROTO_INVEST_PRODUCT_PANEL_TITLE_TW,
@@ -14,9 +18,15 @@ export function ProtoInvestProductShaderPanel({
 }: {
   className?: string;
 }) {
+  const surface = protoFeatureShaderSurface(PROTO_INVEST_PRODUCT_SHADER_PALETTE_SLIDE);
+
   return (
     <div className={`relative ${className}`}>
-      <ProtoGrainGradient variant="meet-proto" />
+      <ProtoGrainGradient
+        variant="meet-proto"
+        colors={surface.colors}
+        colorBack={surface.colorBack}
+      />
       <div className={PROTO_INVEST_PRODUCT_PANEL_TITLE_WRAP}>
         <h2 className={PROTO_INVEST_PRODUCT_PANEL_TITLE_TW}>
           <span className="block">{PROTO_INVEST_PRODUCT_HEADLINE_LINES[0]}</span>

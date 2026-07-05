@@ -120,8 +120,11 @@ export const PROTO_HERO_GRADIENT = [
   `linear-gradient(135deg, ${PROTO_RECEPTION_PALETTE.deep} 0%, ${PROTO_RECEPTION_PALETTE.blue} 22%, ${PROTO_RECEPTION_PALETTE.blue} 48%, ${PROTO_RECEPTION_PALETTE.copper} 78%, ${PROTO_RECEPTION_PALETTE.gold} 100%)`,
 ].join(", ");
 
-/** iPhone /about hero — same documents reception colouring as desktop. */
-export const PROTO_ABOUT_HERO_PHONE_GRADIENT = PROTO_HERO_GRADIENT;
+/** /about hero — home hero palette CSS fallback (wave flow via shader preset). */
+export const PROTO_ABOUT_HERO_GRADIENT = PROTO_HOME_HERO_PHONE_GRADIENT;
+
+/** iPhone /about hero — same hero colouring as desktop. */
+export const PROTO_ABOUT_HERO_PHONE_GRADIENT = PROTO_ABOUT_HERO_GRADIENT;
 
 /** Reception — warm upper-left ellipse (The phone won't stop). */
 const PROTO_FRONT_DESK_GRADIENT = `radial-gradient(ellipse 100% 88% at 22% 18%, ${PROTO_RECEPTION_PALETTE.gold} 0%, ${PROTO_RECEPTION_PALETTE.copper} 45%, ${PROTO_RECEPTION_PALETTE.blue} 72%, ${PROTO_RECEPTION_PALETTE.deep} 100%)`;

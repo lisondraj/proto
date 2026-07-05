@@ -1,6 +1,7 @@
 import type { WorkflowCarouselDesignBackdrop } from "@/lib/workflow-carousel-design-backdrops";
 
 import {
+  PROTO_ABOUT_HERO_GRADIENT,
   PROTO_ABOUT_HERO_PHONE_GRADIENT,
   PROTO_COMMUNICATION_GRIDS,
   PROTO_COMMUNICATION_LINE_OPACITY,
@@ -30,15 +31,15 @@ export const PROTO_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   lineOverlayOpacity: PROTO_COMMUNICATION_LINE_OPACITY.integrate,
 };
 
-/** /about hero visual — documents reception palette. */
+/** /about hero visual — home hero palette. */
 export const PROTO_ABOUT_HERO_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto about hero",
-  gradient: PROTO_HERO_GRADIENT,
+  gradient: PROTO_ABOUT_HERO_GRADIENT,
   grid: PROTO_COMMUNICATION_GRIDS.integrate ?? "hex",
 };
 
-/** iPhone /about hero — same documents reception colouring as desktop. */
+/** iPhone /about hero — same hero colouring as desktop. */
 export const PROTO_ABOUT_HERO_PHONE_BACKDROP: WorkflowCarouselDesignBackdrop = {
   slideIndex: 4,
   label: "Proto about hero phone",
