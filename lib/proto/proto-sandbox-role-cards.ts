@@ -11,7 +11,11 @@ export type ProtoSandboxRoleCardId =
   | "northwind"
   | "atlas"
   | "meridian"
-  | "signal";
+  | "signal"
+  | "arc"
+  | "canopy"
+  | "vertex"
+  | "pulse";
 
 export type ProtoSandboxRoleCard = {
   id: ProtoSandboxRoleCardId;
@@ -94,6 +98,51 @@ export const PROTO_SANDBOX_ROLE_CARDS: readonly ProtoSandboxRoleCard[] = [
   },
 ] as const;
 
+const FEATURED_STACK_EXTRA_ABOVE: readonly ProtoSandboxRoleCard[] = [
+  {
+    id: "arc",
+    startupName: "Arc Compute",
+    role: "Platform Engineer",
+    taskBrief: "Harden the deploy pipeline",
+    checklist: [
+      "Add canary rollout step",
+      "Wire health checks to pager",
+      "Document rollback runbook",
+    ],
+    timeLimit: "65 min",
+    model: "Claude Sonnet",
+    canConnectMcp: true,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$175–205k",
+      equity: "0.14–0.22% equity",
+      location: "Seattle / Hybrid",
+      type: "Full-time",
+    },
+  },
+  {
+    id: "canopy",
+    startupName: "Canopy",
+    role: "Staff Designer",
+    taskBrief: "Redesign the settings hub",
+    checklist: [
+      "Map current IA pain points",
+      "Prototype density variants",
+      "Ship token updates",
+    ],
+    timeLimit: "85 min",
+    model: "GPT-4o",
+    canConnectMcp: false,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$165–195k",
+      equity: "0.10–0.18% equity",
+      location: "Remote (US)",
+      type: "Full-time",
+    },
+  },
+] as const;
+
 const FEATURED_STACK_ABOVE: readonly ProtoSandboxRoleCard[] = [
   {
     id: "atlas",
@@ -160,6 +209,51 @@ const FEATURED_STACK_ABOVE: readonly ProtoSandboxRoleCard[] = [
   },
 ] as const;
 
+const FEATURED_STACK_BELOW: readonly ProtoSandboxRoleCard[] = [
+  {
+    id: "vertex",
+    startupName: "Vertex AI",
+    role: "Research Engineer",
+    taskBrief: "Benchmark the eval harness",
+    checklist: [
+      "Define golden-set metrics",
+      "Add regression snapshots",
+      "Write comparison report",
+    ],
+    timeLimit: "55 min",
+    model: "Fable 5",
+    canConnectMcp: true,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$185–215k",
+      equity: "0.16–0.24% equity",
+      location: "SF / Hybrid",
+      type: "Full-time",
+    },
+  },
+  {
+    id: "pulse",
+    startupName: "Pulse Health",
+    role: "Ops Lead",
+    taskBrief: "Stand up vendor onboarding",
+    checklist: [
+      "Draft SLA checklist",
+      "Build intake form flow",
+      "Pilot with two vendors",
+    ],
+    timeLimit: "50 min",
+    model: "GPT-4o",
+    canConnectMcp: false,
+    videoRecordedPushToMain: true,
+    roleSummary: {
+      pay: "$140–165k",
+      equity: "0.12–0.20% equity",
+      location: "Boston, MA",
+      type: "Full-time",
+    },
+  },
+] as const;
+
 function featuredCard(id: ProtoSandboxRoleCardId) {
   const card = PROTO_SANDBOX_ROLE_CARDS.find((entry) => entry.id === id);
   if (!card) {
@@ -170,10 +264,12 @@ function featuredCard(id: ProtoSandboxRoleCardId) {
 
 /** Featured first-shader column — extras above, Ledger center, peers below. */
 export const PROTO_SANDBOX_FEATURED_STACK: readonly ProtoSandboxRoleCard[] = [
+  ...FEATURED_STACK_EXTRA_ABOVE,
   ...FEATURED_STACK_ABOVE,
   featuredCard("ledger"),
   featuredCard("harmony"),
   featuredCard("northwind"),
+  ...FEATURED_STACK_BELOW,
 ];
 
 export const PROTO_SANDBOX_FEATURED_LEDGER_INDEX = PROTO_SANDBOX_FEATURED_STACK.findIndex(

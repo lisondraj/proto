@@ -47,13 +47,13 @@ type ItemPhase =
 /** Shared grey-box metrics — stack rows and expand card use the same glass panel. */
 function featuredGlassBoxMetrics(layout: VisualLayout) {
   if (layout === "phone") {
-    const articlePadTop = 0.68;
-    const articlePadBottom = 0.68;
+    const articlePadTop = 0.72;
+    const articlePadBottom = 0.84;
     const articlePadX = 0.92;
     const glassLogoH = 1.2;
-    const logoRoleGap = 0.2;
-    const roleBodyH = 2.02;
-    const gap = 0.44;
+    const logoRoleGap = 0.22;
+    const roleBodyH = 2.88;
+    const gap = 0.42;
     const boxH =
       articlePadTop + glassLogoH + logoRoleGap + roleBodyH + articlePadBottom;
     const compactBoxH = articlePadTop + roleBodyH + articlePadBottom;
@@ -72,13 +72,13 @@ function featuredGlassBoxMetrics(layout: VisualLayout) {
     };
   }
 
-  const articlePadTop = 0.66;
-  const articlePadBottom = 0.66;
+  const articlePadTop = 0.7;
+  const articlePadBottom = 0.82;
   const articlePadX = 0.9;
   const glassLogoH = 1.16;
-  const logoRoleGap = 0.18;
-  const roleBodyH = 1.98;
-  const gap = 0.42;
+  const logoRoleGap = 0.2;
+  const roleBodyH = 2.84;
+  const gap = 0.4;
   const boxH = articlePadTop + glassLogoH + logoRoleGap + roleBodyH + articlePadBottom;
   const compactBoxH = articlePadTop + roleBodyH + articlePadBottom;
 
@@ -100,13 +100,14 @@ function featuredGlassBoxMetrics(layout: VisualLayout) {
 function featuredExpandMetrics(layout: VisualLayout) {
   const box = featuredGlassBoxMetrics(layout);
   const logoH = layout === "phone" ? 2.65 : 2.55;
-  const logoGap = 0.28;
-  const tasksMt = 0.58;
-  const tasksH = layout === "phone" ? 4.72 : 4.58;
+  const logoGap = 0.36;
+  const tasksMt = 0.72;
+  const tasksH = layout === "phone" ? 4.82 : 4.68;
   const totalH = logoH + logoGap + box.compactBoxH + tasksMt + tasksH;
   const expandedArticleTop = logoH + logoGap;
   const collapsedArticleTop = (totalH - box.boxH) / 2;
-  const logoEscapeY = box.articlePadTop + box.glassLogoH + box.logoRoleGap + logoGap;
+  /** Clear full light logo above compact grey box — no overlap. */
+  const logoEscapeY = box.articlePadTop + logoH + logoGap;
 
   return {
     ...box,
@@ -159,6 +160,22 @@ const FEATURED_GLASS: Record<ProtoSandboxRoleCardId, { background: string }> = {
     background:
       "linear-gradient(160deg, rgba(255,254,252,0.9) 0%, rgba(255,251,246,0.72) 42%, rgba(255,246,236,0.51) 100%)",
   },
+  arc: {
+    background:
+      "linear-gradient(160deg, rgba(255,255,255,0.91) 0%, rgba(250,252,255,0.73) 42%, rgba(242,247,255,0.52) 100%)",
+  },
+  canopy: {
+    background:
+      "linear-gradient(160deg, rgba(255,255,255,0.9) 0%, rgba(252,255,250,0.72) 42%, rgba(244,252,246,0.51) 100%)",
+  },
+  vertex: {
+    background:
+      "linear-gradient(160deg, rgba(255,254,255,0.9) 0%, rgba(251,250,255,0.72) 42%, rgba(246,244,255,0.51) 100%)",
+  },
+  pulse: {
+    background:
+      "linear-gradient(160deg, rgba(255,253,250,0.9) 0%, rgba(255,249,244,0.72) 42%, rgba(255,243,234,0.51) 100%)",
+  },
 };
 
 /** Text on frosted glass — clear warm ink, readable secondary. */
@@ -173,11 +190,11 @@ const PHONE_CARD_STEP_REM = PHONE_CARD_HEIGHT_REM + PHONE_CARD_GAP_REM;
 const PHONE_CLUSTER_HEIGHT_REM =
   PHONE_CARD_STEP_REM * (PROTO_SANDBOX_ROLE_CARDS.length - 1) + PHONE_CARD_HEIGHT_REM;
 const PHONE_ARTBOARD_HEIGHT_PX = PHONE_CLUSTER_HEIGHT_REM * 16;
-/** Featured column viewport — taller window, wide soft edge fade. */
-const PHONE_FEATURED_VIEWPORT_REM = 19.4;
+/** Featured column viewport — tall window, wide soft edge fade. */
+const PHONE_FEATURED_VIEWPORT_REM = 21.8;
 const PHONE_FEATURED_ARTBOARD_HEIGHT_PX = PHONE_FEATURED_VIEWPORT_REM * 16;
 const FEATURED_MASK =
-  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 1.5%, rgba(0,0,0,0.45) 4%, rgba(0,0,0,0.88) 7%, #000 10%, #000 90%, rgba(0,0,0,0.88) 93%, rgba(0,0,0,0.45) 96%, rgba(0,0,0,0.12) 98.5%, transparent 100%)";
+  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.06) 0.8%, rgba(0,0,0,0.22) 3%, rgba(0,0,0,0.52) 6.5%, rgba(0,0,0,0.82) 10%, rgba(0,0,0,0.96) 13%, #000 16%, #000 84%, rgba(0,0,0,0.96) 87%, rgba(0,0,0,0.82) 90%, rgba(0,0,0,0.52) 93.5%, rgba(0,0,0,0.22) 97%, rgba(0,0,0,0.06) 99.2%, transparent 100%)";
 
 type VisualLayout = "phone" | "desktop";
 
@@ -475,7 +492,7 @@ function FeaturedRoleSummaryGrid({ card }: { card: ProtoSandboxRoleCard }) {
       style={{
         gridTemplateColumns: "minmax(0, 1fr) auto",
         columnGap: "0.68rem",
-        rowGap: "0.24rem",
+        rowGap: "0.28rem",
         alignItems: "baseline",
       }}
     >
@@ -582,7 +599,7 @@ function FeaturedStackRow({
         borderRadius: tokens.cardRadius,
         boxSizing: "border-box",
         background: glass.background,
-        overflow: "hidden",
+        overflow: "visible",
         opacity,
         transform: `scale(${scale})`,
         transformOrigin: "center center",
@@ -778,27 +795,28 @@ function stackRowOpacity(
   phase: ItemPhase,
   overlayActive: boolean,
 ) {
-  const northwindIndex = PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 2;
+  const belowCutoff = PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 2;
 
   if (overlayActive) {
     if (index === focusIndex) return 0;
-    if (index === northwindIndex) return 0.22;
-    return 0.34;
+    if (index > belowCutoff) return 0.2;
+    return 0.36;
   }
 
   const distance = Math.abs(index - focusIndex);
   let opacity = 1;
   if (distance === 0) opacity = 1;
-  else if (distance === 1) opacity = 0.68;
-  else if (distance === 2) opacity = 0.52;
-  else opacity = 0.4;
+  else if (distance === 1) opacity = 0.7;
+  else if (distance === 2) opacity = 0.54;
+  else if (distance === 3) opacity = 0.44;
+  else opacity = 0.38;
 
-  if (index === northwindIndex) {
-    opacity = Math.min(opacity, 0.28);
+  if (index > belowCutoff) {
+    opacity = Math.min(opacity, 0.26);
   }
 
   if (phase === "closing" || phase === "between") {
-    opacity = Math.min(opacity + 0.08, 1);
+    opacity = Math.min(opacity + 0.06, 1);
   }
 
   return opacity;
@@ -806,6 +824,7 @@ function stackRowOpacity(
 
 function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: VisualLayout }) {
   const boxMetrics = featuredGlassBoxMetrics(layout);
+  const expandMetrics = featuredExpandMetrics(layout);
   const startIndex = FEATURED_CLICKABLE_INDICES[0];
 
   const [focusIndex, setFocusIndex] = useState(startIndex);
@@ -815,13 +834,22 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
   const [reduceMotion, setReduceMotion] = useState(false);
   const [cycleKey, setCycleKey] = useState(0);
 
-  const viewportH = layout === "phone" ? PHONE_FEATURED_VIEWPORT_REM : 19.4;
+  const viewportH = layout === "phone" ? PHONE_FEATURED_VIEWPORT_REM : 21.8;
   const rowStep = boxMetrics.rowH + boxMetrics.gap;
   const scrollOffset = viewportH / 2 - (focusIndex * rowStep + boxMetrics.rowH / 2);
   const focusCard = PROTO_SANDBOX_FEATURED_STACK[focusIndex]!;
   const overlayActive =
     phase === "opening" || phase === "expanded" || phase === "closing";
-  const overlayAnchorTop = viewportH / 2 - boxMetrics.boxH / 2;
+  const expandedBlockH =
+    expandMetrics.logoH +
+    expandMetrics.logoGap +
+    expandMetrics.compactBoxH +
+    expandMetrics.tasksMt +
+    expandMetrics.tasksH;
+  const collapsedOverlayTop = viewportH / 2 - boxMetrics.boxH / 2;
+  const expandedOverlayTop = viewportH / 2 - expandedBlockH / 2;
+  const overlayTop = overlayExpanded ? expandedOverlayTop : collapsedOverlayTop;
+  const overlayMotion = ` ${FEATURED_EXPAND_MS}ms ${FEATURED_EASE}`;
 
   useEffect(() => {
     setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -935,11 +963,11 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
         <div
           className="absolute left-0 right-0 z-10"
           style={{
-            top: `${overlayAnchorTop}rem`,
+            top: `${overlayTop}rem`,
             overflow: "visible",
             pointerEvents: "none",
-            opacity: phase === "opening" && !overlayExpanded ? 0.92 : 1,
-            transition: `opacity 280ms ${FEATURED_EASE}`,
+            opacity: 1,
+            transition: `top${overlayMotion}, opacity 240ms ${FEATURED_EASE}`,
           }}
         >
           <FeaturedRoleCard

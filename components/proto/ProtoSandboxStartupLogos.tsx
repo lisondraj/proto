@@ -372,6 +372,18 @@ const LOGO_BY_ID = {
   signal: (props: { height?: string; theme?: LogoTheme }) => (
     <GenericStartupLogo name="Signal Labs" {...props} />
   ),
+  arc: (props: { height?: string; theme?: LogoTheme }) => (
+    <GenericStartupLogo name="Arc Compute" {...props} />
+  ),
+  canopy: (props: { height?: string; theme?: LogoTheme }) => (
+    <GenericStartupLogo name="Canopy" {...props} />
+  ),
+  vertex: (props: { height?: string; theme?: LogoTheme }) => (
+    <GenericStartupLogo name="Vertex AI" {...props} />
+  ),
+  pulse: (props: { height?: string; theme?: LogoTheme }) => (
+    <GenericStartupLogo name="Pulse Health" {...props} />
+  ),
 } as const;
 
 export function ProtoSandboxStartupLogo({
