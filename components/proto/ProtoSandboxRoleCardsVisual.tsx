@@ -23,18 +23,19 @@ const FEATURED_EXPAND_MS = 620;
 const FEATURED_EXPANDED_HOLD_MS = 4000;
 const FEATURED_CLOSE_MS = 620;
 const FEATURED_BETWEEN_MS = 420;
-const FEATURED_LOOP_PAUSE_MS = 3600;
 const FEATURED_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 /** Meridian — intro frame; scroll down before any card opens. */
 const FEATURED_START_INDEX = PROTO_SANDBOX_FEATURED_STACK.findIndex((card) => card.id === "meridian");
 
-/** Signal, Ledger, Harmony — each gets tap → open → close → scroll down. */
+/** Signal, Ledger, Harmony — tap → open; Harmony stays open as the final static frame. */
 const FEATURED_OPEN_INDICES = [
   PROTO_SANDBOX_FEATURED_LEDGER_INDEX - 1,
   PROTO_SANDBOX_FEATURED_LEDGER_INDEX,
   PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 1,
 ] as const;
+
+const FEATURED_FINAL_INDEX = FEATURED_OPEN_INDICES[FEATURED_OPEN_INDICES.length - 1]!;
 
 type ItemPhase =
   | "stack"
@@ -828,14 +829,14 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [overlayExpanded, setOverlayExpanded] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [cycleKey, setCycleKey] = useState(0);
 
   const viewportH = layout === "phone" ? PHONE_FEATURED_VIEWPORT_REM : 26.5;
   const rowStep = boxMetrics.rowH + boxMetrics.gap;
   const scrollOffset = viewportH / 2 - (focusIndex * rowStep + boxMetrics.rowH / 2);
   const focusCard = PROTO_SANDBOX_FEATURED_STACK[focusIndex]!;
   const overlayActive =
-    phase === "opening" || phase === "expanded" || phase === "closing";
+    overlayOpen &&
+    (phase === "opening" || phase === "expanded" || phase === "closing" || phase === "done");
   /** Pin overlay to stack row center — no vertical shift on expand. */
   const overlayTop = viewportH / 2 - boxMetrics.boxH / 2;
 
@@ -844,18 +845,10 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
   }, []);
 
   useEffect(() => {
-    if (phase !== "done" || reduceMotion || !inView) return;
-
-    const loopTimer = window.setTimeout(() => {
-      setCycleKey((current) => current + 1);
-    }, FEATURED_LOOP_PAUSE_MS);
-
-    return () => window.clearTimeout(loopTimer);
-  }, [phase, reduceMotion, inView]);
-
-  useEffect(() => {
     if (reduceMotion) {
-      setFocusIndex(FEATURED_START_INDEX);
+      setFocusIndex(FEATURED_FINAL_INDEX);
+      setOverlayOpen(true);
+      setOverlayExpanded(true);
       setPhase("done");
       return;
     }
@@ -885,6 +878,8 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
     schedule(FEATURED_HOLD_MS, () => setPhase("between"));
 
     FEATURED_OPEN_INDICES.forEach((targetIndex) => {
+      const isFinal = targetIndex === FEATURED_FINAL_INDEX;
+
       schedule(FEATURED_BETWEEN_MS, () => {
         setPhase("scroll");
         setFocusIndex(targetIndex);
@@ -899,6 +894,12 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
       });
       schedule(FEATURED_TAP_MS + FEATURED_OPEN_HOLD_MS, () => setOverlayExpanded(true));
       schedule(FEATURED_TAP_MS + FEATURED_OPEN_HOLD_MS + FEATURED_EXPAND_MS, () => setPhase("expanded"));
+
+      if (isFinal) {
+        schedule(FEATURED_EXPANDED_HOLD_MS, () => setPhase("done"));
+        return;
+      }
+
       schedule(FEATURED_EXPANDED_HOLD_MS, () => {
         setPhase("closing");
         setOverlayExpanded(false);
@@ -909,12 +910,10 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
       });
     });
 
-    schedule(FEATURED_BETWEEN_MS, () => setPhase("done"));
-
     return () => {
       timers.forEach((timer) => window.clearTimeout(timer));
     };
-  }, [reduceMotion, cycleKey, inView]);
+  }, [reduceMotion, inView]);
 
   const scrollMotion =
     phase === "scroll" ? `transform ${FEATURED_SCROLL_MS}ms ${FEATURED_EASE}` : undefined;
