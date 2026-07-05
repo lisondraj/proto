@@ -18,9 +18,8 @@ const FEATURED_START_PAUSE_MS = 500;
 const FEATURED_HOLD_MS = 560;
 const FEATURED_TAP_MS = 260;
 const FEATURED_OPEN_HOLD_MS = 80;
-const FEATURED_EXPAND_HOLD_MS = 48;
 const FEATURED_EXPAND_MS = 620;
-const FEATURED_EXPANDED_HOLD_MS = 2000;
+const FEATURED_EXPANDED_HOLD_MS = 4000;
 const FEATURED_CLOSE_MS = 620;
 const FEATURED_BETWEEN_MS = 420;
 const FEATURED_LOOP_PAUSE_MS = 3600;
@@ -190,11 +189,9 @@ const PHONE_CARD_STEP_REM = PHONE_CARD_HEIGHT_REM + PHONE_CARD_GAP_REM;
 const PHONE_CLUSTER_HEIGHT_REM =
   PHONE_CARD_STEP_REM * (PROTO_SANDBOX_ROLE_CARDS.length - 1) + PHONE_CARD_HEIGHT_REM;
 const PHONE_ARTBOARD_HEIGHT_PX = PHONE_CLUSTER_HEIGHT_REM * 16;
-/** Featured column viewport — tall window, wide soft edge fade. */
-const PHONE_FEATURED_VIEWPORT_REM = 21.8;
+/** Featured column viewport — no edge fade; tall enough to show more of the stack. */
+const PHONE_FEATURED_VIEWPORT_REM = 26.5;
 const PHONE_FEATURED_ARTBOARD_HEIGHT_PX = PHONE_FEATURED_VIEWPORT_REM * 16;
-const FEATURED_MASK =
-  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.06) 0.8%, rgba(0,0,0,0.22) 3%, rgba(0,0,0,0.52) 6.5%, rgba(0,0,0,0.82) 10%, rgba(0,0,0,0.96) 13%, #000 16%, #000 84%, rgba(0,0,0,0.96) 87%, rgba(0,0,0,0.82) 90%, rgba(0,0,0,0.52) 93.5%, rgba(0,0,0,0.22) 97%, rgba(0,0,0,0.06) 99.2%, transparent 100%)";
 
 type VisualLayout = "phone" | "desktop";
 
@@ -588,25 +585,25 @@ function FeaturedStackRow({
 }) {
   const glass = FEATURED_GLASS[card.id];
   const glassLogoHeight = `${boxMetrics.glassLogoH}rem`;
-  const scale = tapped ? 0.972 : highlighted ? 1.014 : 1;
 
   return (
     <article
       className={`flex w-full flex-col ${plusJakartaSans.className}`}
       style={{
         height: `${boxMetrics.rowH}rem`,
+        width: "100%",
         padding: `${boxMetrics.articlePadTop}rem ${boxMetrics.articlePadX}rem ${boxMetrics.articlePadBottom}rem`,
         borderRadius: tokens.cardRadius,
         boxSizing: "border-box",
         background: glass.background,
         overflow: "visible",
         opacity,
-        transform: `scale(${scale})`,
-        transformOrigin: "center center",
-        transition: `opacity 480ms ${FEATURED_EASE}, transform ${FEATURED_TAP_MS}ms ${FEATURED_EASE}`,
-        boxShadow: highlighted
-          ? "0 0 0 1px rgba(255,255,255,0.22), 0 8px 28px rgba(0,0,0,0.12)"
-          : "none",
+        transition: `opacity 480ms ${FEATURED_EASE}`,
+        boxShadow: tapped
+          ? "0 0 0 1px rgba(255,255,255,0.28), 0 6px 20px rgba(0,0,0,0.14)"
+          : highlighted
+            ? "0 0 0 1px rgba(255,255,255,0.22), 0 8px 28px rgba(0,0,0,0.12)"
+            : "none",
         ...(highlighted
           ? {
               backdropFilter: "blur(20px) saturate(1.4) brightness(1.06)",
@@ -651,7 +648,7 @@ function FeaturedRoleCard({
   overlay?: boolean;
 }) {
   const metrics = featuredExpandMetrics(layout);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(shouldExpand);
   const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
@@ -664,23 +661,8 @@ function FeaturedRoleCard({
       return;
     }
 
-    if (!shouldExpand) {
-      setExpanded(false);
-      return;
-    }
-
-    if (overlay) {
-      setExpanded(false);
-      const frame = window.requestAnimationFrame(() => {
-        setExpanded(true);
-      });
-      return () => window.cancelAnimationFrame(frame);
-    }
-
-    setExpanded(false);
-    const expandTimer = window.setTimeout(() => setExpanded(true), FEATURED_EXPAND_HOLD_MS);
-    return () => window.clearTimeout(expandTimer);
-  }, [shouldExpand, reduceMotion, overlay]);
+    setExpanded(shouldExpand);
+  }, [shouldExpand, reduceMotion]);
 
   const showFull = expanded || (reduceMotion && shouldExpand);
   const motion = ` ${FEATURED_EXPAND_MS}ms ${FEATURED_EASE}`;
@@ -706,12 +688,14 @@ function FeaturedRoleCard({
     <div
       className="relative flex w-full flex-col"
       style={{
+        width: "100%",
         minHeight: overlay ? undefined : `${metrics.totalH}rem`,
       }}
     >
       <article
         className={`relative flex w-full flex-col ${plusJakartaSans.className}`}
         style={{
+          width: "100%",
           height: `${articleHeight}rem`,
           marginTop: overlay
             ? 0
@@ -794,29 +778,33 @@ function stackRowOpacity(
   focusIndex: number,
   phase: ItemPhase,
   overlayActive: boolean,
+  overlayExpanded: boolean,
 ) {
   const belowCutoff = PROTO_SANDBOX_FEATURED_LEDGER_INDEX + 2;
 
   if (overlayActive) {
-    if (index === focusIndex) return 0;
-    if (index > belowCutoff) return 0.2;
-    return 0.36;
+    /** Keep focus row visible under overlay while collapsed; hide only when expanded layout differs. */
+    if (index === focusIndex) {
+      return overlayExpanded ? 0 : 1;
+    }
+    if (index > belowCutoff) return 0.12;
+    return 0.22;
   }
 
   const distance = Math.abs(index - focusIndex);
   let opacity = 1;
   if (distance === 0) opacity = 1;
-  else if (distance === 1) opacity = 0.7;
-  else if (distance === 2) opacity = 0.54;
-  else if (distance === 3) opacity = 0.44;
-  else opacity = 0.38;
+  else if (distance === 1) opacity = 0.46;
+  else if (distance === 2) opacity = 0.3;
+  else if (distance === 3) opacity = 0.22;
+  else opacity = 0.16;
 
   if (index > belowCutoff) {
-    opacity = Math.min(opacity, 0.26);
+    opacity = Math.min(opacity, 0.14);
   }
 
   if (phase === "closing" || phase === "between") {
-    opacity = Math.min(opacity + 0.06, 1);
+    opacity = Math.min(opacity + 0.04, 1);
   }
 
   return opacity;
@@ -824,7 +812,6 @@ function stackRowOpacity(
 
 function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: VisualLayout }) {
   const boxMetrics = featuredGlassBoxMetrics(layout);
-  const expandMetrics = featuredExpandMetrics(layout);
   const startIndex = FEATURED_CLICKABLE_INDICES[0];
 
   const [focusIndex, setFocusIndex] = useState(startIndex);
@@ -834,22 +821,14 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
   const [reduceMotion, setReduceMotion] = useState(false);
   const [cycleKey, setCycleKey] = useState(0);
 
-  const viewportH = layout === "phone" ? PHONE_FEATURED_VIEWPORT_REM : 21.8;
+  const viewportH = layout === "phone" ? PHONE_FEATURED_VIEWPORT_REM : 26.5;
   const rowStep = boxMetrics.rowH + boxMetrics.gap;
   const scrollOffset = viewportH / 2 - (focusIndex * rowStep + boxMetrics.rowH / 2);
   const focusCard = PROTO_SANDBOX_FEATURED_STACK[focusIndex]!;
   const overlayActive =
     phase === "opening" || phase === "expanded" || phase === "closing";
-  const expandedBlockH =
-    expandMetrics.logoH +
-    expandMetrics.logoGap +
-    expandMetrics.compactBoxH +
-    expandMetrics.tasksMt +
-    expandMetrics.tasksH;
-  const collapsedOverlayTop = viewportH / 2 - boxMetrics.boxH / 2;
-  const expandedOverlayTop = viewportH / 2 - expandedBlockH / 2;
-  const overlayTop = overlayExpanded ? expandedOverlayTop : collapsedOverlayTop;
-  const overlayMotion = ` ${FEATURED_EXPAND_MS}ms ${FEATURED_EASE}`;
+  /** Pin overlay to stack row center — no vertical shift on expand. */
+  const overlayTop = viewportH / 2 - boxMetrics.boxH / 2;
 
   useEffect(() => {
     setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -900,9 +879,10 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
       schedule(FEATURED_TAP_MS, () => {
         setPhase("opening");
         setOverlayOpen(true);
-        setOverlayExpanded(true);
+        setOverlayExpanded(false);
       });
-      schedule(FEATURED_OPEN_HOLD_MS + FEATURED_EXPAND_MS, () => setPhase("expanded"));
+      schedule(FEATURED_TAP_MS + FEATURED_OPEN_HOLD_MS, () => setOverlayExpanded(true));
+      schedule(FEATURED_TAP_MS + FEATURED_OPEN_HOLD_MS + FEATURED_EXPAND_MS, () => setPhase("expanded"));
       schedule(FEATURED_EXPANDED_HOLD_MS, () => {
         setPhase("closing");
         setOverlayExpanded(false);
@@ -929,45 +909,58 @@ function FeaturedRoleColumn({ tokens, layout }: { tokens: VisualTokens; layout: 
       style={{
         width: tokens.cardWidth,
         height: layout === "phone" ? `${PHONE_FEATURED_VIEWPORT_REM}rem` : `${viewportH}rem`,
-        overflow: overlayActive ? "visible" : "hidden",
-        WebkitMaskImage: FEATURED_MASK,
-        maskImage: FEATURED_MASK,
+        overflow: "visible",
       }}
     >
       <div
+        className="absolute inset-0"
         style={{
-          transform: `translateY(${scrollOffset}rem)`,
-          transition: scrollMotion,
-          willChange: phase === "scroll" ? "transform" : undefined,
+          overflow: "visible",
         }}
       >
-        <div className="flex flex-col" style={{ gap: `${boxMetrics.gap}rem` }}>
-          {PROTO_SANDBOX_FEATURED_STACK.map((card, index) => (
-            <FeaturedStackRow
-              key={card.id}
-              card={card}
-              tokens={tokens}
-              boxMetrics={boxMetrics}
-              opacity={stackRowOpacity(index, focusIndex, phase, overlayActive)}
-              tapped={phase === "tap" && index === focusIndex}
-              highlighted={
-                index === focusIndex &&
-                (phase === "hold" || phase === "tap" || phase === "between" || phase === "done")
-              }
-            />
-          ))}
+        <div
+          style={{
+            transform: `translateY(${scrollOffset}rem)`,
+            transition: scrollMotion,
+            willChange: phase === "scroll" ? "transform" : undefined,
+          }}
+        >
+          <div className="flex flex-col" style={{ gap: `${boxMetrics.gap}rem` }}>
+            {PROTO_SANDBOX_FEATURED_STACK.map((card, index) => (
+              <FeaturedStackRow
+                key={card.id}
+                card={card}
+                tokens={tokens}
+                boxMetrics={boxMetrics}
+                opacity={stackRowOpacity(
+                index,
+                focusIndex,
+                phase,
+                overlayActive,
+                overlayExpanded,
+              )}
+                tapped={phase === "tap" && index === focusIndex}
+                highlighted={
+                  index === focusIndex &&
+                  (phase === "hold" || phase === "tap" || phase === "between" || phase === "done")
+                }
+              />
+            ))}
+          </div>
         </div>
       </div>
 
       {overlayOpen ? (
         <div
-          className="absolute left-0 right-0 z-10"
+          className="absolute z-10"
           style={{
             top: `${overlayTop}rem`,
+            left: 0,
+            right: 0,
+            width: "100%",
             overflow: "visible",
             pointerEvents: "none",
-            opacity: 1,
-            transition: `top${overlayMotion}, opacity 240ms ${FEATURED_EASE}`,
+            willChange: "contents",
           }}
         >
           <FeaturedRoleCard
@@ -1001,6 +994,7 @@ export function ProtoSandboxLedgerCardVisual({ layout = "phone" }: { layout?: Vi
             style={{
               width: PHONE_ARTBOARD_WIDTH_PX,
               height: PHONE_FEATURED_ARTBOARD_HEIGHT_PX,
+              overflow: "visible",
             }}
           >
             <FeaturedRoleColumn tokens={tokens} layout={layout} />
