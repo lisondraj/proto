@@ -28,7 +28,7 @@ export const PROTO_VALIDATE_SLIDE: DoePhoneCommunicationSlide = {
   id: "validate",
   menuLabel: "Validate",
   description:
-    "Proto stress-tests every submission against your rubric, replays how candidates worked, and flags what clears the bar before anyone lands on the shortlist.",
+    "Proto collects real user feedback on each submission, scores market fit, and ships cleared work into your repo for public testing.",
   backdrop: PROTO_VALIDATE_BACKDROP,
 };
 
@@ -57,9 +57,10 @@ const DOEPHONE_SLIDE_BY_ID = Object.fromEntries(
   DOEPHONE_COMMUNICATION_SLIDES.map((slide) => [slide.id, slide]),
 ) as Record<(typeof DOEPHONE_COMMUNICATION_SLIDES)[number]["id"], DoePhoneCommunicationSlide>;
 
-/** /proto feature stack order — submissions fit sits under the first hiring section. */
+/** /proto feature stack order — public challenges sits directly under hiring. */
 export const PROTO_COMMUNICATION_SLIDES: readonly DoePhoneCommunicationSlide[] = [
   DOEPHONE_SLIDE_BY_ID.agents,
+  PROTO_SHORTLIST_SLIDE,
   PROTO_SANDBOX_BUILD_SLIDE,
   PROTO_PROTOTYPE_SLIDE,
   DOEPHONE_SLIDE_BY_ID.billing,
@@ -68,6 +69,5 @@ export const PROTO_COMMUNICATION_SLIDES: readonly DoePhoneCommunicationSlide[] =
   DOEPHONE_SLIDE_BY_ID.ambient,
   DOEPHONE_SLIDE_BY_ID.integrate,
   PROTO_VALIDATE_SLIDE,
-  PROTO_SHORTLIST_SLIDE,
   PROTO_LOOKING_AHEAD_SLIDE,
 ];

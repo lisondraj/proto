@@ -101,13 +101,117 @@ function NorthwindIcon({
 }: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
   const ink = logoInk(theme);
 
-  // Compass ring + north pointer — reads as ops/navigation.
   return (
     <svg viewBox="0 0 32 32" fill="none" {...props}>
       <circle cx="16" cy="16" r="11" stroke={ink} strokeWidth="1.8" />
       <path d="M16 7.5l3.6 8.2H12.4L16 7.5z" fill={ink} />
       <path d="M16 16.5v7" stroke={ink} strokeWidth="1.8" strokeLinecap="round" />
       <circle cx="16" cy="16" r="1.6" fill={ink} />
+    </svg>
+  );
+}
+
+function AtlasIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = logoInk(theme);
+  return (
+    <svg viewBox="0 0 32 32" fill="none" {...props}>
+      <rect x="6" y="7" width="20" height="5" rx="1.5" stroke={ink} strokeWidth="1.8" />
+      <rect x="6" y="14" width="20" height="5" rx="1.5" stroke={ink} strokeWidth="1.8" />
+      <rect x="6" y="21" width="20" height="5" rx="1.5" fill={ink} opacity="0.18" stroke={ink} strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function MeridianIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = logoInk(theme);
+  return (
+    <svg viewBox="0 0 32 32" fill="none" {...props}>
+      <circle cx="16" cy="16" r="10" stroke={ink} strokeWidth="1.8" />
+      <path d="M16 6v20M6 16h20" stroke={ink} strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
+      <circle cx="16" cy="16" r="2.5" fill={ink} />
+    </svg>
+  );
+}
+
+function SignalIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = logoInk(theme);
+  return (
+    <svg viewBox="0 0 32 32" fill="none" {...props}>
+      <path
+        d="M5 18c3-6 6-6 9 0s6 6 9 0s3-6 4-6"
+        stroke={ink}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="8" cy="18" r="1.5" fill={ink} />
+      <circle cx="24" cy="18" r="1.5" fill={ink} />
+    </svg>
+  );
+}
+
+function ArcIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = logoInk(theme);
+  return (
+    <svg viewBox="0 0 32 32" fill="none" {...props}>
+      <path d="M8 22c0-8 5.5-13 13-13" stroke={ink} strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M21 9l4 0l0 4" stroke={ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function CanopyIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = logoInk(theme);
+  return (
+    <svg viewBox="0 0 32 32" fill="none" {...props}>
+      <path d="M16 7c-6 4-9 8-9 12h18c0-4-3-8-9-12z" stroke={ink} strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M16 19v6" stroke={ink} strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function VertexIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = logoInk(theme);
+  return (
+    <svg viewBox="0 0 32 32" fill="none" {...props}>
+      <path d="M16 6L26 24H6L16 6z" stroke={ink} strokeWidth="1.8" strokeLinejoin="round" />
+      <circle cx="16" cy="16" r="2" fill={ink} />
+    </svg>
+  );
+}
+
+function PulseIcon({
+  theme = "default",
+  ...props
+}: SVGProps<SVGSVGElement> & { theme?: LogoTheme }) {
+  const ink = logoInk(theme);
+  return (
+    <svg viewBox="0 0 32 32" fill="none" {...props}>
+      <path
+        d="M4 17h5l3-8 4 16 4-10 3 6h5"
+        stroke={ink}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -386,6 +490,19 @@ const LOGO_BY_ID = {
   ),
 } as const;
 
+const ICON_BY_ID = {
+  harmony: HarmonyIcon,
+  ledger: LedgerIcon,
+  northwind: NorthwindIcon,
+  atlas: AtlasIcon,
+  meridian: MeridianIcon,
+  signal: SignalIcon,
+  arc: ArcIcon,
+  canopy: CanopyIcon,
+  vertex: VertexIcon,
+  pulse: PulseIcon,
+} as const;
+
 export function ProtoSandboxStartupLogo({
   id,
   height,
@@ -397,4 +514,24 @@ export function ProtoSandboxStartupLogo({
 }) {
   const Logo = LOGO_BY_ID[id];
   return <Logo height={height} theme={theme} />;
+}
+
+/** Icon mark only — for compact tiles where a wordmark would overflow. */
+export function ProtoSandboxStartupIcon({
+  id,
+  size = 16,
+  theme = "glass",
+}: {
+  id: keyof typeof ICON_BY_ID;
+  size?: number;
+  theme?: LogoTheme;
+}) {
+  const Icon = ICON_BY_ID[id];
+  return (
+    <Icon
+      theme={theme}
+      style={{ width: size, height: size, flexShrink: 0, display: "block" }}
+      aria-hidden
+    />
+  );
 }

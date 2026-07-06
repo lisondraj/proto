@@ -61,13 +61,13 @@ export const PROTO_FEATURE_COPY: Record<ProtoCommunicationSlideId, ProtoFeatureC
     titleLine1: "See how real",
     titleLine2: "users respond.",
     description:
-      "Proto stress-tests each candidate's work against your rubric, replays how they executed, and flags what clears the bar before anyone lands on the shortlist.",
+      "Proto routes each submission through real user testing, collects market validation feedback, and merges what clears the bar straight into your codebase for public beta.",
   },
   shortlist: {
     titleLine1: "Public challenges",
     titleLine2: "for future hires.",
     description:
-      "Proto keeps a live ranked list of every candidate who cleared your sandbox bar. Scores refresh as new work lands, so hiring managers always know who to call next without rebuilding a spreadsheet.",
+      "Startups publish open build challenges across product, ops, and engineering. Anyone can submit — Proto scores every entry and surfaces the strongest builders before the req goes live.",
   },
   "looking-ahead": {
     titleLine1: "We're looking",

@@ -1044,6 +1044,18 @@ html[data-proto-page] .proto-more-about__track-spacer {
   }
 }
 
+@keyframes proto-challenge-pop {
+  from {
+    opacity: 0;
+    transform: translateY(2px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .proto-submission-step-in {
   animation: proto-submission-step-in 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
